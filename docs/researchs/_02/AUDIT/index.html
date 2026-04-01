@@ -1,0 +1,9239 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Rainbow Trader — ML trading system documentation">
+      
+      
+      
+      
+        <link rel="prev" href="../../_01/USING_VPN/">
+      
+      
+        <link rel="next" href="../AUDIT_BACKEND_INCONSISTENCIES/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Audit - Rainbow Trader</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#frontend-audit--control-panel" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Rainbow Trader" class="md-header__button md-logo" aria-label="Rainbow Trader" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rainbow Trader
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Audit
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../CODE-GENERATION/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Docs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../scripts/analysis/regime/regime_folds/20260325_004531_REGIME_TRAINING_OPTIONS_AUDIT/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Scripts
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Rainbow Trader" class="md-nav__button md-logo" aria-label="Rainbow Trader" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rainbow Trader
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Docs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CODE-GENERATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code Generation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CONFIGURATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DATA-STORAGE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DATABASE-SCHEMA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DOCKER_USAGE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EVENTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GIT-COMMITS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git Commits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MARKDOWN-STYLE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown Style
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MASTER-PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../PIPELINE-FLOWS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipeline Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../PLANS-SCHEMA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plans Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../README_MODULE_TEMPLATE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Readme Module Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../WORK-PLANS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Work Plans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14" id="__nav_2_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plans
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plans
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/CONTROL_PANEL_FRONTEND_REFACTOR_IMPLEMENTATION_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Frontend Refactor Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/CONTROL_PANEL_FRONTEND_REFACTOR_SUPERPLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Frontend Refactor Superplan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/CONTROL_PANEL_FRONTEND_REFACTOR_SUPERPLAN_FINAL_TREE_MATRIX/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Frontend Refactor Superplan Final Tree Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/CONTROL_PANEL_FRONTEND_REFACTOR_SUPERPLAN_MISSING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Frontend Refactor Superplan Missing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/EXPERIMENT_PLAN_THESIS_VALIDATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiment Plan Thesis Validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/KNOWLEDGE_SYSTEM_INTEGRATION_V2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Knowledge System Integration V2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/LIVE_TRADING_GAPS_AND_IDEAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Trading Gaps And Ideas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/PARQUET_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parquet Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/S3_PRUNED_TRIAL_PROGRESS_SCORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 Pruned Trial Progress Scoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/SIGNAL_ANALYTICS_SERVICE_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Signal Analytics Service Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_14_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14_11" id="__nav_2_14_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brain Agent
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_14_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Brain Agent
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/BRAIN-AGENT/BRAIN_ARCHITECTURE_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brain Architecture Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/BRAIN-AGENT/BRAIN_FOUNDATION_AUDIT_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brain Foundation Audit Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/BRAIN-AGENT/EVENT_SYSTEM_DB_DESIGN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event System Db Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/BRAIN-AGENT/EVENT_TAXONOMY_FINAL_PAYLOADS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Taxonomy Final Payloads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/BRAIN-AGENT/EVENT_TAXONOMY_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Taxonomy Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/BRAIN-AGENT/EVENT_TAXONOMY_SIMPLE_VIEW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Taxonomy Simple View
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_14_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14_12" id="__nav_2_14_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sentimental
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_14_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sentimental
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plans/SENTIMENTAL/SENTIMENTAL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sentimental
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_15" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_15" id="__nav_2_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Researchs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_15_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Researchs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LOSS_SCORING_TRAINING_FLOW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loss Scoring Training Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MATHEMATICAL_MODELS_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Models Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PARALLEL_EXECUTION_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parallel Execution Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SAMPLING_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sampling Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_15_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_15_5" id="__nav_2_15_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_15_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_15_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/DEBUG_FLOW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debug Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/EXPERIMENT_10_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiment 10 Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/FEATURE_WEIGHT_STRATEGY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Weight Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/INDICATORS_SIGNALS_PIPELINES_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indicators Signals Pipelines Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/INVOKE_FLOW_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Invoke Flow Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/LLM_PRICING_COMPARISON/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Llm Pricing Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/MEMORY_SYSTEM_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory System Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/METRICS_ANALISYS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics Analisys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/MODULE_STRUCTURE_DECISION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Module Structure Decision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/OLLAMA_TEST_RESULTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ollama Test Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_01/USING_VPN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Vpn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_15_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_15_6" id="__nav_2_15_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_15_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_15_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-file-tree-numbered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. File Tree (numbered)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-navigation-pages--component-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Navigation Pages — Component Trees
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Navigation Pages — Component Trees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        / Home
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backtests-backtest-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /backtests Backtest List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backtestssessionsid-backtest-session-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /backtests/sessions/:id Backtest Session Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experiments-experiments-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments Experiments List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsid-experiment-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id Experiment Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsid-overview-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id (overview tab)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsidcharts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id/charts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsidconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id/config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsidrequirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id/requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trainings-trainings-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trainings Trainings List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trainingssid-training-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trainings/:sid Training Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trainingssidtrials-trials-of-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trainings/:sid/trials Trials of Training
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trials-trials-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trials Trials List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialstid-trial-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trials/:tid Trial Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /hitl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#price-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /price-scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-all-numbers-accounted-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. All Numbers Accounted For
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-unified-patterns--homogeneity-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Unified Patterns — Homogeneity Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Unified Patterns — Homogeneity Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-tables--all-use-123-table-with-entity-prop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Tables — all use 123 Table with entity prop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-context-cards--all-use-121-contextcard-with-type-prop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Context Cards — all use 121 ContextCard with type prop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-list-pages--all-use-122-listlayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ List Pages — all use 122 ListLayout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-api-hooks--all-use-185-usepaginatedresource-or-182-usedetailresource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ API hooks — all use 185 usePaginatedResource or 182 useDetailResource
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-navigation--all-use-118-pathsts--nextlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Navigation — all use 118 paths.ts + next/link &lt;Link&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AUDIT_BACKEND_INCONSISTENCIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Backend Inconsistencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONTROL_PANEL_COMPONENT_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Component Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UNIFIED_COMPONENTS_DESIGN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unified Components Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_15_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_15_7" id="__nav_2_15_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ml
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_15_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_15_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ml
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_ML/ML-deep-research-report-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ml Deep Research Report 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_ML/ML-deep-research-report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ml Deep Research Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_ML/ML-roadmap-checkpoint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ml Roadmap Checkpoint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_ML/baselines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Baselines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_ML/deep-research-report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Research Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_ML/random/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Random
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_ML/script2-baseline-decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script2 Baseline Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_ML/sugerencias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sugerencias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Scripts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Analysis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regime
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Regime
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_1" id="__nav_3_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regime Folds
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Regime Folds
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/regime_folds/20260325_004531_REGIME_TRAINING_OPTIONS_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260325 004531 Regime Training Options Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/regime_folds/REGIME_FOLDS_FOLLOW_UP_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regime Folds Follow Up Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_2" id="__nav_3_1_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_2_1" id="__nav_3_1_1_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260324 154928 Btcusdt 5M Regime History
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_1_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260324 154928 Btcusdt 5M Regime History
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_154928_BTCUSDT_5m_regime_history/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_154928_BTCUSDT_5m_regime_history/summary_daily_regimes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Daily Regimes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_154928_BTCUSDT_5m_regime_history/summary_intraday_fragmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Intraday Fragmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_154928_BTCUSDT_5m_regime_history/summary_label_distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Label Distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_2_2" id="__nav_3_1_1_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260324 162703 Btcusdt 1D Native Regime History
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260324 162703 Btcusdt 1D Native Regime History
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_162703_BTCUSDT_1d_native_regime_history/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_162703_BTCUSDT_1d_native_regime_history/summary_label_distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Label Distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_162703_BTCUSDT_1d_native_regime_history/summary_regimes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Regimes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_2_3" id="__nav_3_1_1_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260324 162703 Btcusdt 1W Native Regime History
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_1_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260324 162703 Btcusdt 1W Native Regime History
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_162703_BTCUSDT_1w_native_regime_history/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_162703_BTCUSDT_1w_native_regime_history/summary_label_distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Label Distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/analysis/regime/results/20260324_162703_BTCUSDT_1w_native_regime_history/summary_regimes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Regimes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benchmarks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Llm
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Llm
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/benchmarks/llm/BENCHMARK_COMPARISON/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmark Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/experiments/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Experiments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/gcp/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gcp
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gcp
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/gcp/sync_state/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync State
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sync State
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/thesis/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thesis
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Thesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/thesis/script_1_validation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script 1 Validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5_2" id="__nav_3_5_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Script 1 Validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/SCRIPT1_V2_CHANGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 V2 Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/SCRIPT1_V3BIS2_CHANGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 V3Bis2 Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/SCRIPT1_V3BIS_CHANGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 V3Bis Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/SCRIPT1_V3_CHANGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 V3 Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2_6" id="__nav_3_5_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2_6_1" id="__nav_3_5_2_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260306 204834
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_2_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260306 204834
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/results/20260306_204834/script1_analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/results/20260306_204834/script1_findings_and_recommendations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Findings And Recommendations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2_6_2" id="__nav_3_5_2_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260307 232547
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_2_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260307 232547
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/results/20260307_232547/script1_analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/results/20260307_232547/script1_findings_and_recommendations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Findings And Recommendations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2_6_3" id="__nav_3_5_2_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260309 140837
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_2_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260309 140837
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/results/20260309_140837/script1_analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_1_validation/results/20260309_140837/script1_findings_and_recommendations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Findings And Recommendations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3" id="__nav_3_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script 2 Thesis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Script 2 Thesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_1" id="__nav_3_5_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Audit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/20260323_SCRIPT2_AUDIT_LOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260323 Script2 Audit Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/20260323_SCRIPT2_TIER_A_RESCUE_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260323 Script2 Tier A Rescue Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/20260328_SCRIPT2_V4_TIER_B_CORRECTED_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260328 Script2 V4 Tier B Corrected Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/20260331_SCRIPT2_TIER_B_RESCUE_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Script2 Tier B Rescue Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/20260401_SCRIPT2_PRELIMINARY_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Script2 Preliminary Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_1_6" id="__nav_3_5_3_1_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anexos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/ANEXOS/20260331_SCRIPT2_SECTION11_REGEN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Script2 Section11 Regen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/ANEXOS/20260331_SCRIPT2_SECTION2_REGEN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Script2 Section2 Regen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/ANEXOS/20260331_SCRIPT2_SECTION_BACKTEST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Script2 Section Backtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/ANEXOS/20260401_SCRIPT2_STATISTICAL_TESTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Script2 Statistical Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_1_7" id="__nav_3_5_3_1_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plans
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plans
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260324_SCRIPT2_REGIME_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260324 Script2 Regime Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260327_19_NORMALIZATION_INTEGRITY_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 19 Normalization Integrity Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260327_20_MARKET_STATE_FEATURE_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 20 Market State Feature Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260327_21_DEEP_RESEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 21 Deep Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260327_22_DEEP_RESEARCH_next_UNIFIED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 22 Deep Research Next Unified
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260329_COLAB_FEASIBILITY_STUDY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260329 Colab Feasibility Study
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260331_TRADE_SELECTIVITY_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Trade Selectivity Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260401_SCRIPT2_ENSEMBLE_AND_REGIME_IDEAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Script2 Ensemble And Regime Ideas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/PLANS/20260401_SCRIPT2_ENSEMBLE_IMPLEMENTATION_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Script2 Ensemble Implementation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/thesis/script_2_thesis/ensemble_backtests/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ensemble Backtests
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ensemble Backtests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/thesis/script_2_thesis/extra_backtests/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extra Backtests
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5_3_3" id="__nav_3_5_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Extra Backtests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_3_2" id="__nav_3_5_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_3_2_1" id="__nav_3_5_3_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 132841
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_3_5_3_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260331 132841
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/extra_backtests/results/20260331_132841/plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/extra_backtests/results/20260331_132841/report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_3_2_2" id="__nav_3_5_3_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 143054
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_3_5_3_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260331 143054
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/extra_backtests/results/20260331_143054/plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/extra_backtests/results/20260331_143054/report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_4" id="__nav_3_5_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Experiments
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Generate Experiments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/thesis/script_2_thesis/generate_experiments/hyper_extractions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hyper Extractions
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hyper Extractions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5" id="__nav_3_5_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/best_per_fold_3runs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Best Per Fold 3Runs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_2" id="__nav_3_5_3_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260319 035820
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260319 035820
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260319_035820/audit_script2_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Script2 State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260319_035820/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260319_035820/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260319_035820/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260319_035820/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_3" id="__nav_3_5_3_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260323 Tiera Rescue
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260323 Tiera Rescue
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260323_tierA_rescue/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260323_tierA_rescue/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260323_tierA_rescue/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260323_tierA_rescue/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_4" id="__nav_3_5_3_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260323 Tiera Rescue V2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260323 Tiera Rescue V2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260323_tierA_rescue_v2/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260323_tierA_rescue_v2/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260323_tierA_rescue_v2/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260323_tierA_rescue_v2/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_5" id="__nav_3_5_3_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260325 Tiera Merged View
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260325 Tiera Merged View
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260325_tierA_merged_view/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260325_tierA_merged_view/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260325_tierA_merged_view/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260325_tierA_merged_view/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_6" id="__nav_3_5_3_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260325 Tierb Mlp Ex
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260325 Tierb Mlp Ex
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260325_tierB_mlp_ex/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260325_tierB_mlp_ex/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260325_tierB_mlp_ex/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260325_tierB_mlp_ex/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_7" id="__nav_3_5_3_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260328 Tierb Corrected
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260328 Tierb Corrected
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260328_tierB_corrected/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260328_tierB_corrected/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260328_tierB_corrected/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260328_tierB_corrected/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260328_tierB_corrected/time_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_8" id="__nav_3_5_3_5_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Tierb Merged View
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260331 Tierb Merged View
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260331_tierB_merged_view/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260331_tierB_merged_view/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260331_tierB_merged_view/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260331_tierB_merged_view/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_9" id="__nav_3_5_3_5_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Tiers A And B Merged View
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260331 Tiers A And B Merged View
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260331_tiers_A_and_B_merged_view/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260331_tiers_A_and_B_merged_view/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260331_tiers_A_and_B_merged_view/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260331_tiers_A_and_B_merged_view/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_10" id="__nav_3_5_3_5_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Tierb Rescue V5
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260401 Tierb Rescue V5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260401_tierB_rescue_v5/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260401_tierB_rescue_v5/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260401_tierB_rescue_v5/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260401_tierB_rescue_v5/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/results/20260401_tierB_rescue_v5/time_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tmp Utils
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tmp Utils
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6_1" id="__nav_3_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lazy Full Compare 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lazy Full Compare 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/tmp-utils/lazy_full_compare_2/TEST_AND_FIX_HANDOFF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test And Fix Handoff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../scripts/vpn/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vpn
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Vpn
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-file-tree-numbered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. File Tree (numbered)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-navigation-pages--component-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Navigation Pages — Component Trees
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Navigation Pages — Component Trees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        / Home
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backtests-backtest-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /backtests Backtest List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backtestssessionsid-backtest-session-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /backtests/sessions/:id Backtest Session Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experiments-experiments-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments Experiments List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsid-experiment-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id Experiment Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsid-overview-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id (overview tab)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsidcharts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id/charts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsidconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id/config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentsidrequirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /experiments/:id/requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trainings-trainings-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trainings Trainings List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trainingssid-training-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trainings/:sid Training Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trainingssidtrials-trials-of-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trainings/:sid/trials Trials of Training
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trials-trials-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trials Trials List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialstid-trial-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /trials/:tid Trial Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /hitl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#price-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /price-scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-all-numbers-accounted-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. All Numbers Accounted For
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-unified-patterns--homogeneity-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Unified Patterns — Homogeneity Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Unified Patterns — Homogeneity Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-tables--all-use-123-table-with-entity-prop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Tables — all use 123 Table with entity prop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-context-cards--all-use-121-contextcard-with-type-prop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Context Cards — all use 121 ContextCard with type prop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-list-pages--all-use-122-listlayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ List Pages — all use 122 ListLayout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-api-hooks--all-use-185-usepaginatedresource-or-182-usedetailresource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ API hooks — all use 185 usePaginatedResource or 182 useDetailResource
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-navigation--all-use-118-pathsts--nextlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ Navigation — all use 118 paths.ts + next/link &lt;Link&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../../CODE-GENERATION/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Docs
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../LOSS_SCORING_TRAINING_FLOW/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Researchs
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="./" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    2
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="frontend-audit--control-panel">Frontend Audit — Control Panel</h1>
+<blockquote>
+<p>Generated: 2026-02-18
+Build: ✅ 29/29 routes | TypeScript: ✅ 0 errors | Lint: ✅ 0 warnings</p>
+</blockquote>
+<hr />
+<h2 id="1-file-tree-numbered">1. File Tree (numbered)</h2>
+<pre><code>src/
+├── app/
+│   ├── 001  layout.tsx
+│   ├── 002  page.tsx
+│   ├── 003  staticParams.ts
+│   ├── backtests/
+│   │   ├── 004  page.tsx
+│   │   ├── session/005  page.tsx              ← legacy redirect
+│   │   └── sessions/[id]/006  page.tsx
+│   ├── experiments/
+│   │   ├── 007  page.tsx
+│   │   ├── detail/008  page.tsx               ← legacy redirect
+│   │   └── [experimentId]/
+│   │       ├── 009  page.tsx
+│   │       ├── backtests/010  page.tsx
+│   │       ├── backtests/sessions/[id]/011  page.tsx
+│   │       ├── charts/012  page.tsx
+│   │       ├── config/013  page.tsx
+│   │       ├── requirements/014  page.tsx
+│   │       ├── trainings/015  page.tsx
+│   │       ├── trainings/[sid]/016  page.tsx
+│   │       ├── trainings/[sid]/trials/017  page.tsx
+│   │       ├── trainings/[sid]/trials/[tid]/018  page.tsx
+│   │       └── trials/019  page.tsx
+│   ├── hitl/020  page.tsx
+│   ├── price-scale/021  page.tsx
+│   ├── trainings/
+│   │   ├── 022  page.tsx
+│   │   ├── detail/023  page.tsx               ← legacy redirect
+│   │   ├── [sid]/024  page.tsx
+│   │   └── [sid]/trials/025  page.tsx
+│   └── trials/
+│       ├── 026  page.tsx
+│       ├── detail/027  page.tsx               ← legacy redirect
+│       └── [tid]/028  page.tsx
+│
+├── components/
+│   ├── 029  DashboardCard.tsx
+│   ├── 030  HitlPage.tsx
+│   ├── 031  IndexPage.tsx
+│   ├── 032  Panel.tsx
+│   ├── charts/
+│   │   ├── 033  ChartLegendBox.tsx
+│   │   ├── 034  ChartPanel.tsx
+│   │   ├── 035  ChartToolbox.tsx
+│   │   └── 036  ResolutionSelector.tsx
+│   ├── client-pages/
+│   │   ├── 037  BacktestSessionClient.tsx
+│   │   ├── 038  BacktestsListClient.tsx
+│   │   ├── 039  ExecutiveHomeClient.tsx
+│   │   ├── 040  ExperimentChartsClient.tsx
+│   │   ├── 041  ExperimentConfigClient.tsx
+│   │   ├── 042  ExperimentDetailClient.tsx
+│   │   ├── 043  ExperimentOverviewClient.tsx
+│   │   ├── 044  ExperimentRequirementsClient.tsx
+│   │   ├── 045  ExperimentsListClient.tsx
+│   │   ├── 046  HitlClient.tsx
+│   │   ├── 047  TrainingDetailClient.tsx
+│   │   ├── 048  TrainingsListClient.tsx
+│   │   ├── 049  TrialDetailClient.tsx
+│   │   └── 050  TrialsListClient.tsx
+│   └── dashboard/
+│       ├── 051  AdminShell.tsx
+│       ├── 052  ExecutiveHomePage.tsx
+│       ├── backtests/
+│       │   ├── detail/
+│       │   │   ├── 053  BacktestSessionPage.tsx
+│       │   │   ├── 054  useBacktestSessionPage.ts
+│       │   │   └── viewer/
+│       │   │       ├── 055  BacktestCharts.tsx
+│       │   │       ├── 056  BacktestDashboard.tsx
+│       │   │       ├── 057  BacktestMetrics.tsx
+│       │   │       ├── 058  BacktestSessionList.tsx
+│       │   │       ├── 059  BacktestTradeBrowser.tsx
+│       │   │       └── 060  BacktestTradeDetails.tsx
+│       │   └── list/
+│       │       ├── 061  BacktestsListPage.tsx
+│       │       ├── 062  useBacktestsListPage.ts
+│       │       ├── filters/063  BacktestsFilters.tsx
+│       │       ├── filters/064  useBacktestsFilters.ts
+│       │       ├── launch/065  BacktestsLaunchPanel.tsx
+│       │       ├── launch/066  useBacktestsLaunchForm.ts
+│       │       └── launch/067  useBacktestsLaunchPanel.ts
+│       ├── experiments/
+│       │   ├── detail/
+│       │   │   ├── 068  ExperimentDetailPage.tsx
+│       │   │   ├── 069  useExperimentDetailPage.ts
+│       │   │   ├── charts/070  ExperimentChartsPanel.tsx
+│       │   │   ├── charts/071  useExperimentCharts.ts
+│       │   │   ├── charts/072  useExperimentCustomChartsState.ts
+│       │   │   ├── charts/073  requirements.ts
+│       │   │   ├── charts/074  types.ts
+│       │   │   ├── charts/plots/075  types.ts
+│       │   │   ├── config/076  ConfigSection.tsx
+│       │   │   ├── config/077  ConfigTreeTable.tsx
+│       │   │   ├── config/078  ExperimentConfigPanel.tsx
+│       │   │   ├── config/079  FatWindowFeaturesTable.tsx
+│       │   │   ├── config/080  KeyValueGrid.tsx
+│       │   │   ├── config/081  configSections.ts
+│       │   │   ├── config/082  useExperimentConfigPanel.ts
+│       │   │   ├── config/083  useFatWindowFeaturesTable.ts
+│       │   │   ├── config/groups/084  ExperimentConfigBotSection.tsx
+│       │   │   ├── config/groups/085  ExperimentConfigCommitsSnapshotSection.tsx
+│       │   │   ├── config/groups/086  ExperimentConfigFatWindowSection.tsx
+│       │   │   ├── config/groups/087  ExperimentConfigIndicatorSection.tsx
+│       │   │   ├── config/groups/088  ExperimentConfigLabelingSection.tsx
+│       │   │   ├── config/groups/089  ExperimentConfigModelTrainerSection.tsx
+│       │   │   ├── config/groups/090  ExperimentConfigOptunaSection.tsx
+│       │   │   ├── config/groups/091  ExperimentConfigOverviewSection.tsx
+│       │   │   ├── config/groups/092  ExperimentConfigPhasesSection.tsx
+│       │   │   ├── config/groups/093  ExperimentConfigPipelineSection.tsx
+│       │   │   ├── config/groups/094  ExperimentConfigRangeSection.tsx
+│       │   │   ├── config/groups/095  ExperimentConfigSamplingSection.tsx
+│       │   │   ├── config/groups/096  ExperimentConfigScoringSection.tsx
+│       │   │   ├── config/groups/097  ExperimentConfigSignalSection.tsx
+│       │   │   ├── config/groups/098  ExperimentConfigSimulationSection.tsx
+│       │   │   ├── config/groups/099  ExperimentConfigTreeGroupSection.tsx
+│       │   │   ├── pages/100  ExperimentChartsPage.tsx
+│       │   │   ├── pages/101  ExperimentConfigPage.tsx
+│       │   │   ├── pages/102  ExperimentOverviewPage.tsx
+│       │   │   ├── shared/103  ExperimentDetailHeader.tsx
+│       │   │   ├── shared/104  ExperimentDetailLayout.tsx
+│       │   │   ├── shared/105  ExperimentDetailTabs.tsx
+│       │   │   ├── shared/106  PanelHeaderActions.tsx
+│       │   │   └── shared/107  SectionNav.tsx
+│       │   ├── list/108  ExperimentsListPage.tsx
+│       │   ├── list/109  useExperimentsListPage.ts
+│       │   ├── requirements/110  ExperimentRequirementsPage.tsx
+│       │   └── requirements/111  useExperimentRequirementsPage.ts
+│       ├── shared/
+│       │   ├── 112  ContextSummaryCard.tsx     ← base card (used only by 121)
+│       │   ├── 113  PaginationControls.tsx
+│       │   ├── 114  SortableTableHeader.tsx
+│       │   ├── 115  StatCard.tsx
+│       │   ├── 116  StatusBadge.tsx
+│       │   ├── 117  formatters.ts
+│       │   ├── 118  paths.ts
+│       │   ├── best-flags/119  BestFlags.tsx
+│       │   ├── best-flags/120  useBestFlags.ts
+│       │   ├── context/121  ContextCard.tsx    ← unified: experiment | training | trial
+│       │   ├── layout/122  ListLayout.tsx
+│       │   ├── table/123  Table.tsx            ← unified: experiments | trainings | trials | backtests
+│       │   ├── table/cells/124  BacktestActionsCell.tsx
+│       │   ├── table/cells/125  BacktestPnLCell.tsx
+│       │   ├── table/cells/126  BacktestTradesCell.tsx
+│       │   ├── table/cells/127  BacktestTrialCell.tsx
+│       │   ├── table/cells/128  ExperimentActionsCell.tsx
+│       │   ├── table/cells/129  ExperimentNameCell.tsx
+│       │   ├── table/cells/130  ExperimentTrialsCell.tsx
+│       │   ├── table/cells/131  MetricsCell.tsx
+│       │   ├── table/cells/132  PhaseStudyCell.tsx
+│       │   ├── table/cells/133  StagesCell.tsx
+│       │   ├── table/cells/134  TrainingActionsCell.tsx
+│       │   ├── table/cells/135  TrialActionsCell.tsx
+│       │   ├── table/columns/136  backtestColumns.tsx
+│       │   ├── table/columns/137  experimentColumns.tsx
+│       │   ├── table/columns/138  trainingColumns.tsx
+│       │   ├── table/columns/139  trialColumns.tsx
+│       │   ├── table/columns/140  types.ts
+│       │   ├── table-density/141  TableDensityToggle.tsx
+│       │   └── table-density/142  useTableDensity.ts
+│       ├── trainings/
+│       │   ├── detail/143  TrainingDetailPage.tsx
+│       │   ├── detail/144  useTrainingDetailPage.ts
+│       │   ├── list/145  TrainingsListPage.tsx
+│       │   ├── list/146  useTrainingsListPage.ts
+│       │   ├── list/filters/147  TrainingsFilters.tsx
+│       │   ├── list/filters/148  useTrainingsFilters.ts
+│       │   ├── list/launch/149  TrainingLaunchPanel.tsx
+│       │   ├── list/launch/150  useTrainingLaunchForm.ts
+│       │   └── list/launch/151  useTrainingLaunchPanel.ts
+│       └── trials/
+│           ├── detail/152  TrialDetailPage.tsx
+│           ├── detail/153  useTrialDetailPage.ts
+│           ├── list/154  TrialsListPage.tsx
+│           ├── list/155  useTrialsListPage.ts
+│           ├── list/156  useBacktestLaunchForm.ts
+│           ├── list/filters/157  TrialsFilters.tsx
+│           ├── list/filters/158  useTrialsFilters.ts
+│           ├── list/launch/159  TrialBacktestLaunchPanel.tsx
+│           └── list/launch/160  useTrialBacktestLaunchPanel.ts
+│
+├── constants/161  dashboard.ts
+├── hooks/
+│   ├── 162  usePageTheme.ts
+│   ├── 163  useSyncedRef.ts
+│   ├── backtests/164  useBacktestCharts.ts
+│   ├── backtests/165  useBacktestConfig.ts
+│   ├── backtests/166  useBacktestData.ts
+│   ├── backtests/167  useBacktestWebSocket.ts
+│   ├── backtests/168  useBacktestWebSocketHandlers.tsx
+│   ├── backtests/169  useChartDataFetcher.ts
+│   ├── backtests/170  useChartToggles.ts
+│   ├── backtests/171  useMarkerHighlights.tsx
+│   ├── backtests/172  useTradeNavigation.tsx
+│   ├── charts/173  useOverviewScrollbar.ts
+│   ├── charts/174  useRectangleDriver.tsx
+│   ├── charts/175  useSharedCrosshairTime.ts
+│   ├── charts/176  useVisibleLogicalRangeChange.ts
+│   ├── charts/177  useZoomSelection.ts
+│   ├── dashboard/178  useBacktestLaunch.ts
+│   ├── dashboard/179  useBacktestSessions.ts
+│   ├── dashboard/180  useDashboardPathContext.ts
+│   ├── dashboard/181  useDashboardQuery.ts
+│   ├── dashboard/182  useDetailResource.ts
+│   ├── dashboard/183  useExperimentDetail.ts
+│   ├── dashboard/184  useExperiments.ts
+│   ├── dashboard/185  usePaginatedResource.ts
+│   ├── dashboard/186  useTrainingDetail.ts
+│   ├── dashboard/187  useTrainingJobs.ts
+│   ├── dashboard/188  useTrainingLaunch.ts
+│   ├── dashboard/189  useTrainings.ts
+│   ├── dashboard/190  useTrialDetail.ts
+│   ├── dashboard/191  useTrials.ts
+│   ├── experiments/192  useExperimentConfig.ts
+│   ├── experiments/193  useExperimentRequirements.ts
+│   ├── experiments/194  useExperimentRootFeatures.ts
+│   └── experiments/195  useExperimentVisualizationData.ts
+├── lib/
+│   ├── backtests/196  backtestsTypes.ts
+│   ├── backtests/197  charts.ts
+│   ├── backtests/198  constants.ts
+│   ├── backtests/helpers/199  CandleTimeIndex.ts
+│   ├── backtests/helpers/200  api.ts
+│   ├── backtests/helpers/201  chartData.ts
+│   ├── backtests/helpers/202  chartSync.ts
+│   ├── backtests/helpers/203  formatters.ts
+│   ├── backtests/helpers/204  index.ts
+│   ├── backtests/helpers/205  markers.ts
+│   ├── backtests/helpers/206  time.ts
+│   ├── backtests/helpers/207  trade.ts
+│   ├── charts/208  lightweightChartOptions.ts
+│   └── dashboard/209  api.ts
+├── types/
+│   ├── 210  dashboard.ts
+│   ├── 211  experiments.ts
+│   └── 212  parquets.ts
+└── utils/
+    ├── 213  api.ts
+    └── 214  value.ts
+</code></pre>
+<hr />
+<h2 id="2-navigation-pages--component-trees">2. Navigation Pages — Component Trees</h2>
+<h3 id="-home"><code>/</code> Home</h3>
+<p><code>002</code> → <code>039</code> → <code>031</code> <code>IndexPage</code>
+- <code>029</code> DashboardCard ×4
+- <code>052</code> ExecutiveHomePage → <code>051</code> AdminShell, <code>115</code> StatCard ×4, <code>123</code> Table ×3</p>
+<h3 id="backtests-backtest-list"><code>/backtests</code> Backtest List</h3>
+<p><code>004</code> → <code>038</code> → <code>061</code> BacktestsListPage
+- <code>051</code> AdminShell, <code>122</code> ListLayout
+- <code>063</code> BacktestsFilters ← <code>064</code>
+- <code>065</code> BacktestsLaunchPanel ← <code>066</code> <code>067</code>
+- <code>123</code> Table entity=backtests
+- <code>062</code> useBacktestsListPage ← <code>179</code> <code>181</code></p>
+<h3 id="backtestssessionsid-backtest-session-detail"><code>/backtests/sessions/:id</code> Backtest Session Detail</h3>
+<p><code>006</code> → <code>037</code> → <code>053</code> BacktestSessionPage
+- <code>051</code> AdminShell
+- <code>121</code> ContextCard type=<strong>experiment</strong>
+- <code>056</code> BacktestDashboard ← <code>055</code> <code>057</code> <code>058</code> <code>059</code> <code>060</code>
+- <code>054</code> useBacktestSessionPage ← <code>183</code> <code>180</code></p>
+<h3 id="experiments-experiments-list"><code>/experiments</code> Experiments List</h3>
+<p><code>007</code> → <code>045</code> → <code>108</code> ExperimentsListPage
+- <code>051</code> AdminShell, <code>122</code> ListLayout
+- <code>123</code> Table entity=experiments
+- <code>109</code> useExperimentsListPage ← <code>184</code> <code>181</code></p>
+<h3 id="experimentsid-experiment-detail"><code>/experiments/:id</code> Experiment Detail</h3>
+<p><code>009</code> → <code>042</code> → <code>068</code> ExperimentDetailPage
+- <code>051</code> AdminShell
+- <code>121</code> ContextCard type=<strong>experiment</strong>
+- <code>070</code> ExperimentChartsPanel ← <code>071</code> <code>072</code> <code>195</code>
+- <code>078</code> ExperimentConfigPanel ← <code>076</code> <code>077</code> <code>079</code> <code>080</code> <code>082</code> <code>083</code> <code>084</code>–<code>099</code>
+- <code>123</code> Table entity=trainings + entity=trials
+- <code>069</code> useExperimentDetailPage ← <code>183</code></p>
+<h3 id="experimentsid-overview-tab"><code>/experiments/:id</code> (overview tab)</h3>
+<p><code>009</code> → <code>043</code> → <code>102</code> ExperimentOverviewPage
+- <code>104</code> ExperimentDetailLayout ← <code>105</code> <code>107</code>
+- <code>103</code> ExperimentDetailHeader → <code>121</code> ContextCard type=<strong>experiment</strong>
+- <code>032</code> Panel, <code>106</code> PanelHeaderActions
+- <code>123</code> Table entity=trainings + entity=trials</p>
+<h3 id="experimentsidcharts"><code>/experiments/:id/charts</code></h3>
+<p><code>012</code> → <code>040</code> → <code>100</code> ExperimentChartsPage
+- <code>104</code> ExperimentDetailLayout
+- <code>103</code> ExperimentDetailHeader → <code>121</code> ContextCard type=<strong>experiment</strong>
+- <code>070</code> ExperimentChartsPanel</p>
+<h3 id="experimentsidconfig"><code>/experiments/:id/config</code></h3>
+<p><code>013</code> → <code>041</code> → <code>101</code> ExperimentConfigPage
+- <code>104</code> ExperimentDetailLayout
+- <code>103</code> ExperimentDetailHeader → <code>121</code> ContextCard type=<strong>experiment</strong>
+- <code>078</code> ExperimentConfigPanel</p>
+<h3 id="experimentsidrequirements"><code>/experiments/:id/requirements</code></h3>
+<p><code>014</code> → <code>044</code> → <code>110</code> ExperimentRequirementsPage
+- <code>051</code> AdminShell
+- <code>121</code> ContextCard type=<strong>experiment</strong>
+- <code>076</code> ConfigSection, <code>077</code> ConfigTreeTable
+- <code>111</code> useExperimentRequirementsPage ← <code>193</code></p>
+<h3 id="trainings-trainings-list"><code>/trainings</code> Trainings List</h3>
+<p><code>022</code> → <code>048</code> → <code>145</code> TrainingsListPage
+- <code>051</code> AdminShell, <code>122</code> ListLayout
+- <code>147</code> TrainingsFilters ← <code>148</code>
+- <code>149</code> TrainingLaunchPanel ← <code>150</code> <code>151</code>
+- <code>123</code> Table entity=trainings
+- <code>146</code> useTrainingsListPage ← <code>189</code> <code>181</code></p>
+<h3 id="trainingssid-training-detail"><code>/trainings/:sid</code> Training Detail</h3>
+<p><code>024</code> → <code>047</code> → <code>143</code> TrainingDetailPage
+- <code>051</code> AdminShell
+- <code>121</code> ContextCard type=<strong>experiment</strong>
+- <code>121</code> ContextCard type=<strong>training</strong>
+- <code>123</code> Table entity=trials
+- <code>144</code> useTrainingDetailPage ← <code>186</code> <code>183</code></p>
+<h3 id="trainingssidtrials-trials-of-training"><code>/trainings/:sid/trials</code> Trials of Training</h3>
+<p><code>025</code> → <code>050</code> → <code>154</code> TrialsListPage (same as <code>/trials</code>)</p>
+<h3 id="trials-trials-list"><code>/trials</code> Trials List</h3>
+<p><code>026</code> → <code>050</code> → <code>154</code> TrialsListPage
+- <code>051</code> AdminShell, <code>122</code> ListLayout
+- <code>157</code> TrialsFilters ← <code>158</code>
+- <code>159</code> TrialBacktestLaunchPanel ← <code>160</code> <code>156</code>
+- <code>123</code> Table entity=trials
+- <code>155</code> useTrialsListPage ← <code>191</code> <code>181</code></p>
+<h3 id="trialstid-trial-detail"><code>/trials/:tid</code> Trial Detail</h3>
+<p><code>028</code> → <code>049</code> → <code>152</code> TrialDetailPage
+- <code>051</code> AdminShell
+- <code>121</code> ContextCard type=<strong>experiment</strong>
+- <code>121</code> ContextCard type=<strong>training</strong>
+- <code>121</code> ContextCard type=<strong>trial</strong>
+- (metrics, charts, distributions, backtest launch form)
+- <code>153</code> useTrialDetailPage ← <code>190</code> <code>183</code> <code>186</code></p>
+<h3 id="hitl"><code>/hitl</code></h3>
+<p><code>020</code> → <code>046</code> → <code>030</code> HitlPage</p>
+<h3 id="price-scale"><code>/price-scale</code></h3>
+<p><code>021</code> → direct page component</p>
+<hr />
+<h2 id="3-all-numbers-accounted-for">3. All Numbers Accounted For</h2>
+<table>
+<thead>
+<tr>
+<th>Range</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001–028</td>
+<td>✅ All used</td>
+<td>app/ routes</td>
+</tr>
+<tr>
+<td>029–032</td>
+<td>✅ All used</td>
+<td>root components</td>
+</tr>
+<tr>
+<td>033–036</td>
+<td>✅ All used</td>
+<td>charts/ (used by BacktestDashboard)</td>
+</tr>
+<tr>
+<td>037–050</td>
+<td>✅ All used</td>
+<td>client-pages/ (used by app/)</td>
+</tr>
+<tr>
+<td>051–052</td>
+<td>✅ All used</td>
+<td>AdminShell, ExecutiveHomePage</td>
+</tr>
+<tr>
+<td>053–067</td>
+<td>✅ All used</td>
+<td>backtests/</td>
+</tr>
+<tr>
+<td>068–111</td>
+<td>✅ All used</td>
+<td>experiments/</td>
+</tr>
+<tr>
+<td>112–142</td>
+<td>✅ All used</td>
+<td>shared/</td>
+</tr>
+<tr>
+<td>143–151</td>
+<td>✅ All used</td>
+<td>trainings/</td>
+</tr>
+<tr>
+<td>152–160</td>
+<td>✅ All used</td>
+<td>trials/</td>
+</tr>
+<tr>
+<td>161</td>
+<td>✅ Used</td>
+<td>constants/dashboard.ts</td>
+</tr>
+<tr>
+<td>162–195</td>
+<td>✅ All used</td>
+<td>hooks/</td>
+</tr>
+<tr>
+<td>196–209</td>
+<td>✅ All used</td>
+<td>lib/</td>
+</tr>
+<tr>
+<td>210–212</td>
+<td>✅ All used</td>
+<td>types/</td>
+</tr>
+<tr>
+<td>213–214</td>
+<td>✅ All used</td>
+<td>utils/</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total: 214 files. 0 orphans.</strong></p>
+<hr />
+<h2 id="4-unified-patterns--homogeneity-checklist">4. Unified Patterns — Homogeneity Checklist</h2>
+<h3 id="-tables--all-use-123-table-with-entity-prop">✅ Tables — all use <code>123</code> Table with entity prop</h3>
+<ul>
+<li><code>entity="experiments"</code> → columns 137, cells 128–130</li>
+<li><code>entity="trainings"</code> → columns 138, cells 134</li>
+<li><code>entity="trials"</code> → columns 139, cells 131–133 135</li>
+<li><code>entity="backtests"</code> → columns 136, cells 124–127</li>
+</ul>
+<h3 id="-context-cards--all-use-121-contextcard-with-type-prop">✅ Context Cards — all use <code>121</code> ContextCard with type prop</h3>
+<ul>
+<li><code>type="experiment"</code> → experiment summary with StatusBadge, formatters, nav links</li>
+<li><code>type="training"</code> → training summary with StatusBadge, progress, nav links</li>
+<li><code>type="trial"</code> → trial summary with StatusBadge, stages, equity, nav links</li>
+</ul>
+<h3 id="-list-pages--all-use-122-listlayout">✅ List Pages — all use <code>122</code> ListLayout</h3>
+<ul>
+<li>Experiments, Trainings, Trials, Backtests</li>
+</ul>
+<h3 id="-api-hooks--all-use-185-usepaginatedresource-or-182-usedetailresource">✅ API hooks — all use <code>185</code> usePaginatedResource or <code>182</code> useDetailResource</h3>
+<ul>
+<li>No direct fetch() calls in components</li>
+</ul>
+<h3 id="-navigation--all-use-118-pathsts--nextlink">✅ Navigation — all use <code>118</code> paths.ts + next/link <code>&lt;Link&gt;</code></h3>
+<ul>
+<li>No raw <code>&lt;a href&gt;</code> tags for internal navigation</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.indexes", "navigation.expand", "navigation.path", "navigation.top", "search.highlight", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

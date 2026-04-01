@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="880" viewBox="0 0 1400 880" role="img" aria-labelledby="title desc">
+  <title id="title">Connection patterns of trainable models</title>
+  <desc id="desc">School-style schematic comparing dense, convolutional, and attention-based connection styles for logistic, MLP, TCN, ViT, and Axial ViT.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #d4d8e2; stroke-width: 2; rx: 18; ry: 18; }
+      .title { font: 700 28px Arial, sans-serif; fill: #1f2937; }
+      .head { font: 700 20px Arial, sans-serif; fill: #1f2937; }
+      .text { font: 15px Arial, sans-serif; fill: #334155; }
+      .small { font: 13px Arial, sans-serif; fill: #475569; }
+      .nodeIn { fill: #dbeafe; stroke: #60a5fa; stroke-width: 2; }
+      .nodeMid { fill: #ede9fe; stroke: #a78bfa; stroke-width: 2; }
+      .nodeConv { fill: #dcfce7; stroke: #4ade80; stroke-width: 2; }
+      .nodeAttn { fill: #ffedd5; stroke: #fb923c; stroke-width: 2; }
+      .nodeOut { fill: #fee2e2; stroke: #f87171; stroke-width: 2; }
+      .line { stroke: #64748b; stroke-width: 2.5; opacity: 0.85; }
+      .dash { stroke-dasharray: 7 6; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="880" />
+  <text class="title" x="35" y="48">How the trainable models connect information</text>
+  <text class="small" x="35" y="76">Reading rule: dense = many-to-many, conv = local window, attention = positions can compare across the sequence.</text>
+
+  <rect class="panel" x="30" y="100" width="250" height="340" />
+  <text class="head" x="108" y="130">Logistic</text>
+  <text class="small" x="64" y="155">One linear weighted sum</text>
+  <circle class="nodeIn" cx="80" cy="220" r="14" />
+  <circle class="nodeIn" cx="80" cy="270" r="14" />
+  <circle class="nodeIn" cx="80" cy="320" r="14" />
+  <circle class="nodeMid" cx="170" cy="270" r="18" />
+  <circle class="nodeOut" cx="230" cy="270" r="16" />
+  <line class="line" x1="94" y1="220" x2="152" y2="270" />
+  <line class="line" x1="94" y1="270" x2="152" y2="270" />
+  <line class="line" x1="94" y1="320" x2="152" y2="270" />
+  <line class="line" x1="188" y1="270" x2="214" y2="270" />
+  <text class="small" x="60" y="385">Dense? yes</text>
+  <text class="small" x="60" y="408">Non-linear? no</text>
+
+  <rect class="panel" x="300" y="100" width="250" height="340" />
+  <text class="head" x="396" y="130">MLP</text>
+  <text class="small" x="334" y="155">Dense layers + activations</text>
+  <circle class="nodeIn" cx="340" cy="210" r="12" />
+  <circle class="nodeIn" cx="340" cy="250" r="12" />
+  <circle class="nodeIn" cx="340" cy="290" r="12" />
+  <circle class="nodeIn" cx="340" cy="330" r="12" />
+  <circle class="nodeMid" cx="425" cy="220" r="13" />
+  <circle class="nodeMid" cx="425" cy="270" r="13" />
+  <circle class="nodeMid" cx="425" cy="320" r="13" />
+  <circle class="nodeMid" cx="495" cy="270" r="15" />
+  <circle class="nodeOut" cx="525" cy="270" r="13" />
+  <line class="line" x1="352" y1="210" x2="412" y2="220" />
+  <line class="line" x1="352" y1="210" x2="412" y2="270" />
+  <line class="line" x1="352" y1="250" x2="412" y2="220" />
+  <line class="line" x1="352" y1="250" x2="412" y2="270" />
+  <line class="line" x1="352" y1="290" x2="412" y2="270" />
+  <line class="line" x1="352" y1="290" x2="412" y2="320" />
+  <line class="line" x1="352" y1="330" x2="412" y2="270" />
+  <line class="line" x1="352" y1="330" x2="412" y2="320" />
+  <line class="line" x1="438" y1="220" x2="480" y2="270" />
+  <line class="line" x1="438" y1="270" x2="480" y2="270" />
+  <line class="line" x1="438" y1="320" x2="480" y2="270" />
+  <line class="line" x1="510" y1="270" x2="512" y2="270" />
+  <text class="small" x="330" y="385">Dense? yes</text>
+  <text class="small" x="330" y="408">Non-linear? yes</text>
+
+  <rect class="panel" x="570" y="100" width="250" height="340" />
+  <text class="head" x="664" y="130">TCN</text>
+  <text class="small" x="607" y="155">Local convolutions over time</text>
+  <rect class="nodeIn" x="615" y="215" width="26" height="26" />
+  <rect class="nodeIn" x="650" y="215" width="26" height="26" />
+  <rect class="nodeIn" x="685" y="215" width="26" height="26" />
+  <rect class="nodeIn" x="720" y="215" width="26" height="26" />
+  <rect class="nodeIn" x="755" y="215" width="26" height="26" />
+  <rect class="nodeConv" x="633" y="290" width="60" height="30" />
+  <rect class="nodeConv" x="703" y="290" width="60" height="30" />
+  <line class="line" x1="628" y1="241" x2="663" y2="290" />
+  <line class="line" x1="663" y1="241" x2="663" y2="290" />
+  <line class="line" x1="698" y1="241" x2="663" y2="290" />
+  <line class="line" x1="698" y1="241" x2="733" y2="290" />
+  <line class="line" x1="733" y1="241" x2="733" y2="290" />
+  <line class="line" x1="768" y1="241" x2="733" y2="290" />
+  <line class="line" x1="663" y1="320" x2="700" y2="360" />
+  <line class="line" x1="733" y1="320" x2="700" y2="360" />
+  <circle class="nodeOut" cx="700" cy="360" r="18" />
+  <text class="small" x="600" y="385">Dense like MLP? no</text>
+  <text class="small" x="600" y="408">Non-linear? yes</text>
+
+  <rect class="panel" x="840" y="100" width="250" height="340" />
+  <text class="head" x="954" y="130">ViT</text>
+  <text class="small" x="872" y="155">Global attention between tokens</text>
+  <circle class="nodeIn" cx="895" cy="245" r="13" />
+  <circle class="nodeIn" cx="955" cy="205" r="13" />
+  <circle class="nodeIn" cx="955" cy="285" r="13" />
+  <circle class="nodeIn" cx="1015" cy="245" r="13" />
+  <line class="line" x1="908" y1="245" x2="942" y2="205" />
+  <line class="line" x1="908" y1="245" x2="942" y2="285" />
+  <line class="line" x1="908" y1="245" x2="1002" y2="245" />
+  <line class="line" x1="968" y1="205" x2="1002" y2="245" />
+  <line class="line" x1="968" y1="285" x2="1002" y2="245" />
+  <line class="line dash" x1="955" y1="205" x2="955" y2="285" />
+  <rect class="nodeAttn" x="900" y="340" width="130" height="34" />
+  <text class="text" x="930" y="362">Attention block</text>
+  <line class="line" x1="955" y1="298" x2="955" y2="340" />
+  <circle class="nodeOut" cx="955" cy="395" r="18" />
+  <line class="line" x1="955" y1="374" x2="955" y2="377" />
+  <text class="small" x="870" y="385">Dense like MLP? no</text>
+  <text class="small" x="870" y="408">Non-linear? yes</text>
+
+  <rect class="panel" x="1110" y="100" width="250" height="340" />
+  <text class="head" x="1190" y="130">Axial ViT</text>
+  <text class="small" x="1135" y="155">Attention by time axis and feature axis</text>
+  <rect class="nodeIn" x="1165" y="205" width="34" height="34" />
+  <rect class="nodeIn" x="1208" y="205" width="34" height="34" />
+  <rect class="nodeIn" x="1251" y="205" width="34" height="34" />
+  <rect class="nodeIn" x="1165" y="248" width="34" height="34" />
+  <rect class="nodeIn" x="1208" y="248" width="34" height="34" />
+  <rect class="nodeIn" x="1251" y="248" width="34" height="34" />
+  <line class="line" x1="1182" y1="222" x2="1225" y2="222" />
+  <line class="line" x1="1225" y1="222" x2="1268" y2="222" />
+  <line class="line" x1="1182" y1="265" x2="1225" y2="265" />
+  <line class="line" x1="1225" y1="265" x2="1268" y2="265" />
+  <line class="line dash" x1="1182" y1="222" x2="1182" y2="265" />
+  <line class="line dash" x1="1225" y1="222" x2="1225" y2="265" />
+  <line class="line dash" x1="1268" y1="222" x2="1268" y2="265" />
+  <rect class="nodeAttn" x="1168" y="330" width="115" height="30" />
+  <rect class="nodeAttn" x="1168" y="370" width="115" height="30" />
+  <text class="small" x="1187" y="350">time attention</text>
+  <text class="small" x="1178" y="390">feature attention</text>
+  <line class="line" x1="1225" y1="282" x2="1225" y2="330" />
+  <circle class="nodeOut" cx="1225" cy="425" r="18" />
+  <line class="line" x1="1225" y1="400" x2="1225" y2="407" />
+  <text class="small" x="1140" y="385">Dense like MLP? no</text>
+  <text class="small" x="1140" y="408">Non-linear? yes</text>
+
+  <rect class="panel" x="30" y="470" width="1330" height="360" />
+  <text class="head" x="55" y="505">One-sentence summary</text>
+  <text class="text" x="55" y="545">Logistic = one linear weighted sum.</text>
+  <text class="text" x="55" y="580">MLP = dense network with non-linear hidden layers.</text>
+  <text class="text" x="55" y="615">TCN = local time-pattern detector using convolutions.</text>
+  <text class="text" x="55" y="650">ViT = global relation detector using attention between tokens.</text>
+  <text class="text" x="55" y="685">Axial ViT = attention model that separates time-relations and feature-relations.</text>
+  <text class="text" x="55" y="740">Important: transformers contain some dense layers internally, but their main idea is attention, not flatten-all-inputs like an MLP.</text>
+</svg>

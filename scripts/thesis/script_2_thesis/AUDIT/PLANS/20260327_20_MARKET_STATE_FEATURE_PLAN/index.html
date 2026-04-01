@@ -1,0 +1,9621 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Rainbow Trader — ML trading system documentation">
+      
+      
+      
+      
+        <link rel="prev" href="../20260327_19_NORMALIZATION_INTEGRITY_AUDIT/">
+      
+      
+        <link rel="next" href="../20260327_21_DEEP_RESEARCH/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>20260327 20 Market State Feature Plan - Rainbow Trader</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#market-state-feature-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../../.." title="Rainbow Trader" class="md-header__button md-logo" aria-label="Rainbow Trader" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rainbow Trader
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              20260327 20 Market State Feature Plan
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../docs/CODE-GENERATION/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Docs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../../analysis/regime/regime_folds/20260325_004531_REGIME_TRAINING_OPTIONS_AUDIT/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Scripts
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../.." title="Rainbow Trader" class="md-nav__button md-logo" aria-label="Rainbow Trader" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Rainbow Trader
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Docs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/CODE-GENERATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code Generation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/CONFIGURATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/DATA-STORAGE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/DATABASE-SCHEMA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/DOCKER_USAGE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/EVENTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/GIT-COMMITS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git Commits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/MARKDOWN-STYLE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown Style
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/MASTER-PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/PIPELINE-FLOWS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipeline Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/PLANS-SCHEMA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plans Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/README_MODULE_TEMPLATE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Readme Module Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/WORK-PLANS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Work Plans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14" id="__nav_2_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plans
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plans
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/CONTROL_PANEL_FRONTEND_REFACTOR_IMPLEMENTATION_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Frontend Refactor Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/CONTROL_PANEL_FRONTEND_REFACTOR_SUPERPLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Frontend Refactor Superplan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/CONTROL_PANEL_FRONTEND_REFACTOR_SUPERPLAN_FINAL_TREE_MATRIX/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Frontend Refactor Superplan Final Tree Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/CONTROL_PANEL_FRONTEND_REFACTOR_SUPERPLAN_MISSING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Frontend Refactor Superplan Missing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/EXPERIMENT_PLAN_THESIS_VALIDATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiment Plan Thesis Validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/KNOWLEDGE_SYSTEM_INTEGRATION_V2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Knowledge System Integration V2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/LIVE_TRADING_GAPS_AND_IDEAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Trading Gaps And Ideas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/PARQUET_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parquet Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/S3_PRUNED_TRIAL_PROGRESS_SCORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3 Pruned Trial Progress Scoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/SIGNAL_ANALYTICS_SERVICE_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Signal Analytics Service Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_14_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14_11" id="__nav_2_14_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brain Agent
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_14_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Brain Agent
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/BRAIN-AGENT/BRAIN_ARCHITECTURE_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brain Architecture Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/BRAIN-AGENT/BRAIN_FOUNDATION_AUDIT_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brain Foundation Audit Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/BRAIN-AGENT/EVENT_SYSTEM_DB_DESIGN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event System Db Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/BRAIN-AGENT/EVENT_TAXONOMY_FINAL_PAYLOADS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Taxonomy Final Payloads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/BRAIN-AGENT/EVENT_TAXONOMY_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Taxonomy Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/BRAIN-AGENT/EVENT_TAXONOMY_SIMPLE_VIEW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Taxonomy Simple View
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_14_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14_12" id="__nav_2_14_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sentimental
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_14_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sentimental
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/plans/SENTIMENTAL/SENTIMENTAL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sentimental
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_15" id="__nav_2_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Researchs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Researchs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/LOSS_SCORING_TRAINING_FLOW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loss Scoring Training Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/MATHEMATICAL_MODELS_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Models Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/PARALLEL_EXECUTION_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parallel Execution Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/SAMPLING_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sampling Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_15_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_15_5" id="__nav_2_15_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_15_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_15_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/DEBUG_FLOW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debug Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/EXPERIMENT_10_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiment 10 Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/FEATURE_WEIGHT_STRATEGY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Weight Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/INDICATORS_SIGNALS_PIPELINES_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Indicators Signals Pipelines Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/INVOKE_FLOW_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Invoke Flow Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/LLM_PRICING_COMPARISON/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Llm Pricing Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/MEMORY_SYSTEM_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory System Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/METRICS_ANALISYS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics Analisys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/MODULE_STRUCTURE_DECISION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Module Structure Decision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/OLLAMA_TEST_RESULTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ollama Test Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_01/USING_VPN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Vpn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_15_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_15_6" id="__nav_2_15_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_15_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_15_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_02/AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_02/AUDIT_BACKEND_INCONSISTENCIES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Backend Inconsistencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_02/CONTROL_PANEL_COMPONENT_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panel Component Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_02/UNIFIED_COMPONENTS_DESIGN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unified Components Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_15_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_15_7" id="__nav_2_15_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ml
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_15_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_15_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ml
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_ML/ML-deep-research-report-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ml Deep Research Report 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_ML/ML-deep-research-report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ml Deep Research Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_ML/ML-roadmap-checkpoint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ml Roadmap Checkpoint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_ML/baselines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Baselines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_ML/deep-research-report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Research Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_ML/random/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Random
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_ML/script2-baseline-decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script2 Baseline Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../docs/researchs/_ML/sugerencias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sugerencias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Scripts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Analysis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regime
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Regime
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_1" id="__nav_3_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regime Folds
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Regime Folds
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/regime_folds/20260325_004531_REGIME_TRAINING_OPTIONS_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260325 004531 Regime Training Options Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/regime_folds/REGIME_FOLDS_FOLLOW_UP_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regime Folds Follow Up Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_2" id="__nav_3_1_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_2_1" id="__nav_3_1_1_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260324 154928 Btcusdt 5M Regime History
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_1_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260324 154928 Btcusdt 5M Regime History
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_154928_BTCUSDT_5m_regime_history/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_154928_BTCUSDT_5m_regime_history/summary_daily_regimes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Daily Regimes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_154928_BTCUSDT_5m_regime_history/summary_intraday_fragmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Intraday Fragmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_154928_BTCUSDT_5m_regime_history/summary_label_distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Label Distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_2_2" id="__nav_3_1_1_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260324 162703 Btcusdt 1D Native Regime History
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260324 162703 Btcusdt 1D Native Regime History
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_162703_BTCUSDT_1d_native_regime_history/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_162703_BTCUSDT_1d_native_regime_history/summary_label_distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Label Distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_162703_BTCUSDT_1d_native_regime_history/summary_regimes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Regimes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1_2_3" id="__nav_3_1_1_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260324 162703 Btcusdt 1W Native Regime History
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_1_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260324 162703 Btcusdt 1W Native Regime History
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_162703_BTCUSDT_1w_native_regime_history/summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_162703_BTCUSDT_1w_native_regime_history/summary_label_distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Label Distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../analysis/regime/results/20260324_162703_BTCUSDT_1w_native_regime_history/summary_regimes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary Regimes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benchmarks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Llm
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Llm
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../benchmarks/llm/BENCHMARK_COMPARISON/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmark Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../experiments/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Experiments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../gcp/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gcp
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gcp
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../gcp/sync_state/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync State
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sync State
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thesis
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Thesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../script_1_validation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script 1 Validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5_2" id="__nav_3_5_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Script 1 Validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/SCRIPT1_V2_CHANGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 V2 Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/SCRIPT1_V3BIS2_CHANGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 V3Bis2 Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/SCRIPT1_V3BIS_CHANGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 V3Bis Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/SCRIPT1_V3_CHANGES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 V3 Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2_6" id="__nav_3_5_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2_6_1" id="__nav_3_5_2_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260306 204834
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_2_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260306 204834
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/results/20260306_204834/script1_analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/results/20260306_204834/script1_findings_and_recommendations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Findings And Recommendations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2_6_2" id="__nav_3_5_2_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260307 232547
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_2_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260307 232547
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/results/20260307_232547/script1_analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/results/20260307_232547/script1_findings_and_recommendations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Findings And Recommendations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_2_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_2_6_3" id="__nav_3_5_2_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260309 140837
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_2_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260309 140837
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/results/20260309_140837/script1_analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../script_1_validation/results/20260309_140837/script1_findings_and_recommendations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script1 Findings And Recommendations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3" id="__nav_3_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script 2 Thesis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Script 2 Thesis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_1" id="__nav_3_5_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Audit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../20260323_SCRIPT2_AUDIT_LOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260323 Script2 Audit Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../20260323_SCRIPT2_TIER_A_RESCUE_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260323 Script2 Tier A Rescue Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../20260328_SCRIPT2_V4_TIER_B_CORRECTED_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260328 Script2 V4 Tier B Corrected Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../20260331_SCRIPT2_TIER_B_RESCUE_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Script2 Tier B Rescue Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../20260401_SCRIPT2_PRELIMINARY_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Script2 Preliminary Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_1_6" id="__nav_3_5_3_1_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anexos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anexos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ANEXOS/20260331_SCRIPT2_SECTION11_REGEN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Script2 Section11 Regen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ANEXOS/20260331_SCRIPT2_SECTION2_REGEN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Script2 Section2 Regen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ANEXOS/20260331_SCRIPT2_SECTION_BACKTEST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Script2 Section Backtest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ANEXOS/20260401_SCRIPT2_STATISTICAL_TESTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Script2 Statistical Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_3_1_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_1_7" id="__nav_3_5_3_1_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plans
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_1_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5_3_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plans
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260324_SCRIPT2_REGIME_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260324 Script2 Regime Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260327_19_NORMALIZATION_INTEGRITY_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 19 Normalization Integrity Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 20 Market State Feature Plan
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 20 Market State Feature Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-document-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What This Document Is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-current-market_regime-block-is-too-lossy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The current market_regime block is too lossy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evidence-from-regime-research" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidence from regime research
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260327_21_DEEP_RESEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 21 Deep Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260327_22_DEEP_RESEARCH_next_UNIFIED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260327 22 Deep Research Next Unified
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260329_COLAB_FEASIBILITY_STUDY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260329 Colab Feasibility Study
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260331_TRADE_SELECTIVITY_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Trade Selectivity Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260401_SCRIPT2_ENSEMBLE_AND_REGIME_IDEAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Script2 Ensemble And Regime Ideas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260401_SCRIPT2_ENSEMBLE_IMPLEMENTATION_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Script2 Ensemble Implementation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ensemble_backtests/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ensemble Backtests
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ensemble Backtests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../extra_backtests/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extra Backtests
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5_3_3" id="__nav_3_5_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Extra Backtests
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_3_2" id="__nav_3_5_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_3_2_1" id="__nav_3_5_3_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 132841
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_3_5_3_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260331 132841
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../extra_backtests/results/20260331_132841/plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../extra_backtests/results/20260331_132841/report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_3_2_2" id="__nav_3_5_3_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 143054
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_3_5_3_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260331 143054
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../extra_backtests/results/20260331_143054/plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../extra_backtests/results/20260331_143054/report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_4" id="__nav_3_5_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Experiments
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Generate Experiments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../generate_experiments/hyper_extractions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hyper Extractions
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hyper Extractions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5" id="__nav_3_5_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_5_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/best_per_fold_3runs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Best Per Fold 3Runs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_2" id="__nav_3_5_3_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260319 035820
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260319 035820
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260319_035820/audit_script2_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit Script2 State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260319_035820/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260319_035820/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260319_035820/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260319_035820/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_3" id="__nav_3_5_3_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260323 Tiera Rescue
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260323 Tiera Rescue
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260323_tierA_rescue/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260323_tierA_rescue/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260323_tierA_rescue/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260323_tierA_rescue/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_4" id="__nav_3_5_3_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260323 Tiera Rescue V2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260323 Tiera Rescue V2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260323_tierA_rescue_v2/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260323_tierA_rescue_v2/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260323_tierA_rescue_v2/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260323_tierA_rescue_v2/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_5" id="__nav_3_5_3_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260325 Tiera Merged View
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260325 Tiera Merged View
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260325_tierA_merged_view/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260325_tierA_merged_view/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260325_tierA_merged_view/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260325_tierA_merged_view/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_6" id="__nav_3_5_3_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260325 Tierb Mlp Ex
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260325 Tierb Mlp Ex
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260325_tierB_mlp_ex/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260325_tierB_mlp_ex/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260325_tierB_mlp_ex/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260325_tierB_mlp_ex/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_7" id="__nav_3_5_3_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260328 Tierb Corrected
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260328 Tierb Corrected
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260328_tierB_corrected/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260328_tierB_corrected/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260328_tierB_corrected/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260328_tierB_corrected/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260328_tierB_corrected/time_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_8" id="__nav_3_5_3_5_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Tierb Merged View
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260331 Tierb Merged View
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260331_tierB_merged_view/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260331_tierB_merged_view/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260331_tierB_merged_view/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260331_tierB_merged_view/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_9" id="__nav_3_5_3_5_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260331 Tiers A And B Merged View
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260331 Tiers A And B Merged View
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260331_tiers_A_and_B_merged_view/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260331_tiers_A_and_B_merged_view/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260331_tiers_A_and_B_merged_view/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260331_tiers_A_and_B_merged_view/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5_3_5_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5_3_5_10" id="__nav_3_5_3_5_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260401 Tierb Rescue V5
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_5_3_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_3_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    20260401 Tierb Rescue V5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260401_tierB_rescue_v5/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260401_tierB_rescue_v5/progress_avg_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Avg Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260401_tierB_rescue_v5/progress_best_only/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Best Only
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260401_tierB_rescue_v5/progress_model_profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Model Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../results/20260401_tierB_rescue_v5/time_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tmp Utils
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tmp Utils
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6_1" id="__nav_3_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lazy Full Compare 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lazy Full Compare 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tmp-utils/lazy_full_compare_2/TEST_AND_FIX_HANDOFF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test And Fix Handoff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../vpn/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vpn
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Vpn
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-document-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What This Document Is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-current-market_regime-block-is-too-lossy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The current market_regime block is too lossy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evidence-from-regime-research" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidence from regime research
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../../../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../../../../analysis/regime/regime_folds/20260325_004531_REGIME_TRAINING_OPTIONS_AUDIT/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Scripts
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Thesis
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../20260323_SCRIPT2_AUDIT_LOG/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Script 2 Thesis
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../20260323_SCRIPT2_AUDIT_LOG/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Audit
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../20260324_SCRIPT2_REGIME_AUDIT/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Plans
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="market-state-feature-plan">Market State Feature Plan</h1>
+<h2 id="what-this-document-is">What This Document Is</h2>
+<p>A design plan for a new <code>MARKET_STATE</code> indicator type and <code>market_state</code> feature block that replaces the current approach of 6 binary regime signals with a richer set of continuous columns covering regime strength, persistence, transitions, and meta-stability.</p>
+<p>This plan does not touch Tier A or the current Tier B. It defines a new extended Tier B (<code>B_ext</code>) and upgrades Tier C/D/E.</p>
+<h2 id="why">Why</h2>
+<h3 id="the-current-market_regime-block-is-too-lossy">The current <code>market_regime</code> block is too lossy</h3>
+<p>The existing <code>market_regime</code> block (available in Tier C+) produces 6 binary SIGNAL features:</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Logic</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trending</code></td>
+<td>ADX &gt;= 25</td>
+<td>0 or 1</td>
+</tr>
+<tr>
+<td><code>ranging</code></td>
+<td>ADX &lt;= 20</td>
+<td>0 or 1</td>
+</tr>
+<tr>
+<td><code>bullish</code></td>
+<td>plus_di &gt; minus_di AND ema_14 &gt; ema_50</td>
+<td>0 or 1</td>
+</tr>
+<tr>
+<td><code>bearish</code></td>
+<td>minus_di &gt; plus_di AND ema_14 &lt; ema_50</td>
+<td>0 or 1</td>
+</tr>
+<tr>
+<td><code>high_vol</code></td>
+<td>atr_ratio &gt; 1.2x rolling_avg</td>
+<td>0 or 1</td>
+</tr>
+<tr>
+<td><code>low_vol</code></td>
+<td>atr_ratio &lt; 0.8x rolling_avg</td>
+<td>0 or 1</td>
+</tr>
+</tbody>
+</table>
+<p>Three problems:</p>
+<ol>
+<li>
+<p><strong>Information destruction.</strong> Continuous values are discretized into 0/1. The model cannot distinguish ADX=25.1 (barely trending) from ADX=50 (extremely strong trend). The model cannot learn that its optimal threshold might be ADX=22 instead of 25. We impose our hardcoded thresholds and throw away the gradient.</p>
+</li>
+<li>
+<p><strong>Volatility ratio is computed and discarded.</strong> The <code>market_regime</code> block computes <code>atr / close</code> relative to its 2016-bar rolling average to produce the <code>high_vol</code> and <code>low_vol</code> signals. This continuous ratio is explicitly marked as an internal dependency (<code>generate_mega_experiment.py</code> line 3189: <em>"We intentionally do NOT add it as a top-level feature, so it does not become a model input column"</em>). The model receives the binary result but never sees the underlying continuous value. This is the only regime dimension whose raw input is not available to the model from any other block.</p>
+</li>
+<li>
+<p><strong>Missing dimensions entirely.</strong> The 6 signals answer <em>what</em> the current regime is, but nothing about:</p>
+</li>
+<li>How long it has been active (persistence)</li>
+<li>How confidently it is classified (stability)</li>
+<li>Whether it just changed (transition awareness)</li>
+<li>Whether the regime itself is stable or volatile (meta-stability)</li>
+<li>Whether higher timeframes agree (cross-timeframe coherence)</li>
+</ol>
+<h3 id="evidence-from-regime-research">Evidence from regime research</h3>
+<p>The <a href="../../../../../analysis/regime/regime_folds/20260325_004531_REGIME_TRAINING_OPTIONS_AUDIT/">Regime Training Options Audit</a> found that:</p>
+<ul>
+<li><code>5m -&gt; daily dominant</code> regimes are too twitchy for fold construction (max contiguous period: 8 days for 27-state taxonomy).</li>
+<li><code>1d native</code> regimes are the best current backbone (max contiguous: 69 days for trend+direction).</li>
+<li>Models break most during <strong>transitions</strong> between regimes.</li>
+<li>The audit explicitly recommends Phase 3: implement persistence, candidate vs confirmed, and MIXED/UNSTABLE states.</li>
+</ul>
+<p>The <a href="../../../../../analysis/regime/regime_folds/REGIME_FOLDS_FOLLOW_UP_PLAN/">Regime Folds Follow-Up Plan</a> items #3, #4, #5 request:</p>
+<ul>
+<li>
+<h1 id="3-persistence-state-machine-observed-candidate-confirmed-states-with-counters">3: Persistence state machine (observed, candidate, confirmed states with counters)</h1>
+</li>
+<li>
+<h1 id="4-confirmation-rules-minimum-duration-consecutive-day-confirmation-majority-vote-confidence-threshold">4: Confirmation rules (minimum duration, consecutive-day confirmation, majority vote, confidence threshold)</h1>
+</li>
+<li>
+<h1 id="5-hysteresis-and-transition-friction-asymmetric-thresholds-weak-candidate-vs-confirmed-switch">5: Hysteresis and transition friction (asymmetric thresholds, weak candidate vs confirmed switch)</h1>
+</li>
+</ul>
+<p>A new indicator type that outputs persistence and transition columns directly addresses these requirements at the feature level.</p>
+<h2 id="what">What</h2>
+<p>A new <code>MARKET_STATE</code> indicator type that produces multiple continuous columns from a single coherent computation. It reuses existing indicator outputs (ADX, ATR, EMA, Bollinger Bands) as inputs and adds stateful regime tracking on top.</p>
+<p>The columns are organized in four groups. Each group can be independently enabled or disabled in the block configuration.</p>
+<h3 id="group-1-continuous-regime-components">Group 1: Continuous regime components</h3>
+<p>These values are already computed by existing blocks or internally by the <code>market_regime</code> block. The goal is to expose them as continuous model features instead of discretizing them into binary signals.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>What it is</th>
+<th>Range</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trend_strength</code></td>
+<td>Raw ADX value</td>
+<td>0-100</td>
+<td>Already available from <code>adx</code> block. Only needs to be ensured present even when <code>adx</code> block is not in the group.</td>
+</tr>
+<tr>
+<td><code>direction_score</code></td>
+<td><code>(plus_di - minus_di) / (plus_di + minus_di)</code></td>
+<td>[-1, +1]</td>
+<td>Normalized directional dominance. Already computed by <code>derived.di_dominance</code> in Tier C+ as a SPREAD, but not available in lower tiers.</td>
+</tr>
+<tr>
+<td><code>ema_trend</code></td>
+<td><code>(ema_fast - ema_slow) / ema_slow</code></td>
+<td>continuous</td>
+<td>Continuous trend alignment. EMA periods configurable (default: 14 fast, 50 slow).</td>
+</tr>
+<tr>
+<td><code>volatility_ratio</code></td>
+<td><code>(atr / close) / rolling_avg(atr / close)</code></td>
+<td>~1.0 center</td>
+<td><strong>Currently computed internally by <code>market_regime</code> and discarded.</strong> Centered around 1.0. Values &gt; 1.2 mean high vol, &lt; 0.8 mean low vol. This is the highest-value column to expose because it is the only regime dimension whose continuous form is not available from any existing block.</td>
+</tr>
+<tr>
+<td><code>bb_squeeze</code></td>
+<td><code>bb_bandwidth / rolling_avg(bb_bandwidth)</code></td>
+<td>~1.0 center</td>
+<td>Bollinger Band squeeze indicator. Centered around 1.0. Low values signal volatility compression (often precedes breakouts).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Implementation complexity: Low.</strong> These can be built with existing <code>IndicatorType</code> values (RATIO, SPREAD) or by ensuring existing block outputs are included. No new pipeline types needed.</p>
+<h3 id="group-2-persistence-and-transitions">Group 2: Persistence and transitions</h3>
+<p>These are completely new computations that require stateful regime tracking. They answer questions that no existing feature can answer: <em>how long has this regime been active?</em> and <em>how stable is it?</em></p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>What it is</th>
+<th>Range</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bars_since_trend_change</code></td>
+<td>Number of bars since the trend component (TRENDING/NEUTRAL/RANGING) last changed</td>
+<td>0 to N</td>
+<td>Log-scaled or normalized by rolling window to keep values in a learnable range.</td>
+</tr>
+<tr>
+<td><code>bars_since_direction_change</code></td>
+<td>Same for the direction component (BULLISH/NEUTRAL/BEARISH)</td>
+<td>0 to N</td>
+<td>Same scaling.</td>
+</tr>
+<tr>
+<td><code>bars_since_vol_change</code></td>
+<td>Same for the volatility component (HIGH_VOL/NORMAL_VOL/LOW_VOL)</td>
+<td>0 to N</td>
+<td>Same scaling.</td>
+</tr>
+<tr>
+<td><code>regime_stability</code></td>
+<td>Fraction of the last N bars (configurable, e.g. 288 = 1 day of 5m) that agree on the current combined regime</td>
+<td>[0, 1]</td>
+<td>High values mean the regime is well-established. Low values mean the market is in transition or mixed. Directly addresses FOLLOW_UP_PLAN #6 (MIXED/low-confidence detection).</td>
+</tr>
+<tr>
+<td><code>transition_recency</code></td>
+<td>Exponential decay from the last regime change. <code>exp(-lambda * bars_since_last_change)</code></td>
+<td>[0, 1]</td>
+<td>High = just changed (transition zone). Low = stable for a long time. Lambda is configurable. Directly addresses FOLLOW_UP_PLAN #5 (hysteresis).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Implementation complexity: Medium.</strong> Requires a new <code>IndicatorType</code> (e.g., <code>MARKET_STATE</code>) because these computations are stateful: they depend on the sequence of regime classifications, not just the current bar's indicator values. The closest existing precedent is the <code>DRAWDOWN</code> indicator, which also tracks state across bars (peak-to-trough).</p>
+<p><strong>These columns, combined with the existing 6 binary signals, provide all the information that the FOLLOW_UP_PLAN items #3, #4, #5, #6 describe:</strong></p>
+<table>
+<thead>
+<tr>
+<th>FOLLOW_UP_PLAN item</th>
+<th>Covered by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#3 Persistence state machine (observed/candidate/confirmed, counters)</td>
+<td><code>bars_since_*_change</code> columns give the counters. The model learns its own observed/candidate/confirmed thresholds from data instead of us hardcoding them.</td>
+</tr>
+<tr>
+<td>#4 Confirmation rules (min duration, consecutive-day, majority vote, confidence)</td>
+<td><code>bars_since_*_change</code> gives duration. <code>regime_stability</code> gives the majority-vote / confidence measure. The model learns the confirmation rule that works best.</td>
+</tr>
+<tr>
+<td>#5 Hysteresis and transition friction</td>
+<td><code>transition_recency</code> explicitly encodes how recent the last change was. Combined with <code>regime_stability</code>, the model can learn to distrust recent transitions with low stability.</td>
+</tr>
+<tr>
+<td>#6 MIXED / low-confidence days</td>
+<td><code>regime_stability</code> directly measures this. Low stability = mixed/unstable. The model can learn to reduce position sizing or avoid trading when stability is low.</td>
+</tr>
+</tbody>
+</table>
+<p>The key insight: instead of hardcoding a persistence state machine with arbitrary thresholds (e.g., "confirmed after 3 consecutive days"), we give the model the raw persistence and stability signals and let it learn the optimal thresholds from training data.</p>
+<h3 id="group-3-meta-regime">Group 3: Meta-regime</h3>
+<p>Standard quantitative finance practice for characterizing regime dynamics.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>What it is</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trend_momentum</code></td>
+<td>Rate of change of ADX over N bars</td>
+<td>Is the trend strengthening or weakening? A high ADX that is falling means the trend is dying. A low ADX that is rising means a new trend may be forming.</td>
+</tr>
+<tr>
+<td><code>vol_of_vol</code></td>
+<td>Rolling standard deviation of <code>volatility_ratio</code> changes</td>
+<td>Measures the stability of the volatility regime itself. High vol-of-vol means the market is alternating rapidly between calm and volatile states. Low vol-of-vol means the current volatility state is persistent and trustworthy.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Implementation complexity: Low.</strong> Rate of change can be a SPREAD or simple arithmetic on existing values. Rolling std is a VOLATILITY-type computation.</p>
+<h3 id="group-4-cross-timeframe-regime-agreement-deferred">Group 4: Cross-timeframe regime agreement (deferred)</h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>regime_agreement_htf</code></td>
+<td>Do higher-timeframe regimes agree with the base timeframe regime?</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status: Deferred.</strong> This requires multi-timeframe data to be available, which only applies when the experiment uses multiple timeframes (Tier D/E in the thesis). The <code>market_state</code> block configuration should support this group, but implementation is postponed until after Groups 1-3 are validated.</p>
+<p><strong>Design note:</strong> When implemented, this should be configurable by specifying which higher timeframes to compare against, not hardcoded to specific tiers.</p>
+<h2 id="architecture-new-market_state-indicatortype">Architecture: New <code>MARKET_STATE</code> IndicatorType</h2>
+<h3 id="why-a-single-new-indicator-type-instead-of-many-small-ones">Why a single new indicator type instead of many small ones</h3>
+<p>Groups 1, 3 could technically be built from existing indicator types (RATIO, SPREAD, VOLATILITY). But there are strong reasons to unify everything into one indicator type:</p>
+<ol>
+<li>
+<p><strong>Coherent computation.</strong> The regime classification (TRENDING/RANGING, BULLISH/BEARISH, HIGH_VOL/LOW_VOL) must be computed once before the Group 2 persistence columns can count bars since last change. If we split the computation, the regime classification happens in multiple places or needs to be passed between features. A single indicator type computes the regime classification once and derives all columns from it.</p>
+</li>
+<li>
+<p><strong>Single configuration surface.</strong> One block config with clear group enable/disable flags. No need to wire up 12 separate features with cross-references.</p>
+</li>
+<li>
+<p><strong>Consistency with regime detector.</strong> The thresholds and logic (ADX &gt;= 25, DI crossover, ATR ratio baseline) live in one place. If we change a threshold, all derived columns update consistently.</p>
+</li>
+<li>
+<p><strong>Expandable.</strong> Adding Group 4 (cross-timeframe) or future groups (e.g., HMM-based regime probabilities) means adding columns to one indicator, not designing new feature types.</p>
+</li>
+</ol>
+<h3 id="block-configuration-schema">Block configuration schema</h3>
+<pre><code class="language-jsonc">&quot;market_state&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;mandatory&quot;: false,
+    &quot;groups&quot;: {
+        &quot;continuous&quot;: true,      // Group 1: trend_strength, direction_score, etc.
+        &quot;persistence&quot;: true,     // Group 2: bars_since_*, stability, transition
+        &quot;meta&quot;: true,            // Group 3: trend_momentum, vol_of_vol
+        &quot;cross_tf&quot;: false        // Group 4: regime_agreement_htf (deferred)
+    },
+    &quot;per_tf&quot;: [
+        {
+            &quot;tfs&quot;: [&quot;5m&quot;],
+            // Regime classification parameters (same as current market_regime)
+            &quot;adx_period&quot;: 14,
+            &quot;adx_strong_trend&quot;: 25.0,
+            &quot;adx_weak_trend&quot;: 20.0,
+            &quot;ema_fast_period&quot;: 14,
+            &quot;ema_slow_period&quot;: 50,
+            &quot;atr_period&quot;: 14,
+            &quot;vol_baseline_days&quot;: 7,
+            &quot;vol_multipliers&quot;: {&quot;high&quot;: 1.2, &quot;low&quot;: 0.8},
+            // Persistence parameters (Group 2)
+            &quot;stability_window&quot;: 288,  // bars for regime_stability rolling window (~1 day of 5m)
+            &quot;transition_decay_lambda&quot;: 0.01,  // exp decay rate for transition_recency
+            // Meta parameters (Group 3)
+            &quot;trend_momentum_window&quot;: 20,  // bars for ADX rate of change
+            &quot;vol_of_vol_window&quot;: 50  // bars for rolling std of volatility_ratio
+        }
+    ]
+}
+</code></pre>
+<p>This configuration is <strong>generic and tier-agnostic</strong>. Tiers are a thesis concept. The block itself is a reusable indicator that can be configured for any experiment.</p>
+<h3 id="relationship-to-existing-market_regime-block">Relationship to existing <code>market_regime</code> block</h3>
+<p>The existing <code>market_regime</code> block and its 6 binary signals remain unchanged and available. The new <code>market_state</code> block is a separate, complementary block.</p>
+<p>In the MEGA generator <code>block_groups</code>, tiers that want both would list both blocks:</p>
+<pre><code class="language-jsonc">&quot;block_groups&quot;: {
+    // Current Tier B: no regime features
+    &quot;standard&quot;: [&quot;ohlcv&quot;, &quot;ema&quot;, &quot;rsi&quot;, &quot;macd&quot;, &quot;bollinger_bands&quot;, &quot;atr&quot;, &quot;adx&quot;, &quot;stochastic&quot;, &quot;obv&quot;],
+
+    // New extended Tier B: adds market_state (groups 1+3 only)
+    &quot;standard_ext&quot;: [&quot;ohlcv&quot;, &quot;ema&quot;, &quot;rsi&quot;, &quot;macd&quot;, &quot;bollinger_bands&quot;, &quot;atr&quot;, &quot;adx&quot;, &quot;stochastic&quot;, &quot;obv&quot;, &quot;market_state&quot;],
+
+    // Tier C: full single-tf (existing blocks + market_state with all single-tf groups)
+    &quot;full_single_tf&quot;: [
+        &quot;ohlcv&quot;, &quot;ema&quot;, &quot;rsi&quot;, &quot;macd&quot;, &quot;bollinger_bands&quot;, &quot;atr&quot;, &quot;adx&quot;, &quot;stochastic&quot;,
+        &quot;obv&quot;, &quot;vwap&quot;, &quot;volatility&quot;, &quot;time_features&quot;, &quot;drawdown&quot;, &quot;derived&quot;, &quot;signals&quot;,
+        &quot;market_regime&quot;, &quot;market_state&quot;
+    ],
+
+    // Tier D/E: same + multi-tf (market_state cross_tf group enabled)
+    &quot;full_multi_tf&quot;: [
+        &quot;ohlcv&quot;, &quot;ema&quot;, &quot;rsi&quot;, &quot;macd&quot;, &quot;bollinger_bands&quot;, &quot;atr&quot;, &quot;adx&quot;, &quot;stochastic&quot;,
+        &quot;obv&quot;, &quot;vwap&quot;, &quot;volatility&quot;, &quot;time_features&quot;, &quot;drawdown&quot;, &quot;derived&quot;, &quot;signals&quot;,
+        &quot;market_regime&quot;, &quot;market_state&quot;
+    ]
+}
+</code></pre>
+<p>Group enable/disable per tier would be controlled via <code>block_overrides</code> in the tier config:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th><code>market_state</code> groups enabled</th>
+<th>Total new columns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>(not included)</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B_ext</td>
+<td><code>continuous</code> + <code>meta</code> (Groups 1+3)</td>
+<td>7</td>
+</tr>
+<tr>
+<td>C</td>
+<td><code>continuous</code> + <code>persistence</code> + <code>meta</code> (Groups 1+2+3)</td>
+<td>12</td>
+</tr>
+<tr>
+<td>D/E</td>
+<td>All groups including <code>cross_tf</code> (Groups 1+2+3+4, when implemented)</td>
+<td>12+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-this-enables">What This Enables</h2>
+<h3 id="for-tier-b_ext">For Tier B_ext</h3>
+<p>The model receives 7 continuous regime features where before it had 0. This gives it the raw ingredients to learn:</p>
+<ul>
+<li>Trend strength and whether the market is trending, ranging, or in between (without hardcoded 25/20 thresholds)</li>
+<li>Directional dominance as a continuous score, not a binary flag</li>
+<li>Volatility relative to its recent baseline (the value that was previously computed and discarded)</li>
+<li>Bollinger squeeze as a breakout anticipation signal</li>
+<li>Whether the current trend is strengthening or weakening</li>
+<li>Whether the volatility regime is stable or itself volatile</li>
+</ul>
+<h3 id="for-tier-c">For Tier C</h3>
+<p>Everything from Tier B_ext plus 5 persistence columns. This means the model can learn:</p>
+<ul>
+<li>To trust a regime that has been active for many bars</li>
+<li>To distrust a regime that just changed</li>
+<li>To reduce confidence when regime stability is low (MIXED/transition zones)</li>
+<li>To behave differently in the first bars of a new regime vs an established regime</li>
+<li>The optimal confirmation thresholds from data instead of hardcoded rules</li>
+</ul>
+<h3 id="for-the-thesis">For the thesis</h3>
+<p>The <code>market_state</code> block directly enables the training options proposed in the <a href="../../../../../analysis/regime/regime_folds/20260325_004531_REGIME_TRAINING_OPTIONS_AUDIT/">Regime Training Options Audit</a>:</p>
+<ul>
+<li><strong>Option D (global model plus regime features):</strong> Add <code>market_state</code> columns to the global training set and test whether regime information helps the model specialize.</li>
+<li><strong>Option E (regime-aware do-not-trade):</strong> Use <code>regime_stability</code> and <code>transition_recency</code> to learn when NOT to trade.</li>
+<li><strong>Phase 3 (transition safety):</strong> The persistence columns implement the candidate/confirmed concept without hardcoding the state machine.</li>
+</ul>
+<h2 id="implementation-phases">Implementation Phases</h2>
+<h3 id="phase-1-group-1--group-3-continuous--meta">Phase 1: Group 1 + Group 3 (continuous + meta)</h3>
+<ul>
+<li>7 columns, all implementable with existing indicator types or simple arithmetic</li>
+<li>No new <code>IndicatorType</code> required yet</li>
+<li>Can be built as individual RATIO/SPREAD indicators composed together in the MEGA generator</li>
+<li>Deliverable: new <code>market_state</code> block in <code>blocks_catalog</code> with <code>continuous</code> and <code>meta</code> groups</li>
+<li>Risk: low</li>
+</ul>
+<h3 id="phase-2-group-2-persistence">Phase 2: Group 2 (persistence)</h3>
+<ul>
+<li>5 columns requiring stateful computation</li>
+<li>New <code>IndicatorType.MARKET_STATE</code> added to the pipeline</li>
+<li>The indicator receives regime classification parameters, classifies each bar, and tracks state</li>
+<li>Deliverable: persistence columns working in the pipeline, enabled for Tier C+</li>
+<li>Risk: medium (new indicator type in the data pipeline)</li>
+</ul>
+<h3 id="phase-3-group-4-cross-timeframe">Phase 3: Group 4 (cross-timeframe)</h3>
+<ul>
+<li>Deferred until Groups 1-3 are validated</li>
+<li>Requires multi-timeframe experiments to be running</li>
+<li>Design note: configurable by listing which higher timeframes to compare against</li>
+</ul>
+<h2 id="open-questions">Open Questions</h2>
+<ol>
+<li>
+<p><strong>Should Group 1 columns go through RELATIVE_INDICATOR normalization?</strong> Some of them are already relative (volatility_ratio, bb_squeeze are centered around 1.0). Others are bounded (trend_strength 0-100, direction_score -1 to +1). The normalization pipeline may need to be configured per-column.</p>
+</li>
+<li>
+<p><strong>Scaling for bars_since_* columns.</strong> Raw bar counts can be very large (thousands). Options: log-scale, divide by a configurable window, or let the normalization pipeline handle it. Log-scale is most common in quant literature for duration features.</p>
+</li>
+<li>
+<p><strong>Should the 6 existing binary signals be kept when <code>market_state</code> is active?</strong> Current recommendation: yes, keep both. The binaries are cheap and serve as easy shortcuts. The continuous columns provide the gradient. They complement each other.</p>
+</li>
+<li>
+<p><strong>Interaction with <code>derived.di_dominance</code>.</strong> The <code>direction_score</code> column overlaps with the existing <code>di_dominance</code> derived feature. When both <code>market_state</code> and <code>derived</code> blocks are active, we should either skip the duplicate or let feature selection handle it.</p>
+</li>
+</ol>
+<hr />
+<h2 id="how-this-gets-built-the-indicator-in-detail">How This Gets Built: The Indicator In Detail</h2>
+<p>Everything above describes <em>what</em> we want. Everything below describes <em>how</em> we build it, based on how indicators actually work in this codebase.</p>
+<hr />
+<h3 id="anatomy-of-an-indicator-in-this-system">Anatomy of an indicator in this system</h3>
+<p>Every indicator in rainbow-trader follows the same pattern. Before designing MARKET_STATE, here is the pattern that ADX, DRAWDOWN, Bollinger Bands, and all 17 existing indicators follow.</p>
+<h4 id="files-per-indicator">Files per indicator</h4>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Module</th>
+<th>File</th>
+<th>What it contains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>rainbow-common</code></td>
+<td><code>types/configs/indicators/{name}_config.py</code></td>
+<td>Pydantic config class extending <code>BaseIndicatorGenerated</code>. Declares <code>column_outputs_generated: ClassVar[list[str]]</code> (fixed list of output column names), instance parameters (periods, windows, thresholds), test config, maybe-config for optional overrides.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>rainbow-common</code></td>
+<td><code>types/configs/__init__.py</code></td>
+<td>Import config classes. Add to <code>IndicatorConfigUnion</code> type alias. Add to <code>__all__</code>.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>rainbow-common</code></td>
+<td><code>types/enums.py</code></td>
+<td>Add value to <code>IndicatorType</code> enum. Add entry to <code>INDICATOR_GROUPS</code> dict (maps indicator to <code>FeatureGroup</code> for feature selection taxonomy).</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>rainbow-core</code></td>
+<td><code>types/composed/indicators.py</code></td>
+<td>Pydantic composed type extending <code>BaseIndicator</code>. Declares <code>relative_meta</code> (how each column is relativized), <code>normalization_meta</code> (how each column is normalized), <code>get_warm_up_periods()</code>, <code>get_config()</code>. Also: add <code>{name}_config</code> field to <code>IndicatorConfig</code> wrapper. Update <code>BaseIndicator.indicator_type</code> Literal union.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>rainbow-data-processing</code></td>
+<td><code>indicator/{name}.py</code></td>
+<td><strong>NEW FILE.</strong> The actual computation: <code>process_{name}(inputs, config, ...) -&gt; ProcessResult</code>. Pure Polars expressions. Validates inputs, filters by range, computes columns, trims warm-up, cleans NaN/Inf, validates output.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>rainbow-data-processing</code></td>
+<td><code>helpers/indicator_dispatch.py</code></td>
+<td>Add one <code>isinstance(config, XxxConfig): return process_xxx(...)</code> branch to the dispatch chain.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>MEGA generator</td>
+<td><code>generate_mega_experiment.py</code></td>
+<td>Add block handler (reads config from JSON, calls <code>builder.ensure_*</code> for dependencies, calls <code>builder.add_indicator</code> with input refs).</td>
+</tr>
+<tr>
+<td>8</td>
+<td>MEGA generator</td>
+<td><code>generate_mega_experiment.json</code></td>
+<td>Add entry to <code>blocks_catalog</code> with default config. Add to relevant <code>block_groups</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total per indicator: 6 existing files to modify + 1 new file + 1 JSON config.</strong></p>
+<h4 id="concrete-example-drawdown-indicator">Concrete example: DRAWDOWN indicator</h4>
+<p>Config (<code>drawdown_config.py</code>):</p>
+<pre><code class="language-python">class DrawdownConfig(BaseIndicatorGenerated):
+    &quot;&quot;&quot;Drawdown. Columns: drawdown, max_drawdown&quot;&quot;&quot;
+    segement_path: ClassVar[Path | str | None] = Path(&quot;indicators&quot;)
+    column_outputs_generated: ClassVar[list[str]] = [&quot;drawdown&quot;, &quot;max_drawdown&quot;]
+    period: int
+    test: DrawdownTestConfig
+</code></pre>
+<p>Composed type (<code>indicators.py</code>):</p>
+<pre><code class="language-python">class DrawdownIndicator(BaseIndicatorOneInput):
+    indicator_type: Literal[IndicatorType.DRAWDOWN] = IndicatorType.DRAWDOWN
+    feature_group: ClassVar[FeatureGroup] = FeatureGroup.VOLATILITY
+    config_type: ClassVar[type[BaseConfig]] = DrawdownConfig
+    relative_meta: ClassVar = {
+        &quot;drawdown&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+        &quot;max_drawdown&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+    }
+    normalization_meta: ClassVar = {
+        &quot;drawdown_rel&quot;: NormalizationMethod.NONE,
+        &quot;max_drawdown_rel&quot;: NormalizationMethod.NONE,
+    }
+    def get_warm_up_periods(self) -&gt; int:
+        return self.get_config().period * 2
+</code></pre>
+<p>Process function (<code>drawdown.py</code>): validates inputs → filters time range → computes <code>rolling_max</code> → <code>drawdown = (price - rolling_max) / rolling_max</code> → <code>max_drawdown = rolling_min(drawdown)</code> → trims warm-up → cleans NaN/Inf → validates → returns <code>ProcessResult</code>.</p>
+<p>Dispatch (<code>indicator_dispatch.py</code>): one branch in the <code>isinstance</code> chain:</p>
+<pre><code class="language-python">if isinstance(indicator_config, DrawdownConfig):
+    return process_drawdown(indicator_inputs, indicator_config, ...)
+</code></pre>
+<p><strong>MARKET_STATE follows this exact pattern.</strong> The only difference is: more output columns (12 vs 2), more inputs (6 vs 1), and the computation includes regime classification + run-length counting.</p>
+<hr />
+<h3 id="marketstateconfig-design"><code>MarketStateConfig</code> design</h3>
+<p>The Pydantic config for the indicator itself. This is what lives in <code>rainbow-common/types/configs/indicators/market_state_config.py</code>.</p>
+<pre><code class="language-python">class MarketStateConfig(BaseIndicatorGenerated):
+    &quot;&quot;&quot;Market State indicator. Produces 12 continuous columns characterizing
+    regime strength, persistence, transitions, and meta-stability.
+
+    Columns:
+        Group 1 (continuous): trend_strength, direction_score, ema_trend,
+            volatility_ratio, bb_squeeze
+        Group 2 (persistence): bars_since_trend_change, bars_since_direction_change,
+            bars_since_vol_change, regime_stability, transition_recency
+        Group 3 (meta): trend_momentum, vol_of_vol
+    &quot;&quot;&quot;
+
+    segement_path: ClassVar[Path | str | None] = Path(&quot;indicators&quot;)
+
+    # All 12 columns, always computed. Which ones become experiment features
+    # is decided by the MEGA generator, not the indicator.
+    column_outputs_generated: ClassVar[list[str]] = [
+        # Group 1: continuous regime components
+        &quot;trend_strength&quot;,
+        &quot;direction_score&quot;,
+        &quot;ema_trend&quot;,
+        &quot;volatility_ratio&quot;,
+        &quot;bb_squeeze&quot;,
+        # Group 2: persistence and transitions
+        &quot;bars_since_trend_change&quot;,
+        &quot;bars_since_direction_change&quot;,
+        &quot;bars_since_vol_change&quot;,
+        &quot;regime_stability&quot;,
+        &quot;transition_recency&quot;,
+        # Group 3: meta-regime
+        &quot;trend_momentum&quot;,
+        &quot;vol_of_vol&quot;,
+    ]
+
+    # --- Regime classification thresholds ---
+    adx_strong_trend: float = 25.0    # ADX &gt;= this → TRENDING
+    adx_weak_trend: float = 20.0      # ADX &lt;= this → RANGING (between = NEUTRAL)
+    ema_fast_period: int = 14         # For ema_trend and direction classification
+    ema_slow_period: int = 50         # For ema_trend and direction classification
+
+    # --- Volatility baseline ---
+    vol_baseline_window: int = 2016   # Rolling mean window for ATR/Close ratio baseline.
+                                      # Default 2016 = 7 days of 5m bars.
+                                      # For 1h: 168. For 1d: 30.
+    vol_high_multiplier: float = 1.2  # volatility_ratio &gt; this → HIGH_VOL regime
+    vol_low_multiplier: float = 0.8   # volatility_ratio &lt; this → LOW_VOL regime
+
+    # --- Persistence parameters (Group 2) ---
+    stability_window: int = 288       # Rolling window for regime_stability.
+                                      # Default 288 = 1 day of 5m bars.
+                                      # For 1h: 24. For 1d: 7.
+    transition_decay_lambda: float = 0.01  # Exponential decay rate for transition_recency.
+                                           # 0.01 → half-life ~69 bars (~5.75h at 5m).
+
+    # --- Meta parameters (Group 3) ---
+    trend_momentum_window: int = 20   # Window for ADX rate of change.
+    vol_of_vol_window: int = 50       # Window for rolling std of volatility_ratio changes.
+
+    test: MarketStateTestConfig
+
+
+class MarketStateTestConfig(BaseConfig, BaseIndicatorValidation):
+    &quot;&quot;&quot;Market State validation configuration.&quot;&quot;&quot;
+
+
+class MaybeMarketStateConfig(IndicatorColumnMeta):
+    &quot;&quot;&quot;Optional per-feature Market State overrides.&quot;&quot;&quot;
+    adx_strong_trend: float | None = None
+    adx_weak_trend: float | None = None
+    ema_fast_period: int | None = None
+    ema_slow_period: int | None = None
+    vol_baseline_window: int | None = None
+    vol_high_multiplier: float | None = None
+    vol_low_multiplier: float | None = None
+    stability_window: int | None = None
+    transition_decay_lambda: float | None = None
+    trend_momentum_window: int | None = None
+    vol_of_vol_window: int | None = None
+</code></pre>
+<h4 id="why-all-12-columns-are-always-computed-not-configurable-at-indicator-level">Why all 12 columns are always computed (not configurable at indicator level)</h4>
+<p>Every indicator in this system has <code>column_outputs_generated</code> as a <code>ClassVar</code> — a class-level constant. ADX always produces 3 columns (<code>adx</code>, <code>plus_di</code>, <code>minus_di</code>). Bollinger always produces 5 (<code>upper_band</code>, <code>middle_band</code>, <code>lower_band</code>, <code>bandwidth</code>, <code>percent_b</code>). Not all may be used by every experiment.</p>
+<p>MARKET_STATE follows the same rule: always 12 columns. Reasons:</p>
+<ol>
+<li><strong>Pipeline consistency.</strong> The pipeline assumes <code>column_outputs_generated</code> is fixed. The relative_indicator and normalization stages iterate over this list. Dynamic columns would break this assumption.</li>
+<li><strong>One code path.</strong> <code>process_market_state</code> has one implementation. No conditional logic for "which groups are enabled."</li>
+<li><strong>Cheap.</strong> The computation is vectorized Polars executing in Rust. 12 columns vs 7 is negligible. The expensive part is the parent indicators (ADX, EMA, ATR, BB), already computed and cached as parquets.</li>
+<li><strong>The MEGA generator controls what becomes a feature.</strong> The generator reads <code>feature_groups</code> flags from the block config and only adds the selected columns as experiment features. Unused columns exist in the indicator parquet but are never loaded into the FAT window.</li>
+</ol>
+<h4 id="configuration-examples-for-different-timeframes">Configuration examples for different timeframes</h4>
+<p>The indicator is timeframe-agnostic. Window sizes are in bars:</p>
+<pre><code class="language-jsonc">// 5-minute bars (thesis default)
+{
+    &quot;vol_baseline_window&quot;: 2016,    // 7 days × 288 bars/day
+    &quot;stability_window&quot;: 288,        // 1 day
+    &quot;trend_momentum_window&quot;: 20,    // ~1.7 hours
+    &quot;vol_of_vol_window&quot;: 50         // ~4.2 hours
+}
+
+// 1-hour bars
+{
+    &quot;vol_baseline_window&quot;: 168,     // 7 days × 24 bars/day
+    &quot;stability_window&quot;: 24,         // 1 day
+    &quot;trend_momentum_window&quot;: 12,    // 12 hours
+    &quot;vol_of_vol_window&quot;: 24         // 1 day
+}
+
+// 1-day bars
+{
+    &quot;vol_baseline_window&quot;: 30,      // 30 days
+    &quot;stability_window&quot;: 7,          // 1 week
+    &quot;trend_momentum_window&quot;: 5,     // 1 week
+    &quot;vol_of_vol_window&quot;: 14         // 2 weeks
+}
+</code></pre>
+<h4 id="why-these-defaults">Why these defaults</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>adx_strong_trend=25.0</code> / <code>adx_weak_trend=20.0</code></td>
+<td>Matches <code>regime_detector.py</code> constants (<code>ADX_STRONG=25</code>, <code>ADX_WEAK=20</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ema_fast_period=14</code> / <code>ema_slow_period=50</code></td>
+<td>Matches <code>regime_detector.py</code> (<code>EMA_FAST=14</code>, <code>EMA_SLOW=50</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>vol_baseline_window=2016</code></td>
+<td>Matches <code>regime_detector.py</code> (<code>VOL_ROLLING_WINDOW=2016</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>vol_high=1.2</code> / <code>vol_low=0.8</code></td>
+<td>Matches existing <code>market_regime</code> block thresholds</td>
+<td></td>
+</tr>
+<tr>
+<td><code>stability_window=288</code></td>
+<td>1 day of 5m. Regime persistence measured in days, not hours.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>transition_decay_lambda=0.01</code></td>
+<td>Half-life ~69 bars (~5.75h at 5m). Transition is "recent" for about half a day.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>trend_momentum_window=20</code></td>
+<td>~1.7h at 5m. ADX changes slowly; short window captures recent acceleration.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>vol_of_vol_window=50</code></td>
+<td>~4.2h at 5m. Enough samples to be meaningful, not so many it smooths everything.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="marketstateindicator-design-composed-type"><code>MarketStateIndicator</code> design (composed type)</h3>
+<p>This is what lives in <code>rainbow-core/types/composed/indicators.py</code>:</p>
+<pre><code class="language-python">class MarketStateIndicator(BaseIndicator):
+    &quot;&quot;&quot;Market State. 12 continuous columns for regime characterization.&quot;&quot;&quot;
+
+    indicator_type: Literal[IndicatorType.MARKET_STATE] = IndicatorType.MARKET_STATE
+    feature_group: ClassVar[FeatureGroup] = FeatureGroup.TREND
+    config_type: ClassVar[type[BaseConfig]] = MarketStateConfig
+
+    # Per-column relativization. Most columns are already bounded or relative.
+    relative_meta: ClassVar[dict[str, RelativeIndicatorMeta]] = {
+        &quot;trend_strength&quot;: RelativeIndicatorMeta(method=RelativeMethod.DIVIDE_BY_100),
+            # ADX 0-100 → 0-1
+        &quot;direction_score&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Already [-1, +1]
+        &quot;ema_trend&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Already relative: (fast-slow)/slow
+        &quot;volatility_ratio&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Already centered ~1.0
+        &quot;bb_squeeze&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Already centered ~1.0
+        &quot;bars_since_trend_change&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Log-scaled in computation
+        &quot;bars_since_direction_change&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+        &quot;bars_since_vol_change&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+        &quot;regime_stability&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Already [0, 1]
+        &quot;transition_recency&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Already [0, 1]
+        &quot;trend_momentum&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Small continuous, normalization handles it
+        &quot;vol_of_vol&quot;: RelativeIndicatorMeta(method=RelativeMethod.NONE),
+            # Non-negative, normalization handles it
+    }
+
+    # Per-column normalization (after relative_indicator pipeline).
+    # Suffix _rel because normalization runs after the relative_indicator step.
+    normalization_meta: ClassVar[dict[str, NormalizationMethod]] = {
+        &quot;trend_strength_rel&quot;: NormalizationMethod.NONE,      # 0-1 after DIVIDE_BY_100
+        &quot;direction_score_rel&quot;: NormalizationMethod.NONE,      # [-1, +1]
+        &quot;ema_trend_rel&quot;: NormalizationMethod.ROBUST,          # Unbounded, needs scaling
+        &quot;volatility_ratio_rel&quot;: NormalizationMethod.NONE,     # ~1.0 center, bounded in practice
+        &quot;bb_squeeze_rel&quot;: NormalizationMethod.NONE,           # ~1.0 center, bounded in practice
+        &quot;bars_since_trend_change_rel&quot;: NormalizationMethod.NONE,   # Log-scaled [0, ~1]
+        &quot;bars_since_direction_change_rel&quot;: NormalizationMethod.NONE,
+        &quot;bars_since_vol_change_rel&quot;: NormalizationMethod.NONE,
+        &quot;regime_stability_rel&quot;: NormalizationMethod.NONE,     # [0, 1]
+        &quot;transition_recency_rel&quot;: NormalizationMethod.NONE,   # [0, 1]
+        &quot;trend_momentum_rel&quot;: NormalizationMethod.ROBUST,     # Unbounded
+        &quot;vol_of_vol_rel&quot;: NormalizationMethod.ROBUST,         # Unbounded
+    }
+
+    market_state_config: MaybeMarketStateConfig | None = None
+
+    def get_warm_up_periods(self) -&gt; int:
+        config = self.get_config()
+        return self.get_warm_up_periods_static(config)
+
+    @classmethod
+    def get_warm_up_periods_static(cls, config: MarketStateConfig) -&gt; int:
+        &quot;&quot;&quot;Warm-up dominated by vol_baseline_window. Uses 2x conservative rule.&quot;&quot;&quot;
+        _ = cls
+        max_window = max(
+            config.vol_baseline_window,
+            config.stability_window,
+            config.trend_momentum_window,
+            config.vol_of_vol_window,
+        )
+        return max_window * 2
+</code></pre>
+<h4 id="warm-up-analysis">Warm-up analysis</h4>
+<table>
+<thead>
+<tr>
+<th>Window</th>
+<th>Default (5m)</th>
+<th>Bars</th>
+<th>Warm-up (2x)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vol_baseline_window</code></td>
+<td>2016</td>
+<td>7 days</td>
+<td><strong>4032 bars</strong> (~14 days)</td>
+</tr>
+<tr>
+<td><code>stability_window</code></td>
+<td>288</td>
+<td>1 day</td>
+<td>576 bars (~2 days)</td>
+</tr>
+<tr>
+<td><code>trend_momentum_window</code></td>
+<td>20</td>
+<td>~1.7h</td>
+<td>40 bars</td>
+</tr>
+<tr>
+<td><code>vol_of_vol_window</code></td>
+<td>50</td>
+<td>~4.2h</td>
+<td>100 bars</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dominant: <code>vol_baseline_window</code> → 4032 bars warm-up at 5m.</strong> This is the same cost as the existing <code>market_regime</code> block (which already uses a 2016-bar rolling mean for the ATR/Close baseline). No new warm-up penalty compared to existing regime features.</p>
+<p>The parent indicators (ADX, EMA, ATR, BB) have their own warm-up handled by the pipeline before MARKET_STATE runs. ADX warm-up is ~42 bars, EMA slow is ~150 bars — much smaller than MARKET_STATE's own 4032.</p>
+<hr />
+<h3 id="inputs-and-dependencies">Inputs and dependencies</h3>
+<h4 id="what-parent-features-market_state-needs">What parent features MARKET_STATE needs</h4>
+<table>
+<thead>
+<tr>
+<th>Input #</th>
+<th>Input name</th>
+<th>Source indicator</th>
+<th>Columns used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>input_adx</code></td>
+<td>ADX indicator</td>
+<td><code>adx</code>, <code>plus_di</code>, <code>minus_di</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>input_ema_fast</code></td>
+<td>EMA indicator (period=fast)</td>
+<td><code>ema</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>input_ema_slow</code></td>
+<td>EMA indicator (period=slow)</td>
+<td><code>ema</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>input_atr</code></td>
+<td>ATR indicator</td>
+<td><code>atr</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>input_close</code></td>
+<td>OHLCV (clean price)</td>
+<td><code>close</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>input_bb</code></td>
+<td>Bollinger Bands indicator</td>
+<td><code>bandwidth</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>6 inputs.</strong> This is more than RATIO (2) or SPREAD (2), but the mechanism is the same: <code>validate_and_get_indicator_inputs(inputs, expected_count=6, input_names=[...])</code>. CONDITION signals already handle N inputs (4 inputs in the bullish/bearish direction signals).</p>
+<h4 id="dependency-graph">Dependency graph</h4>
+<pre><code class="language-text">OHLCV (close) ─────────────────────────────┐
+                                            │
+ADX (adx, plus_di, minus_di) ──────────────┤
+                                            │
+EMA fast (ema) ─────────────────────────────┼──→ MARKET_STATE → 12 columns
+                                            │
+EMA slow (ema) ─────────────────────────────┤
+                                            │
+ATR (atr) ──────────────────────────────────┤
+                                            │
+Bollinger Bands (bandwidth) ────────────────┘
+</code></pre>
+<p>All parent indicators are computed and cached as parquets before MARKET_STATE runs. The pipeline resolves dependencies automatically. The MEGA generator's block handler calls <code>builder.ensure_adx(...)</code>, <code>builder.ensure_ema(...)</code>, etc. — exactly like the existing <code>market_regime</code> block does at line 3072–3075.</p>
+<hr />
+<h3 id="process_market_state-computation-pseudocode"><code>process_market_state</code> computation (pseudocode)</h3>
+<p>This is the core function in <code>rainbow-data-processing/indicator/market_state.py</code>. All computations are vectorized Polars — <strong>no Python loops</strong>.</p>
+<pre><code class="language-python">def process_market_state(
+    inputs: list[IndicatorInput],
+    config: MarketStateConfig,
+    timeframe: str, range_start: datetime, range_end: datetime, ...
+) -&gt; ProcessResult:
+
+    # ── 1. VALIDATE AND JOIN INPUTS ──
+    validated = validate_and_get_indicator_inputs(
+        inputs, expected_count=6,
+        input_names=[&quot;input_adx&quot;, &quot;input_ema_fast&quot;, &quot;input_ema_slow&quot;,
+                     &quot;input_atr&quot;, &quot;input_close&quot;, &quot;input_bb&quot;]
+    )
+    frame = join_all_inputs_on_timestamp(validated)
+    # Columns available: adx, plus_di, minus_di, ema (x2), atr, close, bandwidth
+
+    # ── 2. GROUP 1: CONTINUOUS REGIME COMPONENTS ──
+
+    frame = frame.with_columns(
+        # trend_strength: raw ADX passthrough
+        pl.col(&quot;adx&quot;).alias(&quot;trend_strength&quot;),
+
+        # direction_score: normalized DI dominance, bounded [-1, +1]
+        pl.when(pl.col(&quot;plus_di&quot;) + pl.col(&quot;minus_di&quot;) &gt; 0)
+        .then((pl.col(&quot;plus_di&quot;) - pl.col(&quot;minus_di&quot;))
+              / (pl.col(&quot;plus_di&quot;) + pl.col(&quot;minus_di&quot;)))
+        .otherwise(0.0)
+        .alias(&quot;direction_score&quot;),
+
+        # ema_trend: relative EMA alignment
+        pl.when(pl.col(&quot;input_ema_slow_ema&quot;) != 0)
+        .then((pl.col(&quot;input_ema_fast_ema&quot;) - pl.col(&quot;input_ema_slow_ema&quot;))
+              / pl.col(&quot;input_ema_slow_ema&quot;))
+        .otherwise(0.0)
+        .alias(&quot;ema_trend&quot;),
+    )
+
+    # volatility_ratio: ATR/Close relative to its rolling mean
+    frame = frame.with_columns(
+        (pl.col(&quot;atr&quot;) / pl.col(&quot;close&quot;)).alias(&quot;_atr_close_ratio&quot;)
+    ).with_columns(
+        pl.col(&quot;_atr_close_ratio&quot;)
+        .rolling_mean(window_size=config.vol_baseline_window,
+                      min_periods=config.vol_baseline_window)
+        .alias(&quot;_atr_close_baseline&quot;)
+    ).with_columns(
+        pl.when(pl.col(&quot;_atr_close_baseline&quot;) &gt; 0)
+        .then(pl.col(&quot;_atr_close_ratio&quot;) / pl.col(&quot;_atr_close_baseline&quot;))
+        .otherwise(1.0)
+        .alias(&quot;volatility_ratio&quot;)
+    )
+
+    # bb_squeeze: bandwidth relative to its rolling mean
+    frame = frame.with_columns(
+        pl.col(&quot;bandwidth&quot;)
+        .rolling_mean(window_size=config.vol_baseline_window,
+                      min_periods=config.vol_baseline_window)
+        .alias(&quot;_bb_baseline&quot;)
+    ).with_columns(
+        pl.when(pl.col(&quot;_bb_baseline&quot;) &gt; 0)
+        .then(pl.col(&quot;bandwidth&quot;) / pl.col(&quot;_bb_baseline&quot;))
+        .otherwise(1.0)
+        .alias(&quot;bb_squeeze&quot;)
+    )
+
+    # ── 3. INTERNAL REGIME CLASSIFICATION ──
+    # These intermediate columns are NOT output. They are used to compute Group 2.
+    # Classifies each bar into discrete regime states.
+
+    frame = frame.with_columns(
+        # Trend: 0=RANGING, 1=NEUTRAL, 2=TRENDING
+        pl.when(pl.col(&quot;adx&quot;) &gt;= config.adx_strong_trend).then(pl.lit(2))
+        .when(pl.col(&quot;adx&quot;) &lt;= config.adx_weak_trend).then(pl.lit(0))
+        .otherwise(pl.lit(1))
+        .cast(pl.Int8).alias(&quot;_trend_regime&quot;),
+
+        # Direction: 0=BEARISH, 1=NEUTRAL, 2=BULLISH
+        pl.when(
+            (pl.col(&quot;plus_di&quot;) &gt; pl.col(&quot;minus_di&quot;))
+            &amp; (pl.col(&quot;input_ema_fast_ema&quot;) &gt; pl.col(&quot;input_ema_slow_ema&quot;))
+        ).then(pl.lit(2))
+        .when(
+            (pl.col(&quot;minus_di&quot;) &gt; pl.col(&quot;plus_di&quot;))
+            &amp; (pl.col(&quot;input_ema_fast_ema&quot;) &lt; pl.col(&quot;input_ema_slow_ema&quot;))
+        ).then(pl.lit(0))
+        .otherwise(pl.lit(1))
+        .cast(pl.Int8).alias(&quot;_direction_regime&quot;),
+
+        # Volatility: 0=LOW_VOL, 1=NORMAL_VOL, 2=HIGH_VOL
+        pl.when(pl.col(&quot;volatility_ratio&quot;) &gt; config.vol_high_multiplier).then(pl.lit(2))
+        .when(pl.col(&quot;volatility_ratio&quot;) &lt; config.vol_low_multiplier).then(pl.lit(0))
+        .otherwise(pl.lit(1))
+        .cast(pl.Int8).alias(&quot;_vol_regime&quot;),
+    )
+
+    # Combined regime: unique integer 0-26 (3×3×3 = 27 possible states)
+    frame = frame.with_columns(
+        (pl.col(&quot;_trend_regime&quot;) * 9
+         + pl.col(&quot;_direction_regime&quot;) * 3
+         + pl.col(&quot;_vol_regime&quot;))
+        .cast(pl.Int16).alias(&quot;_combined_regime&quot;)
+    )
+
+    # ── 4. GROUP 2: PERSISTENCE AND TRANSITIONS ──
+    #
+    # The key technique: detect changes → create run groups via cum_sum
+    # → count bars within each group. Fully vectorized, no Python loops.
+
+    # Detect changes (0 = same as previous bar, 1 = changed)
+    frame = frame.with_columns(
+        (pl.col(&quot;_trend_regime&quot;) != pl.col(&quot;_trend_regime&quot;).shift(1))
+            .cast(pl.Int32).alias(&quot;_trend_changed&quot;),
+        (pl.col(&quot;_direction_regime&quot;) != pl.col(&quot;_direction_regime&quot;).shift(1))
+            .cast(pl.Int32).alias(&quot;_dir_changed&quot;),
+        (pl.col(&quot;_vol_regime&quot;) != pl.col(&quot;_vol_regime&quot;).shift(1))
+            .cast(pl.Int32).alias(&quot;_vol_changed&quot;),
+        (pl.col(&quot;_combined_regime&quot;) != pl.col(&quot;_combined_regime&quot;).shift(1))
+            .cast(pl.Int32).alias(&quot;_combined_changed&quot;),
+    )
+
+    # bars_since_*_change:
+    #   Step 1: cum_sum(change_flag) → group ID that increments at each change
+    #   Step 2: cum_count() within each group → bars since last change
+    #   Step 3: Log-scale: log1p(counter) / log1p(stability_window)
+    #           This maps [0, ∞) to [0, ~1+] where 1.0 = stable for stability_window bars
+    scale = config.stability_window
+
+    for prefix, change_col, output_col in [
+        (&quot;trend&quot;, &quot;_trend_changed&quot;, &quot;bars_since_trend_change&quot;),
+        (&quot;dir&quot;, &quot;_dir_changed&quot;, &quot;bars_since_direction_change&quot;),
+        (&quot;vol&quot;, &quot;_vol_changed&quot;, &quot;bars_since_vol_change&quot;),
+    ]:
+        run_group = f&quot;_{prefix}_run_group&quot;
+        raw_counter = f&quot;_{prefix}_raw_counter&quot;
+        frame = frame.with_columns(
+            pl.col(change_col).cum_sum().alias(run_group)
+        ).with_columns(
+            pl.lit(1).cum_sum().over(run_group).alias(raw_counter)
+        ).with_columns(
+            (pl.col(raw_counter).cast(pl.Float64).log1p()
+             / math.log1p(scale))
+            .alias(output_col)
+        )
+
+    # regime_stability: fraction of last N bars without combined regime changes
+    # = 1.0 - (number_of_changes_in_window / window_size)
+    # Approximation of &quot;fraction of window with same regime&quot;. Fully vectorized.
+    frame = frame.with_columns(
+        (1.0 - pl.col(&quot;_combined_changed&quot;)
+         .rolling_sum(window_size=config.stability_window, min_periods=1)
+         .cast(pl.Float64) / config.stability_window)
+        .alias(&quot;regime_stability&quot;)
+    )
+
+    # transition_recency: exp(-lambda * bars_since_combined_change)
+    frame = frame.with_columns(
+        pl.col(&quot;_combined_changed&quot;).cum_sum().alias(&quot;_combined_run_group&quot;)
+    ).with_columns(
+        pl.lit(1).cum_sum().over(&quot;_combined_run_group&quot;).alias(&quot;_combined_raw_counter&quot;)
+    ).with_columns(
+        (-config.transition_decay_lambda
+         * pl.col(&quot;_combined_raw_counter&quot;).cast(pl.Float64))
+        .exp()
+        .alias(&quot;transition_recency&quot;)
+    )
+
+    # ── 5. GROUP 3: META-REGIME ──
+
+    # trend_momentum: rate of change of ADX
+    frame = frame.with_columns(
+        ((pl.col(&quot;adx&quot;) - pl.col(&quot;adx&quot;).shift(config.trend_momentum_window))
+         / config.trend_momentum_window)
+        .alias(&quot;trend_momentum&quot;)
+    )
+
+    # vol_of_vol: rolling std of volatility_ratio changes
+    frame = frame.with_columns(
+        pl.col(&quot;volatility_ratio&quot;).diff()
+        .rolling_std(window_size=config.vol_of_vol_window,
+                     min_periods=config.vol_of_vol_window)
+        .alias(&quot;vol_of_vol&quot;)
+    )
+
+    # ── 6. CLEANUP ──
+    # Drop internal columns (prefix _), keep 12 output columns + timestamp + inputs
+    # Standard: trim_warm_up, clean_indicator_output, validate
+    output_columns = [&quot;timestamp&quot;, ...inputs...,
+                      *MarketStateConfig.column_outputs_generated, SYNTHETIC_COL]
+    # ... trim, clean, validate, return ProcessResult ...
+</code></pre>
+<h4 id="key-implementation-notes">Key implementation notes</h4>
+<ol>
+<li>
+<p><strong>No Python loops.</strong> The <code>bars_since_*_change</code> counters use <code>cum_sum</code> to create run-length groups and <code>cum_sum().over(group)</code> to count within groups. These are pure Polars expressions executing in Rust.</p>
+</li>
+<li>
+<p><strong><code>regime_stability</code> approximation.</strong> The exact definition ("fraction of last N bars with same regime as current bar") would require <code>rolling_map</code> with a Python callback (~100x slower). We use the approximation <code>1 - change_frequency</code>: <code>1.0 - rolling_sum(change_flag, window) / window</code>. This measures "what fraction of the window had no regime change" — highly correlated with the exact definition, and fully vectorized.</p>
+</li>
+<li>
+<p><strong>Log-scaling for counters.</strong> Raw <code>bars_since_*</code> can be thousands (a regime lasting 1 day at 5m = 288 bars, lasting 1 week = 2016). Log-scaling: <code>log1p(counter) / log1p(stability_window)</code> compresses to ~[0, 1+]. Value of 1.0 means "stable for at least <code>stability_window</code> bars." Values &gt;1.0 for very long regimes — fine, the model can learn what these mean.</p>
+</li>
+<li>
+<p><strong>Division safety.</strong> All divisions guard against zero denominators with <code>pl.when(...).then(...).otherwise(...)</code>.</p>
+</li>
+<li>
+<p><strong>First-bar handling.</strong> <code>shift(1)</code> produces null for the first row. <code>!= null</code> evaluates to null, which <code>.cast(pl.Int32)</code> maps to 0. So the first bar counts as "no change" — correct behavior.</p>
+</li>
+</ol>
+<hr />
+<h3 id="impact-map">Impact map</h3>
+<h4 id="module-rainbow-common-types-only-no-computation">Module: <code>rainbow-common</code> (types only, no computation)</h4>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>types/enums.py</code></td>
+<td>Add <code>MARKET_STATE = "MARKET_STATE"</code> to <code>IndicatorType</code>. Add <code>IndicatorType.MARKET_STATE: FeatureGroup.TREND</code> to <code>INDICATOR_GROUPS</code>.</td>
+</tr>
+<tr>
+<td><code>types/configs/indicators/market_state_config.py</code></td>
+<td><strong>NEW FILE.</strong> <code>MarketStateConfig</code>, <code>MarketStateTestConfig</code>, <code>MaybeMarketStateConfig</code>.</td>
+</tr>
+<tr>
+<td><code>types/configs/__init__.py</code></td>
+<td>Import 3 config classes. Add <code>MarketStateConfig</code> to <code>IndicatorConfigUnion</code>. Add all 3 to <code>__all__</code>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="module-rainbow-core-composed-types">Module: <code>rainbow-core</code> (composed types)</h4>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>types/composed/indicators.py</code></td>
+<td>Add <code>MarketStateIndicator(BaseIndicator)</code> class. Add <code>market_state_config: MarketStateConfig \| None = None</code> to <code>IndicatorConfig</code>. Add <code>IndicatorType.MARKET_STATE</code> to <code>BaseIndicator.indicator_type</code> Literal union.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="module-rainbow-data-processing-computation">Module: <code>rainbow-data-processing</code> (computation)</h4>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>indicator/market_state.py</code></td>
+<td><strong>NEW FILE.</strong> <code>process_market_state</code> + <code>validate_market_state</code> (~200-250 lines).</td>
+</tr>
+<tr>
+<td><code>helpers/indicator_dispatch.py</code></td>
+<td>Import <code>MarketStateConfig</code> + <code>process_market_state</code>. Add one <code>isinstance</code> branch (~12 lines).</td>
+</tr>
+</tbody>
+</table>
+<h4 id="mega-generator-experiment-generation">MEGA generator (experiment generation)</h4>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>generate_mega_experiment.py</code></td>
+<td>Add <code>market_state</code> block handler (~100 lines). Calls <code>builder.ensure_adx()</code>, <code>ensure_ema()</code>, <code>ensure_atr()</code>, <code>ensure_bb()</code>, then <code>builder.add_indicator()</code> with 6 input refs. Similar to <code>market_regime</code> block at line 3048.</td>
+</tr>
+<tr>
+<td><code>generate_mega_experiment.json</code></td>
+<td>Add <code>market_state</code> to <code>blocks_catalog</code>. Add to relevant <code>block_groups</code>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="summary">Summary</h4>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Files modified</th>
+<th>Files created</th>
+<th>Lines estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Types (common)</td>
+<td>2</td>
+<td>1</td>
+<td>~80</td>
+</tr>
+<tr>
+<td>Composed types (core)</td>
+<td>1</td>
+<td>0</td>
+<td>~100</td>
+</tr>
+<tr>
+<td>Computation (data-processing)</td>
+<td>1</td>
+<td>1</td>
+<td>~250</td>
+</tr>
+<tr>
+<td>Generator</td>
+<td>2</td>
+<td>0</td>
+<td>~120</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>6</strong></td>
+<td><strong>2</strong></td>
+<td><strong>~550</strong></td>
+</tr>
+</tbody>
+</table>
+<p>No changes to: window-preparer, model-trainer, or any other module. The pipeline handles new indicators transparently through the existing dispatch + parquet flow.</p>
+<hr />
+<h3 id="relationship-to-existing-market_regime-block-detailed">Relationship to existing <code>market_regime</code> block (detailed)</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th><code>market_regime</code> (existing)</th>
+<th><code>market_state</code> (new)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature type</td>
+<td>SIGNAL (6 binary features)</td>
+<td>INDICATOR (12 continuous columns)</td>
+</tr>
+<tr>
+<td>Pipeline</td>
+<td>None (signals are 0/1, no relativization/normalization)</td>
+<td>Full relative_indicator + normalization pipeline</td>
+</tr>
+<tr>
+<td>Computation</td>
+<td>Inline in MEGA generator using THRESHOLD/CONDITION signal types</td>
+<td>Dedicated <code>process_market_state</code> function in data-processing</td>
+</tr>
+<tr>
+<td>Registered in type system</td>
+<td>No (signals, not a registered indicator type)</td>
+<td>Yes (first-class <code>IndicatorType.MARKET_STATE</code>)</td>
+</tr>
+<tr>
+<td>Reusability</td>
+<td>Tied to generator logic</td>
+<td>Any experiment can use it via config</td>
+</tr>
+</tbody>
+</table>
+<p>An experiment can use both, one, or neither. Both together: 6 binary signals + 12 continuous columns.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../../..", "features": ["navigation.tabs", "navigation.indexes", "navigation.expand", "navigation.path", "navigation.top", "search.highlight", "toc.follow"], "search": "../../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

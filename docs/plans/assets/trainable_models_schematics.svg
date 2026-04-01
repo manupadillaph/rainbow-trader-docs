@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Basic schematic of trainable models used in Script 2</title>
+  <desc id="desc">Five-column diagram showing logistic, MLP, TCN, ViT and Axial ViT in simple school-style blocks.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #d4d8e2; stroke-width: 2; rx: 20; ry: 20; }
+      .title { font: 700 30px Arial, sans-serif; fill: #1f2937; }
+      .head { font: 700 22px Arial, sans-serif; fill: #1f2937; }
+      .text { font: 15px Arial, sans-serif; fill: #334155; }
+      .small { font: 14px Arial, sans-serif; fill: #475569; }
+      .input { fill: #dbeafe; stroke: #60a5fa; stroke-width: 2; rx: 10; ry: 10; }
+      .mid { fill: #ede9fe; stroke: #a78bfa; stroke-width: 2; rx: 10; ry: 10; }
+      .conv { fill: #dcfce7; stroke: #4ade80; stroke-width: 2; rx: 10; ry: 10; }
+      .attn { fill: #ffedd5; stroke: #fb923c; stroke-width: 2; rx: 10; ry: 10; }
+      .out { fill: #fee2e2; stroke: #f87171; stroke-width: 2; rx: 10; ry: 10; }
+      .arrow { stroke: #64748b; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="760" />
+  <text class="title" x="40" y="55">Trainable models in Script 2: simple visual memory aid</text>
+
+  <rect class="panel" x="30" y="90" width="250" height="620" />
+  <text class="head" x="95" y="130">Logistic</text>
+  <rect class="input" x="80" y="175" width="150" height="60" />
+  <text class="text" x="114" y="210">Window [W,F]</text>
+  <line class="arrow" x1="155" y1="235" x2="155" y2="290" />
+  <rect class="mid" x="80" y="290" width="150" height="60" />
+  <text class="text" x="103" y="325">Flatten + weights</text>
+  <line class="arrow" x1="155" y1="350" x2="155" y2="405" />
+  <rect class="out" x="80" y="405" width="150" height="60" />
+  <text class="text" x="112" y="440">LONG/SHORT/NONE</text>
+  <text class="small" x="55" y="520">Best for simple straight rules.</text>
+  <text class="small" x="55" y="545">Think: one weighted vote.</text>
+
+  <rect class="panel" x="300" y="90" width="250" height="620" />
+  <text class="head" x="392" y="130">MLP</text>
+  <rect class="input" x="350" y="175" width="150" height="60" />
+  <text class="text" x="384" y="210">Window [W,F]</text>
+  <line class="arrow" x1="425" y1="235" x2="425" y2="280" />
+  <rect class="mid" x="350" y="280" width="150" height="60" />
+  <text class="text" x="385" y="315">Dense layer 1</text>
+  <line class="arrow" x1="425" y1="340" x2="425" y2="385" />
+  <rect class="mid" x="350" y="385" width="150" height="60" />
+  <text class="text" x="385" y="420">Dense layer 2</text>
+  <line class="arrow" x1="425" y1="445" x2="425" y2="490" />
+  <rect class="out" x="350" y="490" width="150" height="60" />
+  <text class="text" x="382" y="525">LONG/SHORT/NONE</text>
+  <text class="small" x="325" y="595">Best for non-linear combinations.</text>
+  <text class="small" x="325" y="620">Think: a bending decision rule.</text>
+
+  <rect class="panel" x="570" y="90" width="250" height="620" />
+  <text class="head" x="665" y="130">TCN</text>
+  <rect class="input" x="620" y="175" width="150" height="60" />
+  <text class="text" x="654" y="210">Window [W,F]</text>
+  <line class="arrow" x1="695" y1="235" x2="695" y2="280" />
+  <rect class="conv" x="620" y="280" width="150" height="60" />
+  <text class="text" x="656" y="315">Conv over time</text>
+  <line class="arrow" x1="695" y1="340" x2="695" y2="385" />
+  <rect class="conv" x="620" y="385" width="150" height="60" />
+  <text class="text" x="663" y="420">Pooling</text>
+  <line class="arrow" x1="695" y1="445" x2="695" y2="490" />
+  <rect class="out" x="620" y="490" width="150" height="60" />
+  <text class="text" x="652" y="525">LONG/SHORT/NONE</text>
+  <text class="small" x="595" y="595">Best for local time patterns.</text>
+  <text class="small" x="595" y="620">Think: scanning short motifs.</text>
+
+  <rect class="panel" x="840" y="90" width="250" height="620" />
+  <text class="head" x="940" y="130">ViT</text>
+  <rect class="input" x="890" y="175" width="150" height="60" />
+  <text class="text" x="917" y="210">Tokens / patches</text>
+  <line class="arrow" x1="965" y1="235" x2="965" y2="280" />
+  <rect class="attn" x="890" y="280" width="150" height="60" />
+  <text class="text" x="920" y="315">Self-attention</text>
+  <line class="arrow" x1="965" y1="340" x2="965" y2="385" />
+  <rect class="attn" x="890" y="385" width="150" height="60" />
+  <text class="text" x="907" y="420">Transformer block</text>
+  <line class="arrow" x1="965" y1="445" x2="965" y2="490" />
+  <rect class="out" x="890" y="490" width="150" height="60" />
+  <text class="text" x="922" y="525">LONG/SHORT/NONE</text>
+  <text class="small" x="865" y="595">Best for long-range interactions.</text>
+  <text class="small" x="865" y="620">Think: every part can look at every part.</text>
+
+  <rect class="panel" x="1110" y="90" width="250" height="620" />
+  <text class="head" x="1185" y="130">Axial ViT</text>
+  <rect class="input" x="1160" y="175" width="150" height="60" />
+  <text class="text" x="1187" y="210">Grid [time, feat]</text>
+  <line class="arrow" x1="1235" y1="235" x2="1235" y2="280" />
+  <rect class="attn" x="1160" y="280" width="150" height="60" />
+  <text class="text" x="1196" y="315">Time attention</text>
+  <line class="arrow" x1="1235" y1="340" x2="1235" y2="385" />
+  <rect class="attn" x="1160" y="385" width="150" height="60" />
+  <text class="text" x="1188" y="420">Feature attention</text>
+  <line class="arrow" x1="1235" y1="445" x2="1235" y2="490" />
+  <rect class="out" x="1160" y="490" width="150" height="60" />
+  <text class="text" x="1192" y="525">LONG/SHORT/NONE</text>
+  <text class="small" x="1135" y="595">Best for structured time + feature relations.</text>
+  <text class="small" x="1135" y="620">Think: compare along each axis separately.</text>
+</svg>

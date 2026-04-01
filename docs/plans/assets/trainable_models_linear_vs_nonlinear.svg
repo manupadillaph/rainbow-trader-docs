@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Linear versus non-linear intuition for trainable models</title>
+  <desc id="desc">Two-panel schematic comparing logistic linear weighted sum and MLP non-linear feature interaction.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f8fb; }
+      .panel { fill: #ffffff; stroke: #d4d8e2; stroke-width: 2; rx: 18; ry: 18; }
+      .title { font: 700 28px Arial, sans-serif; fill: #1f2937; }
+      .subtitle { font: 600 18px Arial, sans-serif; fill: #334155; }
+      .text { font: 16px Arial, sans-serif; fill: #334155; }
+      .small { font: 14px Arial, sans-serif; fill: #475569; }
+      .boxBlue { fill: #dbeafe; stroke: #60a5fa; stroke-width: 2; rx: 12; ry: 12; }
+      .boxGreen { fill: #dcfce7; stroke: #4ade80; stroke-width: 2; rx: 12; ry: 12; }
+      .boxOrange { fill: #ffedd5; stroke: #fb923c; stroke-width: 2; rx: 12; ry: 12; }
+      .boxPurple { fill: #ede9fe; stroke: #a78bfa; stroke-width: 2; rx: 12; ry: 12; }
+      .arrow { stroke: #64748b; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="520" />
+
+  <rect class="panel" x="30" y="30" width="540" height="460" />
+  <text class="title" x="60" y="75">Linear: Logistic</text>
+  <text class="subtitle" x="60" y="108">Each feature adds or subtracts in a straight, constant way.</text>
+
+  <rect class="boxBlue" x="70" y="155" width="120" height="54" />
+  <text class="text" x="104" y="188">RSI</text>
+  <rect class="boxBlue" x="70" y="235" width="120" height="54" />
+  <text class="text" x="88" y="268">Momentum</text>
+  <rect class="boxBlue" x="70" y="315" width="120" height="54" />
+  <text class="text" x="91" y="348">Volume</text>
+
+  <line class="arrow" x1="190" y1="182" x2="320" y2="182" />
+  <line class="arrow" x1="190" y1="262" x2="320" y2="262" />
+  <line class="arrow" x1="190" y1="342" x2="320" y2="342" />
+
+  <rect class="boxGreen" x="320" y="200" width="150" height="140" />
+  <text class="subtitle" x="355" y="235">Weighted Sum</text>
+  <text class="small" x="345" y="270">score =</text>
+  <text class="small" x="345" y="295">0.8 * RSI</text>
+  <text class="small" x="345" y="318">+ 0.3 * MOM</text>
+  <text class="small" x="345" y="341">- 0.5 * VOL</text>
+
+  <line class="arrow" x1="470" y1="270" x2="520" y2="270" />
+  <rect class="boxOrange" x="520" y="238" width="120" height="64" />
+  <text class="text" x="565" y="276">Output</text>
+
+  <text class="small" x="60" y="415">If RSI changes by +1, the score changes by the same fixed amount.</text>
+  <text class="small" x="60" y="440">This is good for simple straight patterns.</text>
+
+  <rect class="panel" x="630" y="30" width="540" height="460" />
+  <text class="title" x="660" y="75">Non-linear: MLP</text>
+  <text class="subtitle" x="660" y="108">The model can treat combinations of features differently.</text>
+
+  <rect class="boxBlue" x="670" y="155" width="120" height="54" />
+  <text class="text" x="704" y="188">RSI</text>
+  <rect class="boxBlue" x="670" y="235" width="120" height="54" />
+  <text class="text" x="688" y="268">Momentum</text>
+  <rect class="boxBlue" x="670" y="315" width="120" height="54" />
+  <text class="text" x="691" y="348">Volume</text>
+
+  <line class="arrow" x1="790" y1="182" x2="900" y2="175" />
+  <line class="arrow" x1="790" y1="182" x2="900" y2="255" />
+  <line class="arrow" x1="790" y1="262" x2="900" y2="175" />
+  <line class="arrow" x1="790" y1="262" x2="900" y2="255" />
+  <line class="arrow" x1="790" y1="342" x2="900" y2="255" />
+
+  <circle class="boxPurple" cx="930" cy="175" r="36" />
+  <circle class="boxPurple" cx="930" cy="255" r="36" />
+  <text class="small" x="913" y="180">H1</text>
+  <text class="small" x="913" y="260">H2</text>
+
+  <line class="arrow" x1="966" y1="175" x2="1040" y2="220" />
+  <line class="arrow" x1="966" y1="255" x2="1040" y2="220" />
+  <rect class="boxOrange" x="1040" y="188" width="100" height="64" />
+  <text class="text" x="1070" y="226">Output</text>
+
+  <text class="small" x="660" y="405">Example idea: "buy only if RSI is low AND momentum is rising together".</text>
+  <text class="small" x="660" y="430">Now the same RSI value can mean different things depending on the rest.</text>
+</svg>
