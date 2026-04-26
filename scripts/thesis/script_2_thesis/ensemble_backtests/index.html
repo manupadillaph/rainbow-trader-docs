@@ -40790,10 +40790,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#what-it-does" class="md-nav__link">
+  <a href="#runner-behavior" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What It Does
+        Runner Behavior
       
     </span>
   </a>
@@ -40818,10 +40818,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#what-it-does_1" class="md-nav__link">
+  <a href="#batch-runner-behavior" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What It Does
+        Batch Runner Behavior
       
     </span>
   </a>
@@ -40890,10 +40890,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#what-it-does_2" class="md-nav__link">
+  <a href="#batch-audit-behavior" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What It Does
+        Batch Audit Behavior
       
     </span>
   </a>
@@ -41367,8 +41367,8 @@ Script 2 thesis exporters and merged views:</p>
 <li>enforces strict execution compatibility</li>
 <li>writes a full <code>plan.json</code></li>
 </ol>
-<p>If you enable <code>--max-prob-corr</code> and/or <code>--max-signal-agreement</code>, the planner keeps the same structure
-but changes the <code>take top N per model</code> step:</p>
+<p>If you enable <code>--max-prob-corr</code> and/or <code>--max-signal-agreement</code>, the planner
+keeps the same structure but changes the <code>take top N per model</code> step:</p>
 <ul>
 <li>it still walks candidates inside each <code>model_type</code> in ranking order</li>
 <li>it compares each new candidate against the full pool already selected</li>
@@ -41437,8 +41437,9 @@ The renderer can rebuild <code>report.md</code> later without rerunning backtest
 <li>only one strict compatibility bucket in the final plan</li>
 </ul>
 <p>Inside the chosen bucket it keeps the top <code>N</code> trials per model family.</p>
-<p>With <code>--max-prob-corr</code> and/or <code>--max-signal-agreement</code>, it still targets <code>top-per-model</code>, but only
-accepts a candidate when it is not too redundant with the pool selected so far.</p>
+<p>With <code>--max-prob-corr</code> and/or <code>--max-signal-agreement</code>, it still targets
+<code>top-per-model</code>, but only accepts a candidate when it is not too redundant with
+the pool selected so far.</p>
 <h3 id="planner-parameters">Planner Parameters</h3>
 <p><code>generate_ensemble_backtest_plan.py</code></p>
 <ul>
@@ -41586,7 +41587,7 @@ This is the general ensemble-oriented composite.</p>
 <p>Additional eligibility:</p>
 <ul>
 <li><code>PnL &lt; 0</code></li>
-<li><code>PnL + Est.Friction &gt; 0</code></li>
+<li><code>Total Gross PnL &gt; 0</code></li>
 </ul>
 <p>Use this when you suspect the model family may contain friction victims and
 want to see whether an ensemble can recover latent gross edge.</p>
@@ -41600,7 +41601,8 @@ want to see whether an ensemble can recover latent gross edge.</p>
 selection signal.</p>
 <h3 id="correlation-aware-selection">Correlation-Aware Selection</h3>
 <p>This is the main prediction-diversity extension in the current planner.</p>
-<p>Without <code>--max-prob-corr</code> and without <code>--max-signal-agreement</code>, selection is pure ranking:</p>
+<p>Without <code>--max-prob-corr</code> and without <code>--max-signal-agreement</code>, selection is
+pure ranking:</p>
 <ul>
 <li>bucket first</li>
 <li>then ranked <code>top-per-model</code></li>
@@ -41644,7 +41646,7 @@ selection signal.</p>
 <p>This preserves the existing planner shape while avoiding obviously redundant
 members.</p>
 <h2 id="runner">Runner</h2>
-<h3 id="what-it-does">What It Does</h3>
+<h3 id="runner-behavior">Runner Behavior</h3>
 <p><code>run_ensemble_backtests.py</code></p>
 <ol>
 <li>loads the selected source trials from the plan</li>
@@ -41656,7 +41658,7 @@ members.</p>
 <li>writes raw artifacts and regenerates <code>report.md</code></li>
 </ol>
 <h2 id="batch-runner">Batch Runner</h2>
-<h3 id="what-it-does_1">What It Does</h3>
+<h3 id="batch-runner-behavior">Batch Runner Behavior</h3>
 <p><code>run_ensemble_backtest_batch.py</code></p>
 <p>This is the orchestration layer for thesis campaigns.</p>
 <p>Use it when:</p>
@@ -41790,22 +41792,26 @@ members.</p>
   - the batch continues with the remaining executions</p>
 <h3 id="batch-examples">Batch Examples</h3>
 <p>Run the full Phase 1 Block A batch:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/run_ensemble_backtest_batch.py \
-  --batch-json scripts/thesis/script_2_thesis/ensemble_backtests/batches/20260403_phase1_block_a.json
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+.venv/bin/python &quot;$ENSEMBLE_DIR/run_ensemble_backtest_batch.py&quot; \
+  --batch-json &quot;$ENSEMBLE_DIR/batches/20260403_phase1_block_a.json&quot;
 </code></pre>
 <p>Generate all plans first, but do not run any backtests yet:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/run_ensemble_backtest_batch.py \
-  --batch-json scripts/thesis/script_2_thesis/ensemble_backtests/batches/20260403_phase1_block_a.json \
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+.venv/bin/python &quot;$ENSEMBLE_DIR/run_ensemble_backtest_batch.py&quot; \
+  --batch-json &quot;$ENSEMBLE_DIR/batches/20260403_phase1_block_a.json&quot; \
   --plan-only
 </code></pre>
 <p>Run only one named execution:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/run_ensemble_backtest_batch.py \
-  --batch-json scripts/thesis/script_2_thesis/ensemble_backtests/batches/20260403_phase1_block_a.json \
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+.venv/bin/python &quot;$ENSEMBLE_DIR/run_ensemble_backtest_batch.py&quot; \
+  --batch-json &quot;$ENSEMBLE_DIR/batches/20260403_phase1_block_a.json&quot; \
   --only-execution block_a_tcn_f1_promise_top2_mild
 </code></pre>
 <p>Force a rerun of one named execution even if it already has <code>results.json</code>:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/run_ensemble_backtest_batch.py \
-  --batch-json scripts/thesis/script_2_thesis/ensemble_backtests/batches/20260403_phase1_block_a.json \
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+.venv/bin/python &quot;$ENSEMBLE_DIR/run_ensemble_backtest_batch.py&quot; \
+  --batch-json &quot;$ENSEMBLE_DIR/batches/20260403_phase1_block_a.json&quot; \
   --only-execution block_a_tcn_f1_promise_top2_mild \
   --rerun-existing
 </code></pre>
@@ -41836,7 +41842,7 @@ members.</p>
 <li>and, unless <code>--plan-only</code> was used, normal runner artifacts too</li>
 </ul>
 <h2 id="batch-audit">Batch Audit</h2>
-<h3 id="what-it-does_2">What It Does</h3>
+<h3 id="batch-audit-behavior">Batch Audit Behavior</h3>
 <p><code>audit_ensemble_batch_results.py</code></p>
 <p>This is the campaign-level reader for one completed batch root.</p>
 <p>Use it when:</p>
@@ -41889,7 +41895,7 @@ members.</p>
 <p>Best for questions like:
   - which merge rule wins most often?
   - which merge rule has the best average PnL?
-  - which rule improves <code>PnL+Fric</code> most often?</p>
+  - which rule improves <code>Total Gross PnL</code> most often?</p>
 <ul>
 <li><code>campaign_group_summary.csv</code>
   Aggregated campaign views by:</li>
@@ -41912,7 +41918,7 @@ members.</p>
   Human-readable campaign summary:</li>
 <li>quick takeaways</li>
 <li>top executions by net PnL</li>
-<li>top executions by <code>PnL+Fric</code></li>
+<li>top executions by <code>Total Gross PnL</code></li>
 <li>merge rule leaderboard</li>
 <li>family summary</li>
 <li>diversity summary</li>
@@ -41927,17 +41933,23 @@ members.</p>
 </ul>
 <h3 id="batch-audit-examples">Batch Audit Examples</h3>
 <p>Audit a finished batch in place:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/audit_ensemble_batch_results.py \
-  --batch-dir scripts/thesis/script_2_thesis/ensemble_backtests/results/20260403_181718_phase1_block_a
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+BATCH_ROOT=&quot;$ENSEMBLE_DIR/results/20260403_181718_phase1_block_a&quot;
+.venv/bin/python &quot;$ENSEMBLE_DIR/audit_ensemble_batch_results.py&quot; \
+  --batch-dir &quot;$BATCH_ROOT&quot;
 </code></pre>
 <p>Write the campaign audit package into a dedicated subfolder:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/audit_ensemble_batch_results.py \
-  --batch-dir scripts/thesis/script_2_thesis/ensemble_backtests/results/20260403_181718_phase1_block_a \
-  --output-dir scripts/thesis/script_2_thesis/ensemble_backtests/results/20260403_181718_phase1_block_a/audit_views
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+BATCH_ROOT=&quot;$ENSEMBLE_DIR/results/20260403_181718_phase1_block_a&quot;
+.venv/bin/python &quot;$ENSEMBLE_DIR/audit_ensemble_batch_results.py&quot; \
+  --batch-dir &quot;$BATCH_ROOT&quot; \
+  --output-dir &quot;$BATCH_ROOT/audit_views&quot;
 </code></pre>
 <p>Render shorter leaderboards:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/audit_ensemble_batch_results.py \
-  --batch-dir scripts/thesis/script_2_thesis/ensemble_backtests/results/20260403_181718_phase1_block_a \
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+BATCH_ROOT=&quot;$ENSEMBLE_DIR/results/20260403_181718_phase1_block_a&quot;
+.venv/bin/python &quot;$ENSEMBLE_DIR/audit_ensemble_batch_results.py&quot; \
+  --batch-dir &quot;$BATCH_ROOT&quot; \
   --top-n 5
 </code></pre>
 <h3 id="runner-parameters">Runner Parameters</h3>
@@ -42120,7 +42132,8 @@ signal at each timestamp.</p>
 <li>votes are weighted by the normalized <code>selection_score</code></li>
 <li>the winner is the signal with the highest total vote weight</li>
 <li>ties are broken by weighted summed probabilities</li>
-<li>the weighted winner is kept only if its total vote-weight share is at least the threshold</li>
+<li>the weighted winner is kept only if its total vote-weight share is at least
+  the threshold</li>
 <li>otherwise emits <code>NONE</code></li>
 </ol>
 <p>Practical example:</p>
@@ -42187,32 +42200,51 @@ signal at each timestamp.</p>
 interesting because the score already encodes a friction-aware preference.</p>
 <h2 id="full-usage-examples">Full Usage Examples</h2>
 <h3 id="example-1-default-8-rule-exploration-across-several-runs">Example 1: Default 8-rule exploration across several runs</h3>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/generate_ensemble_backtest_plan.py \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260319_035820/script2_experiment_ids.csv \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260323_tierA_rescue_v2/script2_experiment_ids.csv \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260325_tierB_mlp_ex/script2_experiment_ids.csv \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260328_tierB_corrected/script2_experiment_ids.csv \
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+RESULTS_DIR=scripts/thesis/script_2_thesis/results
+RUN_A=20260319_035820
+RUN_B=20260323_tierA_rescue_v2
+RUN_C=20260325_tierB_mlp_ex
+RUN_D=20260328_tierB_corrected
+.venv/bin/python &quot;$ENSEMBLE_DIR/generate_ensemble_backtest_plan.py&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_A/script2_experiment_ids.csv&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_B/script2_experiment_ids.csv&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_C/script2_experiment_ids.csv&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_D/script2_experiment_ids.csv&quot; \
   --fold 2 \
   --top-per-model 2 \
-  --output-dir scripts/thesis/script_2_thesis/ensemble_backtests/results/20260402_default8_f2
+  --output-dir &quot;$ENSEMBLE_DIR/results/20260402_default8_f2&quot;
 </code></pre>
 <h3 id="example-2-friction-oriented-selection-with-conservative-voting">Example 2: Friction-oriented selection with conservative voting</h3>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/generate_ensemble_backtest_plan.py \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260319_035820/script2_experiment_ids.csv \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260325_tierB_mlp_ex/script2_experiment_ids.csv \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260328_tierB_corrected/script2_experiment_ids.csv \
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+RESULTS_DIR=scripts/thesis/script_2_thesis/results
+RUN_A=20260319_035820
+RUN_C=20260325_tierB_mlp_ex
+RUN_D=20260328_tierB_corrected
+MERGE_RULES=majority_vote:0.75,majority_vote:0.85
+MERGE_RULES=&quot;$MERGE_RULES,weighted_majority_vote:0.75&quot;
+MERGE_RULES=&quot;$MERGE_RULES,weighted_majority_vote:0.85&quot;
+.venv/bin/python &quot;$ENSEMBLE_DIR/generate_ensemble_backtest_plan.py&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_A/script2_experiment_ids.csv&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_C/script2_experiment_ids.csv&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_D/script2_experiment_ids.csv&quot; \
   --fold 2 \
   --tier B \
   --top-per-model 3 \
   --rank-by friction \
-  --merge-rules majority_vote:0.75,majority_vote:0.85,weighted_majority_vote:0.75,weighted_majority_vote:0.85 \
-  --output-dir scripts/thesis/script_2_thesis/ensemble_backtests/results/20260402_friction_f2_tierb
+  --merge-rules &quot;$MERGE_RULES&quot; \
+  --output-dir &quot;$ENSEMBLE_DIR/results/20260402_friction_f2_tierb&quot;
 </code></pre>
 <h3 id="example-3-correlation-aware-planning">Example 3: Correlation-aware planning</h3>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/generate_ensemble_backtest_plan.py \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260319_035820/script2_experiment_ids.csv \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260325_tierB_mlp_ex/script2_experiment_ids.csv \
-  --summary-csv scripts/thesis/script_2_thesis/results/20260328_tierB_corrected/script2_experiment_ids.csv \
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+RESULTS_DIR=scripts/thesis/script_2_thesis/results
+RUN_A=20260319_035820
+RUN_C=20260325_tierB_mlp_ex
+RUN_D=20260328_tierB_corrected
+.venv/bin/python &quot;$ENSEMBLE_DIR/generate_ensemble_backtest_plan.py&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_A/script2_experiment_ids.csv&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_C/script2_experiment_ids.csv&quot; \
+  --summary-csv &quot;$RESULTS_DIR/$RUN_D/script2_experiment_ids.csv&quot; \
   --fold 1 \
   --tier B \
   --top-per-model 1 \
@@ -42226,23 +42258,31 @@ interesting because the score already encodes a friction-aware preference.</p>
 <li>but automatic rejection of highly redundant prediction streams</li>
 </ul>
 <h3 id="example-4-execute-exactly-what-the-plan-defines">Example 4: Execute exactly what the plan defines</h3>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/run_ensemble_backtests.py \
-  --plan-json scripts/thesis/script_2_thesis/ensemble_backtests/results/20260402_fold2_mix/plan.json
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+.venv/bin/python &quot;$ENSEMBLE_DIR/run_ensemble_backtests.py&quot; \
+  --plan-json &quot;$ENSEMBLE_DIR/results/20260402_fold2_mix/plan.json&quot;
 </code></pre>
 <h3 id="example-5-override-the-merge-rules-at-execution-time">Example 5: Override the merge rules at execution time</h3>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/run_ensemble_backtests.py \
-  --plan-json scripts/thesis/script_2_thesis/ensemble_backtests/results/20260402_fold2_mix/plan.json \
-  --merge-rules average,weighted_average,majority_vote:0.75,weighted_majority_vote:0.75
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+MERGE_RULES=average,weighted_average
+MERGE_RULES=&quot;$MERGE_RULES,majority_vote:0.75&quot;
+MERGE_RULES=&quot;$MERGE_RULES,weighted_majority_vote:0.75&quot;
+.venv/bin/python &quot;$ENSEMBLE_DIR/run_ensemble_backtests.py&quot; \
+  --plan-json &quot;$ENSEMBLE_DIR/results/20260402_fold2_mix/plan.json&quot; \
+  --merge-rules &quot;$MERGE_RULES&quot;
 </code></pre>
 <h3 id="example-6-regenerate-only-the-report">Example 6: Regenerate only the report</h3>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/render_ensemble_backtest_report.py \
-  --results-csv scripts/thesis/script_2_thesis/ensemble_backtests/results/20260402_fold2_mix/results.csv \
-  --results-json scripts/thesis/script_2_thesis/ensemble_backtests/results/20260402_fold2_mix/results.json \
-  --output-md scripts/thesis/script_2_thesis/ensemble_backtests/results/20260402_fold2_mix/report.md
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+RUN_DIR=&quot;$ENSEMBLE_DIR/results/20260402_fold2_mix&quot;
+.venv/bin/python &quot;$ENSEMBLE_DIR/render_ensemble_backtest_report.py&quot; \
+  --results-csv &quot;$RUN_DIR/results.csv&quot; \
+  --results-json &quot;$RUN_DIR/results.json&quot; \
+  --output-md &quot;$RUN_DIR/report.md&quot;
 </code></pre>
 <h3 id="example-7-execute-one-full-campaign-block-from-a-json-batch-spec">Example 7: Execute one full campaign block from a JSON batch spec</h3>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/run_ensemble_backtest_batch.py \
-  --batch-json scripts/thesis/script_2_thesis/ensemble_backtests/batches/20260403_phase1_block_a.json
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+.venv/bin/python &quot;$ENSEMBLE_DIR/run_ensemble_backtest_batch.py&quot; \
+  --batch-json &quot;$ENSEMBLE_DIR/batches/20260403_phase1_block_a.json&quot;
 </code></pre>
 <p>This creates:</p>
 <ul>
@@ -42252,8 +42292,9 @@ interesting because the score already encodes a friction-aware preference.</p>
 <li>one subfolder per execution, each with its own planner and runner artifacts</li>
 </ul>
 <h3 id="example-8-run-only-one-named-execution-from-the-batch">Example 8: Run only one named execution from the batch</h3>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/run_ensemble_backtest_batch.py \
-  --batch-json scripts/thesis/script_2_thesis/ensemble_backtests/batches/20260403_phase1_block_a.json \
+<pre><code class="language-bash">ENSEMBLE_DIR=scripts/thesis/script_2_thesis/ensemble_backtests
+.venv/bin/python &quot;$ENSEMBLE_DIR/run_ensemble_backtest_batch.py&quot; \
+  --batch-json &quot;$ENSEMBLE_DIR/batches/20260403_phase1_block_a.json&quot; \
   --only-execution block_a_tcn_f1_promise_top2_mild
 </code></pre>
 <h2 id="artifacts">Artifacts</h2>
@@ -42306,7 +42347,8 @@ interesting because the score already encodes a friction-aware preference.</p>
 </li>
 <li>
 <p><code>results.json</code>
-  Rich metadata including selection policy, prediction preparation state, and all result rows.</p>
+  Rich metadata including selection policy, prediction preparation state, and
+  all result rows.</p>
 </li>
 <li>
 <p><code>report.md</code>

@@ -40855,11 +40855,12 @@ thresholds.</p>
 </ul>
 <h2 id="main-scripts">Main Scripts</h2>
 <h3 id="generate_extra_backtest_planpy"><code>generate_extra_backtest_plan.py</code></h3>
-<p>Reads the SQLite DB, computes trial metrics and estimated friction, selects
-friction-victim candidates, inspects their original prediction parquets, and
-writes <code>plan.md</code> plus <code>plan.json</code>.</p>
+<p>Reads the SQLite DB, computes trial metrics from persisted gross/net monetary
+snapshots, selects friction-victim candidates, inspects their original
+prediction parquets, and writes <code>plan.md</code> plus <code>plan.json</code>.</p>
 <p>Example:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/extra_backtests/generate_extra_backtest_plan.py \
+<pre><code class="language-bash">SCRIPT_DIR=scripts/thesis/script_2_thesis/extra_backtests
+.venv/bin/python &quot;$SCRIPT_DIR/generate_extra_backtest_plan.py&quot; \
   --db-path database/rainbow_trader.sqlite \
   --per-fold-k 5 \
   --min-trades 100
@@ -40871,8 +40872,10 @@ and reruns the selected thresholds as manual backtests. After writing
 shared standalone renderer so the normal flow and the report-only flow stay
 identical.</p>
 <p>Example:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/extra_backtests/run_extra_backtests.py \
-  --plan-json scripts/thesis/script_2_thesis/extra_backtests/results/20260331_132116/plan.json \
+<pre><code class="language-bash">SCRIPT_DIR=scripts/thesis/script_2_thesis/extra_backtests
+RESULTS_DIR=&quot;$SCRIPT_DIR/results/20260331_132116&quot;
+.venv/bin/python &quot;$SCRIPT_DIR/run_extra_backtests.py&quot; \
+  --plan-json &quot;$RESULTS_DIR/plan.json&quot; \
   --selection-mode all
 </code></pre>
 <h3 id="render_extra_backtest_reportpy"><code>render_extra_backtest_report.py</code></h3>
@@ -40880,8 +40883,10 @@ identical.</p>
 backtests. This is the right tool when the reporting logic changes after a run
 has already finished.</p>
 <p>Example:</p>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/extra_backtests/render_extra_backtest_report.py \
-  --results-csv scripts/thesis/script_2_thesis/extra_backtests/results/20260331_132841/results.csv
+<pre><code class="language-bash">SCRIPT_DIR=scripts/thesis/script_2_thesis/extra_backtests
+RESULTS_DIR=&quot;$SCRIPT_DIR/results/20260331_132841&quot;
+.venv/bin/python &quot;$SCRIPT_DIR/render_extra_backtest_report.py&quot; \
+  --results-csv &quot;$RESULTS_DIR/results.csv&quot;
 </code></pre>
 <h3 id="run_extra_backtestssh"><code>run_extra_backtests.sh</code></h3>
 <p>Convenience wrapper for:</p>
@@ -40889,45 +40894,54 @@ has already finished.</p>
 <li>generating the plan</li>
 <li>optionally stopping there</li>
 <li>running the reruns into the same folder</li>
-<li>writing <code>backtesting.log</code> automatically into that folder during the rerun step</li>
+<li>writing <code>backtesting.log</code> automatically into that folder during the rerun
+  step</li>
 <li>optionally rebuilding <code>report.md</code> only from an existing <code>results.csv</code></li>
 </ol>
 <p>Examples:</p>
 <pre><code class="language-bash"># Plan only
-bash scripts/thesis/script_2_thesis/extra_backtests/run_extra_backtests.sh --plan-only
+SCRIPT_DIR=scripts/thesis/script_2_thesis/extra_backtests
+bash &quot;$SCRIPT_DIR/run_extra_backtests.sh&quot; --plan-only
 
 # Plan only, but keep 7 candidates per fold
-bash scripts/thesis/script_2_thesis/extra_backtests/run_extra_backtests.sh --plan-only --per-fold-k 7
+bash &quot;$SCRIPT_DIR/run_extra_backtests.sh&quot; --plan-only --per-fold-k 7
 
 # Full flow
-bash scripts/thesis/script_2_thesis/extra_backtests/run_extra_backtests.sh
+bash &quot;$SCRIPT_DIR/run_extra_backtests.sh&quot;
 
 # Reuse an existing plan and run all three threshold variants
-bash scripts/thesis/script_2_thesis/extra_backtests/run_extra_backtests.sh \
-  --plan-json scripts/thesis/script_2_thesis/extra_backtests/results/20260331_170000/plan.json \
+RESULTS_DIR=&quot;$SCRIPT_DIR/results/20260331_170000&quot;
+bash &quot;$SCRIPT_DIR/run_extra_backtests.sh&quot; \
+  --plan-json &quot;$RESULTS_DIR/plan.json&quot; \
   --selection-mode all
 
 # Regenerate report.md only from an existing results.csv
-bash scripts/thesis/script_2_thesis/extra_backtests/run_extra_backtests.sh \
+RESULTS_DIR=&quot;$SCRIPT_DIR/results/20260331_132841&quot;
+bash &quot;$SCRIPT_DIR/run_extra_backtests.sh&quot; \
   --report-only \
-  --results-csv scripts/thesis/script_2_thesis/extra_backtests/results/20260331_132841/results.csv
+  --results-csv &quot;$RESULTS_DIR/results.csv&quot;
 </code></pre>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>Candidate selection is automatic and DB-driven. The audit markdown is not an input.</li>
-<li>By default the planner keeps <code>5</code> candidates per fold, aiming for <code>20</code> total reruns when every fold has enough
-  eligible trials.</li>
-<li>The selection score is now rescue-oriented: it still values S2/F1/Objective, but also gives more weight to
-  gross edge per trade and moderate turnover instead of simply favoring the highest-trade friction victims.</li>
-<li>Threshold proposals are based on prediction parquets and are meant to guide reruns, not to guarantee a target trade count.</li>
-<li>The default rerun mode is <code>all</code>, which means <code>20</code> candidates × <code>3</code> thresholds = <code>60</code> manual reruns when every fold
-  has enough eligible trials.</li>
-<li>The rerun period stays aligned to the original experiment fold because the extra-backtest runner reuses the stored
-  experiment range and only overrides strategy thresholds.</li>
-<li>The final markdown report is now produced through the shared standalone renderer, so <code>run_extra_backtests.py</code> and
-  <code>render_extra_backtest_report.py</code> produce the same <code>report.md</code> structure.</li>
+<li>Candidate selection is automatic and DB-driven. The audit markdown is not an
+  input.</li>
+<li>By default the planner keeps <code>5</code> candidates per fold, aiming for <code>20</code> total
+  reruns when every fold has enough eligible trials.</li>
+<li>The selection score is now rescue-oriented: it still values S2/F1/Objective,
+  but also gives more weight to gross edge per trade and moderate turnover
+  instead of simply favoring the highest-trade friction victims.</li>
+<li>Threshold proposals are based on prediction parquets and are meant to guide
+  reruns, not to guarantee a target trade count.</li>
+<li>The default rerun mode is <code>all</code>, which means <code>20</code> candidates × <code>3</code>
+  thresholds = <code>60</code> manual reruns when every fold has enough eligible trials.</li>
+<li>The rerun period stays aligned to the original experiment fold because the
+  extra-backtest runner reuses the stored experiment range and only overrides
+  strategy thresholds.</li>
+<li>The final markdown report is now produced through the shared standalone
+  renderer, so <code>run_extra_backtests.py</code> and <code>render_extra_backtest_report.py</code>
+  produce the same <code>report.md</code> structure.</li>
 <li>The actual execution override path is implemented in:
-  <a href="/home/manuelpadilla/sources/reposUbuntu/PERSONALS/rainbow-trader/modules/core/src/rainbow/core/helpers/backtest_strategy_overrides.py"><code>modules/core/src/rainbow/core/helpers/backtest_strategy_overrides.py</code></a></li>
+  <code>modules/core/src/rainbow/core/helpers/backtest_strategy_overrides.py</code>.</li>
 </ul>
 
 
