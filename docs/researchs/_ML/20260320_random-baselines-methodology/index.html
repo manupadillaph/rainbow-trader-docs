@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../ML-deep-research-report-2/">
+        <link rel="prev" href="../20260315_baselines-catalog/">
       
       
-        <link rel="next" href="../ML-roadmap-checkpoint/">
+        <link rel="next" href="../20260430_ML_models_roadmap/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Ml Deep Research Report - Rainbow Trader</title>
+        <title>20260320 Random Baselines Methodology - Rainbow Trader</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#model-options-for-small-window-multi-timeframe-trading-sequences" class="md-skip">
+        <a href="#random-baseline-guide-for-thesis-validation" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ml Deep Research Report
+              20260320 Random Baselines Methodology
             
           </span>
         </div>
@@ -1166,14 +1166,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../plans/SCRIPT2_DEEP_VERIFICATION_PLAN/" class="md-nav__link">
+      <a href="../../../plans/SCRIPT2_REPORT_CLEANING_AND_REGENERATION_PLAN/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Script2 Deep Verification Plan
+    Script2 Report Cleaning And Regeneration Plan
   
 
     
@@ -2388,14 +2388,126 @@
   
   
     <li class="md-nav__item">
-      <a href="../ML-deep-research-report-2/" class="md-nav__link">
+      <a href="../20260301_thesis-literature-review/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Ml Deep Research Report 2
+    20260301 Thesis Literature Review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260305_ML-architectures-survey-EN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260305 Ml Architectures Survey En
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260306_ML-architectures-survey-ES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260306 Ml Architectures Survey Es
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260310_practical-suggestions-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260310 Practical Suggestions Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260315_baselines-catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260315 Baselines Catalog
   
 
     
@@ -2432,7 +2544,7 @@
   <span class="md-ellipsis">
     
   
-    Ml Deep Research Report
+    20260320 Random Baselines Methodology
   
 
     
@@ -2450,7 +2562,7 @@
   <span class="md-ellipsis">
     
   
-    Ml Deep Research Report
+    20260320 Random Baselines Methodology
   
 
     
@@ -2476,10 +2588,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#framing-your-current-setup-and-the-core-modeling-problem" class="md-nav__link">
+  <a href="#1-title-and-goal" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Framing your current setup and the core modeling problem
+        1. Title and Goal
       
     </span>
   </a>
@@ -2487,22 +2599,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#transformer-family-time-series-backbones-worth-testing" class="md-nav__link">
+  <a href="#2-why-random-baselines-are-mandatory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Transformer-family time-series backbones worth testing
+        2. Why Random Baselines Are Mandatory
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Transformer-family time-series backbones worth testing">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-freeze-temporal-splits-and-reporting-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Freeze Temporal Splits and Reporting Protocol
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Freeze Temporal Splits and Reporting Protocol">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#patch-tokens-instead-of-timestamp-tokens" class="md-nav__link">
+  <a href="#what-freeze-temporal-splits-means" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Patch tokens instead of timestamp tokens
+        What freeze temporal splits means
       
     </span>
   </a>
@@ -2510,10 +2633,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-tokens-instead-of-time-tokens" class="md-nav__link">
+  <a href="#what-freeze-report-protocol-means" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Variable tokens instead of time tokens
+        What freeze report protocol means
       
     </span>
   </a>
@@ -2521,32 +2644,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#explicit-cross-dimension-modeling" class="md-nav__link">
+  <a href="#freeze-checklist" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Explicit cross-dimension modeling
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#time-series-transformers-with-built-in-priors-decomposition-periodicity-multi-scale" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Time-series Transformers with built-in priors (decomposition, periodicity, multi-scale)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#time-aware-position-encoding-variants" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Time-aware position encoding variants
+        Freeze checklist
       
     </span>
   </a>
@@ -2559,22 +2660,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#non-transformer-baselines-that-often-match-or-beat-attention-on-short-windows" class="md-nav__link">
+  <a href="#4-always-flat-baseline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Non-Transformer baselines that often match or beat attention on short windows
+        4. Always-Flat Baseline
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Non-Transformer baselines that often match or beat attention on short windows">
+    <nav class="md-nav" aria-label="4. Always-Flat Baseline">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#temporal-convolutional-networks-and-inception-style-cnns" class="md-nav__link">
+  <a href="#definition" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Temporal convolutional networks and Inception-style CNNs
+        Definition
       
     </span>
   </a>
@@ -2582,10 +2683,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#rocket-and-minirocket-as-fast-strong-baselines-for-window-classification" class="md-nav__link">
+  <a href="#why-keep-it" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ROCKET and MiniROCKET as “fast strong baselines” for window classification
+        Why keep it
       
     </span>
   </a>
@@ -2593,10 +2694,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#linear--mlp-mixers-as-control-points" class="md-nav__link">
+  <a href="#limitation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Linear / MLP mixers as control points
+        Limitation
       
     </span>
   </a>
@@ -2609,22 +2710,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sequence-backbones-beyond-transformers" class="md-nav__link">
+  <a href="#5-random-l-and-random-b-full-detail" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sequence backbones beyond Transformers
+        5. Random-L and Random-B Full Detail
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Sequence backbones beyond Transformers">
+    <nav class="md-nav" aria-label="5. Random-L and Random-B Full Detail">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#structured-state-space-models-and-mamba-family-models" class="md-nav__link">
+  <a href="#random-l-full-detail-label-prior-matched" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Structured state space models and Mamba-family models
+        Random-L Full Detail (Label-Prior Matched)
       
     </span>
   </a>
@@ -2632,10 +2733,164 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#continuous-time-models-for-irregular-or-misaligned-sampling" class="md-nav__link">
+  <a href="#definition_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Continuous-time models for irregular or misaligned sampling
+        Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration-source-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibration source rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-l-algorithm-pseudocode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random-L algorithm pseudocode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapping-to-pipeline-prediction-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapping to pipeline prediction fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strengths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strengths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weaknesses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weaknesses
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-b-full-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random-B Full Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#definition_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration-source-rules_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibration source rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-b-algorithm-pseudocode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random-B algorithm pseudocode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapping-to-pipeline-prediction-fields_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapping to pipeline prediction fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gate-interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gate interaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strengths_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strengths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weaknesses_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weaknesses
       
     </span>
   </a>
@@ -2648,10 +2903,198 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multi-timeframe-representation-strategies-that-match-your-window-construction" class="md-nav__link">
+  <a href="#6-random-markov-full-detail-optional-advanced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Multi-timeframe representation strategies that match your window construction
+        6. Random-Markov Full Detail (Optional Advanced)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Random-Markov Full Detail (Optional Advanced)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transition-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transition matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sampling-algorithm-pseudocode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampling algorithm pseudocode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional extension
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-statistics-to-prove-better-than-random" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Statistics to Prove Better Than Random
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Statistics to Prove Better Than Random">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-seed-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-seed requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute-random-distribution-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compute random distribution summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-percentile-vs-random-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model percentile vs random distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empirical-p-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empirical p-value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effect-size-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect size requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistency-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consistency requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-clarification-on-train-vs-validation-vs-test-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Clarification on Train vs Validation vs Test Usage
       
     </span>
   </a>
@@ -2659,10 +3102,110 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#updated-research-directions-for-pretraining-and-transfer-to-your-supervised-heads" class="md-nav__link">
+  <a href="#9-leakage-explained-test-set-calibration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Updated research directions for pretraining and transfer to your supervised heads
+        9. Leakage Explained (Test-Set Calibration)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Leakage Explained (Test-Set Calibration)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-leakage-means-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What leakage means here
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-harmful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why harmful
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrong-vs-correct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrong vs correct
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-fair-comparison-model-with-gate-vs-random-with-same-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Fair Comparison: Model With Gate vs Random With Same Gate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Fair Comparison: Model With Gate vs Random With Same Gate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitfall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pitfall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correct-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correct comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fairness-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fairness checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-thesis-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Thesis Acceptance Criteria
       
     </span>
   </a>
@@ -2670,10 +3213,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#model-shortlist-and-experimental-matrix-aligned-with-your-pipeline" class="md-nav__link">
+  <a href="#12-recommended-reporting-template" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Model shortlist and experimental matrix aligned with your pipeline
+        12. Recommended Reporting Template
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-common-mistakes-and-anti-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Common Mistakes and Anti-Patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-defaults-for-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Defaults for This Project
       
     </span>
   </a>
@@ -2696,14 +3261,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../ML-roadmap-checkpoint/" class="md-nav__link">
+      <a href="../20260430_ML_models_roadmap/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Ml Roadmap Checkpoint
+    20260430 Ml Models Roadmap
   
 
     
@@ -2724,126 +3289,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../baselines/" class="md-nav__link">
+      <a href="../20260430_script2-progressive-complexity-decisions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Baselines
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../deep-research-report/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Deep Research Report
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../random/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Random
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../script2-baseline-decisions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Script2 Baseline Decisions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sugerencias/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Sugerencias
+    20260430 Script2 Progressive Complexity Decisions
   
 
     
@@ -41581,10 +42034,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#framing-your-current-setup-and-the-core-modeling-problem" class="md-nav__link">
+  <a href="#1-title-and-goal" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Framing your current setup and the core modeling problem
+        1. Title and Goal
       
     </span>
   </a>
@@ -41592,22 +42045,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#transformer-family-time-series-backbones-worth-testing" class="md-nav__link">
+  <a href="#2-why-random-baselines-are-mandatory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Transformer-family time-series backbones worth testing
+        2. Why Random Baselines Are Mandatory
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Transformer-family time-series backbones worth testing">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-freeze-temporal-splits-and-reporting-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Freeze Temporal Splits and Reporting Protocol
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Freeze Temporal Splits and Reporting Protocol">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#patch-tokens-instead-of-timestamp-tokens" class="md-nav__link">
+  <a href="#what-freeze-temporal-splits-means" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Patch tokens instead of timestamp tokens
+        What freeze temporal splits means
       
     </span>
   </a>
@@ -41615,10 +42079,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-tokens-instead-of-time-tokens" class="md-nav__link">
+  <a href="#what-freeze-report-protocol-means" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Variable tokens instead of time tokens
+        What freeze report protocol means
       
     </span>
   </a>
@@ -41626,32 +42090,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#explicit-cross-dimension-modeling" class="md-nav__link">
+  <a href="#freeze-checklist" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Explicit cross-dimension modeling
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#time-series-transformers-with-built-in-priors-decomposition-periodicity-multi-scale" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Time-series Transformers with built-in priors (decomposition, periodicity, multi-scale)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#time-aware-position-encoding-variants" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Time-aware position encoding variants
+        Freeze checklist
       
     </span>
   </a>
@@ -41664,22 +42106,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#non-transformer-baselines-that-often-match-or-beat-attention-on-short-windows" class="md-nav__link">
+  <a href="#4-always-flat-baseline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Non-Transformer baselines that often match or beat attention on short windows
+        4. Always-Flat Baseline
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Non-Transformer baselines that often match or beat attention on short windows">
+    <nav class="md-nav" aria-label="4. Always-Flat Baseline">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#temporal-convolutional-networks-and-inception-style-cnns" class="md-nav__link">
+  <a href="#definition" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Temporal convolutional networks and Inception-style CNNs
+        Definition
       
     </span>
   </a>
@@ -41687,10 +42129,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#rocket-and-minirocket-as-fast-strong-baselines-for-window-classification" class="md-nav__link">
+  <a href="#why-keep-it" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ROCKET and MiniROCKET as “fast strong baselines” for window classification
+        Why keep it
       
     </span>
   </a>
@@ -41698,10 +42140,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#linear--mlp-mixers-as-control-points" class="md-nav__link">
+  <a href="#limitation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Linear / MLP mixers as control points
+        Limitation
       
     </span>
   </a>
@@ -41714,22 +42156,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sequence-backbones-beyond-transformers" class="md-nav__link">
+  <a href="#5-random-l-and-random-b-full-detail" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sequence backbones beyond Transformers
+        5. Random-L and Random-B Full Detail
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Sequence backbones beyond Transformers">
+    <nav class="md-nav" aria-label="5. Random-L and Random-B Full Detail">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#structured-state-space-models-and-mamba-family-models" class="md-nav__link">
+  <a href="#random-l-full-detail-label-prior-matched" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Structured state space models and Mamba-family models
+        Random-L Full Detail (Label-Prior Matched)
       
     </span>
   </a>
@@ -41737,10 +42179,164 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#continuous-time-models-for-irregular-or-misaligned-sampling" class="md-nav__link">
+  <a href="#definition_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Continuous-time models for irregular or misaligned sampling
+        Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration-source-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibration source rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-l-algorithm-pseudocode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random-L algorithm pseudocode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapping-to-pipeline-prediction-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapping to pipeline prediction fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strengths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strengths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weaknesses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weaknesses
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-b-full-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random-B Full Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#definition_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration-source-rules_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibration source rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-b-algorithm-pseudocode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random-B algorithm pseudocode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapping-to-pipeline-prediction-fields_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapping to pipeline prediction fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gate-interaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gate interaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strengths_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strengths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weaknesses_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weaknesses
       
     </span>
   </a>
@@ -41753,10 +42349,198 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multi-timeframe-representation-strategies-that-match-your-window-construction" class="md-nav__link">
+  <a href="#6-random-markov-full-detail-optional-advanced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Multi-timeframe representation strategies that match your window construction
+        6. Random-Markov Full Detail (Optional Advanced)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Random-Markov Full Detail (Optional Advanced)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transition-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transition matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sampling-algorithm-pseudocode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampling algorithm pseudocode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional extension
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-statistics-to-prove-better-than-random" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Statistics to Prove Better Than Random
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Statistics to Prove Better Than Random">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-seed-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-seed requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute-random-distribution-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compute random distribution summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-percentile-vs-random-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model percentile vs random distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empirical-p-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empirical p-value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effect-size-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect size requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistency-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consistency requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-clarification-on-train-vs-validation-vs-test-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Clarification on Train vs Validation vs Test Usage
       
     </span>
   </a>
@@ -41764,10 +42548,110 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#updated-research-directions-for-pretraining-and-transfer-to-your-supervised-heads" class="md-nav__link">
+  <a href="#9-leakage-explained-test-set-calibration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Updated research directions for pretraining and transfer to your supervised heads
+        9. Leakage Explained (Test-Set Calibration)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Leakage Explained (Test-Set Calibration)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-leakage-means-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What leakage means here
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-harmful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why harmful
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrong-vs-correct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrong vs correct
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-fair-comparison-model-with-gate-vs-random-with-same-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Fair Comparison: Model With Gate vs Random With Same Gate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Fair Comparison: Model With Gate vs Random With Same Gate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitfall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pitfall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correct-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correct comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fairness-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fairness checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-thesis-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Thesis Acceptance Criteria
       
     </span>
   </a>
@@ -41775,10 +42659,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#model-shortlist-and-experimental-matrix-aligned-with-your-pipeline" class="md-nav__link">
+  <a href="#12-recommended-reporting-template" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Model shortlist and experimental matrix aligned with your pipeline
+        12. Recommended Reporting Template
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-common-mistakes-and-anti-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Common Mistakes and Anti-Patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-defaults-for-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Defaults for This Project
       
     </span>
   </a>
@@ -41864,7 +42770,7 @@
     
     
       <li class="md-path__item">
-        <a href="../ML-deep-research-report-2/" class="md-path__link">
+        <a href="../20260301_thesis-literature-review/" class="md-path__link">
           
   <span class="md-ellipsis">
     Ml
@@ -41886,91 +42792,455 @@
 
 
 
-<h1 id="model-options-for-small-window-multi-timeframe-trading-sequences">Model options for small-window multi-timeframe trading sequences</h1>
-<h2 id="framing-your-current-setup-and-the-core-modeling-problem">Framing your current setup and the core modeling problem</h2>
-<p>Your current “TradingViT” is a Transformer encoder that consumes a 2D time-series window shaped as <code>[batch, seq_len, features]</code>, projects features to an embedding dimension, adds a learned positional embedding, runs a stack of self-attention layers, then pools across time and produces multi-head outputs (class + two bounded regressions). This is structurally closer to a standard Transformer encoder from “Attention Is All You Need” than to a classical vision ViT that forms 2D patches from an image grid. citeturn11search0turn11search1</p>
-<p>From the perspective of research literature, your input is a multivariate time series window (MTS). The central question is how to (a) encode temporal order, (b) model cross-feature interactions, and (c) stay stable under small-window supervision and non-stationary market regimes. The Transformer family is attractive because self-attention can connect any two positions in a sequence. citeturn11search0turn13search11</p>
-<p>Two details in your setting matter for model choice:</p>
-<p>First, you treat the window as “ticks” where a tick can mean 1h bars or 1d bars, and features can themselves come from multiple timeframes aligned by timestamp. This creates a representation where position index is a lag counter, but the real elapsed time per step can differ by feature/timeframe. In the broader time-series literature this resembles misaligned or irregular sampling across variables, a case where adding explicit time-interval information or adopting continuous-time models can change results. citeturn6search2turn6search0turn3search3</p>
-<p>Second, your pipeline evaluates with temporal splits and embargo-like logic. This matches a known issue in finance: naive random CV can leak future-dependent information. A finance-specific discussion of purging/embargo and time-aware validation is covered in entity["book","Advances in Financial Machine Learning","lopez de prado 2018"] and related material. citeturn14search1turn14search14</p>
-<h2 id="transformer-family-time-series-backbones-worth-testing">Transformer-family time-series backbones worth testing</h2>
-<p>A useful way to organize Transformer alternatives is by what they tokenize and how they inject inductive bias for time.</p>
-<h3 id="patch-tokens-instead-of-timestamp-tokens">Patch tokens instead of timestamp tokens</h3>
-<p>Patch-based tokenization adapts the key ViT idea (“tokens are patches”) from vision to time series. In ViT, an image is split into fixed patches and fed to a Transformer. citeturn11search1</p>
-<p>For time series, PatchTST applies segmentation along the time axis into subseries “patches” that become tokens, often with a “channel-independence” design. This is motivated by long lookbacks, but patching can also help short windows by forcing a local aggregation prior to attention, which can act as a bias toward local patterns. citeturn0search0turn13search7</p>
-<p>How this maps to your use: keep your multi-head outputs, replace the encoder with “patch embed → transformer over patches → pool → heads”. When <code>seq_len=50</code>, you can test patch sizes like 5 or 10 (tokens 10 or 5), which changes attention’s effective granularity. The PatchTST paper and the broader Transformer-in-time-series survey both describe patching as a response to limitations of timestamp-level tokenization. citeturn0search0turn13search7turn13search11</p>
-<h3 id="variable-tokens-instead-of-time-tokens">Variable tokens instead of time tokens</h3>
-<p>A dominant failure mode for multivariate time series is collapsing many variables at each timestep into a single token embedding, which can blur variable-specific dynamics. iTransformer flips the dimensions: it embeds time points of each variable into “variate tokens” and applies attention across variables, while feed-forward layers operate per variable token. citeturn0search9turn0search1</p>
-<p>For your setting (many features and a modest <code>seq_len</code>), a “variables-as-tokens” backbone can be a direct fit: each feature becomes one token, and each token contains the lag vector of length <code>seq_len</code> (embedded by a small MLP/1D conv). This also aligns with your “2D matrix” intuition: you are now tokenizing along the feature axis instead of the time axis. The iTransformer paper provides the rationale and empirical results in forecasting contexts; the architectural idea transfers to classification/regression heads. citeturn0search9turn13search11</p>
-<h3 id="explicit-cross-dimension-modeling">Explicit cross-dimension modeling</h3>
-<p>Crossformer targets multivariate time series by embedding the input into a 2D array and modeling cross-dimension dependency explicitly, rather than treating cross-variable interaction as a side effect of time-token embeddings. citeturn4search0turn4search4</p>
-<p>This design direction is relevant when your signal depends on interactions between indicators (feature-feature) as much as on temporal patterns (time-time). It is also aligned with your idea of the window as a 2D object rather than a 1D sequence. citeturn4search0turn13search11</p>
-<h3 id="time-series-transformers-with-built-in-priors-decomposition-periodicity-multi-scale">Time-series Transformers with built-in priors (decomposition, periodicity, multi-scale)</h3>
-<p>Several time-series Transformers add structural priors. Autoformer integrates decomposition (trend/seasonal) and an autocorrelation mechanism as a replacement for standard self-attention in long-term forecasting. citeturn1search1turn1search5<br />
-FEDformer uses seasonal-trend decomposition and frequency-domain mechanisms for long horizons. citeturn1search2turn1search6<br />
-TimesNet models temporal variation in a 2D space with an emphasis on multi-periodicity and is presented as “task-general” across time-series tasks. citeturn1search15turn1search3<br />
-Multi-resolution Transformer lines also formalize multi-scale processing and cite patching as a mechanism derived from ViT-style tokenization. citeturn9search9turn11search1</p>
-<p>For your use, these families matter less for computational scaling (50 steps is not long) and more for inductive bias: decomposition and periodicity priors can stabilize training when labels are sparse/noisy or when regime drift is present. citeturn13search11turn14search16</p>
-<h3 id="time-aware-position-encoding-variants">Time-aware position encoding variants</h3>
-<p>Transformers do not encode order by default; they rely on positional information additions or changes to attention. citeturn11search0turn11search7<br />
-For time series classification, ConvTran specifically focuses on absolute and relative position encoding variants (tAPE + eRPE) and couples them with a convolution-based input encoding for multivariate time series classification. citeturn10search13</p>
-<p>In your case, this is one of the most “surgical” transformer-family changes: keep your encoder stack, replace absolute learned <code>position_embedding</code> with a relative or hybrid scheme, and compare outcomes under different window sizes and multiple tick granularities. citeturn10search13turn11search7</p>
-<p>image_group{"layout":"carousel","aspect_ratio":"16:9","query":["PatchTST time series transformer diagram","iTransformer inverted transformer time series architecture","Crossformer multivariate time series transformer architecture","TimesNet time series foundation model architecture"],"num_per_query":1}</p>
-<h2 id="non-transformer-baselines-that-often-match-or-beat-attention-on-short-windows">Non-Transformer baselines that often match or beat attention on short windows</h2>
-<p>A recurring pattern in time-series research is that model class matters less than bias/regularization and evaluation protocol, and that non-attention models can dominate on many tasks and datasets.</p>
-<h3 id="temporal-convolutional-networks-and-inception-style-cnns">Temporal convolutional networks and Inception-style CNNs</h3>
-<p>Temporal Convolutional Networks (TCNs) use dilated causal convolutions to build receptive fields across time without recurrence. A systematic evaluation by Bai et al. reports that a generic convolutional architecture can outperform LSTMs across multiple sequence modeling tasks and can have longer effective memory. citeturn2search0turn13search0</p>
-<p>For time-series classification, InceptionTime is a CNN ensemble inspired by Inception modules and is evaluated on standard time-series classification benchmarks, with claims about scalability compared to prior methods. citeturn0search3turn0search7</p>
-<p>Why these belong in your shortlist: for <code>seq_len≈50</code>, convolution kernels with dilation or multi-scale filters match the “small windows” regime, and they impose a local pattern bias that can be useful in noisy financial data contexts. citeturn2search0turn0search7turn14search16</p>
-<h3 id="rocket-and-minirocket-as-fast-strong-baselines-for-window-classification">ROCKET and MiniROCKET as “fast strong baselines” for window classification</h3>
-<p>ROCKET transforms a time series with many random convolutional kernels and trains a linear classifier on summary features. MiniROCKET reformulates ROCKET to reduce compute and increase determinism while maintaining reported accuracy levels on UCR benchmarks. citeturn7search0turn7search1turn7search4</p>
-<p>These methods are not neural sequence models in the Transformer sense, but they are relevant because your core directional label is a discrete classification problem on fixed-length windows. Using them as baselines can clarify whether the expensive part of modeling is temporal pattern extraction or downstream decision calibration. citeturn7search0turn7search1</p>
-<h3 id="linear--mlp-mixers-as-control-points">Linear / MLP mixers as control points</h3>
-<p>The paper “Are Transformers Effective for Time Series Forecasting?” argues that self-attention is permutation-invariant and can lose temporal information, and shows that simple linear baselines (LTSF-Linear) outperform multiple Transformer variants on long-term forecasting benchmarks. citeturn5search0turn5search12<br />
-Related follow-on work includes Mixer-style architectures like TSMixer that alternate mixing across time and feature dimensions using MLP blocks. citeturn4search1turn4search17</p>
-<p>Even if you are not doing forecasting, this line of results supports including at least one “no-attention” baseline: flatten+MLP, TCN, or a time-feature mixer. citeturn5search0turn4search1</p>
-<h2 id="sequence-backbones-beyond-transformers">Sequence backbones beyond Transformers</h2>
-<h3 id="structured-state-space-models-and-mamba-family-models">Structured state space models and Mamba-family models</h3>
-<p>Structured State Space models (S4) are proposed as sequence models derived from continuous-time state space formulations, with attention to computational feasibility and performance on long-range dependency benchmarks. citeturn3search0turn3search4<br />
-Mamba proposes selective state space models as a linear-time alternative backbone to attention and reports scaling to long sequences and throughput differences versus Transformers. citeturn3search1turn3search5turn13search6</p>
-<p>For your “small window” regime, SSMs are not about enabling long context, but about providing an alternate inductive bias for temporal dynamics with different optimization behavior than attention. If your current Transformer shows collapse, unstable training, or sensitivity to positional encoding choices, SSM backbones can be a controlled experiment. citeturn3search0turn3search1turn10search13</p>
-<h3 id="continuous-time-models-for-irregular-or-misaligned-sampling">Continuous-time models for irregular or misaligned sampling</h3>
-<p>When observations are not aligned on a single uniform grid, approaches that embed time intervals explicitly or treat hidden state dynamics in continuous time become relevant.</p>
-<p>GRU-D incorporates missingness masks and time intervals into a recurrent model for multivariate time series with missing values. citeturn6search2<br />
-Latent ODEs and ODE-RNNs define continuous-time hidden dynamics and can operate across arbitrary time gaps. citeturn6search1turn6search5<br />
-Neural Controlled Differential Equations (Neural CDEs) target irregularly sampled multivariate time series and report results against ODE/RNN baselines. citeturn6search0turn6search4<br />
-Time2Vec proposes a model-agnostic vector representation of time that can be used in many architectures. citeturn3search3</p>
-<p>In your pipeline, the multi-timeframe alignment “by last timestamp ≤ t” can create effective irregularity across features when interpreted in real elapsed time. If you choose to represent that explicitly (time deltas per feature per lag), these model classes become more directly applicable. citeturn6search2turn6search1turn3search3</p>
-<h2 id="multi-timeframe-representation-strategies-that-match-your-window-construction">Multi-timeframe representation strategies that match your window construction</h2>
-<p>Your current window is a 2D object (lags × features), but features may come from different timeframes and “lag index” does not correspond to a single shared Δt across features. The literature suggests several ways to address similar structure.</p>
-<p>One approach is explicit time encoding: append time delta features or learn time embeddings. Time2Vec supports this as a drop-in time representation that can be combined with attention, convolutions, or MLPs. citeturn3search3<br />
-If you stay within the Transformer family, ConvTran’s focus on absolute/relative position and its multivariate classification framing make it relevant to this axis. citeturn10search13</p>
-<p>A second approach is architectural separation by resolution: encode each timeframe group with its own encoder, then fuse. The multi-resolution Transformer paper is an example of encoding and fusing multiple resolutions in a formal way, albeit in forecasting contexts. citeturn9search9<br />
-TimesNet’s multi-periodicity framing also fits multi-timeframe mixtures, because multiple periodicities show up as multiple dominant scales. citeturn1search15turn1search3</p>
-<p>A third approach is to change tokenization: iTransformer’s variable tokens or Crossformer’s cross-dimension design both push modeling capacity toward feature-feature structure, which can be useful when the “time axis” is partly a bookkeeping device for multiple time bases. citeturn0search9turn4search0</p>
-<h2 id="updated-research-directions-for-pretraining-and-transfer-to-your-supervised-heads">Updated research directions for pretraining and transfer to your supervised heads</h2>
-<p>Small labeled datasets and regime drift motivate pretraining and transfer.</p>
-<p>A Transformer-based representation learning framework for multivariate time series is presented by Zerveas et al., with an explicit goal of pretraining for downstream tasks including classification and regression. citeturn10search0turn10search8<br />
-TS2Vec is an unsupervised contrastive framework that learns timestamp-level representations and reports improvements on time-series classification benchmarks. citeturn5search1turn5search9<br />
-A survey on self-supervised learning for time series proposes a taxonomy across generative, contrastive, and adversarial families, which helps in selecting pretraining objectives. citeturn10search6turn10search14</p>
-<p>On the foundation model side, recent work focuses on large-scale pretraining for forecasting. TimesFM is released by entity["company","Google","tech company"] Research as a decoder-only foundation model for time-series forecasting, with claims about zero-shot transfer across domains and granularities. citeturn5search2turn5search10turn5search6<br />
-Chronos is released by entity["company","Amazon","e-commerce and cloud"] as a pretrained probabilistic forecasting framework that tokenizes time series values and trains language-model-like architectures. citeturn5search3turn5search15<br />
-TimeGPT is proposed by entity["company","Nixtla","time series company"] as a foundation model for time series with reported zero-shot forecasting results. citeturn8search3turn8search7<br />
-Timer proposes GPT-style generative pretraining for time series and frames it as “large time series models.” citeturn10search3turn8search10</p>
-<p>These models are trained for forecasting, not your label scheme, but they point to a transfer pattern: use pretrained encoders/embeddings and train your classification/regression heads on top, or fine-tune end-to-end if data and compute allow. citeturn10search0turn5search6turn5search3turn10search3</p>
-<h2 id="model-shortlist-and-experimental-matrix-aligned-with-your-pipeline">Model shortlist and experimental matrix aligned with your pipeline</h2>
-<p>A practical selection strategy is to test across three axes: tokenization, temporal-order mechanism, and cross-feature mechanism, while keeping your heads and your Stage1/2/3 evaluation stable.</p>
-<p>A minimal shortlist that spans the space:</p>
-<p>A “convolution-first” backbone: TCN or InceptionTime-style CNN (plus your three heads). citeturn2search0turn0search7<br />
-A “Transformer with position focus” backbone: ConvTran-style position encoding + conv embedding + attention stack. citeturn10search13<br />
-A “patch-token” Transformer: PatchTST-like patch embed + Transformer. citeturn0search0turn13search7<br />
-A “feature-token” Transformer: iTransformer-like inversion (features as tokens, lag vectors embedded per feature). citeturn0search9turn0search1<br />
-A non-attention control: ROCKET/MiniROCKET or an MLP mixer. citeturn7search0turn7search1turn4search1<br />
-A non-Transformer sequence backbone: S4 or Mamba-style SSM blocks with your heads. citeturn3search0turn3search1</p>
-<p>For your multi-timeframe setting, add one explicit test per model: with and without time-interval/timeframe encoding. Time2Vec is one method for time representation; continuous-time models (Neural CDE / Latent ODE) are another path if you make the time axis explicit rather than implicit. citeturn3search3turn6search0turn6search1</p>
-<p>For evaluation, keep two checks separate:</p>
-<p>Offline predictive checks: calibration of tradeability probabilities and regression head error conditional on tradeable labels. This follows from your pipeline design and aligns with multi-head supervision.<br />
-Backtest checks: Stage3 behavior under entry gating and thresholds. In finance literature, regime drift and non-stationarity can reverse offline improvements, so stage-by-stage stability is a required filter. citeturn14search16turn14search2</p>
+<h1 id="random-baseline-guide-for-thesis-validation">Random Baseline Guide for Thesis Validation</h1>
+<blockquote>
+<p><strong>What this is:</strong> Guía metodológica para baselines aleatorios calibrados en validación de tesis: calibración desde train, múltiples seeds, freeze de splits, protocolo de comparación justa modelo-vs-random, tests estadísticos (Mann-Whitney, Holm-Sidak). Catálogo conceptual de baselines → ver <code>20260315_baselines-catalog.md</code>.</p>
+</blockquote>
+<h2 id="1-title-and-goal">1. Title and Goal</h2>
+<p>The goal of this document is to define a rigorous, decision-complete method to validate that model performance is statistically better than calibrated random baselines.</p>
+<p>In this project, "random" does not mean naive uniform guessing. It means controlled stochastic policies calibrated from allowed data (training, or locked dev if explicitly defined before final testing).</p>
+<h2 id="2-why-random-baselines-are-mandatory">2. Why Random Baselines Are Mandatory</h2>
+<p>A single random run is weak evidence because random outcomes have variance. One seed can look very bad or unexpectedly good by chance.</p>
+<p>Multiple calibrated random baselines are required because they let us estimate a distribution of outcomes under a null hypothesis:</p>
+<ul>
+<li>"No real predictive edge."</li>
+</ul>
+<p>Fairness principle for all comparisons:</p>
+<ul>
+<li>Same temporal split.</li>
+<li>Same execution costs and slippage settings.</li>
+<li>Same gate behavior (<code>entry_threshold</code>, <code>min_quality_threshold</code>).</li>
+<li>Same backtest engine and rules.</li>
+</ul>
+<p>If any of these differs, the model vs random comparison is not methodologically valid.</p>
+<p>Implementation rule for this project:</p>
+<ul>
+<li>Random baseline probabilities are calibrated from observed training labels.</li>
+<li>They are not Optuna-suggested hyperparameters.</li>
+</ul>
+<h2 id="3-freeze-temporal-splits-and-reporting-protocol">3. Freeze Temporal Splits and Reporting Protocol</h2>
+<h3 id="what-freeze-temporal-splits-means">What freeze temporal splits means</h3>
+<p>Define and lock train/validation/test periods once, before running the campaign. Do not adjust boundaries after inspecting results.</p>
+<p>Example:</p>
+<ul>
+<li>Train: 2021-01-01 to 2024-12-31</li>
+<li>Validation: 2025-01-01 to 2025-12-31</li>
+<li>Test: 2026-01-01 to 2026-02-25</li>
+</ul>
+<p>The exact dates can differ, but they must be fixed before analysis.</p>
+<h3 id="what-freeze-report-protocol-means">What freeze report protocol means</h3>
+<p>Define the full evaluation procedure before running experiments, then do not change it after observing outcomes:</p>
+<ul>
+<li>Metrics to report.</li>
+<li>Number of random seeds.</li>
+<li>Statistical tests and p-value formula.</li>
+<li>Acceptance thresholds for thesis support.</li>
+<li>Ranking and tie-break rules.</li>
+</ul>
+<p>This prevents:</p>
+<ul>
+<li>Cherry-picking windows or metrics.</li>
+<li>Moving-goalpost bias ("change criteria until model wins").</li>
+</ul>
+<h3 id="freeze-checklist">Freeze checklist</h3>
+<ul>
+<li>Split boundaries fixed.</li>
+<li>Metrics fixed.</li>
+<li>Seed count fixed.</li>
+<li>Statistical tests fixed.</li>
+<li>Pass/fail thesis criteria fixed.</li>
+</ul>
+<h2 id="4-always-flat-baseline">4. Always-Flat Baseline</h2>
+<p>Always-flat is the minimum baseline and always outputs <code>NONE</code>.</p>
+<h3 id="definition">Definition</h3>
+<p>At each tick:</p>
+<ul>
+<li><code>signal = NONE</code>.</li>
+<li><code>prob_none = 1.0</code>, <code>prob_long = 0.0</code>, <code>prob_short = 0.0</code>.</li>
+</ul>
+<h3 id="why-keep-it">Why keep it</h3>
+<ul>
+<li>It verifies that your strategy beats "never trade."</li>
+<li>It gives a strict floor for activity-based baselines.</li>
+<li>It is useful for sanity checks and pipeline regression tests.</li>
+</ul>
+<h3 id="limitation">Limitation</h3>
+<ul>
+<li>It does not test directional skill under active trading.</li>
+<li>It is usually too weak to be your only random baseline.</li>
+</ul>
+<h2 id="5-random-l-and-random-b-full-detail">5. Random-L and Random-B Full Detail</h2>
+<h3 id="random-l-full-detail-label-prior-matched">Random-L Full Detail (Label-Prior Matched)</h3>
+<p>Random-L is a label-prior matched random baseline. It samples directly from empirical class shares and does not explicitly
+model entry policy mechanics.</p>
+<h3 id="definition_1">Definition</h3>
+<p>At each tick, sample one class from calibrated class priors:</p>
+<ul>
+<li><code>P(NONE) = p_none</code></li>
+<li><code>P(LONG) = p_long</code></li>
+<li><code>P(SHORT) = p_short</code></li>
+</ul>
+<p>with:</p>
+<ul>
+<li><code>p_none + p_long + p_short = 1</code>.</li>
+</ul>
+<h3 id="calibration-source-rules">Calibration source rules</h3>
+<ul>
+<li>Recommended: estimate priors from training data only.</li>
+<li>Optional: estimate from training + validation only if the protocol is frozen before touching final test.</li>
+<li>Never estimate priors from final test.</li>
+</ul>
+<h3 id="random-l-algorithm-pseudocode">Random-L algorithm pseudocode</h3>
+<pre><code class="language-python">def sample_random_l(rng, p_none: float, p_long: float, p_short: float) -&gt; str:
+    u = rng.random()
+    if u &lt; p_none:
+        return &quot;NONE&quot;
+    if u &lt; p_none + p_long:
+        return &quot;LONG&quot;
+    return &quot;SHORT&quot;
+</code></pre>
+<h3 id="mapping-to-pipeline-prediction-fields">Mapping to pipeline prediction fields</h3>
+<p>Use calibrated priors as emitted probabilities:</p>
+<ul>
+<li><code>prob_none = p_none</code></li>
+<li><code>prob_long = p_long</code></li>
+<li><code>prob_short = p_short</code></li>
+<li><code>trade_probabilities = p_long + p_short</code></li>
+<li><code>signal</code>: sampled class</li>
+<li><code>confidence</code>: probability of sampled class</li>
+<li><code>strength</code>, <code>quality</code>, <code>combined_confidence</code>: same policy family used for Random-B to keep fair comparability.</li>
+</ul>
+<h3 id="strengths">Strengths</h3>
+<ul>
+<li>Very simple and transparent.</li>
+<li>Good first stochastic baseline above always-flat.</li>
+<li>Captures class imbalance in <code>NONE/LONG/SHORT</code>.</li>
+</ul>
+<h3 id="weaknesses">Weaknesses</h3>
+<ul>
+<li>Ignores explicit entry-policy structure.</li>
+<li>Memoryless and non-temporal.</li>
+<li>Usually weaker null than Random-B for policy-level comparison.</li>
+</ul>
+<h3 id="random-b-full-detail">Random-B Full Detail</h3>
+<p>Random-B is a frequency-matched random baseline. It matches entry activity and directional mix, but remains stochastic and memoryless.</p>
+<h3 id="definition_2">Definition</h3>
+<p>At each tick:</p>
+<ul>
+<li>Sample entry/no-entry with <code>p_trade</code>.</li>
+<li>If entry occurs, sample LONG vs SHORT with <code>p_long_cond</code>.</li>
+<li>If no entry, output NONE.</li>
+</ul>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><code>p_trade</code>: target entry frequency.</li>
+<li><code>p_long_cond</code>: probability of LONG conditional on entry.</li>
+<li><code>p_short_cond = 1 - p_long_cond</code>.</li>
+</ul>
+<h3 id="calibration-source-rules_1">Calibration source rules</h3>
+<ul>
+<li>Recommended: estimate parameters from training data only.</li>
+<li>Optional: use training + validation only if this choice is frozen before touching final test.</li>
+<li>Never estimate from final test.</li>
+</ul>
+<h3 id="random-b-algorithm-pseudocode">Random-B algorithm pseudocode</h3>
+<pre><code class="language-python">def sample_random_b(rng, p_trade: float, p_long_cond: float) -&gt; str:
+    enter = rng.random() &lt; p_trade
+    if not enter:
+        return &quot;NONE&quot;
+    is_long = rng.random() &lt; p_long_cond
+    return &quot;LONG&quot; if is_long else &quot;SHORT&quot;
+</code></pre>
+<h3 id="mapping-to-pipeline-prediction-fields_1">Mapping to pipeline prediction fields</h3>
+<p>To integrate fairly with your current pipeline, the random baseline should emit the same output schema as model predictions:</p>
+<ul>
+<li><code>signal</code>: sampled label (<code>NONE</code>, <code>LONG</code>, <code>SHORT</code>).</li>
+<li><code>prob_none</code>, <code>prob_long</code>, <code>prob_short</code>: calibrated class probabilities used by the baseline.</li>
+<li><code>trade_probabilities = prob_long + prob_short</code>.</li>
+<li><code>confidence</code>: probability of the sampled class.</li>
+<li><code>strength</code>, <code>quality</code>: defined by baseline policy (see recommended options below).</li>
+<li><code>combined_confidence</code>: computed with the same formula used in model pipeline.</li>
+</ul>
+<p>Recommended policy for <code>strength</code> and <code>quality</code>:</p>
+<ul>
+<li>Option A (direction-only null, simpler): fixed constants (for example 0.5, 0.5).</li>
+<li>Option B (closer behavioral null, preferred): sample from empirical training distributions (optionally conditioned by sampled signal).</li>
+</ul>
+<p>Important:</p>
+<ul>
+<li>Keep this choice fixed before test evaluation.</li>
+<li>Apply the same gate and downstream logic regardless of baseline type.</li>
+</ul>
+<h3 id="gate-interaction">Gate interaction</h3>
+<p>Random-B predictions must pass through:</p>
+<ul>
+<li><code>entry_threshold</code> on <code>combined_confidence</code>.</li>
+<li><code>min_quality_threshold</code> on <code>quality</code>.</li>
+</ul>
+<p>This is mandatory for fair comparison versus model results that also pass the same gate.</p>
+<h3 id="strengths_1">Strengths</h3>
+<ul>
+<li>Stronger than always-flat.</li>
+<li>Matches realistic activity level of the target policy.</li>
+<li>Easy to implement and explain.</li>
+</ul>
+<h3 id="weaknesses_1">Weaknesses</h3>
+<ul>
+<li>Memoryless (IID over time).</li>
+<li>Does not model persistence/regime behavior by itself.</li>
+</ul>
+<h2 id="6-random-markov-full-detail-optional-advanced">6. Random-Markov Full Detail (Optional Advanced)</h2>
+<p>Random-Markov extends random baselines with temporal persistence.</p>
+<h3 id="definition_3">Definition</h3>
+<p>Instead of sampling each tick independently, the next signal depends on previous signal:</p>
+<ul>
+<li><code>P(s_t | s_{t-1})</code></li>
+</ul>
+<p>with states in <code>{NONE, LONG, SHORT}</code>.</p>
+<h3 id="why-this-matters">Why this matters</h3>
+<p>Financial predictions often exhibit short-run persistence in action sequences. IID random may be too weak as null. Markov random creates a harder and more realistic null baseline.</p>
+<h3 id="transition-matrix">Transition matrix</h3>
+<p>Use a 3x3 transition matrix:</p>
+<pre><code class="language-text">          next NONE   next LONG   next SHORT
+prev NONE     a           b           c
+prev LONG     d           e           f
+prev SHORT    g           h           i
+</code></pre>
+<p>Each row sums to 1.</p>
+<h3 id="calibration">Calibration</h3>
+<p>Estimate transitions from training sequence counts:</p>
+<ul>
+<li>Count transitions <code>count(prev -&gt; next)</code>.</li>
+<li>Apply smoothing (for example Laplace) to avoid zero-probability transitions.</li>
+<li>Normalize each row.</li>
+</ul>
+<h3 id="sampling-algorithm-pseudocode">Sampling algorithm pseudocode</h3>
+<pre><code class="language-python">def sample_random_markov(rng, prev_state: str, transition_probs: dict[str, dict[str, float]]) -&gt; str:
+    probs = transition_probs[prev_state]
+    u = rng.random()
+    if u &lt; probs[&quot;NONE&quot;]:
+        return &quot;NONE&quot;
+    if u &lt; probs[&quot;NONE&quot;] + probs[&quot;LONG&quot;]:
+        return &quot;LONG&quot;
+    return &quot;SHORT&quot;
+</code></pre>
+<p>Initialization:</p>
+<ul>
+<li>Sample first state from empirical class prior (training), or set fixed start state and keep it fixed across seeds.</li>
+</ul>
+<h3 id="optional-extension">Optional extension</h3>
+<p>Two-level Markov:</p>
+<ul>
+<li>Level 1: Markov over entry/no-entry.</li>
+<li>Level 2: Conditional direction LONG/SHORT when entry occurs.</li>
+</ul>
+<p>This can improve interpretability and control.</p>
+<h3 id="trade-offs">Trade-offs</h3>
+<ul>
+<li>Better realism than IID random.</li>
+<li>More parameters and calibration choices.</li>
+<li>More risk of methodological mistakes if protocol is not frozen.</li>
+</ul>
+<h3 id="positioning">Positioning</h3>
+<p>Use Random-Markov as optional advanced baseline after Random-B.</p>
+<h2 id="7-statistics-to-prove-better-than-random">7. Statistics to Prove Better Than Random</h2>
+<p>Evaluate at least:</p>
+<ul>
+<li>Stage 3 return.</li>
+<li>Stage 3 Sharpe.</li>
+<li>Stage 3 win rate.</li>
+<li>Final objective score.</li>
+</ul>
+<h3 id="multi-seed-requirement">Multi-seed requirement</h3>
+<p>Run each random baseline with many seeds (recommended 30 to 50) to estimate its outcome distribution.</p>
+<h3 id="compute-random-distribution-summary">Compute random distribution summary</h3>
+<p>For each metric and baseline:</p>
+<ul>
+<li>Mean.</li>
+<li>Standard deviation.</li>
+<li>Confidence interval (for example 95% CI for the mean).</li>
+</ul>
+<h3 id="model-percentile-vs-random-distribution">Model percentile vs random distribution</h3>
+<p>Compute where the model sits relative to random outcomes:</p>
+<ul>
+<li>Higher percentile is better for maximize metrics.</li>
+<li>This gives intuitive effect interpretation.</li>
+</ul>
+<h3 id="empirical-p-value">Empirical p-value</h3>
+<p>For maximize metrics:</p>
+<pre><code class="language-text">p = (1 + #random &gt;= model) / (N + 1)
+</code></pre>
+<p>For minimize metrics:</p>
+<pre><code class="language-text">p = (1 + #random &lt;= model) / (N + 1)
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>N</code> is number of random seeds.</li>
+<li><code>#random &gt;= model</code> counts random runs that are at least as good as model.</li>
+</ul>
+<p>Lower <code>p</code> means stronger evidence against the random-null behavior.</p>
+<h3 id="effect-size-requirement">Effect size requirement</h3>
+<p>Do not rely on p-value alone. Require practical effect size:</p>
+<ul>
+<li>Absolute delta vs random mean/median.</li>
+<li>Optional standardized effect (for example Cohen-style ratio):</li>
+</ul>
+<pre><code class="language-text">effect_z = (model - mean_random) / std_random
+</code></pre>
+<h3 id="consistency-requirement">Consistency requirement</h3>
+<p>A thesis claim should hold across defined temporal periods/splits, not only one lucky window.</p>
+<h2 id="8-clarification-on-train-vs-validation-vs-test-usage">8. Clarification on Train vs Validation vs Test Usage</h2>
+<p>Question clarified:</p>
+<ul>
+<li>"Does this mean not use validation data, only training?"</li>
+</ul>
+<p>Answer:</p>
+<ul>
+<li>Calibration must never use final test data.</li>
+<li>Preferred default is training-only calibration.</li>
+<li>Validation can be used for development calibration only if protocol is frozen before final test is touched.</li>
+</ul>
+<p>Reason:</p>
+<ul>
+<li>Final test must remain untouched evidence of generalization.</li>
+</ul>
+<h2 id="9-leakage-explained-test-set-calibration">9. Leakage Explained (Test-Set Calibration)</h2>
+<h3 id="what-leakage-means-here">What leakage means here</h3>
+<p>Leakage happens when test information influences baseline calibration.</p>
+<p>Example of leakage:</p>
+<ul>
+<li>Estimate <code>p_trade</code> or transition matrix using final test distribution.</li>
+</ul>
+<h3 id="why-harmful">Why harmful</h3>
+<ul>
+<li>Baseline becomes tuned to evaluation target.</li>
+<li>Random baseline may look artificially stronger or weaker.</li>
+<li>Statistical significance becomes biased and unreliable.</li>
+</ul>
+<h3 id="wrong-vs-correct">Wrong vs correct</h3>
+<p>Wrong:</p>
+<ul>
+<li>"We computed Random-B probabilities from final test labels/predictions."</li>
+</ul>
+<p>Correct:</p>
+<ul>
+<li>"We computed Random-B probabilities from training data (or locked dev set), then evaluated once on test."</li>
+</ul>
+<h2 id="10-fair-comparison-model-with-gate-vs-random-with-same-gate">10. Fair Comparison: Model With Gate vs Random With Same Gate</h2>
+<h3 id="pitfall">Pitfall</h3>
+<p>Comparing model outputs after gate to random outputs before gate is invalid.</p>
+<h3 id="correct-comparison">Correct comparison</h3>
+<p>Both model and random baseline must run through identical decision path:</p>
+<ul>
+<li>Same <code>entry_threshold</code>.</li>
+<li>Same <code>min_quality_threshold</code>.</li>
+<li>Same execution costs/slippage settings.</li>
+<li>Same backtest horizon and tick set.</li>
+</ul>
+<h3 id="fairness-checklist">Fairness checklist</h3>
+<ul>
+<li>Gate parameters identical.</li>
+<li>Backtest config identical.</li>
+<li>Data split identical.</li>
+<li>Metrics and objective formula identical.</li>
+</ul>
+<h2 id="11-thesis-acceptance-criteria">11. Thesis Acceptance Criteria</h2>
+<p>Claim support should require all of the following:</p>
+<ul>
+<li>Positive effect size versus random distribution.</li>
+<li>Statistically significant empirical p-value at the chosen threshold.</li>
+<li>Consistency across defined periods/splits.</li>
+</ul>
+<p>Fail or reject support when:</p>
+<ul>
+<li>Improvement appears in only one split.</li>
+<li>P-values are not significant.</li>
+<li>Gains vanish under nearby period changes or stress splits.</li>
+</ul>
+<h2 id="12-recommended-reporting-template">12. Recommended Reporting Template</h2>
+<p>Use one compact table per baseline family:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Random mean</th>
+<th>Random std</th>
+<th>Random 95% CI</th>
+<th>Model value</th>
+<th>Model percentile</th>
+<th>Empirical p-value</th>
+<th>Pass</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage3 return</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Sharpe</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Win rate</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Objective</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Conclusion template:</p>
+<pre><code class="language-text">Thesis verdict: supported / partially supported / not supported.
+Reason summary:
+1) Effect size vs random: ...
+2) Empirical p-values: ...
+3) Consistency across periods: ...
+</code></pre>
+<h2 id="13-common-mistakes-and-anti-patterns">13. Common Mistakes and Anti-Patterns</h2>
+<ul>
+<li>Calibrating probabilities from final test data.</li>
+<li>Running only one random seed.</li>
+<li>Changing metrics/rules after seeing outcomes.</li>
+<li>Comparing gated model against ungated random baseline.</li>
+<li>Treating distribution divergence alone as proof of predictive edge.</li>
+</ul>
+<h2 id="practical-defaults-for-this-project">Practical Defaults for This Project</h2>
+<ul>
+<li>File scope: documentation only.</li>
+<li>Statistical direction default: maximize metrics unless explicitly marked minimize.</li>
+<li>Seed recommendation: 30 to 50 random seeds per random baseline variant.</li>
+<li>Baseline order recommendation:</li>
+<li>Always-flat</li>
+<li>Random-L</li>
+<li>Random-B</li>
+<li>Random-Markov (optional advanced)</li>
+</ul>
 
 
 
