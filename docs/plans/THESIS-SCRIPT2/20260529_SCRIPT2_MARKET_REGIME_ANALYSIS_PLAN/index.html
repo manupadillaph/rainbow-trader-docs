@@ -108923,6 +108923,15 @@ comparison, and canonical publication.</p>
 </ul>
 <p>Therefore, Section 4 below remains the regime-level aggregation proposal, but the report-by-report implementation is
 delegated to the future reporting remediation plan.</p>
+<p><strong>Update (2026-06-07):</strong> the cross-fold reporting remediation plan
+(<a href="../20260601_SCRIPT2_CROSS_FOLD_REPORTING_AND_INVESTOR_METRICS_PLAN/"><code>20260601_SCRIPT2_CROSS_FOLD_REPORTING_AND_INVESTOR_METRICS_PLAN.md</code></a>)
+is in progress and delivers only the <strong>regime-agnostic</strong> cross-fold aggregation (aggregate/average net PnL,
+compounded aggregate Alpha RC, fold-win count/rate, fold coverage, investor summaries, selectivity). The
+<strong>regime-conditional</strong> reporting (bull/bear and the richer market-state splits) is explicitly <strong>deferred to this
+regime plan</strong> and must be implemented properly with the real regime detector (<code>scripts/analysis/regime/</code>) — never
+from hard-coded fold numbers or a benchmark-return proxy. A bull/bear-by-benchmark-sign proxy was briefly prototyped
+in that refactor and has been removed precisely because it is not real regime detection. Section 4 and Section 5.3
+below remain the home for this work.</p>
 <hr />
 <h2 id="1-document-index--all-regime-related-resources">1. Document Index — All Regime-Related Resources</h2>
 <h3 id="11-plans-active-and-archived">1.1 Plans (active and archived)</h3>

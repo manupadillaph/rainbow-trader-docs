@@ -113333,6 +113333,11 @@ not the same object as another fold's trained model, so aggregation must be labe
 instead: tier, model family, experiment recipe, run family, or explicit selection policy. Minimum cross-fold metrics:
 aggregate net PnL, average net PnL, aggregate/average Alpha RC, Alpha RC fold-win count, bull-fold Alpha RC, bear-fold
 Alpha RC, bull/bear net PnL, fold coverage, trades, and net/gross per trade where available.</p>
+<p><strong>Note (2026-06-07):</strong> the regime-conditional subset above (bull-fold / bear-fold Alpha RC, bull/bear net PnL) is
+deferred. The cross-fold reporting refactor
+(<code>docs/plans/THESIS-SCRIPT2/20260601_SCRIPT2_CROSS_FOLD_REPORTING_AND_INVESTOR_METRICS_PLAN.md</code>) delivers only the
+regime-agnostic cross-fold metrics; the bull/bear split is owned by, and implemented properly in,
+<code>docs/plans/THESIS-SCRIPT2/20260529_SCRIPT2_MARKET_REGIME_ANALYSIS_PLAN.md</code> (real regime detector, not hard-coded).</p>
 <h3 id="73-cross-experiment-comparison">7.3 Cross-Experiment Comparison</h3>
 <p>For each comparison pair (real vs random):</p>
 <ul>

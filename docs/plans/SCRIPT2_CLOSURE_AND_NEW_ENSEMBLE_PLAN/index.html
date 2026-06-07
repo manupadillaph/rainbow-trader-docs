@@ -110123,6 +110123,10 @@ because it produces positive raw PnL in a favorable market window. The minimum B
 aggregate net PnL, aggregate/average Alpha RC, Alpha RC fold wins, bull-fold Alpha RC, bear-fold Alpha RC,
 delta-vs-best-source, trade-count reduction, friction/selectivity evidence, and any better-than-proportional claims
 separately for PnL and Alpha RC where the source data supports both.</p>
+<p><strong>Note (2026-06-07):</strong> the bull-fold / bear-fold (regime) portion of this evidence is deferred. The cross-fold
+reporting refactor delivers the regime-agnostic cross-fold metrics; the regime (bull/bear) split is owned by and
+implemented properly in <code>docs/plans/THESIS-SCRIPT2/20260529_SCRIPT2_MARKET_REGIME_ANALYSIS_PLAN.md</code>. Until that
+lands, B6 uses the regime-agnostic cross-fold evidence plus the per-fold benchmark context already in the audits.</p>
 <p>Stop conditions:</p>
 <ul>
 <li>all three selectors show alpha_rc dominated by negative or near-zero values after accounting for RC benchmark
