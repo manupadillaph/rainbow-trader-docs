@@ -481,6 +481,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#comments-docs-and-commit-messages-are-code-not-chat-no-meta-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comments, Docs and Commit Messages Are Code, Not Chat (No Meta-Language)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#order-tidiness-and-placement-are-not-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Order, Tidiness and Placement Are Not Optional
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4208,6 +4230,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -4343,6 +4369,62 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../docs/plans/THESIS-SCRIPT2/20260611_SCRIPT2_F5_REPORTS_HANDOFF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260611 Script2 F5 Reports Handoff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docs/plans/THESIS-SCRIPT2/20260611_SCRIPT2_F5_REPORT_FIELD_SPEC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260611 Script2 F5 Report Field Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -4403,10 +4485,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_8_4" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_8_6" >
         
           
-          <label class="md-nav__link" for="__nav_3_17_8_4" id="__nav_3_17_8_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_17_8_6" id="__nav_3_17_8_6_label" tabindex="0">
             
   
   
@@ -4424,8 +4506,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_8_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_17_8_4">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_8_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_17_8_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -109154,6 +109236,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#comments-docs-and-commit-messages-are-code-not-chat-no-meta-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comments, Docs and Commit Messages Are Code, Not Chat (No Meta-Language)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#order-tidiness-and-placement-are-not-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Order, Tidiness and Placement Are Not Optional
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -109840,11 +109944,50 @@
 <ul>
 <li>Use type hints on every function signature and variable where non-obvious</li>
 <li>Write complete docstrings (parameters, return types, examples)</li>
-<li>Use <code>#</code> comments to explain <strong>why</strong>, not just what</li>
+<li>Use <code>#</code> comments to explain <strong>why</strong> (non-obvious rationale/constraints), not <strong>what</strong> the code already shows</li>
+<li><strong>Variable and parameter names follow the type and the project's existing conventions.</strong> A value of
+  type <code>BacktestMetrics</code> is named <code>backtest_metrics</code>, NOT a generic <code>metrics</code>. Match the naming already
+  used in the surrounding code.</li>
 <li>Use <code>try/except</code> with proper logging — never silently swallow errors</li>
 <li>Prefer readability over premature optimization</li>
 <li>Write modular code: separate files for models, data loading, training, etc.</li>
 <li>Before writing code, restate your understanding of the task</li>
+</ul>
+<h3 id="comments-docs-and-commit-messages-are-code-not-chat-no-meta-language">Comments, Docs and Commit Messages Are Code, Not Chat (No Meta-Language)</h3>
+<p>A comment, docstring, README, design doc, or commit/PR message is read by a developer who opens it
+<strong>fresh</strong> — with zero knowledge of our conversation, of what you just changed, or of what was asked.
+Write only for that reader.</p>
+<p><strong>NEVER write meta-language</strong>, i.e. text that:</p>
+<ul>
+<li>narrates what you changed or the before/after state (<code>now writes…</code>, <code>was previously…</code>, <code>this replaces…</code>, <code>the only place that…</code>);</li>
+<li>describes what the code does <strong>not</strong> do, or what was <strong>removed</strong> (because removal was requested);</li>
+<li>explains a decision <strong>to me</strong> (chat-style justification) instead of documenting the thing as it stands;</li>
+<li>references a plan, its sections, tasks, or phase codes (<code>as the plan says</code>, <code>plan section 6.3</code>, <code>P.4#5 of plan #566</code>, <code>Phase F5</code>, <code>F5 reports</code>).</li>
+</ul>
+<p><strong>Plans, their tasks, and their phase/task codes live in exactly two places: the plan document itself and
+the implementation chat.</strong> Nowhere else — not in code, comments or docstrings; not in READMEs or any other
+doc; not in commit or PR messages. Plans are archived and rotate, and an internal code like <code>F5</code> or <code>P4#3</code>
+is meaningless to a future reader. Every artifact outside the plan must stand on its own and never point
+at one.</p>
+<p>A comment or doc may assume <strong>only</strong> the thing as it currently exists. If it would only make sense to
+someone who watched the change happen or who has the plan open, delete it. Explain the non-obvious
+<strong>why</strong>, never the history.</p>
+<p><code>TODO</code> / <code>NOTE</code> comments are allowed to flag missing, pending, or noteworthy things — but they too must
+stand alone (no plan references, no change narration).</p>
+<h3 id="order-tidiness-and-placement-are-not-optional">Order, Tidiness and Placement Are Not Optional</h3>
+<p>Clean structure is <strong>as important as — often more important than — code that merely works.</strong> Functional
+but messy code is not acceptable here.</p>
+<ul>
+<li><strong>Every new function, class, constant or type goes in a coherent, predictable place</strong> — grouped with the
+  related code it belongs to, in the file whose single responsibility it matches. Never drop a helper into
+  an arbitrary file or an arbitrary spot just because it compiles there.</li>
+<li>A symbol's <strong>file must match its kind</strong>: a formatter lives with the formatters, a parser with the
+  parsers, a DB fetch with the fetchers, a domain type in the shared types layer. If a new helper fits no
+  existing file's responsibility, <strong>ask</strong> before inventing a home for it.</li>
+<li>Place new code <strong>next to its closest relatives</strong> — the function it wraps, the section it extends, the
+  siblings of its kind — not appended at the bottom of the file.</li>
+<li>Keep ordering, sectioning and naming consistent with the surrounding code. Tidiness, ordering and
+  readability are first-class acceptance criteria, reviewed before any change is considered done.</li>
 </ul>
 <hr />
 <h2 id="2-code-modification-rules">2. Code Modification Rules</h2>
@@ -109931,6 +110074,15 @@ User asks: &quot;Fix the bug in the loss calculation&quot;
 <li>Prefer typed classes (Pydantic models, dataclasses, TypedDict) over raw dictionaries</li>
 <li>Use Pydantic models for validation and configuration</li>
 <li>Avoid <code>Any</code> unless strictly necessary — and document why if you must use it</li>
+<li><strong>Pass typed objects through the code.</strong> Do NOT pass a raw <code>dict</code> / <code>Mapping</code> between functions as a
+  stand-in for a typed model. Functions take and return the typed object (the Pydantic model /
+  dataclass), not its flattened form.</li>
+<li><strong>Flatten to a <code>dict</code> / flat columns ONLY at the persistence boundary</strong> — e.g. inside the service
+  method that builds the DB <code>values</code>, right before the write. A typed model becomes a dict only there,
+  never earlier and never as a parameter passed around.</li>
+<li><strong>Dependency direction:</strong> shared types live in the foundation layer (<code>rainbow.common.types</code>) so every
+  module imports them from there. A lower layer (e.g. <code>core</code>) must never import from a higher one (e.g.
+  <code>model_trainer</code>); a domain type must not live in a higher layer that lower layers then depend on.</li>
 </ul>
 <hr />
 <h2 id="8-virtual-environment">8. Virtual Environment</h2>
@@ -109953,6 +110105,9 @@ User asks: &quot;Fix the bug in the loss calculation&quot;
 <li>Use <code>git reset --soft</code> for undoing commits safely</li>
 <li>Always check <code>git status</code> and <code>git diff</code> before committing</li>
 <li>Prefer small commits with clear, precise messages</li>
+<li>Commit and PR messages describe the change itself — the <em>what</em> and <em>why</em> — for a reader with no access
+  to our chat or any plan. No meta-language, no plan/task/phase references (see §1, "Comments, Docs and
+  Commit Messages Are Code")</li>
 </ul>
 <h3 id="submodules">Submodules</h3>
 <ul>

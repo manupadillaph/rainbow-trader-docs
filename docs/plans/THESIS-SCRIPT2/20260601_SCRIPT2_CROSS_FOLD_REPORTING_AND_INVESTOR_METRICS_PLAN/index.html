@@ -3480,6 +3480,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -4779,6 +4783,62 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../20260611_SCRIPT2_F5_REPORTS_HANDOFF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260611 Script2 F5 Reports Handoff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260611_SCRIPT2_F5_REPORT_FIELD_SPEC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260611 Script2 F5 Report Field Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -4839,10 +4899,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_8_4" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_8_6" >
         
           
-          <label class="md-nav__link" for="__nav_3_17_8_4" id="__nav_3_17_8_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_17_8_6" id="__nav_3_17_8_6_label" tabindex="0">
             
   
   
@@ -4860,8 +4920,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_8_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_17_8_4">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_8_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_17_8_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -111728,8 +111788,6 @@ risk_halt_reason_counts
   → Better-than-Proportional Alpha RC Count
   → Better-than-Proportional Alpha RC Rate
   → Dual Better-than-Proportional Count
-  → Risk Metric Backfill Completeness
-  → Risk Gate Backfill Completeness
 [existing ... Status]
 </code></pre>
 <p>Canonical-order rules:</p>
@@ -112810,7 +112868,7 @@ shared metric/reporting changes affect it.</p>
 </tr>
 <tr>
 <td>Section 11</td>
-<td>New correlations for investor metrics, cross-fold outputs, and Alpha RC selectivity.</td>
+<td>New trial-level correlations for the investor metrics (global matrix rows/columns plus an Investor Metric Correlations section). Alpha RC selectivity is NOT a trial-level correlation (it is a per-variant extra-backtest comparison) and was removed (2026-06-13, Manu); regime-conditional Alpha RC correlations are deferred to the market-regime plan.</td>
 </tr>
 <tr>
 <td>Statistical Tests</td>
@@ -113033,15 +113091,44 @@ stated explicitly so the canonical criterion is never silently lost. An optional
 </code></pre>
 <p>This renders from the existing <code>results.csv</code> artifact; it does not rerun backtests.</p>
 <h4 id="826-ensemble-campaign-reports-all-active-non-legacy-campaigns">8.2.6 Ensemble campaign reports (all active non-legacy campaigns)</h4>
-<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/audit_ensemble_batch_results.py \
-  --batch-dir scripts/thesis/script_2_thesis/ensemble_backtests/results/&lt;batch_root&gt; \
-  --output-dir &quot;$STAGE_ROOT/ensemble_backtests/results/&lt;batch_root&gt;&quot;
+<p>Each batch root produces TWO report kinds, both regenerated: the campaign-level <code>campaign_report.md</code>
+(<code>audit_ensemble_batch_results.py</code>) and the per-campaign <code>report.md</code> for every execution
+(<code>render_ensemble_backtest_report.py</code>). The 6 active non-legacy batch roots below were verified on disk (2026-06-12):
+504 per-campaign <code>report.md</code> (96 + 96 + 72 + 72 + 72 + 96) plus 6 <code>campaign_report.md</code>.</p>
+<pre><code class="language-bash"># All 6 active non-legacy batch roots (verified on disk 2026-06-12).
+ENSEMBLE_BATCH_ROOTS=(
+  20260521_154249_phase1_block_a_friction
+  20260526_114000_phase1_block_a_promise
+  20260527_015750_phase1_block_b_promise
+  20260527_042255_phase1_block_b_friction
+  20260528_024240_phase1_block_b_promise_rc
+  20260528_115524_phase1_block_a_promise_rc
+)
+ENS_ROOT=&quot;scripts/thesis/script_2_thesis/ensemble_backtests/results&quot;
+
+for batch in &quot;${ENSEMBLE_BATCH_ROOTS[@]}&quot;; do
+  # (a) Campaign-level campaign_report.md — DB-enriched by backtest_session_id (explicit --db-path).
+  .venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/audit_ensemble_batch_results.py \
+    --batch-dir &quot;$ENS_ROOT/$batch&quot; \
+    --db-path database/rainbow_trader.sqlite \
+    --output-dir &quot;$STAGE_ROOT/ensemble_backtests/results/$batch&quot;
+
+  # (b) Per-campaign report.md for every execution — DB auto-resolved from the artifact db_path metadata.
+  while IFS= read -r results_csv; do
+    rel=&quot;${results_csv#&quot;$ENS_ROOT&quot;/}&quot;
+    .venv/bin/python scripts/thesis/script_2_thesis/ensemble_backtests/render_ensemble_backtest_report.py \
+      --results-csv &quot;$results_csv&quot; \
+      --output-md &quot;$STAGE_ROOT/ensemble_backtests/results/${rel%/results.csv}/report.md&quot;
+  done &lt; &lt;(find &quot;$ENS_ROOT/$batch&quot; -mindepth 2 -name results.csv -not -path '*_LEGACY*')
+done
 </code></pre>
-<p>Every active non-legacy ensemble campaign report is regenerated like every other report — none is left out. The only
+<p>No <code>--db-as-of-completed-at</code> applies here: ensemble enrichment reads <strong>specific sessions by <code>backtest_session_id</code></strong>, not
+a completion-time window, so there is no later-completed-row leak to cut (unlike the per-run progress packs in §8.2.3).</p>
+<p>Every active non-legacy ensemble report is regenerated like every other report — none is left out. The only
 coordination is timing, not exclusion: <code>SCRIPT2_CLOSURE_AND_NEW_ENSEMBLE_PLAN.md</code> Block B (<code>promise_rc</code> batches B2b,
 B3c, B4b) is still producing new batches, so regenerate each ensemble report from its settled batch results and re-run
-the regeneration for any batch the closure plan lands after this pass. Expand <code>&lt;batch_root&gt;</code> to the full list of
-current non-legacy campaign batch roots in the command manifest.</p>
+the regeneration for any batch the closure plan lands after this pass. Re-derive <code>ENSEMBLE_BATCH_ROOTS</code> from disk at
+regeneration time if the closure plan has landed further batches since 2026-06-12.</p>
 <p>The source-trial Alpha RC enrichment gap applies here: the ensemble <code>results.json</code> <code>source_results</code> rows carry
 <code>alpha_rc</code>/<code>benchmark_return_rc</code> as <code>null</code> even when the underlying trial has Risk-Constrained values in the DB (the
 ensemble writer only mapped the classical <code>alpha</code>/<code>benchmark_return</code>). Any RC-based ensemble comparison must read the
@@ -113062,16 +113149,29 @@ from or write over <code>_LEGACY</code> / <code>*_LEGACY_PRE_RC.md</code> artifa
 <li>Build one global publish matrix.</li>
 </ul>
 <p>Known first-pass comparators:</p>
+<p>All comparators live in <code>scripts/thesis/script_2_thesis/refactor/tools/</code> and share <code>compare_helper.py</code>
+(<code>FieldComparisonSpec</code> / <code>TableComparisonSpec</code> / <code>compare_section_tables</code>). The full set — one per report family,
+including the two ensemble comparators that were previously missing from this list:</p>
 <pre><code class="language-text">compare_progress_original_vs_new.py
 compare_progress_avg_only_original_vs_new.py
 compare_progress_best_only_original_vs_new.py
 compare_progress_model_profile_original_vs_new.py
+compare_progress_time_metrics_original_vs_new.py
 compare_best_per_fold_original_vs_new.py
 compare_ranking_tables_original_vs_new1.py
 compare_correlations_original_vs_new1.py
 compare_statistical_tests_original_vs_new1.py
 compare_extra_backtest_original_vs_new1.py
+compare_ensemble_campaign_original_vs_new1.py
+compare_ensemble_report_original_vs_new1.py
 </code></pre>
+<p>Each comparator is the regression guard that proves the <strong>unchanged</strong> columns of its family stay identical. Two
+adjustments apply to every comparator a widened family touches (the ensemble pair included): (a) point it at
+canonical-vs-staging via <code>--original-md</code> / <code>--new-md</code> (the ensemble-campaign comparator still defaults to the old
+<code>_NEW</code>/<code>_NEW1</code> deep-verification paths and must be repointed); (b) declare each new F5 header in the comparator's
+<code>*_NEW1_ONLY</code> / field-spec lists — <code>compare_helper</code> raises on an undeclared column, so a widened table will not run
+until the new headers are acknowledged. New tables (T-CF / T-IS / Investor &amp; Cost Detail / Operational Gate
+Breakdown) and new columns are then validated manually, exactly as the bullets above require.</p>
 <p>Mandatory scans:</p>
 <pre><code class="language-bash">rg -n &quot;Report field named&quot; scripts/thesis/script_2_thesis/_tmp/&lt;plan_staging_root&gt;
 rg -n &quot;Investor MTM|Investor Summary|Cross-Fold Sortino|Sortino|Calmar|Profit Factor|Turnover|Exposure|Fold Coverage&quot; \
