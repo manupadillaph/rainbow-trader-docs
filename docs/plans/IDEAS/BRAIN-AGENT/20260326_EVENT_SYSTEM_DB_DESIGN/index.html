@@ -4166,8 +4166,6 @@
       
         
       
-        
-      
     
     
     
@@ -4219,36 +4217,10 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../../THESIS-SCRIPT2/20260601_SCRIPT2_CROSS_FOLD_REPORTING_AND_INVESTOR_METRICS_PLAN/" class="md-nav__link">
+    
+    
+      
         
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    20260601 Script2 Cross Fold Reporting And Investor Metrics Plan
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
       
         
       
@@ -4311,10 +4283,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_4_2" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_4_1" >
         
           
-          <label class="md-nav__link" for="__nav_3_17_4_2" id="__nav_3_17_4_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_17_4_1" id="__nav_3_17_4_1_label" tabindex="0">
             
   
   
@@ -4332,8 +4304,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_17_4_2">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_17_4_1">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -4946,6 +4918,34 @@
     
   
     20260530 Script2 Alpha Rc Report Remediation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../THESIS-SCRIPT2/_archived/20260601_SCRIPT2_CROSS_FOLD_REPORTING_AND_INVESTOR_METRICS_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260601 Script2 Cross Fold Reporting And Investor Metrics Plan
   
 
     
@@ -9092,6 +9092,8 @@
       
         
       
+        
+      
     
     
     
@@ -9759,6 +9761,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../../../scripts/thesis/script_2_thesis/AUDIT/20260614_SCRIPT2_ENSEMBLE_PHASE1_CROSS_BLOCK_BIFURCATION_SYNTHESIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260614 Script2 Ensemble Phase1 Cross Block Bifurcation Synthesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -9813,10 +9843,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_23" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_24" >
         
           
-          <label class="md-nav__link" for="__nav_4_5_3_1_23" id="__nav_4_5_3_1_23_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_5_3_1_24" id="__nav_4_5_3_1_24_label" tabindex="0">
             
   
   
@@ -9834,8 +9864,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_5_3_1_23_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5_3_1_23">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_5_3_1_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_3_1_24">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -109758,7 +109788,7 @@
 <hr />
 <h2 id="2-current-db-schema-before-changes">2. Current DB Schema (Before Changes)</h2>
 <h3 id="table-tasks">Table: <code>tasks</code></h3>
-<pre><code>tasks
+<pre><code class="language-text">tasks
 ├── id                          INT PK AUTO
 ├── task_uuid                   VARCHAR(36) UNIQUE INDEXED — stable UUID
 ├── task_type                   VARCHAR(50) NOT NULL — TaskType enum
@@ -109772,13 +109802,15 @@
 ├── created_at                  DATETIME(tz) server default
 └── updated_at                  DATETIME(tz) server default
 </code></pre>
-<p><strong>Relationships:</strong>
-- <code>events</code> → 1:N with <code>events.task_id</code>
-- <code>experiment</code> → N:1 with <code>experiments.id</code>
-- <code>trial</code> → N:1 with <code>trials.id</code>
-- <code>parquets</code> → 1:N with <code>parquets.task_id</code></p>
+<p><strong>Relationships:</strong></p>
+<ul>
+<li><code>events</code> → 1:N with <code>events.task_id</code></li>
+<li><code>experiment</code> → N:1 with <code>experiments.id</code></li>
+<li><code>trial</code> → N:1 with <code>trials.id</code></li>
+<li><code>parquets</code> → 1:N with <code>parquets.task_id</code></li>
+</ul>
 <h3 id="table-events">Table: <code>events</code></h3>
-<pre><code>events
+<pre><code class="language-text">events
 ├── id              INT PK AUTO
 ├── event_uuid      VARCHAR(36) UNIQUE INDEXED — stable UUID
 ├── event_type      ENUM(EventType) NOT NULL
@@ -109994,7 +110026,7 @@ child_tasks: Mapped[list[Task]] = relationship(&quot;Task&quot;, back_populates=
 <hr />
 <h2 id="4-task-lifecycle--event-flow">4. Task Lifecycle &amp; Event Flow</h2>
 <h3 id="41-how-tasks-and-events-relate">4.1 How Tasks and Events Relate</h3>
-<pre><code>Task (DB record)                           Events (DB records)
+<pre><code class="language-text">Task (DB record)                           Events (DB records)
 ┌──────────────────────┐                   ┌──────────────────────┐
 │ task_uuid: &quot;abc-123&quot; │                   │ LABELS_REQUESTED     │
 │ task_type: LABELING  │◄──────────────────│   task_id: 42        │
@@ -110018,7 +110050,7 @@ All 4 events share task_uuid=&quot;abc-123&quot; in their payload
 </code></pre>
 <h3 id="42-training-task--all-events-under-one-task">4.2 Training Task — All Events Under One Task</h3>
 <p>Phase, Trial, and Epoch are <strong>internal steps</strong> of the model-trainer module, not separate Tasks. All their events point to the same TRAINING Task via <code>task_id</code>. The internal hierarchy is expressed through <strong>domain IDs in payloads</strong>.</p>
-<pre><code>Task: TRAINING (task_uuid=&quot;t-001&quot;, task_type=TRAINING, thread_ref=&quot;exp-main&quot;)
+<pre><code class="language-text">Task: TRAINING (task_uuid=&quot;t-001&quot;, task_type=TRAINING, thread_ref=&quot;exp-main&quot;)
   │
   │  All events below share: task_id=42, payload.task_uuid=&quot;t-001&quot;
   │  Internal hierarchy via domain IDs: study_id, phase_number, trial_id, trial_number, epoch
@@ -110078,7 +110110,7 @@ All 4 events share task_uuid=&quot;abc-123&quot; in their payload
 </tbody>
 </table>
 <h3 id="43-event-bridge-flow">4.3 Event Bridge Flow</h3>
-<pre><code>Orchestrator (LangGraph)              Module                    Event Bridge
+<pre><code class="language-text">Orchestrator (LangGraph)              Module                    Event Bridge
 │                                     │                         │
 │  1. Create Task (status=pending)    │                         │
 │     task_uuid=&quot;abc-123&quot;             │                         │
@@ -110126,12 +110158,12 @@ All 4 events share task_uuid=&quot;abc-123&quot; in their payload
 <p>Every event payload follows this layered structure:</p>
 <h3 id="layer-1-identity-all-events-in-the-family">Layer 1: Identity (ALL events in the family)</h3>
 <p>Fields that route and identify the work unit. Present in REQUESTED, STARTED, PROGRESS, and DONE.</p>
-<pre><code>task_uuid, parent_task_uuid          ← from BaseEventPayload
+<pre><code class="language-text">task_uuid, parent_task_uuid          ← from BaseEventPayload
 experiment_id, study_id?, trial_id   ← domain-specific routing IDs
 </code></pre>
 <h3 id="layer-2-config-fingerprint-started--done">Layer 2: Config Fingerprint (STARTED + DONE)</h3>
 <p>Deterministic hash of the configuration that defines what this task does. For families where the config matters for caching or change detection.</p>
-<pre><code>label_config_hash    ← Labels family
+<pre><code class="language-text">label_config_hash    ← Labels family
 fat_hash             ← FAT Windows family
 cache_key            ← SMALL Windows family
 pipeline_hash?       ← Data Processing (if implemented)
@@ -110173,7 +110205,7 @@ pipeline_hash?       ← Data Processing (if implemented)
 </table>
 <h3 id="layer-3-key-parameters-started">Layer 3: Key Parameters (STARTED)</h3>
 <p>Human-readable parameters that define the behavior of this task. Not for machines (that's what the hash is for) — for humans reading logs, dashboards, and agent summaries.</p>
-<pre><code>threshold_type, horizon              ← Labels: &quot;what kind of labeling run is this?&quot;
+<pre><code class="language-text">threshold_type, horizon              ← Labels: &quot;what kind of labeling run is this?&quot;
 window_size, features_count          ← FAT Windows: &quot;how big is this FAT build?&quot;
 data_fraction, feature_subset_size   ← SMALL Windows: &quot;how much data, how many features?&quot;
 total_phases, total_trials_planned   ← Training: &quot;how big is this training run?&quot;
@@ -110181,11 +110213,11 @@ total_phases, total_trials_planned   ← Training: &quot;how big is this trainin
 <h3 id="layer-4-variable-data-progress--done">Layer 4: Variable Data (PROGRESS + DONE)</h3>
 <p>Data that changes during execution or represents the final outcome.</p>
 <p><strong>PROGRESS:</strong> position counters + live metrics</p>
-<pre><code>processed_rows, total_rows, progress_percent    ← where am I?
+<pre><code class="language-text">processed_rows, total_rows, progress_percent    ← where am I?
 train_loss, val_loss, f1_macro                  ← how is it going? (Trial)
 </code></pre>
 <p><strong>DONE:</strong> outcome + key results</p>
-<pre><code>status/outcome, duration_seconds                ← how did it end?
+<pre><code class="language-text">status/outcome, duration_seconds                ← how did it end?
 count_long, count_short, count_none             ← what was produced? (Labels)
 total_pnl, return_pct, sharpe_ratio             ← what was the result? (Backtest)
 </code></pre>

@@ -3838,8 +3838,6 @@
       
         
       
-        
-      
     
     
     
@@ -3891,36 +3889,10 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../../THESIS-SCRIPT2/20260601_SCRIPT2_CROSS_FOLD_REPORTING_AND_INVESTOR_METRICS_PLAN/" class="md-nav__link">
+    
+    
+      
         
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    20260601 Script2 Cross Fold Reporting And Investor Metrics Plan
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
       
         
       
@@ -3983,10 +3955,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_4_2" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_4_1" >
         
           
-          <label class="md-nav__link" for="__nav_3_17_4_2" id="__nav_3_17_4_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_17_4_1" id="__nav_3_17_4_1_label" tabindex="0">
             
   
   
@@ -4004,8 +3976,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_17_4_2">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_17_4_1">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -4618,6 +4590,34 @@
     
   
     20260530 Script2 Alpha Rc Report Remediation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../THESIS-SCRIPT2/_archived/20260601_SCRIPT2_CROSS_FOLD_REPORTING_AND_INVESTOR_METRICS_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260601 Script2 Cross Fold Reporting And Investor Metrics Plan
   
 
     
@@ -8764,6 +8764,8 @@
       
         
       
+        
+      
     
     
     
@@ -9431,6 +9433,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../../../scripts/thesis/script_2_thesis/AUDIT/20260614_SCRIPT2_ENSEMBLE_PHASE1_CROSS_BLOCK_BIFURCATION_SYNTHESIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260614 Script2 Ensemble Phase1 Cross Block Bifurcation Synthesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -9485,10 +9515,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_23" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_24" >
         
           
-          <label class="md-nav__link" for="__nav_4_5_3_1_23" id="__nav_4_5_3_1_23_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_5_3_1_24" id="__nav_4_5_3_1_24_label" tabindex="0">
             
   
   
@@ -9506,8 +9536,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_5_3_1_23_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5_3_1_23">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_5_3_1_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_3_1_24">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -109081,7 +109111,7 @@
 <hr />
 <h2 id="a-data-fetch">A. Data Fetch</h2>
 <p><strong>Process:</strong> Downloads historical OHLCV candles for ONE symbol+timeframe combination. Can be invoked from experiment (orchestrator) or standalone (CLI). Provider is ALWAYS resolved before any work starts — either from ExperimentConfig.data_provider or from active DataProviderConfig.</p>
-<pre><code>DATA_FETCH_REQUESTED:  experiment_id?, symbol, timeframe, provider, range_start, range_end
+<pre><code class="language-text">DATA_FETCH_REQUESTED:  experiment_id?, symbol, timeframe, provider, range_start, range_end
 DATA_FETCH_STARTED:    experiment_id?, symbol, timeframe, provider, range_start, range_end
 DATA_FETCH_PROGRESS:   experiment_id?, symbol, timeframe, provider, fetched_rows, total_rows, progress_percent
 DATA_FETCH_DONE:       experiment_id?, symbol, timeframe, provider, rows_fetched, parquet_id?
@@ -109099,7 +109129,7 @@ DATA_FETCH_DONE:       experiment_id?, symbol, timeframe, provider, rows_fetched
 <hr />
 <h2 id="b-data-processing">B. Data Processing</h2>
 <p><strong>Process:</strong> Computes feature DAG for an experiment — transforms raw OHLCV through pipelines (CLEAN_PRICE, RELATIVE_PRICE) and indicators (RSI, EMA, etc.). Each <code>ExtendedFeature</code> node is processed independently. The orchestrator calls this once per experiment; internally it iterates over all feature nodes in dependency order.</p>
-<pre><code>DATA_PROCESSING_REQUESTED:  experiment_id
+<pre><code class="language-text">DATA_PROCESSING_REQUESTED:  experiment_id
 DATA_PROCESSING_STARTED:    experiment_id, features_total
 DATA_PROCESSING_PROGRESS:   experiment_id, features_processed, features_total, progress_percent, current_feature?
 DATA_PROCESSING_DONE:       experiment_id, features_processed, features_total, features_failed, duration_seconds
@@ -109117,7 +109147,7 @@ DATA_PROCESSING_DONE:       experiment_id, features_processed, features_total, f
 <hr />
 <h2 id="c-labels">C. Labels</h2>
 <p><strong>Process:</strong> Generates LONG/SHORT/NONE labels for each candle based on future price movement over a <code>horizon</code> window. Always runs per experiment. Uses OHLCV + ATR (if ATR-based thresholds). One labeling config per experiment, three label classes, no "label families".</p>
-<pre><code>LABELS_REQUESTED:  experiment_id
+<pre><code class="language-text">LABELS_REQUESTED:  experiment_id
 LABELS_STARTED:    experiment_id, label_config_hash, threshold_type, horizon
 LABELS_PROGRESS:   experiment_id, processed_rows, total_rows, progress_percent
 LABELS_DONE:       experiment_id, label_config_hash, count_long, count_short, count_none, count_total
@@ -109135,7 +109165,7 @@ LABELS_DONE:       experiment_id, label_config_hash, count_long, count_short, co
 <hr />
 <h2 id="d-fat-windows">D. FAT Windows</h2>
 <p><strong>Process:</strong> Builds flattened feature windows for each sampling timestamp. One row per potential trade entry, containing <code>window_size</code> historical values for every feature. Input: sampling parquet (timestamps + labels) + all feature parquets. Output: one large FAT parquet.</p>
-<pre><code>FAT_WINDOWS_REQUESTED:  experiment_id
+<pre><code class="language-text">FAT_WINDOWS_REQUESTED:  experiment_id
 FAT_WINDOWS_STARTED:    experiment_id, window_size, features_count, sampling_rows
 FAT_WINDOWS_PROGRESS:   experiment_id, windows_built, total_windows, progress_percent
 FAT_WINDOWS_DONE:       experiment_id, fat_hash, n_windows, n_columns, fat_parquet_id?
@@ -109156,7 +109186,7 @@ FAT_WINDOWS_DONE:       experiment_id, fat_hash, n_windows, n_columns, fat_parqu
 <hr />
 <h2 id="e-small-windows">E. SMALL Windows</h2>
 <p><strong>Process:</strong> Creates a trial-specific subset of the FAT parquet. Selects specific feature columns (from Optuna suggestion) and optionally reduces rows (via <code>data_fraction</code>). Can be reused across trials if the <code>cache_key</code> matches. Called per-trial from the training loop.</p>
-<pre><code>SMALL_WINDOWS_REQUESTED:  experiment_id, trial_id
+<pre><code class="language-text">SMALL_WINDOWS_REQUESTED:  experiment_id, trial_id
 SMALL_WINDOWS_STARTED:    experiment_id, trial_id, cache_key, feature_subset_size, data_fraction, reused
 SMALL_WINDOWS_PROGRESS:   experiment_id, trial_id, cache_key, columns_processed, total_columns, progress_percent
 SMALL_WINDOWS_DONE:       experiment_id, trial_id, cache_key, reused, small_parquet_id?
@@ -109175,7 +109205,7 @@ SMALL_WINDOWS_DONE:       experiment_id, trial_id, cache_key, reused, small_parq
 <hr />
 <h2 id="f-training-container-level">F. Training (container level)</h2>
 <p><strong>Process:</strong> Top-level orchestration of multi-phase progressive training. Resolves all phases from config, creates the OptunaStudy DB record, then runs phases sequentially. Knows total_phases and total_trials_planned from <code>resolve_study_phase_totals()</code>.</p>
-<pre><code>TRAINING_REQUESTED:  experiment_id
+<pre><code class="language-text">TRAINING_REQUESTED:  experiment_id
 TRAINING_STARTED:    experiment_id, total_phases, total_trials_planned, resume
 TRAINING_PROGRESS:   experiment_id, phases_completed, total_phases, trials_completed, total_trials_planned, progress_percent
 TRAINING_DONE:       experiment_id, phases_completed, total_phases, trials_completed, total_trials_planned, status, duration_seconds, best_trial_id?, best_score?
@@ -109195,7 +109225,7 @@ TRAINING_DONE:       experiment_id, phases_completed, total_phases, trials_compl
 <hr />
 <h2 id="g-phase-nested-inside-training">G. Phase (nested inside Training)</h2>
 <p><strong>Process:</strong> One Optuna optimization run within a training session. Creates/resumes an Optuna study with <code>n_trials</code> trials. Uses <code>data_fraction</code> to control how much training data trials see (progressive training). Can warm-start from previous phase's best trials.</p>
-<pre><code>PHASE_STARTED:   experiment_id, study_id, phase_number, total_phases, planned_trials, data_fraction
+<pre><code class="language-text">PHASE_STARTED:   experiment_id, study_id, phase_number, total_phases, planned_trials, data_fraction
 PHASE_PROGRESS:  experiment_id, study_id, phase_number, total_phases, trials_completed, planned_trials, progress_percent,
                  current_trial_id?, current_trial_number?, last_trial_outcome?, last_trial_score?
 PHASE_DONE:      experiment_id, study_id, phase_number, total_phases, n_completed, n_pruned, n_failed, planned_trials,
@@ -109221,7 +109251,7 @@ PHASE_DONE:      experiment_id, study_id, phase_number, total_phases, n_complete
 <hr />
 <h2 id="h-trial-nested-inside-phase">H. Trial (nested inside Phase)</h2>
 <p><strong>Process:</strong> One Optuna trial. Samples hyperparameters (or inherits from parent trial if warm-starting), builds SMALL windows, trains a model for <code>total_epochs</code> epochs, evaluates through 3 stages (train → validation → mini-backtest), reports objective value. Each epoch produces <code>EpochSnapshotMetrics</code>.</p>
-<pre><code>TRIAL_STARTED:   experiment_id, study_id, trial_id, trial_number, phase_number
+<pre><code class="language-text">TRIAL_STARTED:   experiment_id, study_id, trial_id, trial_number, phase_number
 TRIAL_PROGRESS:  experiment_id, study_id, trial_id, trial_number, phase_number,
                  epoch, total_epochs, progress_percent,
                  train_loss, val_loss, f1_macro, epoch_objective_value,
@@ -109253,7 +109283,7 @@ TRIAL_DONE:      experiment_id, study_id, trial_id, trial_number, phase_number,
 <hr />
 <h2 id="i-backtest">I. Backtest</h2>
 <p><strong>Process:</strong> Simulates trading using a trained model over a historical range. Three types: MINI (during trial, last N rows from SMALL), COMPLETE (after phase, full range), MANUAL (user CLI). Creates a <code>BacktestSession</code> DB record. Runs tick-by-tick: model predicts, bot decides, orders execute with slippage/commission.</p>
-<pre><code>BACKTEST_REQUESTED:  experiment_id, study_id?, trial_id, backtest_type
+<pre><code class="language-text">BACKTEST_REQUESTED:  experiment_id, study_id?, trial_id, backtest_type
 BACKTEST_STARTED:    experiment_id, study_id?, trial_id, backtest_session_id, backtest_type,
                      range_start, range_end, initial_equity
 BACKTEST_PROGRESS:   experiment_id, study_id?, trial_id, backtest_session_id, backtest_type,
@@ -109285,7 +109315,7 @@ BACKTEST_DONE:       experiment_id, study_id?, trial_id, backtest_session_id, ba
 <h2 id="j-live-trading">J. Live Trading</h2>
 <p><strong>Process:</strong> Runs a live trading session from an <code>ExecutionPlan</code>. Each plan defines one symbol+timeframe+model combination. The runner spawns a <code>LiveInstance</code>, creates a <code>LiveSession</code> DB record, subscribes to a candle stream, and runs the bot loop: receive candle → model predicts → bot decides → execute orders.</p>
 <p><strong>ExecutionPlan always carries:</strong> <code>experiment_id</code>, <code>trial_id</code>, <code>mode</code>, <code>target_symbol</code>, <code>target_timeframe</code>.</p>
-<pre><code>LIVE_TRADING_REQUESTED:          execution_plan_id, execution_plan_uuid, experiment_id, trial_id,
+<pre><code class="language-text">LIVE_TRADING_REQUESTED:          execution_plan_id, execution_plan_uuid, experiment_id, trial_id,
                                  mode, target_symbol, target_timeframe
 LIVE_TRADING_STARTED:            execution_plan_id, execution_plan_uuid, experiment_id, trial_id, live_session_id,
                                  mode, target_symbol, target_timeframe
@@ -109322,7 +109352,7 @@ LIVE_TRADING_ANOMALY_DETECTED:   execution_plan_id, execution_plan_uuid, experim
 <hr />
 <h2 id="k-hitl-human-in-the-loop">K. HITL (Human-in-the-Loop)</h2>
 <p><strong>Process:</strong> Governance mechanism for sensitive actions. Partially implemented — payloads and DB audit table defined, but the orchestrator interruption mechanism is not wired yet. Flow: system requests approval → control panel displays → human decides → system proceeds or stops.</p>
-<pre><code>HITL_REQUEST:   experiment_id?, trial_id?, action, description, context, allowed_responses
+<pre><code class="language-text">HITL_REQUEST:   experiment_id?, trial_id?, action, description, context, allowed_responses
 HITL_DECISION:  experiment_id?, trial_id?, action, decision, approver, reason?
 HITL_APPROVED:  experiment_id?, trial_id?, action, approver, reason?
 HITL_REJECTED:  experiment_id?, trial_id?, action, approver, reason?
