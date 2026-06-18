@@ -109627,8 +109627,9 @@ full metric set, so every <code>(trial, config)</code> result is self-describing
   step</strong>: the generator pins those ids/window in the same DB pass it selects in, and <code>evaluate_config</code> ensures the
   prediction parquet itself at run time.</li>
 <li><strong><code>results.json</code> / <code>results.csv</code></strong> — one row per <code>(trial, config)</code> evaluation with the full id set (§8).</li>
-<li><strong>Run isolation</strong> — each executor run gets a timestamped directory (<code>YYYYMMDD_HHMMSS[_suffix]</code>) and snapshots
-  its <code>input_plan.json</code>, so no run overwrites another and every run is reproducible from its snapshot.</li>
+<li><strong>Run isolation</strong> — by default each executor run gets a fresh timestamped directory (<code>{YYYYMMDD_HHMMSS}_{label}</code>
+  via <code>make_run_directory</code>) and snapshots its <code>input_plan.json</code>, so no run overwrites another. Passing an explicit
+  existing run directory instead <strong>resumes</strong> that run (re-using its snapshot, skipping already-finished work).</li>
 </ul>
 <h3 id="selection-criteria-generate_input">Selection Criteria (generate_input)</h3>
 <p><code>generate_input</code> selects trials with a flexible, composable <code>SelectionCriteria</code>, reusing <code>fetch_trials</code> (scope)
@@ -109651,8 +109652,8 @@ winners that may turn PnL-positive (<code>top_k</code>), a broad regenerate-and-
     bot_config_overrides.py     DONE (T1) — BotConfigOverride + clone_experiment_config_with_bot_config_override
     config_evaluation.py        DONE (T2) — evaluate_config + ConfigEvaluationResult
   core/.../helpers/
-    report_artifacts.py         + ensure_timestamped_run_directory (run isolation + input snapshot), shared
-                                with ensemble_backtests; reuse write_csv / write_json / write_atomic
+    report_artifacts.py         + make_run_directory (clean run isolation: results_root/{ts}_{label}), shared
+                                by ensemble_backtests + optimizer; reuse write_csv / write_json / write_atomic
     reports.py                  reuse: fetch_trials, load_csv_rows, to_completed_backtest_trial_result,
                                 load_backtest_session_metrics_from_db, utc_now_compact
     monetary_metrics / report_formatters    reuse, untouched
@@ -109665,7 +109666,7 @@ winners that may turn PnL-positive (<code>top_k</code>), a broad regenerate-and-
 scripts/thesis/script_2_thesis/
   extra_backtests/              DONE (T1) — migrated to the consolidated override; behavior + artifacts identical
   ensemble_backtests/
-    run_ensemble_backtest_batch.py   imports ensure_timestamped_run_directory from core (extraction, T3)
+    run_ensemble_backtest_batch.py   migrated to make_run_directory from core (T3)
   bot_config_optimizer/         NEW (all new orchestration)
     models.py            typed: InputPlan, ResolvedTrialRef, SweepConfigSet / OptunaSearchSpace, ConfigEvalRow
     generate_input.py    selection criteria (reuse fetch_trials + percentile_scores) -&gt; input_plan.json + .md
@@ -109675,9 +109676,8 @@ scripts/thesis/script_2_thesis/
     report.py            results.csv -&gt; report.md
     README.md
 </code></pre>
-<p>All new orchestration lives in <code>bot_config_optimizer/</code>. The only library change beyond Layer 1 is extracting the
-shared run-isolation helper into <code>report_artifacts.py</code> (T3); the <code>ensemble_backtests</code> batch runner switches to
-importing it.</p>
+<p>All new orchestration lives in <code>bot_config_optimizer/</code>. The only library change beyond Layer 1 is the shared
+<code>make_run_directory</code> helper in <code>report_artifacts.py</code> (T3); the <code>ensemble_backtests</code> batch runner migrates to it.</p>
 <h2 id="5-reuse-map-no-duplication">5. Reuse Map (No Duplication)</h2>
 <table>
 <thead>
@@ -109721,9 +109721,9 @@ importing it.</p>
 </tr>
 <tr>
 <td>Run isolation</td>
-<td>the timestamped-run + snapshot pattern</td>
-<td>extract <code>ensure_timestamped_run_directory</code> from the ensemble batch runner into <code>report_artifacts.py</code> (shared)</td>
+<td><code>write_json</code> for the input snapshot</td>
 <td>—</td>
+<td><code>make_run_directory(results_root, label)</code> in <code>report_artifacts.py</code>, shared by ensemble + optimizer (replaces the ensemble's path-detection helper)</td>
 </tr>
 <tr>
 <td>Optuna</td>
@@ -109856,9 +109856,11 @@ new <code>backtest_session_id</code> but not <code>source_backtest_session_id</c
 </ol>
 <h3 id="phase-2--orchestration--sweep">Phase 2 — Orchestration + sweep</h3>
 <ol>
-<li>[ ] T3: extract <code>ensure_timestamped_run_directory</code> (+ its name patterns) from the ensemble batch runner into
-   <code>report_artifacts.py</code> (shared run isolation + input snapshot); switch <code>run_ensemble_backtest_batch.py</code> to import
-   it (behavior identical). Unit tests for the naming/snapshot helper.</li>
+<li>[x] T3: add a clean <code>make_run_directory(results_root, label)</code> to <code>report_artifacts.py</code> (run isolation:
+   <code>results_root/{YYYYMMDD_HHMMSS}_{label}</code>), shared by the optimizer and the ensemble. Migrate
+   <code>run_ensemble_backtest_batch.py</code> to it: a fresh run when no output directory is given, an explicit existing
+   directory used as-is to resume. Clean the redundant date out of the batch specs (drop the baked-in <code>output_dir</code>
+   and the date-prefixed <code>batch_name</code>) so run dirs carry a single timestamp. Unit tests for the helper.</li>
 <li>[ ] T4: <code>models.py</code> — typed orchestration models: <code>InputPlan</code>, <code>ResolvedTrialRef</code>
    (<code>trial_id</code>/<code>experiment_id</code>/<code>source_backtest_session_id</code>/window), the config spec (<code>SweepConfigSet</code> /
    <code>OptunaSearchSpace</code>), and <code>ConfigEvalRow</code> (the full per-row id set). Unit tests for validation.</li>
@@ -109906,8 +109908,10 @@ new <code>backtest_session_id</code> but not <code>source_backtest_session_id</c
    reusing <code>fetch_trials</code> + <code>percentile_scores</code> and emits a resolved <code>input_plan.json</code>; the executors consume it.</li>
 <li>[x] <strong>No separate "resolve" step</strong>: the generator pins <code>experiment_id</code> + <code>source_backtest_session_id</code> + window
    in the same DB pass it selects in, and <code>evaluate_config</code> ensures the prediction parquet at run time.</li>
-<li>[x] <strong>Run isolation + input snapshot</strong> live in <code>report_artifacts.ensure_timestamped_run_directory</code>, shared by
-   <code>ensemble_backtests</code> and the optimizer (extracted from the ensemble batch runner).</li>
+<li>[x] <strong>Run isolation</strong> is a clean <code>report_artifacts.make_run_directory(results_root, label)</code>
+   (<code>results_root/{YYYYMMDD_HHMMSS}_{label}</code>), shared by <code>ensemble_backtests</code> and the optimizer. A run with no
+   explicit output directory is fresh; an explicit existing directory is used as-is to <strong>resume</strong> that run. The
+   input snapshot is written with <code>write_json</code>.</li>
 <li>[x] <strong>Two thin executors</strong> (<code>run_sweep</code> / <code>run_optuna</code>) over the shared core, not one mode-branching script;
    <code>config_space.py</code> is the single seam where sweep (explicit list / grid) and Optuna (search-space <code>suggest</code>)
    differ.</li>
