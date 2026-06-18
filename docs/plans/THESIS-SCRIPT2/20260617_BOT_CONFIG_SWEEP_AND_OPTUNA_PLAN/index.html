@@ -109727,9 +109727,9 @@ scripts/thesis/script_2_thesis/
 </tr>
 <tr>
 <td>Optuna</td>
-<td><code>OptunaParam</code> + <code>SamplerConfig</code> foundation types (<code>common</code>); the <code>OptunaStudy</code> table for the app-side study record</td>
-<td><code>suggest_param</code> (+ <code>resolve_*_value</code>) promoted from model-trainer to <code>common</code>/<code>core</code> (shared, no cross-coupling)</td>
-<td>own <code>BotConfigOptunaConfig</code>, bot-config search space, plain TPE study, <code>alpha_rc</code> objective — independent of model-trainer</td>
+<td><code>OptunaParam</code> foundation types (<code>common</code>); the <code>OptunaStudy</code> table for the app-side study record</td>
+<td>—</td>
+<td>independent <code>suggest_value</code> / <code>suggest_override</code> over <code>OptunaParam</code>; <code>OptunaSearchSpace</code> config; plain TPE study, <code>alpha_rc</code> objective — model-trainer untouched</td>
 </tr>
 <tr>
 <td>Reporting</td>
@@ -109861,31 +109861,36 @@ new <code>backtest_session_id</code> but not <code>source_backtest_session_id</c
    <code>run_ensemble_backtest_batch.py</code> to it: a fresh run when no output directory is given, an explicit existing
    directory used as-is to resume. Clean the redundant date out of the batch specs (drop the baked-in <code>output_dir</code>
    and the date-prefixed <code>batch_name</code>) so run dirs carry a single timestamp. Unit tests for the helper.</li>
-<li>[ ] T4: <code>models.py</code> — typed orchestration models: <code>InputPlan</code>, <code>ResolvedTrialRef</code>
-   (<code>trial_id</code>/<code>experiment_id</code>/<code>source_backtest_session_id</code>/window), the config spec (<code>SweepConfigSet</code> /
-   <code>OptunaSearchSpace</code>), and <code>ConfigEvalRow</code> (the full per-row id set). Unit tests for validation.</li>
-<li>[ ] T5: <code>generate_input.py</code> — select trials with a flexible <code>SelectionCriteria</code> (scope filters via
+<li>[x] T4: <code>models.py</code> — typed orchestration models: <code>SelectionCriteria</code> (+ <code>MetricWeight</code>), <code>ResolvedTrialRef</code>
+   (<code>trial_id</code>/<code>experiment_id</code>/<code>source_backtest_session_id</code>/window + selection provenance), the config spec
+   (<code>SweepConfigSet</code> / <code>OptunaSearchSpace</code>, discriminated by <code>mode</code>) inside <code>InputPlan</code>, and <code>ConfigEvalRow</code>
+   (the full per-row id set + metrics/deltas). Unit tests for validation.</li>
+<li>[x] T5: <code>generate_input.py</code> — select trials with a flexible <code>SelectionCriteria</code> (scope filters via
    <code>fetch_trials</code>; <code>rank_by</code> a single metric <strong>or</strong> a weighted composite of <code>percentile_scores</code>; <code>top_k</code> /
    <code>bottom_k</code>, per-fold or global; explicit-ids escape hatch), reusing <code>fetch_trials</code> + <code>percentile_scores</code>; pin
    <code>experiment_id</code> + <code>source_backtest_session_id</code> + stage-3 window per trial; emit <code>input_plan.json</code> +
    <code>input_plan.md</code> (with <code>selection_score</code> + <code>score_components</code>). Unit tests for selection + resolution.</li>
-<li>[ ] T6: <code>config_space.py</code> (sweep: explicit list / grid expansion of <code>BotConfigOverride</code>) + <code>run_sweep.py</code>
-   executor (read <code>input_plan.json</code> → for each <code>(trial × config)</code> call <code>evaluate_config</code> → <code>results.json</code> /
-   <code>results.csv</code> with the full id traceability, under a timestamped run dir with input snapshot) + <code>report.py</code>
-   (generic baseline-vs-config delta table). This covers "re-run all backtests with the corrected trailing-stop
-   config" (one config × many trials). Unit tests.</li>
+<li>[x] T6: <code>config_space.py</code> (<code>sweep_variants</code> — the explicit labelled config list; the seam where Optuna later
+   adds its <code>suggest</code> producer) + <code>run_sweep.py</code> executor (read <code>input_plan.json</code> → for each <code>(trial × config)</code>
+   call <code>evaluate_config</code> → <code>ConfigEvalRow</code> with the baseline loaded via <code>load_backtest_session_metrics_from_db</code>
+   and the full id set + deltas → <code>results.json</code> / <code>results.csv</code> written into the input plan's run directory) +
+   <code>report.py</code> (generic baseline-vs-config delta table, re-renderable from <code>results.json</code>). Covers "re-run all
+   backtests with the corrected trailing-stop config" (one config × many trials). Unit tests for the pure
+   row-building, the sweep producer and the renderer.</li>
 </ol>
 <h3 id="phase-3--optuna">Phase 3 — Optuna</h3>
 <ol>
-<li>[ ] T7: promote <code>suggest_param</code> (+ its <code>resolve_*_value</code> helpers) from model-trainer to <code>common</code>/<code>core</code>
-   (shared; model-trainer switches to the shared import). Define <code>BotConfigOptunaConfig</code> (own, independent) and
-   the bot-config Optuna search space (groups A + B + C, costs fixed) mapping fields to <code>OptunaParam</code>, reusing only
-   the <code>common</code> foundation types. Plain <code>TPESampler</code> + seed, no pruner. Config objective = <code>alpha_rc</code>.
-   Search-space ranges/grids reviewed before any Optuna run.</li>
-<li>[ ] T8: <code>run_optuna.py</code> executor — per-trial Optuna study (own <code>RDBStorage</code> SQLite, <code>load_if_exists</code> resume,
-   SIGINT/SIGTERM graceful stop + orphan cleanup), each Optuna trial → <code>evaluate_config</code> → one <code>backtest_session</code>,
-   reusing the <code>OptunaStudy</code> table for the app-side study record (<code>study_id</code> / status / best). Optuna report
-   (best config + trial history + param importances) reusing <code>report.py</code>. Unit tests.</li>
+<li>[x] T7: <code>config_space.suggest_value</code> / <code>suggest_override</code> — an independent Optuna suggestion dispatch over the
+   <code>OptunaParam</code> types (float / int / categorical / ranges / fixed) that builds a <code>BotConfigOverride</code> from a search
+   space (<code>field path -&gt; OptunaParam</code>), reusing only the <code>common</code> foundation types (model-trainer untouched). The
+   search space + budget live in <code>OptunaSearchSpace</code> (T4); the plain <code>TPESampler</code> + seed and the <code>alpha_rc</code>
+   objective are wired in T8. Unit tests for each param type and the nested override build.</li>
+<li>[x] T8: <code>run_optuna.py</code> executor — per studied trial, a plain-<code>TPESampler</code> Optuna study in its own
+   <code>RDBStorage</code> SQLite in the run directory (<code>load_if_exists</code> resume, SIGINT/SIGTERM graceful stop); the objective
+   suggests a config (<code>suggest_override</code>), runs <code>evaluate_config</code>, and returns <code>alpha_rc</code>. Each Optuna trial maps
+   to one <code>backtest_session</code> and one <code>ConfigEvalRow</code>; <code>results.json</code> / <code>results.csv</code> / <code>report.md</code> are written via
+   the shared results helpers (in <code>report.py</code>), plus the best config and per-trial param importances. Unit tests
+   for the objective-value mapping.</li>
 </ol>
 <h2 id="10-quality-gates-and-staging">10. Quality Gates And Staging</h2>
 <ul>
@@ -109921,12 +109926,16 @@ new <code>backtest_session_id</code> but not <code>source_backtest_session_id</c
 <li>[x] Selection <code>rank_by</code> supports either a single metric or a <strong>weighted composite score</strong> (<code>percentile_scores</code>
     per metric × weights, normalized), with <code>top_k</code> / <code>bottom_k</code> and an explicit-ids escape hatch — the
     <code>generate_extra_backtest_plan</code> scoring pattern, generalized.</li>
-<li>[x] <code>suggest_param</code> (+ <code>resolve_*_value</code>) is <strong>promoted</strong> from model-trainer to <code>common</code>/<code>core</code> and shared;
-    model-trainer switches to the shared import. No other Optuna code is shared with model-trainer.</li>
-<li>[x] The Optuna optimizer is <strong>independent</strong> from model-trainer: own <code>BotConfigOptunaConfig</code>, reusing only the
-    <code>OptunaParam</code> / <code>SamplerConfig</code> foundation types; plain <code>TPESampler</code> + seed; <strong>no pruner</strong> (backtests are
-    single-shot); the <code>OptunaStudy</code> table is reused for the app-side study record and each Optuna trial maps to
-    one <code>backtest_session</code>.</li>
+<li>[x] Optuna value suggestion is <strong>reimplemented independently</strong> in the optimizer (<code>config_space.suggest_value</code>
+    / <code>suggest_override</code> over the <code>OptunaParam</code> types) rather than promoting model-trainer's <code>suggest_param</code>:
+    promotion would touch ~10 model-trainer files and add an <code>optuna</code> dependency to <code>core</code> for little reuse (the
+    override-building is optimizer-specific anyway). model-trainer is left untouched.</li>
+<li>[x] The Optuna optimizer is <strong>independent</strong> from model-trainer: reuses only the <code>OptunaParam</code> foundation
+    types; plain <code>TPESampler</code> + seed; <strong>no pruner</strong> (backtests are single-shot). It keeps its own Optuna
+    <code>RDBStorage</code> SQLite per studied trial in the run directory (resume via <code>load_if_exists</code>) and does <strong>not</strong> write
+    to the app-side <code>OptunaStudy</code> table — a poor fit, since its <code>best_trial_id</code> is a <code>Trial</code> foreign key and its
+    counters are training-oriented. Each Optuna trial maps to one <code>backtest_session</code>; the optuna-trial → session →
+    config → objective mapping and the best are recorded in <code>results.json</code>.</li>
 </ol>
 <h2 id="12-execution-note">12. Execution Note</h2>
 <p>This plan only adds backtest re-evaluation and optimization tooling; it runs new backtests (compute + DB writes for
