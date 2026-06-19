@@ -3805,10 +3805,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#task-4-add-the-buy_and_hold-baseline-model-d1-recommended" class="md-nav__link">
+  <a href="#task-4-add-the-always_long-baseline-model-d1-recommended" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task 4: Add the buy_and_hold baseline model (D1 recommended)
+        Task 4: Add the always_long baseline model (D1 recommended)
       
     </span>
   </a>
@@ -109293,10 +109293,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#task-4-add-the-buy_and_hold-baseline-model-d1-recommended" class="md-nav__link">
+  <a href="#task-4-add-the-always_long-baseline-model-d1-recommended" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task 4: Add the buy_and_hold baseline model (D1 recommended)
+        Task 4: Add the always_long baseline model (D1 recommended)
       
     </span>
   </a>
@@ -109493,7 +109493,7 @@
 <p><strong>Overview:</strong> Implements a constrained buy-and-hold baseline that runs as a real backtest session
 (constant LONG, full equity, same RiskManager and full metric suite) for apples-to-apples comparison
 on every metric axis. Core changes: <code>exit_enabled</code> flags on stop-loss / take-profit (gate the exit
-action while keeping the level computed for sizing), a non-trainable <code>buy_and_hold</code> model, and experiment
+action while keeping the level computed for sizing), a non-trainable <code>always_long</code> model, and experiment
 wiring. The field defaults to True, so historical configs keep their exact behavior with <strong>no backfill</strong>;
 an audit records that they are implicitly <code>exit_enabled=true</code>.</p>
 <p><strong>Status:</strong> Planning only — a detailed task spec; execution not yet authorized.</p>
@@ -109502,7 +109502,7 @@ an audit records that they are implicitly <code>exit_enabled=true</code>.</p>
 <p><strong>Created:</strong> 2026-06-08</p>
 <p><strong>Status:</strong> Implementation plan pending Manu review. No code edit, config change, SQL execution, or experiment run is authorized by this document alone.</p>
 <p><strong>Goal:</strong> Add a constrained buy-and-hold baseline that runs as a real backtest session through the existing engine, so it produces the FULL investor/execution metric suite (drawdown, Sortino, Calmar, exposure, costs, operational gates) under the same operational restrictions as the bot — enabling true apples-to-apples comparison on every metric axis, not just return/alpha.</p>
-<p><strong>Architecture:</strong> Reuse the existing prediction seam and the uniformly-applied <code>RiskManager</code>. A buy-and-hold is just a decision policy that emits <code>LONG</code>. Two minimal, decoupled changes make it a <em>pure</em> buy-and-hold: (1) a <code>buy_and_hold</code> non-trainable baseline model that emits <code>LONG</code>; (2) a config flag <code>exit_enabled</code> on <code>StopLossConfig</code>/<code>TakeProfitConfig</code> that, when <code>false</code>, stops the bot from <em>closing</em> on SL/TP hits <strong>without changing how SL/TP are computed or used for sizing</strong>. All other exits are already disablable via existing config (<code>exit_threshold=0.0</code>, <code>trailing_stop.enabled=false</code>, risk-halt thresholds <code>None</code>). The buy-and-hold bot profile is attached only to its own experiment via the existing per-experiment <code>bot_config</code> override seam — no other experiment config is touched.</p>
+<p><strong>Architecture:</strong> Reuse the existing prediction seam and the uniformly-applied <code>RiskManager</code>. A buy-and-hold is just a decision policy that emits <code>LONG</code>. Two minimal, decoupled changes make it a <em>pure</em> buy-and-hold: (1) a <code>always_long</code> non-trainable baseline model that emits <code>LONG</code>; (2) a config flag <code>exit_enabled</code> on <code>StopLossConfig</code>/<code>TakeProfitConfig</code> that, when <code>false</code>, stops the bot from <em>closing</em> on SL/TP hits <strong>without changing how SL/TP are computed or used for sizing</strong>. All other exits are already disablable via existing config (<code>exit_threshold=0.0</code>, <code>trailing_stop.enabled=false</code>, risk-halt thresholds <code>None</code>). The buy-and-hold bot profile is attached only to its own experiment via the existing per-experiment <code>bot_config</code> override seam — no other experiment config is touched.</p>
 <p><strong>Tech Stack:</strong> Python 3 / Pydantic v2 config models, PyTorch baseline-model interface, the Rainbow backtesting engine and bot-logic modules, the Script 2 experiment generator.</p>
 <hr />
 <h2 id="0-why-this-design-evidence-summary">0. Why This Design (Evidence Summary)</h2>
@@ -109556,7 +109556,7 @@ an audit records that they are implicitly <code>exit_enabled=true</code>.</p>
 <tr>
 <td>D1</td>
 <td>Decision policy implementation</td>
-<td><strong>Dedicated <code>buy_and_hold</code> baseline model</strong> (clean cross-fold identity)</td>
+<td><strong>Dedicated <code>always_long</code> baseline model</strong> (clean cross-fold identity)</td>
 <td>Reuse <code>rule_based</code> with <code>default_signal: "LONG"</code> (zero new Python, but muddier report identity)</td>
 </tr>
 <tr>
@@ -109603,19 +109603,19 @@ an audit records that they are implicitly <code>exit_enabled=true</code>.</p>
 </ul>
 <p><strong>Create (buy-and-hold baseline model — D1 recommended):</strong></p>
 <ul>
-<li><code>modules/model-trainer/src/rainbow/model_trainer/models/buy_and_hold.py</code> — <code>TradingBuyAndHoldModel</code> (mirrors <code>always_none.py</code>, emits <code>LONG</code>).</li>
-<li><code>config/experiments/models/buy-and-hold-model-hyperparameters.yaml</code> — fixed hyperparameters.</li>
+<li><code>modules/model-trainer/src/rainbow/model_trainer/models/always_long.py</code> — <code>TradingAlwaysLongModel</code> (mirrors <code>always_none.py</code>, emits <code>LONG</code>).</li>
+<li><code>config/experiments/models/always-long-model-hyperparameters.yaml</code> — fixed hyperparameters.</li>
 </ul>
 <p><strong>Modify (model registration):</strong></p>
 <ul>
-<li><code>modules/model-trainer/src/rainbow/model_trainer/types.py</code> — add <code>"buy_and_hold"</code> to <code>ModelType</code>; add <code>ResolvedBuyAndHoldModelHyperparameters</code>; add it to the resolved union.</li>
+<li><code>modules/model-trainer/src/rainbow/model_trainer/types.py</code> — add <code>"always_long"</code> to <code>ModelType</code>; add <code>ResolvedAlwaysLongModelHyperparameters</code>; add it to the resolved union.</li>
 <li><code>modules/model-trainer/src/rainbow/model_trainer/models/factory.py</code> — register flow capabilities + dispatch.</li>
 <li><code>modules/model-trainer/src/rainbow/model_trainer/helpers/optuna/hyperparams_models.py</code> — resolve hyperparameters.</li>
 </ul>
 <p><strong>Modify (experiment generation + profile):</strong></p>
 <ul>
-<li>The active Script 2 tiers config JSON (e.g. <code>scripts/thesis/script_2_thesis/generate_experiments/script2_tiers_config*.json</code>) — add a <code>buy_and_hold</code> model entry to the chosen tier and a per-experiment <code>bot_config</code> override (the buy-and-hold profile).</li>
-<li><code>scripts/thesis/script_2_thesis/generate_experiments/generate_script2_experiments.py</code> — wire <code>buy_and_hold</code> into the model-category resolution and <code>kind</code> mapping.</li>
+<li>The active Script 2 tiers config JSON (e.g. <code>scripts/thesis/script_2_thesis/generate_experiments/script2_tiers_config*.json</code>) — add a <code>always_long</code> model entry to the chosen tier and a per-experiment <code>bot_config</code> override (the buy-and-hold profile).</li>
+<li><code>scripts/thesis/script_2_thesis/generate_experiments/generate_script2_experiments.py</code> — wire <code>always_long</code> into the model-category resolution and <code>kind</code> mapping.</li>
 </ul>
 <p><strong>Create (audit — Task 7):</strong></p>
 <ul>
@@ -109711,6 +109711,10 @@ git commit -m &quot;feat(bot-config): add exit_enabled flag to stop-loss/take-pr
 </code></pre>
 <hr />
 <h2 id="task-2-gate-the-stop-loss-exit-on-exit_enabled">Task 2: Gate the stop-loss exit on <code>exit_enabled</code></h2>
+<p><strong>Status: DONE (2026-06-19)</strong> — SL exits gated on <code>stop_loss_config.exit_enabled</code>. Implemented through a
+new <code>build_close_order</code> factory in <code>exit_manager.py</code> that every close-order construction routes through;
+the gate is explicit in the SL conditions. All steps complete; 38 bot-logic tests pass; ruff, mypy
+--strict and pyright clean; pylint 10.00/10.</p>
 <p><strong>Files:</strong></p>
 <ul>
 <li>Modify: <code>modules/bot-logic/src/rainbow/bot_logic/bot_logic.py:158,202,228</code></li>
@@ -109792,6 +109796,8 @@ git commit -m &quot;feat(bot-logic): gate stop-loss exit on stop_loss_config.exi
 </code></pre>
 <hr />
 <h2 id="task-3-gate-the-take-profit-exit-on-exit_enabled">Task 3: Gate the take-profit exit on <code>exit_enabled</code></h2>
+<p><strong>Status: DONE (2026-06-19)</strong> — TP exits gated on <code>take_profit_config.exit_enabled</code>, in the same
+<code>build_close_order</code> refactor as Task 2. All steps complete; tests pass; gates clean.</p>
 <p><strong>Files:</strong></p>
 <ul>
 <li>Modify: <code>modules/bot-logic/src/rainbow/bot_logic/bot_logic.py:256,283</code></li>
@@ -109846,36 +109852,43 @@ Expected: clean, all bot-logic tests pass (regression check for the shared modul
 git commit -m &quot;feat(bot-logic): gate take-profit exit on take_profit_config.exit_enabled&quot;
 </code></pre>
 <hr />
-<h2 id="task-4-add-the-buy_and_hold-baseline-model-d1-recommended">Task 4: Add the <code>buy_and_hold</code> baseline model (D1 recommended)</h2>
+<h2 id="task-4-add-the-always_long-baseline-model-d1-recommended">Task 4: Add the <code>always_long</code> baseline model (D1 recommended)</h2>
+<p><strong>Status: DONE (2026-06-19)</strong> — Implemented as model_type <code>always_long</code>, NOT <code>buy_and_hold</code>: buy-and-hold
+is the emergent result of this always-LONG model combined with the exit-disabling profile (Task 5), not
+the model's own identity (with exits enabled it would still close on SL/TP/uncertainty hits). Registered
+as a first-class type mirroring <code>always_none</code> across three submodules — common (<code>optuna_config.py</code>),
+model-trainer (<code>types.py</code>, <code>factory.py</code>, <code>hyperparams_models.py</code>, <code>training_reporting.py</code>,
+<code>models/__init__.py</code>, <code>models/always_long.py</code>) and core (display alias <code>LNG</code>) — plus the hyperparameters
+yaml and a unit test. All steps complete; gates green; <code>create_model("always_long")</code> smoke OK.</p>
 <p><strong>Files:</strong></p>
 <ul>
-<li>Create: <code>modules/model-trainer/src/rainbow/model_trainer/models/buy_and_hold.py</code></li>
+<li>Create: <code>modules/model-trainer/src/rainbow/model_trainer/models/always_long.py</code></li>
 <li>Modify: <code>modules/model-trainer/src/rainbow/model_trainer/types.py</code></li>
 <li>Modify: <code>modules/model-trainer/src/rainbow/model_trainer/models/factory.py</code></li>
 <li>Modify: <code>modules/model-trainer/src/rainbow/model_trainer/helpers/optuna/hyperparams_models.py</code></li>
-<li>Create: <code>config/experiments/models/buy-and-hold-model-hyperparameters.yaml</code></li>
-<li>Test: <code>modules/model-trainer/tests/test_buy_and_hold_model.py</code></li>
+<li>Create: <code>config/experiments/models/always-long-model-hyperparameters.yaml</code></li>
+<li>Test: <code>modules/model-trainer/tests/test_always_long_model.py</code></li>
 </ul>
 <blockquote>
 <p><strong>Implementation note:</strong> This task mirrors <code>always_none.py</code> exactly. Open
 <code>modules/model-trainer/src/rainbow/model_trainer/models/always_none.py</code> and copy its structure
 line-for-line (including comments and the <code>self._anchor</code> parameter that keeps the training loop
 happy for non-trainable models). The ONLY logic difference is the target class index: <code>always_none</code>
-sets <code>logits[:, 0]</code> (NONE); <code>buy_and_hold</code> sets <code>logits[:, 1]</code> (LONG). Class index contract is
+sets <code>logits[:, 0]</code> (NONE); <code>always_long</code> sets <code>logits[:, 1]</code> (LONG). Class index contract is
 <code>0=NONE, 1=LONG, 2=SHORT</code> per the base model output contract.</p>
 </blockquote>
 <ul>
 <li>[ ] <strong>Step 1: Write the failing test</strong></li>
 </ul>
-<p>Create <code>modules/model-trainer/tests/test_buy_and_hold_model.py</code>:</p>
+<p>Create <code>modules/model-trainer/tests/test_always_long_model.py</code>:</p>
 <pre><code class="language-python">import torch
 
-from rainbow.model_trainer.models.buy_and_hold import TradingBuyAndHoldModel
+from rainbow.model_trainer.models.always_long import TradingAlwaysLongModel
 
 
-def test_buy_and_hold_always_emits_long() -&gt; None:
+def test_always_long_always_emits_long() -&gt; None:
     &quot;&quot;&quot;forward() must put the dominant logit on the LONG class (index 1) for every row.&quot;&quot;&quot;
-    model = TradingBuyAndHoldModel(
+    model = TradingAlwaysLongModel(
         input_dim=4, seq_len=8, num_classes=3,
         strength_value=0.5, quality_value=0.5, sampled_logit_margin=5.0,
     )
@@ -109889,12 +109902,12 @@ def test_buy_and_hold_always_emits_long() -&gt; None:
 <ul>
 <li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
 </ul>
-<p>Run: <code>.venv/bin/python -m pytest modules/model-trainer/tests/test_buy_and_hold_model.py -v</code>
-Expected: FAIL with <code>ModuleNotFoundError: rainbow.model_trainer.models.buy_and_hold</code>.</p>
+<p>Run: <code>.venv/bin/python -m pytest modules/model-trainer/tests/test_always_long_model.py -v</code>
+Expected: FAIL with <code>ModuleNotFoundError: rainbow.model_trainer.models.always_long</code>.</p>
 <ul>
 <li>[ ] <strong>Step 3: Create the model (mirror always_none, emit LONG)</strong></li>
 </ul>
-<p>Create <code>modules/model-trainer/src/rainbow/model_trainer/models/buy_and_hold.py</code>:</p>
+<p>Create <code>modules/model-trainer/src/rainbow/model_trainer/models/always_long.py</code>:</p>
 <pre><code class="language-python">&quot;&quot;&quot;Buy-and-hold baseline model: always predicts LONG (never NONE, never SHORT).
 
 Non-trainable baseline. Mirrors TradingAlwaysNoneModel but targets the LONG class (index 1).
@@ -109914,7 +109927,7 @@ from rainbow.model_trainer.models.base import BaseModel
 _LONG_CLASS_INDEX = 1
 
 
-class TradingBuyAndHoldModel(BaseModel):
+class TradingAlwaysLongModel(BaseModel):
     &quot;&quot;&quot;Always emits LONG with a fixed logit margin. Auxiliary outputs are fixed constants.&quot;&quot;&quot;
 
     def __init__(
@@ -109954,10 +109967,10 @@ committing; match its keyword/positional convention so the factory call site is 
 </ul>
 <p>In <code>modules/model-trainer/src/rainbow/model_trainer/types.py</code>:</p>
 <ul>
-<li>Add <code>"buy_and_hold"</code> to the <code>ModelType</code> Literal (alongside <code>"always_none"</code>).</li>
+<li>Add <code>"always_long"</code> to the <code>ModelType</code> Literal (alongside <code>"always_none"</code>).</li>
 <li>Add the resolved hyperparameters model (mirror <code>ResolvedAlwaysNoneModelHyperparameters</code>):</li>
 </ul>
-<pre><code class="language-python">class ResolvedBuyAndHoldModelHyperparameters(BaseModel):
+<pre><code class="language-python">class ResolvedAlwaysLongModelHyperparameters(BaseModel):
     &quot;&quot;&quot;Fixed hyperparameters for the buy-and-hold baseline.&quot;&quot;&quot;
 
     strength_value: float
@@ -109966,7 +109979,7 @@ committing; match its keyword/positional convention so the factory call site is 
 </code></pre>
 <ul>
 <li>
-<p>Add <code>ResolvedBuyAndHoldModelHyperparameters</code> to the <code>ResolvedModelHyperparameters</code> union.</p>
+<p>Add <code>ResolvedAlwaysLongModelHyperparameters</code> to the <code>ResolvedModelHyperparameters</code> union.</p>
 </li>
 <li>
 <p>[ ] <strong>Step 5: Register in the factory</strong></p>
@@ -109974,15 +109987,15 @@ committing; match its keyword/positional convention so the factory call site is 
 </ul>
 <p>In <code>modules/model-trainer/src/rainbow/model_trainer/models/factory.py</code>:</p>
 <ul>
-<li>Add to <code>_MODEL_FLOW_CAPABILITIES_BY_TYPE</code>: <code>"buy_and_hold": ModelFlowCapabilities(is_trainable=False, has_pre_resolved=False),</code></li>
+<li>Add to <code>_MODEL_FLOW_CAPABILITIES_BY_TYPE</code>: <code>"always_long": ModelFlowCapabilities(is_trainable=False, has_pre_resolved=False),</code></li>
 <li>Add dispatch in <code>create_model</code> (mirror the <code>always_none</code> block):</li>
 </ul>
-<pre><code class="language-python">    if model_type == &quot;buy_and_hold&quot;:
-        if not isinstance(resolved_model_hyperparameters, ResolvedBuyAndHoldModelHyperparameters):
-            raise ValueError(&quot;buy_and_hold requires ResolvedBuyAndHoldModelHyperparameters&quot;)
-        from rainbow.model_trainer.models.buy_and_hold import TradingBuyAndHoldModel
+<pre><code class="language-python">    if model_type == &quot;always_long&quot;:
+        if not isinstance(resolved_model_hyperparameters, ResolvedAlwaysLongModelHyperparameters):
+            raise ValueError(&quot;always_long requires ResolvedAlwaysLongModelHyperparameters&quot;)
+        from rainbow.model_trainer.models.always_long import TradingAlwaysLongModel
 
-        return TradingBuyAndHoldModel(
+        return TradingAlwaysLongModel(
             input_dim=input_dim,
             seq_len=seq_len,
             num_classes=num_classes,
@@ -109994,12 +110007,12 @@ committing; match its keyword/positional convention so the factory call site is 
 <ul>
 <li>[ ] <strong>Step 6: Resolve hyperparameters in Optuna handler</strong></li>
 </ul>
-<p>In <code>modules/model-trainer/src/rainbow/model_trainer/helpers/optuna/hyperparams_models.py</code>, add a branch mirroring <code>always_none</code> that builds <code>ResolvedBuyAndHoldModelHyperparameters</code> from the model hyperparameters config (all fixed values).</p>
+<p>In <code>modules/model-trainer/src/rainbow/model_trainer/helpers/optuna/hyperparams_models.py</code>, add a branch mirroring <code>always_none</code> that builds <code>ResolvedAlwaysLongModelHyperparameters</code> from the model hyperparameters config (all fixed values).</p>
 <ul>
 <li>[ ] <strong>Step 7: Create the hyperparameters yaml</strong></li>
 </ul>
-<p>Create <code>config/experiments/models/buy-and-hold-model-hyperparameters.yaml</code>:</p>
-<pre><code class="language-yaml">buy_and_hold_model_hyperparameters:
+<p>Create <code>config/experiments/models/always-long-model-hyperparameters.yaml</code>:</p>
+<pre><code class="language-yaml">always_long_model_hyperparameters:
   strength_value: 0.5
   quality_value: 0.5
   sampled_logit_margin: 5.0
@@ -110007,13 +110020,13 @@ committing; match its keyword/positional convention so the factory call site is 
 <ul>
 <li>[ ] <strong>Step 8: Run tests + quality gates</strong></li>
 </ul>
-<p>Run: <code>.venv/bin/python -m pytest modules/model-trainer/tests/test_buy_and_hold_model.py -v &amp;&amp; .venv/bin/mypy --strict modules/model-trainer/src/rainbow/model_trainer/models/buy_and_hold.py modules/model-trainer/src/rainbow/model_trainer/models/factory.py modules/model-trainer/src/rainbow/model_trainer/types.py &amp;&amp; .venv/bin/ruff check modules/model-trainer/src/rainbow/model_trainer/models/buy_and_hold.py</code>
+<p>Run: <code>.venv/bin/python -m pytest modules/model-trainer/tests/test_always_long_model.py -v &amp;&amp; .venv/bin/mypy --strict modules/model-trainer/src/rainbow/model_trainer/models/always_long.py modules/model-trainer/src/rainbow/model_trainer/models/factory.py modules/model-trainer/src/rainbow/model_trainer/types.py &amp;&amp; .venv/bin/ruff check modules/model-trainer/src/rainbow/model_trainer/models/always_long.py</code>
 Expected: PASS / clean.</p>
 <ul>
 <li>[ ] <strong>Step 9: Commit</strong></li>
 </ul>
-<pre><code class="language-bash">git add modules/model-trainer/src/rainbow/model_trainer/models/buy_and_hold.py config/experiments/models/buy-and-hold-model-hyperparameters.yaml modules/model-trainer/src/rainbow/model_trainer/types.py modules/model-trainer/src/rainbow/model_trainer/models/factory.py modules/model-trainer/src/rainbow/model_trainer/helpers/optuna/hyperparams_models.py modules/model-trainer/tests/test_buy_and_hold_model.py
-git commit -m &quot;feat(model-trainer): add buy_and_hold non-trainable baseline (always LONG)&quot;
+<pre><code class="language-bash">git add modules/model-trainer/src/rainbow/model_trainer/models/always_long.py config/experiments/models/always-long-model-hyperparameters.yaml modules/model-trainer/src/rainbow/model_trainer/types.py modules/model-trainer/src/rainbow/model_trainer/models/factory.py modules/model-trainer/src/rainbow/model_trainer/helpers/optuna/hyperparams_models.py modules/model-trainer/tests/test_always_long_model.py
+git commit -m &quot;feat(model-trainer): add always_long non-trainable baseline (always LONG)&quot;
 </code></pre>
 <hr />
 <h2 id="task-5-buy-and-hold-bot-profile--experiment-generation-wiring">Task 5: Buy-and-hold bot profile + experiment generation wiring</h2>
@@ -110064,27 +110077,27 @@ and <code>require_higher_confidence=false</code>.</p>
 <ul>
 <li>[ ] <strong>Step 2: Add the model entry + override to the tiers config</strong></li>
 </ul>
-<p>In the active <code>script2_tiers_config*.json</code>, add <code>"buy_and_hold"</code> to the chosen tier's <code>models</code> list and attach the profile above under that experiment's <code>bot_config</code> override block (following the existing <code>experiment_defaults.bot_config</code> shape).</p>
+<p>In the active <code>script2_tiers_config*.json</code>, add <code>"always_long"</code> to the chosen tier's <code>models</code> list and attach the profile above under that experiment's <code>bot_config</code> override block (following the existing <code>experiment_defaults.bot_config</code> shape).</p>
 <ul>
 <li>[ ] <strong>Step 3: Wire the model category in the generator</strong></li>
 </ul>
-<p>In <code>generate_script2_experiments.py</code>, add <code>"buy_and_hold"</code> to <code>MODEL_ORDER</code>, create/extend a baseline category set so it resolves to a non-trainable <code>kind</code> (e.g. <code>"buy_and_hold"</code> or reuse <code>"always_none"</code> category semantics with <code>n_trials=1</code>), and ensure <code>model_space</code> is locked to <code>{"choices": ["buy_and_hold"]}</code> at the injection point (the line that sets <code>hyperparameters_config["model_space"]</code>).</p>
+<p>In <code>generate_script2_experiments.py</code>, add <code>"always_long"</code> to <code>MODEL_ORDER</code>, create/extend a baseline category set so it resolves to a non-trainable <code>kind</code> (e.g. <code>"always_long"</code> or reuse <code>"always_none"</code> category semantics with <code>n_trials=1</code>), and ensure <code>model_space</code> is locked to <code>{"choices": ["always_long"]}</code> at the injection point (the line that sets <code>hyperparameters_config["model_space"]</code>).</p>
 <ul>
 <li>[ ] <strong>Step 4: Generate one fold and inspect the JSON (no run yet)</strong></li>
 </ul>
 <p>Run: <code>.venv/bin/python scripts/thesis/script_2_thesis/generate_experiments/generate_script2_experiments.py &lt;generator args for a single tier/fold&gt;</code>
-Expected: a <code>buy_and_hold</code> experiment JSON is produced whose <code>bot_config.strategy_config.stop_loss_config.exit_enabled == false</code> and <code>take_profit_config.exit_enabled == false</code>.</p>
+Expected: a <code>always_long</code> experiment JSON is produced whose <code>bot_config.strategy_config.stop_loss_config.exit_enabled == false</code> and <code>take_profit_config.exit_enabled == false</code>.</p>
 <ul>
 <li>[ ] <strong>Step 5: Commit (generation artifacts only; no backtest run)</strong></li>
 </ul>
 <pre><code class="language-bash">git add scripts/thesis/script_2_thesis/generate_experiments/
-git commit -m &quot;feat(script2): add buy_and_hold baseline experiment + held-position bot profile&quot;
+git commit -m &quot;feat(script2): add always_long baseline experiment + held-position bot profile&quot;
 </code></pre>
 <hr />
 <h2 id="task-6-verify-the-full-metric-suite-populates-for-a-buy-and-hold-run">Task 6: Verify the full metric suite populates for a buy-and-hold run</h2>
 <p><strong>Files:</strong></p>
 <ul>
-<li>Test: <code>modules/backtesting-engine/tests/test_buy_and_hold_run.py</code> (integration-style, small synthetic window)</li>
+<li>Test: <code>modules/backtesting-engine/tests/test_always_long_run.py</code> (integration-style, small synthetic window)</li>
 </ul>
 <blockquote>
 <p>Depends on D4: for the investor metric suite (drawdown/Sortino/Calmar/exposure) to populate
@@ -110101,9 +110114,9 @@ run populates the full suite natively. The buy-and-hold baseline tasks below rem
 <ul>
 <li>[ ] <strong>Step 1: Write the failing test</strong></li>
 </ul>
-<p>Create <code>modules/backtesting-engine/tests/test_buy_and_hold_run.py</code>: build a tiny price series and a <code>buy_and_hold</code> model + the held-position profile (exits off, <code>max_concurrent_positions=1</code>), run the backtest loop, and assert:</p>
-<pre><code class="language-python">def test_buy_and_hold_enters_once_and_holds_to_end() -&gt; None:
-    metrics, trades = run_buy_and_hold_on_synthetic_series(prices=[100, 90, 80, 120, 130])
+<p>Create <code>modules/backtesting-engine/tests/test_always_long_run.py</code>: build a tiny price series and a <code>always_long</code> model + the held-position profile (exits off, <code>max_concurrent_positions=1</code>), run the backtest loop, and assert:</p>
+<pre><code class="language-python">def test_always_long_enters_once_and_holds_to_end() -&gt; None:
+    metrics, trades = run_always_long_on_synthetic_series(prices=[100, 90, 80, 120, 130])
     # Exactly one entry, never closed by SL/TP despite the dip to 80.
     assert metrics.trades_count == 0  # no CLOSED trades
     assert metrics.open_positions == 1  # still holding at the end
@@ -110113,16 +110126,16 @@ run populates the full suite natively. The buy-and-hold baseline tasks below rem
 <ul>
 <li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
 </ul>
-<p>Run: <code>.venv/bin/python -m pytest modules/backtesting-engine/tests/test_buy_and_hold_run.py -v</code>
+<p>Run: <code>.venv/bin/python -m pytest modules/backtesting-engine/tests/test_always_long_run.py -v</code>
 Expected: FAIL until the helper + wiring exist (or until exits-off behavior is verified end-to-end).</p>
 <ul>
 <li>[ ] <strong>Step 3: Implement the test helper using the public engine entry points</strong></li>
 </ul>
-<p>Use <code>run_with_model</code>/<code>run_with_model_and_frame</code> (<a href="../../../modules/backtesting-engine/src/rainbow/backtesting_engine/backtesting_engine.py">backtesting_engine.py</a>) with the <code>TradingBuyAndHoldModel</code> and the held-position profile. No engine code changes — this is a wiring/verification test.</p>
+<p>Use <code>run_with_model</code>/<code>run_with_model_and_frame</code> (<a href="../../../modules/backtesting-engine/src/rainbow/backtesting_engine/backtesting_engine.py">backtesting_engine.py</a>) with the <code>TradingAlwaysLongModel</code> and the held-position profile. No engine code changes — this is a wiring/verification test.</p>
 <ul>
 <li>[ ] <strong>Step 4: Run test to verify it passes</strong></li>
 </ul>
-<p>Run: <code>.venv/bin/python -m pytest modules/backtesting-engine/tests/test_buy_and_hold_run.py -v</code>
+<p>Run: <code>.venv/bin/python -m pytest modules/backtesting-engine/tests/test_always_long_run.py -v</code>
 Expected: PASS — one entry, no SL/TP close through the dip, still holding at end.</p>
 <ul>
 <li>[ ] <strong>Step 5: Quality gates + full regression</strong></li>
@@ -110132,7 +110145,7 @@ Expected: all pass (the shared bot-logic change introduced no regressions).</p>
 <ul>
 <li>[ ] <strong>Step 6: Commit</strong></li>
 </ul>
-<pre><code class="language-bash">git add modules/backtesting-engine/tests/test_buy_and_hold_run.py
+<pre><code class="language-bash">git add modules/backtesting-engine/tests/test_always_long_run.py
 git commit -m &quot;test(backtest): verify buy-and-hold enters once and holds through SL/TP levels&quot;
 </code></pre>
 <hr />
@@ -110173,7 +110186,7 @@ git commit -m &quot;docs(audit): exit_enabled defaults to true; historical confi
 <p>The buy-and-hold baseline is a normal backtest session/trial, so it flows through the cross-fold and
 investor-summary reporting defined in
 <code>docs/plans/THESIS-SCRIPT2/_archived/20260601_SCRIPT2_CROSS_FOLD_REPORTING_AND_INVESTOR_METRICS_PLAN.md</code>. The
-only reporting decision is its cross-fold identity label (recommend a dedicated <code>buy_and_hold</code>
+only reporting decision is its cross-fold identity label (recommend a dedicated <code>always_long</code>
 baseline identity so it is never pooled with the <code>rule_based</code> TA baseline). No reporting code is
 written in this plan; this is a handoff note so the cross-fold plan accounts for the new baseline.</p>
 <h2 id="5-out-of-scope">5. Out of Scope</h2>
@@ -110194,7 +110207,7 @@ written in this plan; this is a handoff note so the cross-fold plan accounts for
   gates/capital deployment Task 5 notes, investor-metrics sequencing D4/Task 6, Benchmark RC
   divergence §5, the no-backfill decision §0 + D6 + Task 7).</li>
 <li><strong>Type consistency:</strong> <code>exit_enabled</code> (bool) used identically in config, yaml, and the two gating
-  reads; <code>ResolvedBuyAndHoldModelHyperparameters</code> fields match the model <code>__init__</code> and the factory
+  reads; <code>ResolvedAlwaysLongModelHyperparameters</code> fields match the model <code>__init__</code> and the factory
   call site.</li>
 <li><strong>No placeholders:</strong> each code step shows the code; model-addition steps anchor to <code>always_none.py</code>
   and require signature verification before commit.</li>
