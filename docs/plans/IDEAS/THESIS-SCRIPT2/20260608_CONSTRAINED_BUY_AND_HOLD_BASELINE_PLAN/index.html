@@ -109595,7 +109595,7 @@ an audit records that they are implicitly <code>exit_enabled=true</code>.</p>
 <p><strong>Modify (config + flag):</strong></p>
 <ul>
 <li><code>modules/common/src/rainbow/common/types/configs/experiments/bot_config.py</code> — add <code>exit_enabled: bool = True</code> to <code>StopLossConfig</code> and <code>TakeProfitConfig</code>.</li>
-<li><code>config/experiments/bot.yaml</code> — add explicit <code>exit_enabled: true</code> under <code>stop_loss</code> and <code>take_profit</code> (consistency: written where it matters, not relying on the Python default).</li>
+<li><code>config/experiments/bot.yaml</code> and <code>config/executions/bot.yaml</code> — add explicit <code>exit_enabled: true</code> under <code>stop_loss</code> and <code>take_profit</code> (consistency: written where it matters, not relying on the Python default; <code>executions/bot.yaml</code> is the live-trading baseline).</li>
 </ul>
 <p><strong>Modify (exit gating):</strong></p>
 <ul>
@@ -109629,15 +109629,16 @@ an audit records that they are implicitly <code>exit_enabled=true</code>.</p>
 </ul>
 <hr />
 <h2 id="task-1-add-exit_enabled-flag-to-sltp-config">Task 1: Add <code>exit_enabled</code> flag to SL/TP config</h2>
+<p><strong>Status: DONE (2026-06-19)</strong> — added to <code>bot_config.py</code> (<code>StopLossConfig</code> + <code>TakeProfitConfig</code>) and to <strong>both</strong> yamls (<code>config/experiments/bot.yaml</code> + <code>config/executions/bot.yaml</code>); tests pass; gates clean (ruff, mypy --strict, pyright, pylint 10.00/10).</p>
 <p><strong>Files:</strong></p>
 <ul>
 <li>Modify: <code>modules/common/src/rainbow/common/types/configs/experiments/bot_config.py:18-51</code></li>
-<li>Modify: <code>config/experiments/bot.yaml</code> (stop_loss / take_profit sections)</li>
+<li>Modify: <code>config/experiments/bot.yaml</code> and <code>config/executions/bot.yaml</code> (stop_loss / take_profit sections)</li>
 <li>
 <p>Test: <code>modules/common/tests/test_bot_config_structure.py</code></p>
 </li>
 <li>
-<p>[ ] <strong>Step 1: Write the failing test</strong></p>
+<p>[x] <strong>Step 1: Write the failing test</strong></p>
 </li>
 </ul>
 <p>Add to <code>modules/common/tests/test_bot_config_structure.py</code>:</p>
@@ -109661,12 +109662,12 @@ def test_stop_loss_exit_enabled_can_be_disabled_explicitly() -&gt; None:
     assert sl.value == 2.5
 </code></pre>
 <ul>
-<li>[ ] <strong>Step 2: Run test to verify it fails</strong></li>
+<li>[x] <strong>Step 2: Run test to verify it fails</strong></li>
 </ul>
 <p>Run: <code>.venv/bin/python -m pytest modules/common/tests/test_bot_config_structure.py::test_stop_loss_take_profit_exit_enabled_defaults_true -v</code>
 Expected: FAIL with <code>TypeError</code>/<code>ValidationError</code> (unexpected keyword <code>exit_enabled</code>).</p>
 <ul>
-<li>[ ] <strong>Step 3: Add the field (default True)</strong></li>
+<li>[x] <strong>Step 3: Add the field (default True)</strong></li>
 </ul>
 <p>In <code>bot_config.py</code>, in <code>StopLossConfig</code> after <code>value: float</code> (line 33):</p>
 <pre><code class="language-python">    # When False, the bot still COMPUTES and stores the stop-loss (position sizing keeps using
@@ -109680,9 +109681,9 @@ Expected: FAIL with <code>TypeError</code>/<code>ValidationError</code> (unexpec
     exit_enabled: bool = True
 </code></pre>
 <ul>
-<li>[ ] <strong>Step 4: Set the explicit default in <code>bot.yaml</code></strong></li>
+<li>[x] <strong>Step 4: Set the explicit default in the yaml files</strong></li>
 </ul>
-<p>In <code>config/experiments/bot.yaml</code>, under <code>stop_loss</code> and <code>take_profit</code>:</p>
+<p>In both <code>config/experiments/bot.yaml</code> and <code>config/executions/bot.yaml</code>, under <code>stop_loss</code> and <code>take_profit</code>:</p>
 <pre><code class="language-yaml">  stop_loss:
     type: &quot;atr_based&quot;
     value: 2.5
@@ -109693,19 +109694,19 @@ Expected: FAIL with <code>TypeError</code>/<code>ValidationError</code> (unexpec
     exit_enabled: true
 </code></pre>
 <ul>
-<li>[ ] <strong>Step 5: Run tests to verify they pass</strong></li>
+<li>[x] <strong>Step 5: Run tests to verify they pass</strong></li>
 </ul>
 <p>Run: <code>.venv/bin/python -m pytest modules/common/tests/test_bot_config_structure.py -v</code>
 Expected: PASS.</p>
 <ul>
-<li>[ ] <strong>Step 6: Quality gates</strong></li>
+<li>[x] <strong>Step 6: Quality gates</strong></li>
 </ul>
 <p>Run: <code>.venv/bin/mypy --strict modules/common/src/rainbow/common/types/configs/experiments/bot_config.py &amp;&amp; .venv/bin/ruff check modules/common/src/rainbow/common/types/configs/experiments/bot_config.py</code>
 Expected: clean.</p>
 <ul>
-<li>[ ] <strong>Step 7: Commit</strong></li>
+<li>[x] <strong>Step 7: Commit</strong></li>
 </ul>
-<pre><code class="language-bash">git add modules/common/src/rainbow/common/types/configs/experiments/bot_config.py config/experiments/bot.yaml modules/common/tests/test_bot_config_structure.py
+<pre><code class="language-bash">git add modules/common/src/rainbow/common/types/configs/experiments/bot_config.py config/experiments/bot.yaml config/executions/bot.yaml modules/common/tests/test_bot_config_structure.py
 git commit -m &quot;feat(bot-config): add exit_enabled flag to stop-loss/take-profit (default True)&quot;
 </code></pre>
 <hr />
