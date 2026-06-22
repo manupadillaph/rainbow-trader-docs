@@ -2500,6 +2500,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#related-plans-audits-and-current-state-handoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related plans, audits, and current state (handoff)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Related plans, audits, and current state (handoff)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-state-2026-06-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current state (2026-06-22)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#related-plans-audits-and-research" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related plans, audits and research
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-purpose-and-scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -127920,6 +127959,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#related-plans-audits-and-current-state-handoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related plans, audits, and current state (handoff)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Related plans, audits, and current state (handoff)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-state-2026-06-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current state (2026-06-22)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#related-plans-audits-and-research" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related plans, audits and research
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-purpose-and-scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -128391,6 +128469,47 @@ the target two-layer architecture, the impact analysis across every close path a
 (backtest, live sim, live real), the code-quality contract, and the per-method test plan. It is a
 standalone reference; it assumes no prior context.</p>
 </blockquote>
+<h2 id="related-plans-audits-and-current-state-handoff">Related plans, audits, and current state (handoff)</h2>
+<p>Entry point for the rule-based build line. Start here, then follow the links.</p>
+<h3 id="current-state-2026-06-22">Current state (2026-06-22)</h3>
+<p>The Layer-1 regime/state + halving <strong>features are built and wired</strong> (the prerequisite flagged in §3.2):</p>
+<ul>
+<li><code>MARKET_STATE</code> (27 columns: continuous components, one-hot state flags, categorical codes,
+  persistence / transition) and <code>HALVING</code> (8 columns) indicators exist across common / core /
+  data-processing with green gates. <code>MARKET_STATE</code> consumes pre-computed ADX / EMA / ATR / Bollinger /
+  close via eight single-column inputs (reusing cached parquets); <code>HALVING</code> is timestamp-only and
+  symbol-agnostic.</li>
+<li>The regime classification thresholds live once, in <code>classify_regime_codes</code>
+  (<code>modules/data-processing/src/rainbow/data_processing/indicator/market_state.py</code>) — the single source
+  of truth. <code>scripts/analysis/regime/regime_detector_v2.py</code> imports it (run alongside the original
+  <code>regime_detector.py</code>; their labels agree).</li>
+<li>The MEGA generator carries <code>market_state</code> / <code>halving</code> as catalog blocks disabled by default (every
+  existing tier regenerates byte-identically) plus two new groups, <code>full_single_tf_v2</code> /
+  <code>full_multi_tf_v2</code>, that use them in place of the <code>market_regime</code> signals. A per-block <code>columns</code> list
+  picks which columns become features (defaults: 10 for <code>market_state</code>, 3 for <code>halving</code>).</li>
+</ul>
+<p><strong>What is next</strong> is the rule engine itself (this plan's §7 and the §11 roadmap): start at Phase 1 —
+extract the evaluator into <code>rainbow.common.rules</code>.</p>
+<h3 id="related-plans-audits-and-research">Related plans, audits and research</h3>
+<ul>
+<li><strong>Regime / market-state / halving indicators</strong> (implemented; column set, build, and an "As built"
+  section): <a href="../20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN/"><code>20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN.md</code></a>.</li>
+<li><strong>Master roadmap and plan index</strong> (where this line sits among all tracks):
+  <a href="../20260620_MASTER_ROADMAP_AND_PLAN_INDEX/"><code>20260620_MASTER_ROADMAP_AND_PLAN_INDEX.md</code></a>.</li>
+<li><strong>Rule-based research</strong> (the parallel strategy catalog feeding §14), under <code>docs/_researchs/_RULE_BASED/</code>:
+  <code>20260621_01_*Expansion Audit and Research Direction*.md</code> (engine expansion audit + research direction)
+  and <code>20260621_02_*Fifty Rule-Defined Trading Strategies*.md</code> (the 50-strategy catalog with bot profiles).</li>
+<li><strong>Regime folds follow-up</strong> (persistence / hysteresis / MIXED bucket / fold alignment — the source of the
+  persistence columns):
+  <a href="../IDEAS/REGIME/20260529_REGIME_FOLDS_FOLLOW_UP_PLAN/"><code>IDEAS/REGIME/20260529_REGIME_FOLDS_FOLLOW_UP_PLAN.md</code></a>.</li>
+<li><strong>Offline regime tooling</strong>: <code>scripts/analysis/regime/regime_detector.py</code> (original) and
+  <code>regime_detector_v2.py</code> (shares <code>classify_regime_codes</code>); plus <code>analyze_btc_regime_history.py</code> and
+  <code>analyze_btc_regime_native_htf.py</code>.</li>
+<li><strong>Parallel thesis / ensemble lines</strong> (the separate question — do <em>trainable</em> models find signal):
+  <a href="../EXPERIMENT_PLAN_THESIS_VALIDATION/"><code>EXPERIMENT_PLAN_THESIS_VALIDATION.md</code></a> and
+  <a href="../SCRIPT2_CLOSURE_AND_NEW_ENSEMBLE_PLAN/"><code>SCRIPT2_CLOSURE_AND_NEW_ENSEMBLE_PLAN.md</code></a>.</li>
+<li><strong>Key code files</strong> for the rule engine itself: see §13.</li>
+</ul>
 <h2 id="1-purpose-and-scope">1. Purpose and Scope</h2>
 <p>This is a research and build line, parallel to and separate from the thesis validation work
 (<code>docs/plans/EXPERIMENT_PLAN_THESIS_VALIDATION.md</code>) and the Script 2 ensemble work
