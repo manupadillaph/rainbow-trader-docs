@@ -128806,9 +128806,11 @@ own decision language where present.</p>
 </ul>
 <h3 id="52-features-and-alternative-data">5.2 Features and alternative data</h3>
 <ul>
-<li><strong>MARKET_STATE block</strong> — continuous regime descriptors (trend strength, volatility ratio, BB squeeze,
-  bars-since-change, regime stability). Spec exists (archived); not implemented; depends on regime
-  persistence.</li>
+<li><strong><code>MARKET_STATE</code> indicator</strong> — regime as one indicator: continuous components, discrete one-hot state
+  flags, a categorical state code, and persistence/transition columns; plus a companion <code>HALVING</code> indicator.
+  Specified in <code>docs/plans/20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN.md</code>; implemented (both indicators
+  built across common / core / data-processing; MEGA generator wired with <code>full_single_tf_v2</code> /
+  <code>full_multi_tf_v2</code> groups).</li>
 <li><strong>On-chain</strong> (MVRV, SOPR, exchange flows, whale activity), <strong>derivatives</strong> (open interest, funding
   rate, basis, long/short ratio, liquidations), <strong>sentiment</strong> (FinBERT fast scoring + FinGPT/FinMA
   event-driven; GDELT as license-safe news), <strong>microstructure</strong> (spread, order-book imbalance).</li>
@@ -128940,6 +128942,13 @@ iTransformer / ConvTran, then hybrids, with feature neutralization + calibration
   leaderboard) is not implemented.</li>
 <li><strong><code>docs/plans/IDEAS/REGIME/20260529_REGIME_FOLDS_FOLLOW_UP_PLAN.md</code></strong> · 🟡 12-task regime-infra
   roadmap; native 1d/1w histories done; persistence/hysteresis/MIXED bucket/fold-alignment pending.</li>
+<li><strong><code>docs/plans/20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN.md</code></strong> · ✅ implemented (built across
+  common / core / data-processing + MEGA generator wired) — two feature
+  indicators: <code>MARKET_STATE</code> (regime as one indicator — continuous components, discrete one-hot state flags,
+  a categorical state code and persistence/transition columns; the offline detector's classification becomes
+  its single source of truth) and <code>HALVING</code> (time-derived, symbol-agnostic halving-cycle columns).
+  Prerequisite for regime-switch / regime-gated / volatility-regime / halving-cycle rule-based strategies.
+  Not built.</li>
 <li><strong><code>docs/plans/THESIS-SCRIPT2/_archived/20260608_CONSTRAINED_BUY_AND_HOLD_BASELINE_PLAN.md</code></strong> · ✅
   COMPLETE + archived. always_long executed ×3 RC-matched (full investor metric suite, <code>alpha_rc ≈ 0</code>);
   exit_enabled SL/TP gating + mark-to-market returns + liquidate-at-end landed; exit_enabled audit done.</li>

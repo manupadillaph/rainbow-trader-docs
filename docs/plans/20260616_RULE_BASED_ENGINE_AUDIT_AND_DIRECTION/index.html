@@ -128546,6 +128546,16 @@ more than the five wired families:</p>
 </table>
 <p>Bounded indicators take fixed thresholds directly (<code>rsi_14{-1} &gt; 70</code>). Raw/price indicators are best used
 in comparisons (<code>close{-1} &gt; vwap{-1}</code>, <code>ema_9{-1} &gt; ema_21{-1}</code>).</p>
+<blockquote>
+<p><strong>Layer-1 regime/state and halving features — implemented.</strong> Strategies that gate on market regime
+(regime-switch, mean-reversion gated on a ranging regime, volatility-regime rules) or on the halving
+cycle depend on two indicators: <code>MARKET_STATE</code> (regime as continuous + discrete + categorical +
+persistence columns) and <code>HALVING</code>. Both now exist across common / core / data-processing, with the MEGA
+generator wired (the <code>full_single_tf_v2</code> / <code>full_multi_tf_v2</code> groups use them in place of the
+<code>market_regime</code> signals). Their column set and build are in
+<a href="../20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN/"><code>20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN.md</code></a>.
+Expressing this class of strategies now only needs the rule layer to consume these columns.</p>
+</blockquote>
 <h2 id="4-backtest-and-live-execution-model">4. Backtest and Live Execution Model</h2>
 <p>The backtest trades a single instrument: the experiment's <code>base_symbol</code>. Extra symbols are consumed only as
 context features; no positions are opened on them. Contextual multi-symbol (use ETH/BNB features to decide a
@@ -128921,7 +128931,11 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
    existing multi-timeframe handling makes a higher-timeframe feature usable at the base timeframe, so there
    is no new alignment work. The offline regime scripts under <code>scripts/analysis/regime/</code>
    then <strong>import that one shared implementation</strong> instead of keeping their own copy — a single source of
-   truth for the regime definition. Then a Phase-0
+   truth for the regime definition. Its full column set (continuous components, discrete one-hot state flags,
+   a categorical state code, and persistence / transition columns) plus a companion <code>HALVING</code> indicator are
+   specified in
+   <a href="../20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN/"><code>20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN.md</code></a>.
+   Then a Phase-0
    control battery and the vetted battalion on folds → chronological holdout → multi-year (the multi-year
    step needs the data refresh + de-hardcoded folds noted in the master roadmap).</li>
 </ol>

@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#market-state-feature-plan" class="md-skip">
+        <a href="#regime-market-state-and-halving--feature-indicator-plan" class="md-skip">
           Skip to content
         </a>
       
@@ -2556,13 +2556,85 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-this-document-is" class="md-nav__link">
+  <a href="#design" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What This Document Is
+        Design
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-indicators-one-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two indicators, one classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market_state-columns-all-in-one-indicator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MARKET_STATE columns (all in one indicator)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#computability-against-the-indicator-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computability against the indicator engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#halving-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HALVING columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumption-by-the-rule-based-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumption by the rule-based engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deliberately-out-of-scope-separate-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deliberately out of scope (separate mechanisms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -127588,13 +127660,85 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-this-document-is" class="md-nav__link">
+  <a href="#design" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What This Document Is
+        Design
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-indicators-one-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two indicators, one classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#market_state-columns-all-in-one-indicator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MARKET_STATE columns (all in one indicator)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#computability-against-the-indicator-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computability against the indicator engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#halving-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HALVING columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumption-by-the-rule-based-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumption by the rule-based engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deliberately-out-of-scope-separate-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deliberately out of scope (separate mechanisms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -127720,24 +127864,135 @@
 
 
 
-<h1 id="market-state-feature-plan">Market State Feature Plan</h1>
+<h1 id="regime-market-state-and-halving--feature-indicator-plan">Regime, Market State and Halving — Feature Indicator Plan</h1>
 <blockquote>
-<p><strong>PENDING IMPLEMENTATION:</strong> The implementation steps in this document were <strong>not executed</strong>.
-The MARKET_STATE indicator, the <code>market_state</code> block, and all associated code changes described here
-do not yet exist in the codebase. This plan is valid and actionable when the work is resumed.
-Re-verify parameter defaults and file paths against current code before implementing.</p>
-<p><strong>STRATEGY CONTEXT:</strong> The active market regime strategy, the cross-fold analysis, and the document index
-for all regime-related work now live in
-<a href="../../IDEAS/THESIS-SCRIPT2/20260529_SCRIPT2_MARKET_REGIME_ANALYSIS_PLAN.md"><code>docs/plans/THESIS-SCRIPT2/20260529_SCRIPT2_MARKET_REGIME_ANALYSIS_PLAN.md</code></a>.
-This document is superseded as a strategy reference but <strong>remains the authoritative technical implementation spec</strong>
-for the MARKET_STATE indicator: Pydantic config, composed type, process function pseudocode, impact map, and MEGA generator wiring.</p>
-<p><strong>LEGACY STATUS (2026-05-16):</strong> This is a historical feature-design plan.
-Re-verify against current code and configs before using it for implementation.
-Links inside this file may still point to pre-freeze canonical names.</p>
+<p>Status: active, implementation pending (2026-06-22). Re-verify parameter defaults and file paths against
+current code before implementing.</p>
 </blockquote>
-<h2 id="what-this-document-is">What This Document Is</h2>
-<p>A design plan for a new <code>MARKET_STATE</code> indicator type and <code>market_state</code> feature block that replaces the current approach of 6 binary regime signals with a richer set of continuous columns covering regime strength, persistence, transitions, and meta-stability.</p>
-<p>This plan does not touch Tier A or the current Tier B. It defines a new extended Tier B (<code>B_ext</code>) and upgrades Tier C/D/E.</p>
+<p>This plan defines two feature indicators, each usable by any experiment (any symbol) and by the rule-based
+engine, and makes the regime classification a single source of truth shared with the offline regime
+scripts:</p>
+<ul>
+<li><strong><code>MARKET_STATE</code></strong> — market regime as one indicator. In a single computation it emits the continuous
+  regime components, the discrete one-hot state flags, a categorical state code, and the
+  persistence / transition / meta columns. The indicator always computes every column it declares;
+  consumers (experiments, rules) select which ones to use downstream.</li>
+<li><strong><code>HALVING</code></strong> — position in the halving cycle as time-derived columns. It reads only the bar <code>timestamp</code>
+  against a fixed table of halving dates, so it needs no price input and is symbol-agnostic: any
+  experiment, on any symbol, can use it.</li>
+</ul>
+<h2 id="design">Design</h2>
+<h3 id="two-indicators-one-classification">Two indicators, one classification</h3>
+<p>Regime work and halving work both become <strong>feature indicators</strong> in <code>data-processing</code>, each following the
+standard indicator contract (<code>process_</code> over the full per-timeframe frame, then trim warm-up, clean,
+validate). The regime classification is computed in exactly one place — the <code>MARKET_STATE</code> indicator — and
+the offline regime scripts (<code>scripts/analysis/regime/</code>) import that implementation instead of keeping their
+own copy.</p>
+<p>A feature indicator declares a fixed set of output columns and always computes all of them. Which columns
+become experiment features, or are read by a rule, is selected downstream in the experiment / feature
+configuration — never inside the indicator.</p>
+<h3 id="market_state-columns-all-in-one-indicator"><code>MARKET_STATE</code> columns (all in one indicator)</h3>
+<p>The three axes are ternary: trend (trending / neutral / ranging), direction (bullish / neutral / bearish),
+volatility (high / normal / low). The one-hot columns make every state explicit including the middle; the
+categorical codes give compact per-axis and combined labels; the continuous components keep the gradient
+the discrete columns drop.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Columns</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Continuous components</td>
+<td><code>trend_strength</code> (raw ADX 0-100), <code>direction_score</code> ((plus_di − minus_di) / (plus_di + minus_di), [-1, +1]), <code>ema_trend</code> ((fast−slow)/slow), <code>volatility_ratio</code> ((ATR/close) / its rolling baseline, ~1.0), <code>bb_squeeze</code> (bandwidth / its rolling baseline, ~1.0)</td>
+<td>continuous</td>
+</tr>
+<tr>
+<td>Discrete state (one-hot per axis)</td>
+<td><code>trend_trending</code> / <code>trend_neutral</code> / <code>trend_ranging</code>; <code>dir_bullish</code> / <code>dir_neutral</code> / <code>dir_bearish</code>; <code>vol_high</code> / <code>vol_normal</code> / <code>vol_low</code></td>
+<td>0/1</td>
+</tr>
+<tr>
+<td>Categorical codes</td>
+<td><code>regime_trend</code>, <code>regime_dir</code>, <code>regime_vol</code> (each 0/1/2), <code>regime_state</code> (0-26 combined)</td>
+<td>int</td>
+</tr>
+<tr>
+<td>Persistence / transition</td>
+<td><code>bars_since_trend_change</code>, <code>bars_since_direction_change</code>, <code>bars_since_vol_change</code>, <code>bars_since_regime_change</code> (combined), <code>regime_stability</code>, <code>transition_recency</code>, <code>mixed_regime</code> (1 when below the stability threshold)</td>
+<td>continuous + flag</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td><code>trend_momentum</code> (ADX rate of change), <code>vol_of_vol</code> (rolling std of <code>volatility_ratio</code> changes)</td>
+<td>continuous</td>
+</tr>
+</tbody>
+</table>
+<h3 id="computability-against-the-indicator-engine">Computability against the indicator engine</h3>
+<p>Every column is computable with the engine as it is: a <code>process_</code> function runs arbitrary Polars over the
+full per-timeframe frame. Cross-bar state is already done by existing indicators — <code>DRAWDOWN</code>
+(<code>rolling_max</code> / <code>rolling_min</code>) and <code>VWAP</code> (<code>cum_sum</code>). The persistence columns use change detection plus
+<code>cum_sum</code> run-length grouping; <code>regime_stability</code> uses <code>rolling_sum</code>; <code>transition_recency</code> an exponential
+of a counter; <code>trend_momentum</code> a <code>shift</code>; <code>vol_of_vol</code> a <code>rolling_std</code>. No engine change is required.</p>
+<h3 id="halving-columns"><code>HALVING</code> columns</h3>
+<p>Time-derived from the bar <code>timestamp</code> against a fixed table of halving dates in the config. It reads no
+price and is symbol-agnostic: any experiment, on any symbol, can include it.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Columns</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Continuous</td>
+<td><code>halving_days_since</code>, <code>halving_cycle_progress</code> (0-1), <code>halving_days_until_next</code></td>
+<td>continuous</td>
+</tr>
+<tr>
+<td>Discrete phase (one-hot)</td>
+<td><code>halving_phase_pre</code>, <code>halving_phase_markup</code>, <code>halving_phase_peak</code>, <code>halving_phase_bear</code></td>
+<td>0/1</td>
+</tr>
+<tr>
+<td>Categorical</td>
+<td><code>halving_epoch</code> (cycle number / block-reward step)</td>
+<td>int</td>
+</tr>
+</tbody>
+</table>
+<p>The halving cycle has only about four historical repetitions, so its value is strongest as a deterministic
+prior that conditions rules; as a learned model feature its statistical power is limited. That is a property
+of the data, not a usage restriction.</p>
+<h3 id="consumption-by-the-rule-based-engine">Consumption by the rule-based engine</h3>
+<p>The rule DSL reads these columns like any feature: continuous (<code>volatility_ratio{-1} &gt; 1.2</code>), discrete
+(<code>trend_trending{-1} == 1</code>), or categorical (<code>regime_state{-1} == 14</code>). Regime-switch strategies are
+expressed natively as conditions over these columns and depend on this indicator existing.</p>
+<h3 id="deliberately-out-of-scope-separate-mechanisms">Deliberately out of scope (separate mechanisms)</h3>
+<p>Some regime-flavoured needs of the strategies are intentionally NOT columns of this indicator, because a
+different mechanism produces them. Keeping them out leaves <code>MARKET_STATE</code> as one clean source of
+single-symbol, single-timeframe regime state. Where each belongs:</p>
+<ul>
+<li><strong>Higher-timeframe regime agreement</strong> (strategies referencing <code>htf_*</code>): obtained by declaring
+  <code>MARKET_STATE</code> on a higher timeframe — the experiment becomes multi-timeframe and the pipeline aligns the
+  higher-timeframe columns down with a backward as-of join (no leakage). Agreement between the base and the
+  higher-timeframe regime is then a derived comparison over those two column sets; a single-timeframe
+  indicator cannot see another timeframe.</li>
+<li><strong>Context-symbol regime</strong> (strategies referencing <code>ctx_*</code>): the same indicator computed on a context
+  symbol's frame; the cross-symbol comparison is a context-symbol feature, separate from this indicator.</li>
+<li><strong>Volume regime, bar patterns, session features, reversal/failure flags</strong>: separate indicators or
+  signals, not part of the price/volatility regime classification.</li>
+<li><strong>Cheap state-change events</strong> (the regime just changed, a volatility expansion, a squeeze release): these
+  are expressed directly in the rule DSL over the columns above — <code>regime_state{-1} != regime_state{-2}</code>,
+  <code>cross_up(volatility_ratio, …)</code>, <code>change(…)</code> — so they are not duplicated as columns. Models receive the
+  continuous components, which carry the same information as a gradient.</li>
+</ul>
 <h2 id="why">Why</h2>
 <h3 id="the-current-market_regime-block-is-too-lossy">The current <code>market_regime</code> block is too lossy</h3>
 <p>The existing <code>market_regime</code> block (available in Tier C+) produces 6 binary SIGNAL features:</p>
@@ -128116,39 +128371,28 @@ Links inside this file may still point to pre-freeze canonical names.</p>
 <li><strong>Option E (regime-aware do-not-trade):</strong> Use <code>regime_stability</code> and <code>transition_recency</code> to learn when NOT to trade.</li>
 <li><strong>Phase 3 (transition safety):</strong> The persistence columns implement the candidate/confirmed concept without hardcoding the state machine.</li>
 </ul>
-<h2 id="implementation-phases">Implementation Phases</h2>
-<h3 id="phase-1-group-1--group-3-continuous--meta">Phase 1: Group 1 + Group 3 (continuous + meta)</h3>
-<ul>
-<li>7 columns, all implementable with existing indicator types or simple arithmetic</li>
-<li>No new <code>IndicatorType</code> required yet</li>
-<li>Can be built as individual RATIO/SPREAD indicators composed together in the MEGA generator</li>
-<li>Deliverable: new <code>market_state</code> block in <code>blocks_catalog</code> with <code>continuous</code> and <code>meta</code> groups</li>
-<li>Risk: low</li>
-</ul>
-<h3 id="phase-2-group-2-persistence">Phase 2: Group 2 (persistence)</h3>
-<ul>
-<li>5 columns requiring stateful computation</li>
-<li>New <code>IndicatorType.MARKET_STATE</code> added to the pipeline</li>
-<li>The indicator receives regime classification parameters, classifies each bar, and tracks state</li>
-<li>Deliverable: persistence columns working in the pipeline, enabled for Tier C+</li>
-<li>Risk: medium (new indicator type in the data pipeline)</li>
-</ul>
-<h3 id="phase-3-group-4-cross-timeframe">Phase 3: Group 4 (cross-timeframe)</h3>
-<ul>
-<li>Deferred until Groups 1-3 are validated</li>
-<li>Requires multi-timeframe experiments to be running</li>
-<li>Design note: configurable by listing which higher timeframes to compare against</li>
-</ul>
+<h2 id="build-order">Build order</h2>
+<p>All columns live in one indicator and are built together — there is no column-group phasing. The order of
+work across the program is:</p>
+<ol>
+<li><strong><code>MARKET_STATE</code> indicator</strong> (this plan's core), under TDD: classification plus the continuous, discrete,
+   categorical and persistence / transition columns in a single <code>process_</code> function, wired through common /
+   core / data-processing and the MEGA generator. The offline regime scripts then import the same
+   classification.</li>
+<li><strong><code>HALVING</code> indicator</strong> — the time-derived sibling (see its section below).</li>
+<li><strong>Rule-based Layer-2</strong> consumes these columns; regime-switch strategies become expressible. That work
+   lives in the rule-based plan and depends on step 1.</li>
+</ol>
 <h2 id="open-questions">Open Questions</h2>
 <ol>
 <li>
 <p><strong>Should Group 1 columns go through RELATIVE_INDICATOR normalization?</strong> Some of them are already relative (volatility_ratio, bb_squeeze are centered around 1.0). Others are bounded (trend_strength 0-100, direction_score -1 to +1). The normalization pipeline may need to be configured per-column.</p>
 </li>
 <li>
-<p><strong>Scaling for bars_since_* columns.</strong> Raw bar counts can be very large (thousands). Options: log-scale, divide by a configurable window, or let the normalization pipeline handle it. Log-scale is most common in quant literature for duration features.</p>
+<p><strong>Scaling for the <code>bars_since_*</code> columns.</strong> Raw bar counts can be very large (thousands). Options: log-scale, divide by a configurable window, or let the normalization pipeline handle it. Log-scale is most common in quant literature for duration features.</p>
 </li>
 <li>
-<p><strong>Should the 6 existing binary signals be kept when <code>market_state</code> is active?</strong> Current recommendation: yes, keep both. The binaries are cheap and serve as easy shortcuts. The continuous columns provide the gradient. They complement each other.</p>
+<p><strong>The generator's <code>market_regime</code> signal block becomes redundant.</strong> The discrete state flags now come from this indicator's own columns (<code>trend_*</code> / <code>dir_*</code> / <code>vol_*</code>), so new experiments select those instead of the generator's hand-built <code>market_regime</code> signals. Experiments that already reference the old signal column names keep working; new work uses the indicator.</p>
 </li>
 <li>
 <p><strong>Interaction with <code>derived.di_dominance</code>.</strong> The <code>direction_score</code> column overlaps with the existing <code>di_dominance</code> derived feature. When both <code>market_state</code> and <code>derived</code> blocks are active, we should either skip the duplicate or let feature selection handle it.</p>
@@ -128252,42 +128496,63 @@ Links inside this file may still point to pre-freeze canonical names.</p>
 <pre><code class="language-python">if isinstance(indicator_config, DrawdownConfig):
     return process_drawdown(indicator_inputs, indicator_config, ...)
 </code></pre>
-<p><strong>MARKET_STATE follows this exact pattern.</strong> The only difference is: more output columns (12 vs 2), more inputs (6 vs 1), and the computation includes regime classification + run-length counting.</p>
+<p><strong>MARKET_STATE follows this exact pattern.</strong> The only difference is: more output columns (the full regime set vs 2), more inputs (8 vs 1), and the computation includes regime classification + run-length counting.</p>
 <hr />
 <h3 id="marketstateconfig-design"><code>MarketStateConfig</code> design</h3>
 <p>The Pydantic config for the indicator itself. This is what lives in <code>rainbow-common/types/configs/indicators/market_state_config.py</code>.</p>
 <pre><code class="language-python">class MarketStateConfig(BaseIndicatorGenerated):
-    &quot;&quot;&quot;Market State indicator. Produces 12 continuous columns characterizing
-    regime strength, persistence, transitions, and meta-stability.
+    &quot;&quot;&quot;Market State indicator. Produces the full regime state in one computation:
+    continuous components, discrete one-hot state flags, categorical state codes, and
+    persistence / transition / meta columns.
 
     Columns:
-        Group 1 (continuous): trend_strength, direction_score, ema_trend,
-            volatility_ratio, bb_squeeze
-        Group 2 (persistence): bars_since_trend_change, bars_since_direction_change,
-            bars_since_vol_change, regime_stability, transition_recency
-        Group 3 (meta): trend_momentum, vol_of_vol
+        Continuous: trend_strength, direction_score, ema_trend, volatility_ratio, bb_squeeze
+        Meta: trend_momentum, vol_of_vol
+        Discrete one-hot (per axis): trend_trending, trend_neutral, trend_ranging,
+            dir_bullish, dir_neutral, dir_bearish, vol_high, vol_normal, vol_low
+        Categorical: regime_trend, regime_dir, regime_vol, regime_state (0-26)
+        Persistence / transition: bars_since_trend_change, bars_since_direction_change,
+            bars_since_vol_change, bars_since_regime_change, regime_stability,
+            transition_recency, mixed_regime
     &quot;&quot;&quot;
 
     segement_path: ClassVar[Path | str | None] = Path(&quot;indicators&quot;)
 
-    # All 12 columns, always computed. Which ones become experiment features
-    # is decided by the MEGA generator, not the indicator.
+    # Every column is always computed. Which ones become experiment features (or are read by a
+    # rule) is selected downstream, never inside the indicator.
     column_outputs_generated: ClassVar[list[str]] = [
-        # Group 1: continuous regime components
+        # Continuous regime components
         &quot;trend_strength&quot;,
         &quot;direction_score&quot;,
         &quot;ema_trend&quot;,
         &quot;volatility_ratio&quot;,
         &quot;bb_squeeze&quot;,
-        # Group 2: persistence and transitions
+        # Meta
+        &quot;trend_momentum&quot;,
+        &quot;vol_of_vol&quot;,
+        # Discrete one-hot per axis
+        &quot;trend_trending&quot;,
+        &quot;trend_neutral&quot;,
+        &quot;trend_ranging&quot;,
+        &quot;dir_bullish&quot;,
+        &quot;dir_neutral&quot;,
+        &quot;dir_bearish&quot;,
+        &quot;vol_high&quot;,
+        &quot;vol_normal&quot;,
+        &quot;vol_low&quot;,
+        # Categorical codes
+        &quot;regime_trend&quot;,
+        &quot;regime_dir&quot;,
+        &quot;regime_vol&quot;,
+        &quot;regime_state&quot;,
+        # Persistence / transition
         &quot;bars_since_trend_change&quot;,
         &quot;bars_since_direction_change&quot;,
         &quot;bars_since_vol_change&quot;,
+        &quot;bars_since_regime_change&quot;,
         &quot;regime_stability&quot;,
         &quot;transition_recency&quot;,
-        # Group 3: meta-regime
-        &quot;trend_momentum&quot;,
-        &quot;vol_of_vol&quot;,
+        &quot;mixed_regime&quot;,
     ]
 
     # --- Regime classification thresholds ---
@@ -128303,14 +128568,15 @@ Links inside this file may still point to pre-freeze canonical names.</p>
     vol_high_multiplier: float = 1.2  # volatility_ratio &gt; this → HIGH_VOL regime
     vol_low_multiplier: float = 0.8   # volatility_ratio &lt; this → LOW_VOL regime
 
-    # --- Persistence parameters (Group 2) ---
+    # --- Persistence / transition parameters ---
     stability_window: int = 288       # Rolling window for regime_stability.
                                       # Default 288 = 1 day of 5m bars.
                                       # For 1h: 24. For 1d: 7.
     transition_decay_lambda: float = 0.01  # Exponential decay rate for transition_recency.
                                            # 0.01 → half-life ~69 bars (~5.75h at 5m).
+    mixed_regime_max_stability: float = 0.5  # regime_stability below this → mixed_regime = 1.
 
-    # --- Meta parameters (Group 3) ---
+    # --- Meta parameters ---
     trend_momentum_window: int = 20   # Window for ADX rate of change.
     vol_of_vol_window: int = 50       # Window for rolling std of volatility_ratio changes.
 
@@ -128332,16 +128598,17 @@ class MaybeMarketStateConfig(IndicatorColumnMeta):
     vol_low_multiplier: float | None = None
     stability_window: int | None = None
     transition_decay_lambda: float | None = None
+    mixed_regime_max_stability: float | None = None
     trend_momentum_window: int | None = None
     vol_of_vol_window: int | None = None
 </code></pre>
-<h4 id="why-all-12-columns-are-always-computed-not-configurable-at-indicator-level">Why all 12 columns are always computed (not configurable at indicator level)</h4>
+<h4 id="why-all-columns-are-always-computed-selection-happens-downstream">Why all columns are always computed (selection happens downstream)</h4>
 <p>Every indicator in this system has <code>column_outputs_generated</code> as a <code>ClassVar</code> — a class-level constant. ADX always produces 3 columns (<code>adx</code>, <code>plus_di</code>, <code>minus_di</code>). Bollinger always produces 5 (<code>upper_band</code>, <code>middle_band</code>, <code>lower_band</code>, <code>bandwidth</code>, <code>percent_b</code>). Not all may be used by every experiment.</p>
-<p>MARKET_STATE follows the same rule: always 12 columns. Reasons:</p>
+<p>MARKET_STATE follows the same rule: it always computes every declared column. Reasons:</p>
 <ol>
 <li><strong>Pipeline consistency.</strong> The pipeline assumes <code>column_outputs_generated</code> is fixed. The relative_indicator and normalization stages iterate over this list. Dynamic columns would break this assumption.</li>
 <li><strong>One code path.</strong> <code>process_market_state</code> has one implementation. No conditional logic for "which groups are enabled."</li>
-<li><strong>Cheap.</strong> The computation is vectorized Polars executing in Rust. 12 columns vs 7 is negligible. The expensive part is the parent indicators (ADX, EMA, ATR, BB), already computed and cached as parquets.</li>
+<li><strong>Cheap.</strong> The computation is vectorized Polars executing in Rust. The full column set versus a subset is negligible. The expensive part is the parent indicators (ADX, EMA, ATR, BB), already computed and cached as parquets.</li>
 <li><strong>The MEGA generator controls what becomes a feature.</strong> The generator reads <code>feature_groups</code> flags from the block config and only adds the selected columns as experiment features. Unused columns exist in the indicator parquet but are never loaded into the FAT window.</li>
 </ol>
 <h4 id="configuration-examples-for-different-timeframes">Configuration examples for different timeframes</h4>
@@ -128375,7 +128642,6 @@ class MaybeMarketStateConfig(IndicatorColumnMeta):
 <thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
 <th>Rationale</th>
 </tr>
 </thead>
@@ -128383,42 +128649,34 @@ class MaybeMarketStateConfig(IndicatorColumnMeta):
 <tr>
 <td><code>adx_strong_trend=25.0</code> / <code>adx_weak_trend=20.0</code></td>
 <td>Matches <code>regime_detector.py</code> constants (<code>ADX_STRONG=25</code>, <code>ADX_WEAK=20</code>)</td>
-<td></td>
 </tr>
 <tr>
 <td><code>ema_fast_period=14</code> / <code>ema_slow_period=50</code></td>
 <td>Matches <code>regime_detector.py</code> (<code>EMA_FAST=14</code>, <code>EMA_SLOW=50</code>)</td>
-<td></td>
 </tr>
 <tr>
 <td><code>vol_baseline_window=2016</code></td>
 <td>Matches <code>regime_detector.py</code> (<code>VOL_ROLLING_WINDOW=2016</code>)</td>
-<td></td>
 </tr>
 <tr>
 <td><code>vol_high=1.2</code> / <code>vol_low=0.8</code></td>
 <td>Matches existing <code>market_regime</code> block thresholds</td>
-<td></td>
 </tr>
 <tr>
 <td><code>stability_window=288</code></td>
 <td>1 day of 5m. Regime persistence measured in days, not hours.</td>
-<td></td>
 </tr>
 <tr>
 <td><code>transition_decay_lambda=0.01</code></td>
 <td>Half-life ~69 bars (~5.75h at 5m). Transition is "recent" for about half a day.</td>
-<td></td>
 </tr>
 <tr>
 <td><code>trend_momentum_window=20</code></td>
 <td>~1.7h at 5m. ADX changes slowly; short window captures recent acceleration.</td>
-<td></td>
 </tr>
 <tr>
 <td><code>vol_of_vol_window=50</code></td>
 <td>~4.2h at 5m. Enough samples to be meaningful, not so many it smooths everything.</td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -128541,7 +128799,7 @@ class MaybeMarketStateConfig(IndicatorColumnMeta):
 <th>Input #</th>
 <th>Input name</th>
 <th>Source indicator</th>
-<th>Columns used</th>
+<th>Column used</th>
 </tr>
 </thead>
 <tbody>
@@ -128549,47 +128807,59 @@ class MaybeMarketStateConfig(IndicatorColumnMeta):
 <td>1</td>
 <td><code>input_adx</code></td>
 <td>ADX indicator</td>
-<td><code>adx</code>, <code>plus_di</code>, <code>minus_di</code></td>
+<td><code>adx</code></td>
 </tr>
 <tr>
 <td>2</td>
+<td><code>input_plus_di</code></td>
+<td>ADX indicator (same feature)</td>
+<td><code>plus_di</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>input_minus_di</code></td>
+<td>ADX indicator (same feature)</td>
+<td><code>minus_di</code></td>
+</tr>
+<tr>
+<td>4</td>
 <td><code>input_ema_fast</code></td>
 <td>EMA indicator (period=fast)</td>
 <td><code>ema</code></td>
 </tr>
 <tr>
-<td>3</td>
+<td>5</td>
 <td><code>input_ema_slow</code></td>
 <td>EMA indicator (period=slow)</td>
 <td><code>ema</code></td>
 </tr>
 <tr>
-<td>4</td>
+<td>6</td>
 <td><code>input_atr</code></td>
 <td>ATR indicator</td>
 <td><code>atr</code></td>
 </tr>
 <tr>
-<td>5</td>
+<td>7</td>
 <td><code>input_close</code></td>
 <td>OHLCV (clean price)</td>
 <td><code>close</code></td>
 </tr>
 <tr>
-<td>6</td>
+<td>8</td>
 <td><code>input_bb</code></td>
 <td>Bollinger Bands indicator</td>
 <td><code>bandwidth</code></td>
 </tr>
 </tbody>
 </table>
-<p><strong>6 inputs.</strong> This is more than RATIO (2) or SPREAD (2), but the mechanism is the same: <code>validate_and_get_indicator_inputs(inputs, expected_count=6, input_names=[...])</code>. CONDITION signals already handle N inputs (4 inputs in the bullish/bearish direction signals).</p>
+<p><strong>8 inputs.</strong> The engine contract is one column per input name (<code>validate_and_get_indicator_inputs</code> keys inputs by name), so the ADX directional components are three separate single-column inputs (<code>input_adx</code>, <code>input_plus_di</code>, <code>input_minus_di</code>) all referencing the same ADX feature — exactly how ATR/ADX reuse one OHLCV feature for <code>input_high</code> / <code>input_low</code> / <code>input_close</code>. Call: <code>validate_and_get_indicator_inputs(inputs, expected_count=8, input_names=[...])</code>.</p>
 <h4 id="dependency-graph">Dependency graph</h4>
 <pre><code class="language-text">OHLCV (close) ─────────────────────────────┐
                                             │
 ADX (adx, plus_di, minus_di) ──────────────┤
                                             │
-EMA fast (ema) ─────────────────────────────┼──→ MARKET_STATE → 12 columns
+EMA fast (ema) ─────────────────────────────┼──→ MARKET_STATE → 27 columns
                                             │
 EMA slow (ema) ─────────────────────────────┤
                                             │
@@ -128609,9 +128879,10 @@ Bollinger Bands (bandwidth) ────────────────┘
 
     # ── 1. VALIDATE AND JOIN INPUTS ──
     validated = validate_and_get_indicator_inputs(
-        inputs, expected_count=6,
-        input_names=[&quot;input_adx&quot;, &quot;input_ema_fast&quot;, &quot;input_ema_slow&quot;,
-                     &quot;input_atr&quot;, &quot;input_close&quot;, &quot;input_bb&quot;]
+        inputs, expected_count=8,
+        input_names=[&quot;input_adx&quot;, &quot;input_plus_di&quot;, &quot;input_minus_di&quot;,
+                     &quot;input_ema_fast&quot;, &quot;input_ema_slow&quot;, &quot;input_atr&quot;,
+                     &quot;input_close&quot;, &quot;input_bb&quot;]
     )
     frame = join_all_inputs_on_timestamp(validated)
     # Columns available: adx, plus_di, minus_di, ema (x2), atr, close, bandwidth
@@ -128807,6 +129078,9 @@ Bollinger Bands (bandwidth) ────────────────┘
 <li>
 <p><strong>First-bar handling.</strong> <code>shift(1)</code> produces null for the first row. <code>!= null</code> evaluates to null, which <code>.cast(pl.Int32)</code> maps to 0. So the first bar counts as "no change" — correct behavior.</p>
 </li>
+<li>
+<p><strong>Discrete and categorical columns reuse the internal classification.</strong> The pseudocode already computes <code>_trend_regime</code> / <code>_direction_regime</code> / <code>_vol_regime</code> (0/1/2) and <code>_combined_regime</code> (0-26): these are exposed directly as the categorical columns <code>regime_trend</code> / <code>regime_dir</code> / <code>regime_vol</code> and <code>regime_state</code>. The one-hot flags are equality casts (<code>trend_trending = (regime_trend == 2)</code>, <code>vol_low = (regime_vol == 0)</code>, and so on). <code>bars_since_regime_change</code> reuses the <code>_combined</code> run-length counter already built for <code>transition_recency</code>; <code>mixed_regime = (regime_stability &lt; mixed_regime_max_stability)</code>.</p>
+</li>
 </ol>
 <hr />
 <h3 id="impact-map">Impact map</h3>
@@ -128878,7 +129152,7 @@ Bollinger Bands (bandwidth) ────────────────┘
 <tbody>
 <tr>
 <td><code>generate_mega_experiment.py</code></td>
-<td>Add <code>market_state</code> block handler (~100 lines). Calls <code>builder.ensure_adx()</code>, <code>ensure_ema()</code>, <code>ensure_atr()</code>, <code>ensure_bb()</code>, then <code>builder.add_indicator()</code> with 6 input refs. Similar to <code>market_regime</code> block at line 3048.</td>
+<td>Add <code>market_state</code> block handler + <code>ensure_market_state</code>. Calls <code>ensure_adx()</code>, <code>ensure_ema()</code> (fast and slow), <code>ensure_atr()</code>, <code>ensure_bollinger_bands()</code>, then builds the feature with 8 input refs. Similar to the <code>market_regime</code> block.</td>
 </tr>
 <tr>
 <td><code>generate_mega_experiment.json</code></td>
@@ -128944,7 +129218,7 @@ Bollinger Bands (bandwidth) ────────────────┘
 <tr>
 <td>Feature type</td>
 <td>SIGNAL (6 binary features)</td>
-<td>INDICATOR (12 continuous columns)</td>
+<td>INDICATOR (continuous + discrete + categorical + persistence columns)</td>
 </tr>
 <tr>
 <td>Pipeline</td>
@@ -128968,7 +129242,97 @@ Bollinger Bands (bandwidth) ────────────────┘
 </tr>
 </tbody>
 </table>
-<p>An experiment can use both, one, or neither. Both together: 6 binary signals + 12 continuous columns.</p>
+<p>Because <code>MARKET_STATE</code> now emits the discrete state flags as columns, it supersedes the generator's
+<code>market_regime</code> signal block for new work. Experiments that still reference the old signal column names keep
+working.</p>
+<h2 id="halving-indicator"><code>HALVING</code> indicator</h2>
+<p>A second feature indicator: time-derived and symbol-agnostic. It follows the same anatomy as <code>TIME_FEATURES</code>
+(<code>BaseIndicatorOneInput</code>, reads only the bar <code>timestamp</code> from its single input frame — no price, no parent
+indicators) and the same file pattern as any indicator (see the anatomy table above).</p>
+<h3 id="inputs-and-config">Inputs and config</h3>
+<ul>
+<li><strong>Input:</strong> one feature (the OHLCV frame); only its <code>timestamp</code> column is read.</li>
+<li><strong>Config:</strong> a fixed table of halving dates and the phase boundaries. The dates are a property of the
+  asset's protocol — fixed and known ex ante — so the indicator is symbol-agnostic: any experiment on any
+  symbol can include it.</li>
+</ul>
+<pre><code class="language-python">class HalvingConfig(BaseIndicatorGenerated):
+    &quot;&quot;&quot;Halving-cycle indicator. Time-derived from the bar timestamp against a fixed halving calendar.&quot;&quot;&quot;
+
+    segement_path: ClassVar[Path | str | None] = Path(&quot;indicators&quot;)
+
+    column_outputs_generated: ClassVar[list[str]] = [
+        # Continuous
+        &quot;halving_days_since&quot;,
+        &quot;halving_cycle_progress&quot;,
+        &quot;halving_days_until_next&quot;,
+        # Discrete one-hot phase
+        &quot;halving_phase_pre&quot;,
+        &quot;halving_phase_markup&quot;,
+        &quot;halving_phase_peak&quot;,
+        &quot;halving_phase_bear&quot;,
+        # Categorical
+        &quot;halving_epoch&quot;,
+    ]
+
+    # ISO dates of the halving events, ascending. Defaults are the known BTC halvings.
+    halving_dates: list[str] = [&quot;2012-11-28&quot;, &quot;2016-07-09&quot;, &quot;2020-05-11&quot;, &quot;2024-04-19&quot;, &quot;2028-04-01&quot;]
+    # Phase boundaries as fractions of cycle_progress (pre &lt; markup &lt; peak &lt; bear).
+    phase_markup_start: float = 0.0
+    phase_peak_start: float = 0.45
+    phase_bear_start: float = 0.65
+    test: HalvingTestConfig
+</code></pre>
+<p>Plus <code>HalvingTestConfig</code> and <code>MaybeHalvingConfig</code>, mirroring the <code>MARKET_STATE</code> pattern.</p>
+<h3 id="computation-pseudocode">Computation (pseudocode)</h3>
+<p>All vectorized Polars over the <code>timestamp</code> column; no rolling warm-up, since the values are deterministic
+from the calendar:</p>
+<ul>
+<li><code>halving_days_since</code> = days from the most recent halving date at or before the bar timestamp.</li>
+<li><code>halving_days_until_next</code> = days to the next halving date after it.</li>
+<li><code>halving_cycle_progress</code> = <code>days_since / (days_since + days_until_next)</code>, in [0, 1).</li>
+<li><code>halving_epoch</code> = index of the current halving interval.</li>
+<li>one-hot phase flags = <code>halving_cycle_progress</code> bucketed by the phase boundaries.</li>
+</ul>
+<p><code>halving_days_until_next</code> references a future, protocol-known date; that is calendar information available
+ex ante, not price leakage.</p>
+<h3 id="honest-note">Honest note</h3>
+<p>The halving cycle has only about four historical repetitions, so these columns are strongest as a
+deterministic prior that conditions rules; as a learned model feature their statistical power is limited.
+That is a property of the data, not a usage restriction — any experiment may include them.</p>
+<h2 id="single-source-of-truth-the-offline-regime-scripts">Single source of truth: the offline regime scripts</h2>
+<p>The regime classification currently exists twice: in the <code>market_regime</code> generator block and again in
+<code>scripts/analysis/regime/regime_detector.py</code> (<code>compute_indicators</code> + <code>classify_regime</code>). Once <code>MARKET_STATE</code>
+exists, its classification is the one implementation — the offline regime scripts import it instead of
+keeping their own copy, so a threshold or a rule changes in exactly one place. The dependency direction is
+correct: the scripts depend on the module, never the reverse.</p>
+<h2 id="as-built">As built</h2>
+<p>How the implementation realises the design above, including the points where the concrete code refines it:</p>
+<ul>
+<li><strong><code>MARKET_STATE</code> takes 8 single-column inputs</strong>, not 6. The engine matches inputs by name (one column
+  per input), so the ADX components are three inputs (<code>input_adx</code>, <code>input_plus_di</code>, <code>input_minus_di</code>)
+  over the same ADX feature, alongside <code>input_ema_fast</code>, <code>input_ema_slow</code>, <code>input_atr</code>, <code>input_close</code>
+  and <code>input_bb</code>. It consumes those pre-computed feature columns (reusing their cached parquets) rather
+  than recomputing internally.</li>
+<li><strong>27 output columns, all <code>Float64</code></strong> (the discrete one-hot, categorical codes and <code>mixed_regime</code> are
+  integer-valued floats so the clean / validate / normalization pipeline treats every column uniformly).</li>
+<li><strong><code>classify_regime_codes</code></strong> (in <code>rainbow.data_processing.indicator.market_state</code>) is the single
+  classification implementation. <code>scripts/analysis/regime/regime_detector_v2.py</code> imports it; running it
+  alongside the original <code>regime_detector.py</code> yields identical regime labels.</li>
+<li><strong>Config parameters are required</strong> on <code>MarketStateConfig</code> / <code>HalvingConfig</code> (no class defaults, like
+  every other indicator config). Default values live in <code>config/indicators/market-state.yaml</code> and
+  <code>config/indicators/halving.yaml</code> (with the per-column validation), and the generator emits the
+  per-feature <code>Maybe*</code> override form.</li>
+<li><strong>Generator integration is additive.</strong> <code>market_state</code> and <code>halving</code> are added to the <code>blocks_catalog</code>
+  disabled by default, so every existing group regenerates byte-for-byte identically. Two new groups,
+  <code>full_single_tf_v2</code> and <code>full_multi_tf_v2</code>, are copies of the <code>full_*</code> groups with <code>market_regime</code>
+  replaced by <code>market_state</code> and <code>halving</code> appended; the existing groups are untouched.</li>
+<li><strong>Column selection happens in the block config.</strong> A block's <code>columns</code> list picks which of the indicator's
+  columns become experiment features (default: 10 for <code>market_state</code>, 3 for <code>halving</code>); the indicator
+  parquet still holds every column.</li>
+<li><strong><code>HALVING</code></strong> is implemented as the time-derived sibling described in its section above, with absolute
+  epoch-seconds arithmetic (time-zone / unit independent) and the required-config / yaml treatment.</li>
+</ul>
 
 
 

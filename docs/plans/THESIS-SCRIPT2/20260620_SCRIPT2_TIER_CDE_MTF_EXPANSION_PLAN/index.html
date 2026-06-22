@@ -4046,6 +4046,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#current-state--handoff-2026-06-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current state / handoff (2026-06-22)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#why" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4061,6 +4072,17 @@
     <span class="md-ellipsis">
       
         The tier ladder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-set-for-the-new-tiers-regime-state--halving-new-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature set for the new tiers: regime-state + halving (new indicators)
       
     </span>
   </a>
@@ -127687,6 +127709,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#current-state--handoff-2026-06-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current state / handoff (2026-06-22)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#why" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -127702,6 +127735,17 @@
     <span class="md-ellipsis">
       
         The tier ladder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-set-for-the-new-tiers-regime-state--halving-new-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature set for the new tiers: regime-state + halving (new indicators)
       
     </span>
   </a>
@@ -127937,12 +127981,35 @@
 
 
 <h1 id="script-2--tier-cde-expansion-mtf--multi-symbol-plan">Script 2 — Tier C/D/E Expansion (MTF + Multi-Symbol) Plan</h1>
-<p><strong>Created:</strong> 2026-06-20</p>
-<p><strong>Status:</strong> Planning — exploratory. No experiment run, code change, or data prep is authorized by this
-document alone.</p>
+<p><strong>Created:</strong> 2026-06-20 · <strong>Updated:</strong> 2026-06-22</p>
+<p><strong>Status:</strong> Ready to start — this is the <strong>active Script 2 / thesis step</strong> (the ensemble line is now
+concluded; see Current state below). No experiment run, code change, or data prep is authorized by this
+document alone. The immediate next action is <strong>Task 1 (verify MTF data readiness, read-only)</strong>, then
+resolving open decisions D1–D3 with Manu before any run.</p>
 <p><strong>Goal:</strong> Test whether giving the model a multi-timeframe view (up to the daily scale) and cross-symbol
 context produces predictive edge that the single-timeframe tiers could not — and thereby keep the thesis
 open with a concrete next experiment instead of closing on the Tier A/B evidence alone.</p>
+<h2 id="current-state--handoff-2026-06-22">Current state / handoff (2026-06-22)</h2>
+<p>For an agent picking this up cold:</p>
+<ul>
+<li><strong>This is the active Script 2 (thesis) plan</strong>, running <strong>in parallel</strong> to the money-track lines (the
+  rule-based DSL engine and the Optuna bot-config tuning); it does not contend with them. The master index
+  is <code>docs/plans/20260620_MASTER_ROADMAP_AND_PLAN_INDEX.md</code> (this is its Track 2).</li>
+<li><strong>The ensemble investigation is concluded</strong> (Phase 1 → 2 → 3 done; Phase 4 superseded). Verdict: the
+  ensemble edge is <strong>fold-local and defensive — no transferable, recipe-level edge; the outcome is set by
+  the target fold's regime, not the model selection — and it is absent in the bull/ranging folds (F1, F2)</strong>.
+  See <code>AUDIT/20260622_SCRIPT2_ENSEMBLE_CROSS_FOLD_TRANSFER_SYNTHESIS_AUDIT.md</code> and the diagnostics it cites;
+  the cross-fold transfer plan is archived under <code>THESIS-SCRIPT2/_archived/</code>.</li>
+<li><strong>The open weakness this plan attacks:</strong> every tier run so far (A/B) is 5-minute single-timeframe — blind
+  to the daily scale the regime work identified as the most informative regime signal. <strong>Tier D is the
+  first tier that sees it.</strong></li>
+<li><strong>Decision (firm): Tier D (MTF) is the priority. Tier C is NOT a priority now</strong> — it is still 5m-only, so
+  it cannot address the regime-blindness; it is only a <em>conditional attribution control</em> (run after Tier D,
+  and only if Tier D shows signal, to separate "the MTF view helped" from "more features helped"). Tier E
+  (multi-symbol) is last and conditional on Tier D.</li>
+<li><strong>Immediate next action:</strong> Task 1 — verify MTF data readiness (read-only). Then resolve open decisions
+  D1–D3 (model set, fold subset, trial budget) with Manu. Nothing runs before that.</li>
+</ul>
 <h2 id="why">Why</h2>
 <p>Tiers A, B and C are BTCUSDT <strong>5-minute single-timeframe</strong>: the model never sees the daily scale. The
 regime reference audit (<code>scripts/thesis/script_2_thesis/AUDIT/20260612_SCRIPT2_REGIME_FOLD_CROSSFOLD_FULL_AUDIT.md</code>)
@@ -127995,11 +128062,25 @@ executed (placeholder rows, no <code>experiment_id</code>):</p>
 <p>Tier D is the load-bearing experiment (the first tier that sees the daily scale). Tier C is single-TF and
 serves only as a "more 5m features, same myopia" control. Tier E is the heaviest and runs only if Tier D
 shows signal.</p>
+<h2 id="feature-set-for-the-new-tiers-regime-state--halving-new-indicators">Feature set for the new tiers: regime-state + halving (new indicators)</h2>
+<ul>
+<li>The existing <strong><code>market_regime</code> block</strong> (the MEGA generator's 6 binary multi-timeframe signals composed
+  from ADX/EMA/ATR) is now <strong>LEGACY</strong>: kept only for compatibility with the tiers that already ran (A/B).
+  The new tiers should <strong>not</strong> build on it.</li>
+<li>An <strong>improved market-regime-state indicator</strong> and a new <strong>halving indicator</strong> are being finished. The new
+  Tier D/E runs are intended to <strong>use these new indicators</strong> as part of their feature set, not the legacy
+  block.</li>
+<li><strong>Manu is generating the wiring + parameters</strong> to configure / set / activate the two new indicators. Until
+  that lands, the new-indicator feature set for Tier D is <strong>pending on that wiring</strong> — it is a prerequisite
+  for the Tier D run (folded into Task 1 below).</li>
+</ul>
 <h2 id="scope-and-sequencing">Scope and sequencing</h2>
 <ul>
 <li>Keep it <strong>small</strong> and <strong>parallel</strong> to the rule-based engine and Optuna SL/TP tracks (this is Track 2; it
   does not contend with them).</li>
-<li><strong>Priority: Tier D first.</strong> Tier C is an optional control. Tier E is last and conditional on Tier D.</li>
+<li><strong>Priority: Tier D first.</strong> <strong>Tier C is not a priority</strong> — being 5m-only it cannot address the
+  regime-blindness; run it only as a conditional attribution control after Tier D (and only if Tier D shows
+  signal). Tier E is last and conditional on Tier D.</li>
 <li>Reduced search budget (few trials) and a fold subset first, expanding only if a result warrants it.</li>
 </ul>
 <h2 id="open-decisions-pending--do-not-assume-resolve-before-task-2">Open Decisions (pending — do not assume; resolve before Task 2)</h2>
@@ -128040,6 +128121,9 @@ shows signal.</p>
 <li>[ ] Verify the OHLCV/feature data exists for BTCUSDT at 5m, 15m, 1h, 4h and 1d across the fold ranges.</li>
 <li>[ ] Verify the window-preparer / feature pipeline assembles the <code>full_multi_tf</code> group for those
   timeframes and fold windows without gaps.</li>
+<li>[ ] Verify the <strong>new</strong> regime-state and halving indicators are wired, configurable and activatable in the
+  feature pipeline (Manu generates this wiring) — the new tiers use these, not the legacy <code>market_regime</code>
+  block.</li>
 <li>[ ] Report any missing data or pipeline work required before a Tier D run is possible.</li>
 </ul>
 <h3 id="task-2-tier-d-small-run">Task 2: Tier D small run</h3>
