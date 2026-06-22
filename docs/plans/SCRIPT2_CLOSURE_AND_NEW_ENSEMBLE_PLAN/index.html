@@ -3026,10 +3026,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#48---b8-phase-3--fold-locality-validation" class="md-nav__link">
+  <a href="#48-x-b8-phase-3--fold-locality-validation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.8 [ ] B8: Phase 3 — fold-locality validation
+        4.8 [x] B8: Phase 3 — fold-locality validation
       
     </span>
   </a>
@@ -4586,6 +4586,8 @@
       
         
       
+        
+      
     
     
     
@@ -4638,14 +4640,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../THESIS-SCRIPT2/20260614_SCRIPT2_CROSS_FOLD_TRANSFER_PLAN/" class="md-nav__link">
+      <a href="../THESIS-SCRIPT2/20260620_SCRIPT2_TIER_CDE_MTF_EXPANSION_PLAN/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    20260614 Script2 Cross Fold Transfer Plan
+    20260620 Script2 Tier Cde Mtf Expansion Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../THESIS-SCRIPT2/20260621_SCRIPT2_BOT_CONFIG_OPTIMIZATION_CAMPAIGN_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260621 Script2 Bot Config Optimization Campaign Plan
   
 
     
@@ -4724,6 +4754,8 @@
       
         
       
+        
+      
     
     
     
@@ -4737,10 +4769,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_6_2" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_6_3" >
         
           
-          <label class="md-nav__link" for="__nav_3_17_6_2" id="__nav_3_17_6_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_17_6_3" id="__nav_3_17_6_3_label" tabindex="0">
             
   
   
@@ -4758,8 +4790,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_6_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_17_6_2">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_17_6_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -5512,6 +5544,34 @@
     
   
     20260613 Script2 Cross Fold Family Diagnostic Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../THESIS-SCRIPT2/_archived/20260614_SCRIPT2_ENSEMBLE_CROSS_FOLD_TRANSFER_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260614 Script2 Ensemble Cross Fold Transfer Plan
   
 
     
@@ -128957,10 +129017,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#48---b8-phase-3--fold-locality-validation" class="md-nav__link">
+  <a href="#48-x-b8-phase-3--fold-locality-validation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.8 [ ] B8: Phase 3 — fold-locality validation
+        4.8 [x] B8: Phase 3 — fold-locality validation
       
     </span>
   </a>
@@ -129237,11 +129297,16 @@
 <p><strong>Overview:</strong> Execution plan to close Script 2 with a redesigned ensemble campaign in three blocks:
 sync cross-run evidence (including the v5 baseline), run the ensemble campaign under the <code>friction</code> /
 <code>promise</code> / <code>promise_rc</code> selectors across the four folds, and synthesize a final closure document.</p>
-<p><strong>Status:</strong> Active. Block A done; Block B Phase 1 executed and bifurcated (<code>friction</code> dropped,
-<code>promise</code> and <code>promise_rc</code> advance); Phase 2 cross-fold diagnostic and Block C synthesis pending.</p>
-<p><strong>Sequencing (pending):</strong> Finish the remaining basic core + backtesting-module work first (so new
-sessions carry the full field set at run time, no later backfill), then run the cross-fold ensembles,
-then the remaining Phase 2 / Block C closure steps.</p>
+<p><strong>Status:</strong> Block A done; Phase 1 executed and bifurcated (<code>friction</code> dropped, <code>promise</code> + <code>promise_rc</code>
+advance); Phase 2 Step A diagnostic done; <strong>Phase 3 cross-fold transfer (Step B / B8) DONE for both
+selectors (trailing-off) → fold-local, no transferable edge</strong>; Phase 4 (B9) superseded; Block C synthesis
+deferred behind the Tier C/D/E expansion. The ensemble line is effectively concluded (a robust negative
+result) — see <code>AUDIT/20260622_SCRIPT2_ENSEMBLE_CROSS_FOLD_TRANSFER_SYNTHESIS_AUDIT.md</code>.</p>
+<p><strong>Sequencing:</strong> Field-population gate satisfied. DONE: Phase 1 → Phase 2 Step A diagnostic (B6a) → Phase 3
+cross-fold transfer (B8, both selectors). Phase 4 (B9) superseded (Phase 3 settled fold-locality).
+<strong>Remaining before Block C closure:</strong> the Tier C/D/E MTF / multi-symbol expansion
+(<code>THESIS-SCRIPT2/20260620_SCRIPT2_TIER_CDE_MTF_EXPANSION_PLAN.md</code>) as the intermediate thesis-extension
+step; Block C closure is DEFERRED until that returns a verdict.</p>
 </blockquote>
 <p><strong>Created:</strong> 2026-05-20<br />
 <strong>Status:</strong> Active — Phase 1 is complete for all three selectors (<code>friction</code>, <code>promise</code>, <code>promise_rc</code>) across Block A
@@ -129990,6 +130055,11 @@ lands, B6 uses the regime-agnostic cross-fold evidence plus the per-fold benchma
 §4.7 is dropped: the five source runs are different search frontiers of the same problem, not genuine provenance,
 so origin is not a selection axis.</p>
 <h4 id="step-a--cross-fold--regime-diagnostic-no-new-campaign">Step A — cross-fold / regime diagnostic (no new campaign)</h4>
+<p><strong>Status: DONE (2026-06-20)</strong> — <code>scripts/thesis/script_2_thesis/AUDIT/20260620_SCRIPT2_ENSEMBLE_CROSS_FOLD_REGIME_DIAGNOSTIC_AUDIT.md</code>.
+Verdict: across the four folds the advancing selectors beat the RC benchmark in both net PnL (+\$413 /
++\$388) and <code>alpha_rc</code> (+4.13% / +3.88%) with very low drawdown, but only as an oracle per-fold-best
+aggregate; the edge is defensive (low exposure → bench captures the bull-fold upside), concentrated in the
+bear folds. The decisive fold-locality test is the transfer campaign below.</p>
 <p>Answer the open question from §4.6 using only the existing evidence (the six Phase 1 campaigns, their cross-fold
 reports, and the DB), before committing any new campaign. The diagnostic must report, per fold and aggregated
 across all four folds F1–F4:</p>
@@ -130037,8 +130107,15 @@ the selector(s) that survive Phase 1, and how much including v5 changes the cros
 selector rather than blindly following the original <code>{friction, promise}</code> pair.</p>
 <p>Campaign root: <code>&lt;YYYYMMDD&gt;_phase2_provenance_ablation/</code>.</p>
 <p>Audit document: <code>&lt;YYYYMMDD&gt;_SCRIPT2_ENSEMBLE_PHASE2_PROVENANCE_ABLATION_AUDIT.md</code>.</p>
-<h3 id="48---b8-phase-3--fold-locality-validation">4.8 [ ] B8: Phase 3 — fold-locality validation</h3>
-<p>Detailed design: <code>docs/plans/THESIS-SCRIPT2/20260614_SCRIPT2_CROSS_FOLD_TRANSFER_PLAN.md</code> — the fixed-trial
+<h3 id="48-x-b8-phase-3--fold-locality-validation">4.8 [x] B8: Phase 3 — fold-locality validation</h3>
+<p><strong>Status: DONE (2026-06-22).</strong> Ran for both surviving selectors with the trailing stop <strong>off</strong> (<code>promise</code>
+run <code>20260621_095337</code>, <code>promise_rc</code> run <code>20260621_155425</code>; 96 executions each; a first run with the trailing
+active was invalidated and rolled back). <strong>Result: fold-local — the outcome is set by the target fold's
+regime, not the transferred recipe; profit and <code>alpha_rc</code> never coincide; both selectors agree</strong> (the old
+<code>0/14 positive</code> finding survives, sharpened). Reports in <code>AUDIT/ANEXOS/</code> (the <code>..._PROMISE_CAMPAIGN_REPORT.md</code>
+and <code>..._PROMISE_RC_CAMPAIGN_REPORT.md</code> pair); full write-up:
+<code>AUDIT/20260622_SCRIPT2_ENSEMBLE_CROSS_FOLD_TRANSFER_SYNTHESIS_AUDIT.md</code>.</p>
+<p>Detailed design: <code>docs/plans/THESIS-SCRIPT2/_archived/20260614_SCRIPT2_ENSEMBLE_CROSS_FOLD_TRANSFER_PLAN.md</code> — the fixed-trial
 cross-fold transfer of the surviving <code>promise</code>/<code>promise_rc</code> ensembles (recipe-level transfer is already covered by
 <code>AUDIT/ANEXOS/20260613_SCRIPT2_CROSS_FOLD_FAMILY_DIAGNOSTIC_REPORT.md</code>).</p>
 <p>Phase 3 is no longer "cross-fold transfer" in the old sense, because Phase 1 already covers all four folds. Phase
@@ -130056,6 +130133,10 @@ finding.</p>
 <p>Campaign root: <code>&lt;YYYYMMDD&gt;_phase3_fold_locality/</code>.</p>
 <p>Audit document: <code>&lt;YYYYMMDD&gt;_SCRIPT2_ENSEMBLE_PHASE3_FOLD_LOCALITY_AUDIT.md</code>.</p>
 <h3 id="49---b9-phase-4--fixed-trial-all-fold-validation">4.9 [ ] B9: Phase 4 — fixed-trial all-fold validation</h3>
+<p><strong>Status: SUPERSEDED / low value (2026-06-22).</strong> Phase 3 (B8) settled fold-locality decisively across both
+surviving selectors, so a curated-shortlist all-fold re-validation would only re-confirm it. Recommend
+skipping it unless a later step (e.g. the Tier C/D/E expansion) yields a candidate worth all-fold
+validation. Original design retained below for reference.</p>
 <p>This is the phase the old cycle materialized in JSON but never executed and never audited. It is the final
 ensemble validation step.</p>
 <p>Shortlist:</p>
@@ -130089,6 +130170,11 @@ ensemble validation step.</p>
 <p>Path: <code>scripts/thesis/script_2_thesis/AUDIT/&lt;YYYYMMDD&gt;_SCRIPT2_ENSEMBLE_CROSS_PHASE_AUDIT.md</code>.</p>
 <p>This audit is the input artifact for Block C.</p>
 <h2 id="5---block-c--final-synthesis-and-closure">5. [ ] Block C — Final Synthesis And Closure</h2>
+<blockquote>
+<p><strong>Deferred:</strong> before this block runs, the Tier C/D/E MTF / multi-symbol expansion
+(<code>THESIS-SCRIPT2/20260620_SCRIPT2_TIER_CDE_MTF_EXPANSION_PLAN.md</code>) executes as an intermediate
+thesis-extension step. Block C closure is deferred until that plan returns its verdict (extend or close).</p>
+</blockquote>
 <h3 id="51---c1-final-synthesis-document">5.1 [ ] C1: Final synthesis document</h3>
 <p>Single canonical synthesis at:</p>
 <pre><code class="language-text">scripts/thesis/script_2_thesis/AUDIT/SCRIPT2_FINAL_SYNTHESIS.md

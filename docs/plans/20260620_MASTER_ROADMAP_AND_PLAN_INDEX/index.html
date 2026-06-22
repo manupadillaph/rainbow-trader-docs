@@ -4391,6 +4391,8 @@
       
         
       
+        
+      
     
     
     
@@ -4443,14 +4445,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../THESIS-SCRIPT2/20260614_SCRIPT2_CROSS_FOLD_TRANSFER_PLAN/" class="md-nav__link">
+      <a href="../THESIS-SCRIPT2/20260620_SCRIPT2_TIER_CDE_MTF_EXPANSION_PLAN/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    20260614 Script2 Cross Fold Transfer Plan
+    20260620 Script2 Tier Cde Mtf Expansion Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../THESIS-SCRIPT2/20260621_SCRIPT2_BOT_CONFIG_OPTIMIZATION_CAMPAIGN_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260621 Script2 Bot Config Optimization Campaign Plan
   
 
     
@@ -4529,6 +4559,8 @@
       
         
       
+        
+      
     
     
     
@@ -4542,10 +4574,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_6_2" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_17_6_3" >
         
           
-          <label class="md-nav__link" for="__nav_3_17_6_2" id="__nav_3_17_6_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_17_6_3" id="__nav_3_17_6_3_label" tabindex="0">
             
   
   
@@ -4563,8 +4595,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_6_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_17_6_2">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_17_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_17_6_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -5317,6 +5349,34 @@
     
   
     20260613 Script2 Cross Fold Family Diagnostic Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../THESIS-SCRIPT2/_archived/20260614_SCRIPT2_ENSEMBLE_CROSS_FOLD_TRANSFER_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260614 Script2 Ensemble Cross Fold Transfer Plan
   
 
     
@@ -129249,11 +129309,19 @@ iTransformer / ConvTran, then hybrids, with feature neutralization + calibration
   sessions carry the full investor suite). NOW ACTIVE: Phase 2 Step A diagnostic (B6a) → transfer campaign
   (Phase 3/B8) → Phase 4 (B9) → cross-phase audit (B10). Block C closure DEFERRED until the Tier C/D/E
   expansion returns a verdict.</li>
-<li><strong><code>docs/plans/THESIS-SCRIPT2/20260614_SCRIPT2_CROSS_FOLD_TRANSFER_PLAN.md</code></strong> · ⏳ design done; smoke +
-  192-execution campaign authorized (run pending — T3); report pending (T4).</li>
+<li><strong><code>docs/plans/THESIS-SCRIPT2/_archived/20260614_SCRIPT2_ENSEMBLE_CROSS_FOLD_TRANSFER_PLAN.md</code></strong> · ✅
+  COMPLETE + archived. Both selectors run with trailing off → <strong>fold-local, no transferable edge</strong> (outcome
+  set by the target fold's regime, not the recipe). Synthesis:
+  <code>AUDIT/20260622_SCRIPT2_ENSEMBLE_CROSS_FOLD_TRANSFER_SYNTHESIS_AUDIT.md</code>.</li>
 <li><strong><code>docs/plans/THESIS-SCRIPT2/20260620_SCRIPT2_TIER_CDE_MTF_EXPANSION_PLAN.md</code></strong> · ⏳ Tier C/D/E expansion
   (MTF incl. 1d + multi-symbol); never run; the intermediate thesis-extension step BEFORE closure.
   Priority: Tier D (the regime/MTF test). Models/folds: open decisions.</li>
+<li><strong><code>docs/plans/THESIS-SCRIPT2/20260621_SCRIPT2_BOT_CONFIG_OPTIMIZATION_CAMPAIGN_PLAN.md</code></strong> · ⏳ the
+  bot-config optimizer's campaign/analysis phase (its engine is built; the build plan is archived).
+  Phase 1: a large per-fold Optuna config search (trailing on/off + stop-loss + take-profit) for the best
+  <code>(model, config)</code> per fold/regime; Phase 1b: cross-fold validation of the winners (real edge vs
+  fold-local); Phase 2 (later, gated on the data refresh + detector): regime-conditional testing. Not
+  authorized to run.</li>
 <li><strong><code>docs/plans/20260616_RULE_BASED_ENGINE_AUDIT_AND_DIRECTION.md</code></strong> · 🟡 the chosen build (design closed;
   Phase 1 under way). Two layers: Layer 1 = market view (the model, unchanged) → signal; Layer 2 = a
   position-aware rule-driven action engine in the bot, universal for any model. A shared, <strong>expressive
@@ -129383,9 +129451,11 @@ reference = <code>scripts/thesis/script_2_thesis/bot_config_optimizer/README.md<
 </ol>
 <h3 id="track-3--make-money-analysis-layer-now-partly-de-risked-by-34">Track 3 — Make-money analysis layer (now partly de-risked by §3.4)</h3>
 <ol>
-<li>Bot-config optimizer analysis phase: out-of-fold validation of the first profitable config, add
-   stop-loss to the search, cross-trial per-regime config, pick the best runs/ensembles, large Optuna
-   sweeps, audit which configs win per fold and per regime.</li>
+<li>Bot-config optimizer campaign — owned by
+   <code>THESIS-SCRIPT2/20260621_SCRIPT2_BOT_CONFIG_OPTIMIZATION_CAMPAIGN_PLAN.md</code>: a large per-fold Optuna
+   config search (trailing on/off + stop-loss + take-profit) for the best <code>(model, config)</code> per
+   fold/regime, then cross-fold validation of the winners (real edge vs fold-local). Regime-conditional
+   testing is deferred to that plan's Phase 2 (gated on the data refresh + detector).</li>
 <li>Apply the config-effectiveness audit across the full field inventory.</li>
 </ol>
 <h3 id="track-4--regime-program-research-feeds-tracks-13">Track 4 — Regime program (research; feeds Tracks 1–3)</h3>
