@@ -4086,10 +4086,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#what-is-running" class="md-nav__link">
+  <a href="#what-ran" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What is running
+        What ran
       
     </span>
   </a>
@@ -4108,10 +4108,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#next-when-the-campaign-finishes" class="md-nav__link">
+  <a href="#results-in-sample-and-next-step" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Next when the campaign finishes
+        Results (in-sample) and next step
       
     </span>
   </a>
@@ -5138,6 +5138,8 @@
   
     
     
+      
+        
       
         
       
@@ -7254,6 +7256,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_archived/20260624_PHASE4_ACTION_ENGINE_INTEGRATION_OPTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260624 Phase4 Action Engine Integration Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -9239,6 +9269,8 @@
       
         
       
+        
+      
     
     
     
@@ -10130,6 +10162,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/20260624_SCRIPT2_BOT_CONFIG_OPTUNA_CAMPAIGN_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260624 Script2 Bot Config Optuna Campaign Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -10190,10 +10250,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_31" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_32" >
         
           
-          <label class="md-nav__link" for="__nav_4_5_3_1_31" id="__nav_4_5_3_1_31_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_5_3_1_32" id="__nav_4_5_3_1_32_label" tabindex="0">
             
   
   
@@ -10211,8 +10271,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_5_3_1_31_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5_3_1_31">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_5_3_1_32_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_3_1_32">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -127688,10 +127748,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#what-is-running" class="md-nav__link">
+  <a href="#what-ran" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What is running
+        What ran
       
     </span>
   </a>
@@ -127710,10 +127770,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#next-when-the-campaign-finishes" class="md-nav__link">
+  <a href="#results-in-sample-and-next-step" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Next when the campaign finishes
+        Results (in-sample) and next step
       
     </span>
   </a>
@@ -127916,17 +127976,19 @@
 
 <h1 id="script-2--bot-config-optimization-campaign-and-regime-validation">Script 2 — Bot-Config Optimization Campaign and Regime Validation</h1>
 <p><strong>Created:</strong> 2026-06-21</p>
-<p><strong>Status:</strong> Phase 1 RUNNING (launched 2026-06-22). Phases 1b and 2 not started. See "Current state
-(handoff)" below for how to monitor, resume, and continue.</p>
+<p><strong>Status:</strong> Phase 1 COMPLETE and audited (2026-06-24); cross-fold validation is the live next step.
+Phase 2 deferred. See "Current state (handoff)" below.</p>
 <blockquote>
 <p>Living reference for the analysis/campaign phase of the bot-config optimizer. The optimizer engine is
 already built (<code>scripts/thesis/script_2_thesis/bot_config_optimizer/</code>; its README is the usage
 reference). This plan owns <strong>what to search and how to validate the winners</strong>, not the tool's mechanics.</p>
 </blockquote>
 <h2 id="current-state-handoff--2026-06-22">Current state (handoff — 2026-06-22)</h2>
-<p>Pick up from here. Phase 1 (the per-fold/family Optuna config search) is <strong>executing</strong>; Phases 1b and 2
-are not started.</p>
-<h3 id="what-is-running">What is running</h3>
+<p>Pick up from here. Phase 1 (the per-fold/family Optuna config search) <strong>finished</strong> — 3,000 backtests,
+all five families. Its interpretation is the audit
+<code>scripts/thesis/script_2_thesis/AUDIT/20260624_SCRIPT2_BOT_CONFIG_OPTUNA_CAMPAIGN_AUDIT.md</code>. Cross-fold
+validation is the live next step; the regime-conditional phase is deferred.</p>
+<h3 id="what-ran">What ran</h3>
 <ul>
 <li><strong>Phase 1 campaign:</strong> one Optuna study per studied trial, run per family from
   <code>scripts/thesis/script_2_thesis/bot_config_optimizer/</code>.</li>
@@ -127953,17 +128015,17 @@ are not started.</p>
 <li><strong>Read results</strong> by net PnL / Sharpe / trades (engine-version robust); state the benchmark for any
   alpha. The canonical <code>report.md</code> renders <code>Orig / New / Δ</code> per <code>(trial, config)</code>.</li>
 </ul>
-<h3 id="next-when-the-campaign-finishes">Next when the campaign finishes</h3>
-<ol>
-<li>Build the per-fold/regime best <code>(model, config)</code> shortlist from each family's <code>report.md</code> (Phase 1,
-   T4 below).</li>
-<li>Run Phase 1b (Section 5): <code>run_sweep.py</code> applying each fold's winning configs to the other three
-   folds' trials → real edge vs fold-local.</li>
-<li>Phase 2 (Section 6) stays gated on the data refresh + detector.</li>
-</ol>
-<p>Preliminary signal (logistic, mid-run): the positive composite objective concentrates in the bear fold
-F3 and is negative in F1/F2 — consistent with the regime-conditional, defensive pattern. Not a
-profitability claim; the full PnL-vs-baseline read comes from the closed <code>report.md</code>.</p>
+<h3 id="results-in-sample-and-next-step">Results (in-sample) and next step</h3>
+<p>Full numbers in the audit. Headline: <strong>68/100 trials have a PnL-positive best config</strong> (F1 23/25, F2
+11/25, F3 15/25, F4 19/25 — F2 and F4 had zero baseline-profitable trials). The winning recipe is
+consistent, not regime-specific: wide stop-loss (median 3.68), high take-profit (median 3.45, high even in
+the bear folds), trailing off-or-loose (88/100), and few trades (winner median 72). All in-sample, per
+trial — capability, not realized edge. Per-fold winners to carry forward: F1 <code>mlp</code> 3167, F2 <code>mlp_ex</code> 2256,
+F3 <code>vit</code> 3955, F4 <code>logistic</code> 797.</p>
+<p>Live next step — <strong>cross-fold validation</strong> (Section 5): evaluate each fold's winning config on the other
+three folds' trials with <code>run_sweep.py</code>. A config that stays competitive off its own fold is a real
+recipe; one that collapses is fold-local. The regime-conditional phase (Section 6) stays gated on the data
+refresh + detector.</p>
 <h2 id="1-goal">1. Goal</h2>
 <p>For each fold — and each fold is a distinct market regime — find the best <code>(model, bot-config)</code> pairs by
 searching the bot configuration on each trial's <strong>cached predictions</strong> (no retraining, no re-inference),

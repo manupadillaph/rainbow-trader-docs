@@ -2523,6 +2523,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#scope-and-priorities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope and priorities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#related-plans-audits-and-research" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2745,10 +2756,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#74-action-set-layer-2" class="md-nav__link">
+  <a href="#74-action-set-and-payloads-layer-2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.4 Action set (Layer 2)
+        7.4 Action set and payloads (Layer 2)
       
     </span>
   </a>
@@ -5560,6 +5571,8 @@
       
         
       
+        
+      
     
     
     
@@ -7524,6 +7537,34 @@
     
   
     20260616 Trailing Stop Remediation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_archived/20260624_PHASE4_ACTION_ENGINE_INTEGRATION_OPTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260624 Phase4 Action Engine Integration Options
   
 
     
@@ -9522,6 +9563,8 @@
       
         
       
+        
+      
     
     
     
@@ -10413,6 +10456,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../scripts/thesis/script_2_thesis/AUDIT/20260624_SCRIPT2_BOT_CONFIG_OPTUNA_CAMPAIGN_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260624 Script2 Bot Config Optuna Campaign Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -10473,10 +10544,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_31" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_32" >
         
           
-          <label class="md-nav__link" for="__nav_4_5_3_1_31" id="__nav_4_5_3_1_31_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_5_3_1_32" id="__nav_4_5_3_1_32_label" tabindex="0">
             
   
   
@@ -10494,8 +10565,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_5_3_1_31_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5_3_1_31">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_4_5_3_1_32_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_3_1_32">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -127982,6 +128053,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#scope-and-priorities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope and priorities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#related-plans-audits-and-research" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -128204,10 +128286,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#74-action-set-layer-2" class="md-nav__link">
+  <a href="#74-action-set-and-payloads-layer-2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.4 Action set (Layer 2)
+        7.4 Action set and payloads (Layer 2)
       
     </span>
   </a>
@@ -128488,8 +128570,30 @@ standalone reference; it assumes no prior context.</p>
   <code>full_multi_tf_v2</code>, that use them in place of the <code>market_regime</code> signals. A per-block <code>columns</code> list
   picks which columns become features (defaults: 10 for <code>market_state</code>, 3 for <code>halving</code>).</li>
 </ul>
-<p><strong>What is next</strong> is the rule engine itself (this plan's §7 and the §11 roadmap): start at Phase 1 —
-extract the evaluator into <code>rainbow.common.rules</code>.</p>
+<p><strong>Current implementation point.</strong> Phase 1 (shared predicate DSL) and the first Phase-2 slice
+(position-scoped <code>CLOSE</code> with <code>RULE_EXIT</code> and feature-context passing) are implemented and pass targeted
+gates. Isolated scaffolding for later phases also exists (placeholder binding, Layer-1 rule-parameter
+resolution, an <code>action_rules_config</code> clone path on the backtest side). <strong>This code is uncommitted and
+pending remediation before it is trusted</strong> (see the audit findings): the batch rule evaluator and its
+<code>torch</code> dependency must move out of the foundation layer (<code>common</code>) into <code>model-trainer</code>; the action-rules
+config must be optional (<code>| None</code>) like the other optional bot sub-configs; and any unwired / premature
+type created ahead of its phase must not ship as dead code. Phase 3 (the optimization / run harness) is
+<strong>not</strong> built — only isolated foundations exist.</p>
+<h3 id="scope-and-priorities">Scope and priorities</h3>
+<ol>
+<li><strong>Core engine first.</strong> The deliverable that must be correct and complete is the two-layer engine —
+   Layer 1 (<code>rule_based</code> on the shared DSL) and Layer 2 (the optional Bot Action Engine) — running in
+   <strong>backtest and LIVE_SIM</strong>. These two modes are the bar and must be <strong>perfect</strong>: costs, slippage, exits,
+   sizing, metrics, and the no-rules-equals-current-behavior guarantee.</li>
+<li><strong>LIVE_REAL is out of scope to complete now.</strong> There is no exchange API / execution contract yet. The
+   shared bot decision path already flows into the live-real adapter; wire up to that boundary but <strong>leave
+   <code>submit_order</code> and the real-execution gaps not implemented</strong> — do not fake or force live-real. It is a
+   separate, later prerequisite for going live (Section 8.2).</li>
+<li><strong>Secondary, only after the core is solid:</strong> bot-override / strategy optimization (the bot-config
+   optimizer and Optuna over bot action-rule parameters) and the MEGA-generator / feature-catalog wiring
+   for rules (scripts). These improve strategies; they are not the core engine and must not be worked
+   before the core is perfect.</li>
+</ol>
 <h3 id="related-plans-audits-and-research">Related plans, audits and research</h3>
 <ul>
 <li><strong>Regime / market-state / halving indicators</strong> (implemented; column set, build, and an "As built"
@@ -128544,20 +128648,26 @@ subscripts, lambdas, and comprehensions are rejected. Supported elements:</p>
 <li>Comparison operators <code>&lt; &lt;= &gt; &gt;= == !=</code>, including chained comparisons such as <code>30 &lt; rsi_14{-1} &lt; 70</code>.</li>
 <li>Boolean composition with <code>and</code> / <code>or</code> and the bitwise <code>&amp;</code> / <code>|</code> applied to boolean results.</li>
 </ul>
-<p>Rules are evaluated in priority order; the first matching rule wins. When no rule matches, <code>default_signal</code>
-is emitted (typically <code>NONE</code>). Evaluation is vectorized across the batch.</p>
+<p>The current model configuration wraps each expression with a model payload: <code>{expression, signal}</code>. The
+expression itself is a predicate (<code>true</code> / <code>false</code>); the <code>signal</code> is not part of the DSL. In the
+<code>rule_based</code> model, predicates are evaluated in priority order, the first matching payload wins, and
+<code>default_signal</code> is emitted when no predicate matches (typically <code>NONE</code>). Evaluation is vectorized across
+the batch.</p>
 <h3 id="23-output-contract-and-feature-coupling">2.3 Output contract and feature coupling</h3>
 <p>The model emits the standard contract <code>{logits, strength, quality}</code> with three signal classes
 (<code>NONE=0, LONG=1, SHORT=2</code>). Because the contract matches the trainable models, the same scoring, bot
 logic, risk manager, backtest, and metrics apply unchanged. <code>strength</code> and <code>quality</code> are currently constant
 for the whole rule set.</p>
 <p>The model does not compute indicators. A rule referencing <code>rsi_14</code> only works if a feature resolving to
-that name already exists in the experiment's feature window. A generator preflight rejects any experiment
-whose rule references a missing or ambiguous feature, so coverage is validated before a run starts.
-Rule-feature inputs must be raw (non-normalized) so thresholds such as <code>&gt; 70</code> remain semantically valid.</p>
+that name already exists in the experiment's feature window. Generator preflight compiles rule expressions
+through <code>common.rules</code> against the generated feature universe; missing or ambiguous features, invalid ranges,
+and unsupported syntax are rejected before a run starts. Rule-feature inputs must be raw (non-normalized) so
+thresholds such as <code>&gt; 70</code> remain semantically valid.</p>
 <p>Entry rules live in <code>config/experiments/models/rule-based-model-hyperparameters.yaml</code>
 (<code>rule_based_model_hyperparameters.rules</code>, a list of <code>{expression, signal}</code>), resolved into
-<code>ResolvedRuleBasedModelHyperparameters</code> (<code>modules/model-trainer/.../types.py</code>).</p>
+<code>ResolvedRuleBasedModelHyperparameters</code> (<code>modules/model-trainer/.../types.py</code>). This shape remains the
+Layer-1 rule contract: <code>expression</code> is evaluated by the shared predicate engine; <code>signal</code> is interpreted by
+the model layer.</p>
 <h2 id="3-feature-generation-for-rules">3. Feature Generation for Rules</h2>
 <p>Feature blocks are built by the MEGA generator
 (<code>scripts/experiments/generate/generate_mega_experiment.py</code>). The Script 2 orchestrator delegates feature
@@ -128687,20 +128797,33 @@ simulated adapter; LIVE_REAL routes to a provider adapter whose <code>submit_ord
 (providers return <code>rejected</code>), with no slippage, no partial close, and no persisted pending queue
 (Section 8.2).</p>
 <h2 id="5-bot-decision-flow">5. Bot Decision Flow</h2>
-<p>Entries (<code>modules/bot-logic/src/rainbow/bot_logic/bot_logic.py</code>, <code>generate_entry_signals</code>) turn the signal
-plus <code>strength</code>/<code>quality</code> into proposals gated by <code>entry_threshold</code>, <code>min_quality_threshold</code>,
-<code>same_direction_cooldown_ticks</code>, <code>signal_flip_threshold</code>, and <code>require_higher_confidence</code>, then sized by the
-risk manager. <code>strength</code> scales take-profit distance, <code>quality</code> tightens the stop, and both influence size.
-These gates are fixed (not an expressible rule engine).</p>
-<p>Exits (<code>generate_exit_orders</code>) are priority-ordered and config-driven, first-match-wins per position:
-stop loss → take profit → signal flip → uncertainty (side confidence below <code>exit_threshold</code>), plus
-risk force-flat (applied in the engine loop) and optional end-of-window liquidation. Stop loss and take
-profit are gated by <code>exit_enabled</code>. A <code>build_close_order</code> factory (<code>helpers/exit_manager.py</code>) composes the
-typed CLOSE order, and <code>orders.py</code> processes any CLOSE order generically (slippage, PnL, persistence) — so
-new exit reasons reuse the entire close path without engine changes.</p>
-<p>The three-class signal has no <code>CLOSE</code>: <code>NONE</code> means "do not open", it does not close a position. "Enter on
-A, exit on B" cannot be expressed as <code>A -&gt; LONG</code>, <code>B -&gt; NONE</code>; the exit must map to a bot mechanism. The bot
-also does not receive raw features at decision time — only the prediction, positions, price, and time.</p>
+<p>The current bot has two decision paths:</p>
+<ul>
+<li><code>generate_exit_orders</code>: position-scoped management. It checks each open position and may emit a <code>CLOSE</code>
+  order. The current fixed priority is stop loss / trailing stop → take profit → signal flip → uncertainty
+  (side confidence below <code>exit_threshold</code>). Risk force-flat is applied in the engine loop after strategy
+  exits, and optional end-of-window liquidation runs after the loop.</li>
+<li><code>generate_entry_signals</code>: portfolio-scoped entry proposal. It turns the model signal plus
+  <code>strength</code>/<code>quality</code> into candidate entries gated by <code>entry_threshold</code>, <code>min_quality_threshold</code>,
+  <code>same_direction_cooldown_ticks</code>, and <code>require_higher_confidence</code>. The risk manager then approves or
+  rejects those proposals and calculates size.</li>
+</ul>
+<p>This split stays valid. The action engine does not delete the current bot. It adds an optional, declarative
+source of action candidates beside the current fixed logic:</p>
+<ul>
+<li>With <code>action_rules.enabled=false</code>, the current bot behavior is unchanged.</li>
+<li>With <code>action_rules.enabled=true</code>, the bot also evaluates configured predicates and maps matches to typed
+  action candidates (<code>CLOSE</code>, <code>REDUCE</code>, <code>ADD</code>, <code>REVERSE</code>, and so on). Entry by market condition stays a
+  Layer-1 model rule (it produces the signal), not a bot action.</li>
+</ul>
+<p>When enabled, rule actions do not bypass the hard safety logic. The deterministic precedence per position is
+<strong><code>STOP_LOSS</code> / <code>TRAILING_STOP</code> → <code>TAKE_PROFIT</code> → <code>RULE_EXIT</code> (rule-driven close) → <code>SIGNAL_FLIP</code> →
+<code>LOW_CONFIDENCE</code></strong>, one exit per position per tick; risk-increasing rule actions (<code>ADD</code> and the open
+leg of <code>REVERSE</code>) still pass through the risk manager. Rules therefore <em>intervene</em> by inserting their
+candidates into this fixed order — never by overriding stops or risk approval.</p>
+<p>The three-class model signal still has no <code>CLOSE</code>: <code>NONE</code> means "do not open", it does not close a
+position. "Enter on A, exit on B" cannot be expressed as <code>A -&gt; LONG</code>, <code>B -&gt; NONE</code>; the exit must map to a
+bot action.</p>
 <h2 id="6-remaining-limitations">6. Remaining Limitations</h2>
 <p>The trailing stop, previously inert, now applies and persists per tick in both backtest (<code>engine_loop.py</code>,
 <code>apply_trailing_stops</code>) and live (<code>runtime_loop</code>), with a <code>TRAILING_STOP</code> exit code. Remaining limitations
@@ -128736,23 +128859,53 @@ position-aware (open positions, unrealized PnL, bars-since-entry, free slots, ex
 at runtime. It is a <strong>universal bot feature</strong>: it consumes the Layer-1 signal of <em>any</em> model — <code>rule_based</code>,
 <code>mlp</code>, <code>tcn</code>, <code>vit</code> — because the bot is shared by all models and does not depend on which model produced
 the signal. No model is modified to gain it.</p>
-<p>Today Layer 2 is a set of fixed gates plus the fixed exit priority (Section 5). The target is to make Layer 2
-an expressible <strong>rule-driven action engine</strong> over the shared DSL, while the existing fixed gates remain the
-default behavior when no rules are configured.</p>
+<p>Today Layer 2 is a set of fixed gates plus fixed exit priority (Section 5). The target is an optional
+<strong>Bot Action Engine</strong> over the shared DSL. It evaluates predicates and emits typed action candidates with
+explicit scope and payload. The existing bot remains the default behavior when no action rules are enabled.</p>
+<p>Canonical runtime flow:</p>
+<ol>
+<li>The loop receives the feature row / candle, the current positions, and the latest portfolio state.</li>
+<li>The model produces the Layer-1 market view (<code>LONG</code> / <code>SHORT</code> / <code>NONE</code>, probabilities, strength, quality).</li>
+<li>The bot builds a rule context from market features, prediction values, market data, and position state.</li>
+<li>The bot evaluates optional action rules and fixed built-in logic, producing action candidates.</li>
+<li>The bot applies deterministic priority and conflict handling.</li>
+<li>The risk manager approves and sizes risk-increasing actions: the model-signal entry (as today) plus the
+   Layer-2 risk-increasing actions (<code>ADD</code> and the open leg of <code>REVERSE</code>).</li>
+<li>The backtest or live runner executes the resulting orders.</li>
+</ol>
 <h3 id="73-the-shared-rule-dsl--rainbowcommonrules">7.3 The shared rule DSL — <code>rainbow.common.rules</code></h3>
 <p>The expression evaluator currently lives inside <code>rule_based.py</code> (model-trainer). It is extracted into a new
-shared subpackage <code>modules/common/src/rainbow/common/rules/</code> so both layers reuse one evaluator without
-violating dependency direction (bot-logic must not import model-trainer):</p>
+shared subpackage <code>modules/common/src/rainbow/common/rules/</code> so both layers reuse one predicate engine
+without violating dependency direction (bot-logic must not import model-trainer).</p>
+<p><code>common.rules</code> is a <strong>predicate engine</strong>, not a signal engine and not an action engine. It owns feature-token
+resolution, safe AST compilation, DSL validation, placeholder binding, and boolean evaluation of an
+expression against a supplied context. Feature-token resolution includes the standard alias matching used by
+all rule consumers: a rule can write a short stable alias such as <code>rsi_14</code>, and the resolver maps it to the
+one concrete feature name in the supplied context (for example <code>rule_raw_BTC_5m_rsi_14</code>) when the match is
+unambiguous. It returns whether an expression holds (a scalar boolean or a batch boolean mask). It does
+<strong>not</strong> know what a match means.</p>
+<p>Layer-specific payloads live with the layer that owns them:</p>
 <ul>
-<li>A rule type (<code>expression: str</code>, an <code>action</code> literal, optional per-rule <code>strength</code>/<code>quality</code>).</li>
-<li>A safe AST compiler (the current allow-list) that compiles an expression once.</li>
-<li>An evaluator that runs a compiled expression against a supplied <strong>variable context</strong> — either a batch of
-  feature tensors (Layer 1, the model) or a single-tick scalar context of features plus position variables
-  (Layer 2, the bot).</li>
-<li>A placeholder binding step (<code>${param}</code>) for Optuna (Section 7.5).</li>
+<li>Layer 1 keeps <code>{expression, signal}</code> rules. <code>common.rules</code> evaluates <code>expression</code>; model-trainer applies
+  priority/default handling and maps the matched <code>signal</code> (<code>LONG</code> / <code>SHORT</code> / <code>NONE</code>) into logits.</li>
+<li>Layer 2 keeps <code>{expression, action, ...}</code> rules. <code>common.rules</code> evaluates <code>expression</code>; bot-logic applies
+  priority/conflict handling and maps the matched action payload into orders or management decisions.</li>
 </ul>
-<p>Model-trainer's <code>rule_based</code> imports the evaluator from <code>common.rules</code> for Layer 1; bot-logic imports it for
-Layer 2. One evaluator, in the foundation layer, shared.</p>
+<p>This keeps rule semantics shared without turning the shared DSL into a strategy, signal, or execution
+module.</p>
+<p>A compiled expression runs against a supplied <strong>variable context</strong> — either a batch context of market
+features (Layer 1, the model) or a single-tick scalar context of market features plus position variables
+(Layer 2, the bot). Both layers import the compiler, resolver, and placeholder binding from <code>common.rules</code>;
+the <strong>scalar</strong> evaluator is also shared from <code>common.rules</code> (bot-logic uses it for Layer 2), while the
+<strong>batch</strong> evaluator is the <code>torch</code> backend owned by <code>model-trainer</code> (Layer 1). One compiler and one
+resolver, in the foundation layer, shared.</p>
+<p><code>common.rules</code> stays <strong><code>torch</code>-free</strong>: it owns feature-token resolution, AST compilation, DSL validation,
+placeholder binding, and the <strong>scalar</strong> evaluator. Layer 1's <strong>batch</strong> backend — which executes a compiled
+expression over a <code>torch.Tensor</code> feature block and returns a boolean mask per predicate — lives in
+<strong><code>model-trainer</code></strong> (the layer that already owns <code>torch</code>), built on the shared <code>CompiledExpression</code> produced
+by <code>common.rules</code>. The rule <em>intelligence</em> (parse / compile / validate / bind) is shared in the foundation
+layer; the tensor execution backend sits with the code that owns the tensor. The model layer still owns
+<code>signal</code> payloads, first-match / default handling, and logits.</p>
 <p><strong>The DSL is expressive — operators live in the DSL, heavy transforms live in features.</strong> The split rule:
 cheap, ad-hoc, short-window logic is a DSL operator; heavy, reused, or long-history logic is a precomputed
 feature that a rule just references.</p>
@@ -128772,68 +128925,77 @@ no ranges), so the <code>rule_based</code> migration (Phase 1, run after the liv
 rather than staying at parity.
 Conditions such as NR7 or inside-bar then need no new feature — they fall out of the DSL
 (<code>true_range{-1} == lowest(true_range{-7:-1})</code>, <code>high{-1} &lt; high{-2} and low{-1} &gt; low{-2}</code>).</p>
-<h3 id="74-action-set-layer-2">7.4 Action set (Layer 2)</h3>
-<p>The action engine evaluates rules (with market + position context) and emits, per position and per free
-slot, one of:</p>
-<table>
-<thead>
-<tr>
-<th>Action</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ENTER_LONG</code> / <code>ENTER_SHORT</code></td>
-<td>open a new position (position-aware: respects book state)</td>
-</tr>
-<tr>
-<td><code>ADD</code></td>
-<td>pyramid into a position moving in favor</td>
-</tr>
-<tr>
-<td><code>REDUCE</code></td>
-<td>scale out a portion (e.g. partial take-profit)</td>
-</tr>
-<tr>
-<td><code>CLOSE</code></td>
-<td>close a position (reuses <code>build_close_order</code>; exit code <code>RULE_EXIT</code>)</td>
-</tr>
-<tr>
-<td><code>REVERSE</code></td>
-<td>close and open the opposite side</td>
-</tr>
-<tr>
-<td><code>MOVE_STOP</code> / <code>MODIFY_TP</code></td>
-<td>edit a position's protective levels (break-even, ratchet)</td>
-</tr>
-<tr>
-<td><code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code></td>
-<td>turn on or adjust the trailing stop</td>
-</tr>
-<tr>
-<td><code>FLAT_AT_TIME</code></td>
-<td>force-flat at a session boundary</td>
-</tr>
-<tr>
-<td><code>HOLD</code></td>
-<td>do nothing</td>
-</tr>
-</tbody>
-</table>
-<p><code>CLOSE</code> is the first action implemented (the parallel close channel); the others extend the same engine
-(Section 11). Entry actions in Layer 2 are position-aware and complement — do not replace — the Layer-1
-market view: Layer 1 says the market is LONG, Layer 2 decides whether and how to act given the book.</p>
+<h3 id="74-action-set-and-payloads-layer-2">7.4 Action set and payloads (Layer 2)</h3>
+<p>Action rules are not "entry rules" or "exit rules" as separate systems. They are predicates plus bot-owned
+action payloads. The predicate answers "does this condition hold?"; the payload answers "what action should
+the bot candidate represent?"</p>
+<p>Actions have explicit scope:</p>
+<ul>
+<li><strong>Position-scoped actions</strong> are evaluated once per open position. <code>target: current_position</code> means the
+  candidate applies to the position currently being evaluated.</li>
+<li><strong>Portfolio-scoped actions</strong> are evaluated once per tick / side. They do not target an existing position.</li>
+<li><strong>Risk-increasing actions</strong> must pass through the risk manager before they become orders.</li>
+</ul>
+<p>Initial action catalog:</p>
+<ul>
+<li><code>CLOSE</code>: position-scoped; requires <code>target: current_position</code>; closes the current position; no risk approval.</li>
+<li><code>REDUCE</code>: position-scoped; requires <code>target</code> plus <code>size_pct</code> or <code>size_policy</code>; pure reduction needs no
+  risk approval.</li>
+<li><code>REVERSE</code>: position-scoped; requires <code>target</code>, <code>new_side</code>, and optional sizing policy; the close leg needs
+  no risk approval, the open leg does.</li>
+<li><code>ADD</code>: position- or side-scoped pyramiding; requires <code>target</code> / <code>side</code> and <code>size_policy</code>; risk-approved.
+  Adding to an open position is position-aware, so it is a bot action; the <em>first</em> entry is a Layer-1 signal.</li>
+<li><code>MOVE_STOP</code> / <code>MODIFY_TP</code>: position-scoped protective-level updates.</li>
+<li><code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code>: position-scoped trailing-stop updates.</li>
+<li><code>FLAT_AT_TIME</code>: portfolio-scoped force-flat at a session boundary.</li>
+<li><code>HOLD</code>: portfolio- or position-scoped no-op.</li>
+</ul>
+<p><strong>Entry by market condition is not a Layer-2 action.</strong> "Enter long when RSI &lt; 30" is a Layer-1 model rule
+(<code>{expression, signal}</code> in <code>rule_based</code>): it produces the <code>LONG</code> / <code>SHORT</code> signal with the model's strength /
+quality / confidence, is cached in the prediction parquet, feeds the thesis and ensemble pipeline, and flows
+through the bot's existing entry gates and risk sizing. Layer-2 actions are only the position-aware
+management the three-class signal cannot express (it has no <code>CLOSE</code>, and it is not position-aware).</p>
+<p>Example shape:</p>
+<pre><code class="language-yaml">action_rules:
+  enabled: true
+  rules:
+    - expression: &quot;position_unrealized_pnl_pct{-1} &lt; -0.02&quot;
+      action: &quot;CLOSE&quot;
+      target: &quot;current_position&quot;
+      desc: &quot;Close current position after rule-defined loss&quot;
+
+    - expression: &quot;position_unrealized_pnl_pct{-1} &gt; 0.04&quot;
+      action: &quot;REDUCE&quot;
+      target: &quot;current_position&quot;
+      size_pct: 0.50
+
+    - expression: &quot;position_side_long{-1} == 1 and position_unrealized_pnl_pct{-1} &gt; 0.03&quot;
+      action: &quot;ADD&quot;
+      side: &quot;LONG&quot;
+      size_policy: &quot;risk_manager&quot;
+
+    - expression: &quot;position_side_long{-1} == 1 and trend_bearish{-1} == 1&quot;
+      action: &quot;REVERSE&quot;
+      target: &quot;current_position&quot;
+      new_side: &quot;SHORT&quot;
+      size_policy: &quot;risk_manager&quot;
+</code></pre>
+<p>The first implementation slice supports only the smallest useful payload: a position-scoped <code>CLOSE</code> action
+against the current position. That proves the rule-driven, position-aware management path while leaving the
+full action payload model for the next slices.</p>
+<p>Layer-2 actions complement the Layer-1 market view: Layer 1 says what the market looks like; Layer 2 decides
+what to do with the book. The model can still provide the default entry candidate source, and action rules
+can optionally add or override action candidates when enabled.</p>
 <p>A regime-switch strategy is expressible <strong>natively</strong> — conditions over the regime feature with <code>and</code>/<code>or</code>
 (e.g. <code>regime_trend_trending{-1}==1 and cross_up(...)</code> for the trend sub-policy, <code>regime_range...</code> for the
 mean-reversion one), no new engine capability; rule grouping would be optional sugar only. Note the
 order-layer cost (Section 8.1): <code>CLOSE</code> reuses the existing generic close path, but <code>ADD</code>, <code>REDUCE</code>,
 <code>REVERSE</code>, <code>MOVE_STOP</code>, and <code>MODIFY_TP</code> require new order actions and are scheduled in Phase 4.</p>
 <h3 id="75-parametric-rules--optuna-over-strategy-parameters">7.5 Parametric rules + Optuna over strategy parameters</h3>
-<p>A rule may carry tunable placeholders, e.g. <code>rsi_14{-1} &lt; ${rsi_buy}</code>. A strategy declares a search space
-over its placeholders reusing the existing Optuna param kinds (<code>Float</code>/<code>Int</code>/<code>Ranges</code>/<code>Categorical</code>/log).
-Each trial binds the placeholders, builds the concrete rules, runs the backtest, and is scored by
-<code>alpha_rc</code>/net.</p>
+<p>A rule predicate may carry tunable placeholders, e.g. <code>rsi_14{-1} &lt; ${rsi_buy}</code>. A strategy declares a
+search space over its placeholders reusing the existing Optuna param kinds
+(<code>Float</code>/<code>Int</code>/<code>Ranges</code>/<code>Categorical</code>/log). Each trial binds the placeholders, builds the concrete
+predicates plus their layer payloads, runs the backtest, and is scored by <code>alpha_rc</code>/net.</p>
 <p>There are <strong>two optimizers, one per layer</strong>, because the layers live in different places and have different
 cost profiles. The native Optuna inside <code>model-trainer</code> today samples only the model and its training
 (learning rate, batch size, weight decay, loss, architecture, feature selection); it does <strong>not</strong> touch the
@@ -128854,17 +129016,17 @@ over cached predictions. Strategy optimization maps onto these two homes:</p>
 <tbody>
 <tr>
 <td>Layer 1 (view / signal)</td>
-<td>entry-rule thresholds (change the signal)</td>
+<td>entry-predicate thresholds and payload choices that change the signal</td>
 <td>extension of the native <code>model-trainer</code> Optuna — make it sample the rule placeholders for <code>rule_based</code> and regenerate the signal per trial (no training)</td>
 <td>regenerates the signal each trial; no training</td>
-<td>not built — the native Optuna does not sample rule params yet</td>
+<td>core support built — native <code>rule_based</code> hyperparameter resolution samples/binds rule params; signal-regeneration harness remains</td>
 </tr>
 <tr>
 <td>Layer 2 (actions / bot)</td>
-<td>action-rule params + stops/TP/sizing (do not change the signal)</td>
+<td>action-predicate params + stops/TP/sizing (do not change the signal)</td>
 <td>the bot-config optimizer (script) over cached predictions</td>
 <td>re-backtest only, fast</td>
-<td>exists</td>
+<td>core support built — action-rule params/config cloning are available; optimizer script/harness wiring remains</td>
 </tr>
 </tbody>
 </table>
@@ -128875,38 +129037,68 @@ home and reuses the shared param kinds and <code>suggest_*</code> machinery; nei
 window, before any parameter set is believed. (The first profitable Jun-19 result is in-sample and unproven
 until validated out-of-fold.)</p>
 <h3 id="76-a-strategy-as-one-object">7.6 A strategy as one object</h3>
-<p>A strategy is defined in one place as <code>{entry_rules (Layer 1), action_rules (Layer 2), param_space}</code>, all in
-the same DSL. At experiment generation it is deployed to its technical homes: entry rules to the model
-hyperparameters, action rules to <code>bot_config</code>. The single definition gives coherence; the split homes
-respect the cacheable-signal vs runtime-position-aware nature of each layer.</p>
+<p>A strategy is defined in one place as <code>{entry_rules (Layer 1), action_rules (Layer 2), param_space}</code>.
+<code>entry_rules</code> are <code>{expression, signal}</code> payload wrappers around shared predicates; <code>action_rules</code> are
+<code>{expression, action, ...}</code> payload wrappers around shared predicates. At experiment generation they are
+deployed to their technical homes: entry rules to the model hyperparameters, action rules to <code>bot_config</code>.
+The single definition gives coherence; the split homes respect the cacheable-signal vs
+runtime-position-aware nature of each layer.</p>
+<p>This single-strategy object is an <strong>authoring / deployment</strong> construct, not part of the core engine. The
+type <strong>already exists</strong> — <code>RuleStrategyConfig</code> in
+<code>modules/common/src/rainbow/common/types/configs/experiments/rule_strategy_config.py</code>, exported from
+<code>rainbow.common.types.configs</code> — and validates the strategy-level parameter space and placeholder coverage
+(at least one entry or action rule; identifier-valid placeholder names; every placeholder backed by a
+parameter in <code>param_space</code> or <code>action_rules.parameters</code>) without owning model signals or bot actions.
+<strong>Do not delete or recreate it.</strong> It is <strong>Phase-3</strong> scope: the core engine (Phase 1–2: the shared DSL,
+<code>rule_based</code>, and the optional action engine in backtest / LIVE_SIM) does not depend on it, and nothing
+consumes it yet. Phase 3 only needs to <strong>wire</strong> it — the generation step that splits one strategy into model
+hyperparameters (Layer 1) and <code>bot_config</code> action rules (Layer 2), plus the optimizer that searches its
+<code>param_space</code>.</p>
 <h2 id="8-impact-analysis">8. Impact Analysis</h2>
 <h3 id="81-backtest-decision-and-close-paths">8.1 Backtest decision and close paths</h3>
 <p>Per tick, <code>process_tick</code> (<code>engine_loop.py</code>) runs: execute pending orders → resolve prediction →
-<code>apply_trailing_stops</code> → <code>generate_exit_orders</code> → risk force-flat → <code>generate_entry_signals</code> → queue orders;
-end-of-run liquidation runs after the loop. Existing exit codes (<code>common/types/trade_meta.py</code>): <code>STOP_LOSS</code>,
-<code>TAKE_PROFIT</code>, <code>TRAILING_STOP</code>, <code>SIGNAL_FLIP</code>, <code>LOW_CONFIDENCE</code>, <code>MANUAL</code>. The action engine plugs into
-<code>generate_exit_orders</code> (for <code>CLOSE</code>/<code>REDUCE</code>/<code>REVERSE</code>) and <code>generate_entry_signals</code> (for
-<code>ENTER</code>/<code>ADD</code>), reusing <code>build_close_order</code> and the generic CLOSE path in <code>orders.py</code>. A new <code>RULE_EXIT</code>
-exit code is added. <code>CLOSE</code> needs no <code>orders.py</code> change (the generic close path handles it); <code>ADD</code>, <code>REDUCE</code>,
-<code>REVERSE</code>, <code>MOVE_STOP</code>, and <code>MODIFY_TP</code> need <strong>new order actions</strong> in <code>orders.py</code> (today only <code>OPEN</code>/<code>CLOSE</code>)
-and in the live execution adapters — real work scheduled in Phase 4, beyond just passing features
-(Section 8.3).</p>
+<code>apply_trailing_stops</code> → position-scoped exits / management → risk force-flat → portfolio-scoped entries →
+risk approval → queue orders; end-of-run liquidation runs after the loop.</p>
+<p>Existing exit codes (<code>common/types/trade_meta.py</code>): <code>STOP_LOSS</code>, <code>TAKE_PROFIT</code>, <code>TRAILING_STOP</code>,
+<code>SIGNAL_FLIP</code>, <code>LOW_CONFIDENCE</code>, <code>MANUAL</code>. The action engine first plugs into the existing
+position-scoped close path because <code>CLOSE</code> already has complete execution support: <code>build_close_order</code>
+composes the typed order, and <code>orders.py</code> processes any <code>CLOSE</code> generically (slippage, PnL, persistence).
+The first action-rule close reason uses the <code>RULE_EXIT</code> exit code.</p>
+<p>General actions need more infrastructure:</p>
+<ul>
+<li><code>CLOSE</code> needs no new <code>orders.py</code> action.</li>
+<li><code>REDUCE</code> can be implemented either as a partial close order or as a dedicated order action, depending on
+  the final execution contract.</li>
+<li><code>ADD</code> becomes a risk-approved <code>OPEN</code> order; model-signal entries already use the existing <code>OPEN</code> path.</li>
+<li><code>REVERSE</code> is a compound candidate: close leg first, risk-approved open leg second.</li>
+<li><code>MOVE_STOP</code> / <code>MODIFY_TP</code> need order/update paths for protective-level changes.</li>
+</ul>
+<p>Those broader order contracts are scheduled after the initial close slice.</p>
+<p><strong>Execution per mode.</strong> In <strong>backtest</strong> and <strong>LIVE_SIM</strong> every action above executes through the same order
+paths — <code>CLOSE</code> today (generic close: slippage, PnL, persistence), and <code>REDUCE</code> / <code>ADD</code> /
+<code>REVERSE</code> / <code>MOVE_STOP</code> / <code>MODIFY_TP</code> once Phase 4 adds their order actions — so both modes stay the bar and
+must be perfect (costs, slippage, partial fills, sizing, metrics). In <strong>LIVE_REAL</strong> the same candidates are
+produced and routed to the provider adapter, but they are <strong>not executed</strong>: <code>submit_order</code> is not
+implemented (Section 8.2). Wiring stops at that boundary on purpose.</p>
 <h3 id="82-live-sim--real">8.2 Live (sim + real)</h3>
 <p>Live reuses the same <code>generate_exit_orders</code> / <code>generate_entry_signals</code>, so the action engine is inherited by
-both live modes once the bot decision code carries it. LIVE_SIM fills via the simulated adapter (queued with
-latency, seeded slippage) — works. LIVE_REAL has known gaps, recorded so they are not a surprise:
-<code>submit_order</code> is not implemented (providers return <code>rejected</code>), no slippage is applied, partial close is
-rejected, and the pending queue is not persisted across restart. The action engine therefore runs correctly
-in backtest and LIVE_SIM; in LIVE_REAL it inherits these gaps. This is not a blocker because strategies are
-validated on folds first; LIVE_REAL execution and reconciliation are a separate prerequisite for going live.</p>
+both live modes once the bot decision code carries it. <strong>LIVE_SIM is in scope and must be perfect:</strong> it
+fills via the simulated adapter (queued with latency, seeded slippage), so the action engine runs there at
+the same realism bar as the backtest. <strong>LIVE_REAL is out of scope to complete now</strong> — there is no exchange
+API / execution contract yet: <code>submit_order</code> is not implemented (providers return <code>rejected</code>), no slippage
+is applied, partial close is rejected, and the pending queue is not persisted across restart. The decision
+path is wired up to the provider-adapter boundary and <strong>left there</strong>; these gaps are recorded, not closed.
+This is deliberate, not a blocker: strategies are validated on folds in backtest / LIVE_SIM first, and
+LIVE_REAL execution, reconciliation, and the provider contracts are a separate, later prerequisite for going
+live (see "Scope and priorities").</p>
 <h3 id="83-modelbot-contract-and-feature-passing">8.3 Model→bot contract and feature passing</h3>
 <p>Layer 1's contract (<code>{logits, strength, quality}</code> and derived <code>prob_*</code>/<code>combined_confidence</code>) is unchanged —
 no <code>close_signal</code> is added to the model, so the prediction parquet, ensemble merge, and frontend types are
-untouched. Layer 2 needs the <strong>raw features of the tick</strong> and the <strong>position variables</strong>. The bot does not
-receive features today, so <code>generate_exit_orders</code> and <code>generate_entry_signals</code> gain a typed feature-context
-parameter, supplied by the engine loop (backtest) and the runtime loop (live) — both already hold the
-feature row. Position variables (<code>bars_since_entry</code>, <code>unrealized_pnl_pct</code>, <code>entry_price</code>) are derived from
-the open position the bot already has.</p>
+untouched. Layer 2 needs the <strong>raw features of the tick</strong> and the <strong>position variables</strong>. The bot receives a
+typed feature context from the engine loop (backtest) and runtime loop (live); both already hold the feature
+row. Position-scoped candidates derive variables such as <code>bars_since_entry</code>, <code>unrealized_pnl_pct</code>, and
+<code>entry_price</code> from the current open position. Portfolio-scoped candidates derive variables such as free
+slots, current exposure, and side counts from the current book.</p>
 <h3 id="84-resume--pause-state">8.4 Resume / pause state</h3>
 <p><code>CLOSE</code>/exit rules are stateless and need no new persisted state. Stateful actions (e.g. a per-position
 pyramid counter, or a "scaled out once" flag) must be persisted in the runtime state
@@ -128923,23 +129115,23 @@ rule state explicit and serialized when an action requires it.</p>
 <tbody>
 <tr>
 <td><code>common/rules/</code> (new subpackage)</td>
-<td>shared DSL: rule type, AST compiler, evaluator, placeholder binding</td>
+<td>shared, <strong><code>torch</code>-free</strong> predicate DSL: feature resolution, AST compiler, validator, placeholder binding, scalar evaluator</td>
 </tr>
 <tr>
 <td><code>common/types/trade_meta.py</code></td>
 <td>add <code>RULE_EXIT</code> exit code</td>
 </tr>
 <tr>
-<td><code>common/types/configs/experiments/bot_config.py</code> + <code>config/experiments/bot.yaml</code></td>
-<td>Layer-2 action-rules config (follows the <code>StopLossConfig.exit_enabled</code> pattern)</td>
+<td>bot config models + <code>config/experiments/bot.yaml</code></td>
+<td><strong>optional</strong> Layer-2 action-rules config (nullable, like other optional bot sub-configs); absent → current fixed-gate behavior</td>
 </tr>
 <tr>
-<td><code>bot-logic/helpers/</code> (new evaluator-driven action helper) + <code>bot_logic.py</code></td>
-<td>evaluate action rules; plug into entry/exit generation; new feature-context param</td>
+<td><code>bot-logic/helpers/</code> + <code>bot_logic.py</code></td>
+<td>evaluate and arbitrate action rules (compile once, reuse per tick)</td>
 </tr>
 <tr>
-<td><code>model-trainer/models/rule_based.py</code></td>
-<td>import the evaluator from <code>common.rules</code> (no behavior change)</td>
+<td><code>model-trainer/models/rule_based.py</code> (+ batch backend)</td>
+<td>import the compiler / scalar evaluator from <code>common.rules</code>; host the <code>torch</code> batch evaluator over the shared compiled expression (no signal-behavior change)</td>
 </tr>
 <tr>
 <td><code>backtesting-engine/.../engine_loop.py</code>, <code>live-trading-runner/.../runtime_loop.py</code></td>
@@ -128980,15 +129172,16 @@ rule state explicit and serialized when an action requires it.</p>
 <h2 id="9-code-quality-contract">9. Code Quality Contract</h2>
 <p>Every change in this line meets the project standard; messy-but-working is not acceptable.</p>
 <ul>
-<li><strong>Typed objects, not dicts.</strong> Rules, contexts, and results are Pydantic models / frozen dataclasses passed
-  whole; flatten to columns only at the persistence boundary. Variable names follow the type
-  (<code>action_rule</code>, not <code>rule</code>).</li>
+<li><strong>Typed objects, not dicts.</strong> Predicates, layer rule payloads, contexts, and results are Pydantic models /
+  frozen dataclasses passed whole; flatten to columns only at the persistence boundary. Variable names
+  follow the type (<code>action_rule</code>, not <code>rule</code>).</li>
 <li><strong>Placement by responsibility.</strong> Shared DSL in <code>rainbow.common.rules</code> (foundation layer); action helpers
   with the other bot-logic helpers; the exit code with the other exit codes; config sub-models with the
   other bot config. Dependency direction respected: bot-logic imports <code>common</code>, never <code>model_trainer</code>.</li>
 <li><strong>Reuse, do not duplicate.</strong> Reuse <code>build_close_order</code>/<code>build_exit_meta_from_bot</code>/<code>build_exit_reason</code>, the
   CLOSE path in <code>orders.py</code>, the Optuna <code>suggest_value</code>/<code>suggest_override</code>, the existing config-loading and
-  param kinds. Extract the DSL once and share it; never copy the evaluator.</li>
+  param kinds. Extract the predicate DSL once and share it; never copy the expression evaluator into
+  model-trainer or bot-logic.</li>
 <li><strong>No suppression, no legacy, no patches.</strong> Fix root causes; no <code>type: ignore</code>/<code>noqa</code>/<code>pylint: disable</code>; no
   <code>_old</code>/compatibility shims; remove what a change replaces.</li>
 <li><strong>Docs and comments as code.</strong> Full docstrings (params, returns, examples); comments explain the
@@ -129002,10 +129195,11 @@ rule state explicit and serialized when an action requires it.</p>
 <strong>negative</strong> cases, following the existing per-module test layout and the linting-gate test that runs the
 quality gates over <code>src</code> and <code>tests</code>.</p>
 <ul>
-<li><strong>DSL (<code>common.rules</code>)</strong>: parse/compile valid expressions (positive); chained comparisons, negative
-  timesteps, placeholder binding (edge); rejected AST nodes, unknown/ambiguous feature, out-of-range
-  timestep, malformed placeholder (negative). Evaluate against both a batch context and a single-tick
-  position-aware context.</li>
+<li><strong>DSL (<code>common.rules</code>)</strong>: parse/compile valid predicate expressions (positive); chained comparisons,
+  negative timesteps, placeholder binding (edge); rejected AST nodes, unknown/ambiguous feature,
+  out-of-range timestep, malformed placeholder (negative). Evaluate predicates against both a batch context
+  and a single-tick position-aware context. Tests assert that <code>common.rules</code> returns booleans / boolean
+  masks only; Layer-1 signals and Layer-2 actions are asserted in their owning modules.</li>
 <li><strong>Action engine (bot-logic)</strong>: each action fires when its rule matches (positive); first-match/priority
   interaction with the fixed exits, exact-threshold boundaries, position-variable values at entry/edge
   (edge); no duplicate close of the same position, no entry while force-closing, action with no matching rule
@@ -129024,65 +129218,142 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
 <h2 id="11-incremental-implementation-roadmap">11. Incremental Implementation Roadmap</h2>
 <p>Build the abstraction once; deliver in slices so each slice is shippable and validated.</p>
 <ol>
-<li><strong>Phase 1 — Shared DSL.</strong> Extract the evaluator into <code>rainbow.common.rules</code> (rule type + AST compiler +
-   context evaluator + placeholder binding). Migrate <code>rule_based</code> to import it (no behavior change) — the
-   migration runs after the live ensemble to avoid disturbing it. Tests + gates.</li>
-<li><strong>Phase 2 — Parallel close channel.</strong> Layer-2 <code>CLOSE</code> action: config sub-model, action helper, plug into
-   <code>generate_exit_orders</code>, <code>RULE_EXIT</code> code, feature-context passing through engine/runtime loops,
-   position-aware variables. Tests across backtest + live sim. This is the first instance of the action
-   engine.</li>
+<li><strong>Phase 1 — Shared DSL.</strong> Extract the predicate evaluator into <code>rainbow.common.rules</code> (feature resolver +
+   AST compiler + context evaluator + placeholder binding). Migrate <code>rule_based</code> so model-trainer keeps
+   <code>{expression, signal}</code> payload handling but imports predicate compilation/evaluation from <code>common.rules</code>.
+   Tests + gates.</li>
+<li><strong>Phase 2 — Bot Action Engine foundation and first close slice.</strong> Introduce optional action-rule config,
+   feature-context passing, position-aware variables, and the first typed action candidate: position-scoped
+   <code>CLOSE</code> against <code>current_position</code>. Existing hard exits keep first priority (<code>STOP_LOSS</code> /
+   <code>TRAILING_STOP</code>, then <code>TAKE_PROFIT</code>); the first rule-driven close emits <code>RULE_EXIT</code>; model-derived
+   <code>SIGNAL_FLIP</code> and <code>LOW_CONFIDENCE</code> remain after it. With <code>action_rules.enabled=false</code>, the current bot
+   behavior is unchanged. Tests across backtest + live sim.</li>
 <li><strong>Phase 3 — Optuna over strategy params.</strong> Parametric placeholders + search space; Layer-2 optimization
    over cached predictions (reuse bot-config optimizer); Layer-1 signal-regeneration loop; in-fold/out-of-fold
    validation harness.</li>
-<li><strong>Phase 4 — Position-aware entries and management.</strong> <code>ENTER</code>/<code>ADD</code>/<code>REDUCE</code>/<code>REVERSE</code> actions as
-   extensions of the same engine; stateful-action persistence.</li>
+<li><strong>Phase 4 — General action candidates and order contracts (decided design).</strong> Extend the optional action
+   engine with <code>ADD</code>, <code>REDUCE</code>, <code>REVERSE</code>, <code>MOVE_STOP</code>, <code>MODIFY_TP</code>, <code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code>,
+   <code>FLAT_AT_TIME</code>, <code>HOLD</code> — the maximum-flexibility design, with the core refactor accepted. Chosen after an
+   adversarially-reviewed options study.</li>
+<li><strong>Architecture: candidate + arbiter, two channels.</strong> Each tick the bot collects typed action
+     <em>candidates</em> (from the fixed exits, risk force-flat, and the rule actions); a single <strong>arbiter</strong> resolves
+     conflicts and emits the final actions, replacing today's "one exit per position, first-match-wins"
+     control flow — the documented exit precedence and the no-rules early-return are preserved exactly. Two
+     channels: <strong>fill orders</strong> (<code>OPEN</code> / <code>CLOSE</code> / <code>REDUCE</code>) that move money, and a separate typed
+     <strong><code>PositionModification</code></strong> message for state-only protective changes (<code>MOVE_STOP</code> / <code>MODIFY_TP</code> / trailing)
+     that by construction cannot touch PnL / equity / metrics. The arbiter allows several actions on one
+     position in one tick (e.g. scale out <strong>and</strong> tighten the stop on the same bar).</li>
+<li><strong>Execution contracts.</strong> <code>REDUCE</code> = <em>split-on-reduce</em>: close a child <code>Trade</code> row for the reduced size and
+     shrink the surviving row in place — the only representation that keeps PnL / fees correct against the
+     three row-counting metric layers; it must hold <code>Σ entry_commission == original</code> and <code>Σ size == original</code>,
+     carry a distinct child exit code, and suppress the child's position-time-exposure interval. <code>ADD</code> = a
+     risk-approved <code>OPEN</code> reusing the existing pyramid sizing (a new decayed row). <code>REVERSE</code> = ordered legs
+     <code>[CLOSE, OPEN]</code> (the open leg fills next tick). Protective updates persist <code>stop_loss</code> / <code>take_profit</code> /
+     trailing deltas through a service write.</li>
+<li><strong>Mandatory safety / correctness.</strong> Protective updates are <strong>provider-gated in LIVE_REAL</strong> (routed through
+     the provider request, which returns rejected; persisted only on accept); today's trailing-stop write is
+     brought under the same gate (it is a pre-existing direct live-real write). <code>REDUCE</code> is implemented in all
+     three execution paths (backtest, live-sim, and the live-real partial-close guard preserved). In-flight
+     queued orders survive pause / resume (or the multi-leg actions are made resume-atomic) before <code>REVERSE</code>
+     ships. <code>MODIFY_TP</code> / trailing updates get a persistence path covering <code>take_profit</code> and the trailing-delta
+     columns. The <code>ActionRuleConfig.action</code> literal is widened in both its definition sites.</li>
+<li><strong>Resolved details.</strong> <code>ADD</code>-vs-<code>max_concurrent_positions</code> is a config flag (consume a slot or extend);
+     <code>REVERSE</code> sizes the open leg off post-close equity; the <code>REDUCE</code> child carries zero entry-commission; an
+     action-moved stop uses a distinct exit code (<code>RULE_STOP_MOVE</code>). Deferred until a strategy needs it: a full
+     cross-source conflict model beyond one-fill-plus-one-protective per position per tick.</li>
+<li><strong>Build order</strong> (each a complete vertical slice: config → candidate → order / modify contract → risk →
+     tests → gates → QA): foundation (candidate collection + arbiter + <code>PositionModification</code> channel) →
+     <code>HOLD</code> → <code>FLAT_AT_TIME</code> → <code>ADD</code> → <code>REDUCE</code> → protective (gated) → <code>REVERSE</code> (after queue-resume).</li>
 <li><strong>Phase 5 — Feature layer + catalog.</strong> Expose far more of the existing feature/signal system to rule
    experiments (today <code>rule_raw</code> is the bottleneck: 5 raw indicators, single timeframe) across timeframes,
    periods, context symbols, and raw OHLCV. <strong>Add the classic indicators still missing from the
    16-indicator catalog</strong> — Williams %R, CCI, MFI, PPO, TRIX, Keltner, SuperTrend, Aroon, Ichimoku,
    Parabolic SAR, Choppiness, plus swing/structure features (fractals, pivots) — each a self-contained
    <code>data-processing/.../indicator/&lt;name&gt;.py</code> on the existing <code>process_&lt;name&gt;</code> mold (the polars-ta library
-   covers most), wired into <code>IndicatorType</code>, the dispatch, the MEGA generator, and tests. This wave also
-   adds a <strong><code>REGIME</code> / <code>MARKET_STATE</code> indicator</strong>: the detector's <code>compute_indicators</code> + <code>classify_regime</code>
-   logic is <strong>moved into <code>data-processing</code></strong> as a composite indicator emitting the three regime axes as
-   binary features (trend / volatility / direction → the 27/9/3 taxonomies by combination). It is used at
-   whatever timeframe is set in the experiment config (e.g. 1d), exactly like any other indicator — the
-   existing multi-timeframe handling makes a higher-timeframe feature usable at the base timeframe, so there
-   is no new alignment work. The offline regime scripts under <code>scripts/analysis/regime/</code>
-   then <strong>import that one shared implementation</strong> instead of keeping their own copy — a single source of
-   truth for the regime definition. Its full column set (continuous components, discrete one-hot state flags,
-   a categorical state code, and persistence / transition columns) plus a companion <code>HALVING</code> indicator are
-   specified in
+   covers most), wired into <code>IndicatorType</code>, the dispatch, the MEGA generator, and tests. The
+   <strong><code>MARKET_STATE</code> and <code>HALVING</code> indicators this wave depended on are already built</strong> (across common / core
+   / data-processing, with the MEGA generator wired): <code>MARKET_STATE</code> consumes pre-computed indicator columns
+   and emits its full regime column set (continuous components, discrete one-hot state flags, a categorical
+   state code, and persistence / transition columns); <code>classify_regime_codes</code> is the one shared regime
+   classifier, and the offline regime scripts under <code>scripts/analysis/regime/</code> import it instead of keeping
+   their own copy (a single source of truth). Both are used at whatever timeframe the experiment config sets,
+   exactly like any other indicator — existing multi-timeframe handling makes a higher-timeframe feature
+   usable at the base timeframe, so there is no new alignment work. Column set and build are specified in
    <a href="../20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN/"><code>20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN.md</code></a>.
-   Then a Phase-0
+   The remaining Phase-5 work is therefore the rest of the catalog and the <code>rule_raw</code> expansion, not the
+   regime indicators. Then a Phase-0
    control battery and the vetted battalion on folds → chronological holdout → multi-year (the multi-year
    step needs the data refresh + de-hardcoded folds noted in the master roadmap).</li>
 </ol>
 <h2 id="12-decisions-and-open-questions">12. Decisions and Open Questions</h2>
 <p>Decisions taken:</p>
 <ul>
-<li>CLOSE and all Layer-2 actions live in the bot, not in the model; the Layer-1 training contract is not
-  touched.</li>
+<li>All Layer-2 actions live in the bot, not in the model; the Layer-1 training contract is not touched.</li>
+<li>Bot action rules are optional. With <code>action_rules.enabled=false</code>, the existing bot flow remains the
+  default behavior.</li>
+<li>Layer-2 action rules are predicates plus bot-owned payloads. <code>common.rules</code> evaluates the predicate;
+  bot-logic owns action scope, target, payload validation, priority, and order mapping.</li>
+<li>Position-scoped actions (<code>CLOSE</code>, <code>REDUCE</code>, the close leg of <code>REVERSE</code>) are evaluated per open position
+  and target the current position unless a later payload model specifies otherwise.</li>
+<li>Portfolio-scoped actions (<code>FLAT_AT_TIME</code>, <code>HOLD</code>) are evaluated once per tick / side.</li>
+<li>Entry by market condition is a <strong>Layer-1 model rule</strong> (<code>{expression, signal}</code> in <code>rule_based</code>) that produces
+  the cached signal — <strong>not</strong> a Layer-2 bot action. Layer-2 actions are only the position-aware management the
+  three-class signal cannot express.</li>
+<li>Risk-increasing actions (<code>ADD</code> and the open leg of <code>REVERSE</code>), plus the model-signal entry, pass through the
+  risk manager.</li>
 <li>The DSL is extracted to a new <code>rainbow.common.rules</code> subpackage and shared by both layers.</li>
+<li><code>common.rules</code> is a predicate engine only: it evaluates expressions to booleans / boolean masks and does
+  not know Layer-1 signals or Layer-2 actions.</li>
 <li>Layer 2 is a universal bot feature available to any model, not specific to <code>rule_based</code>.</li>
 <li>Position-awareness is in scope from the start.</li>
 <li>Optuna optimizes both layers; overfitting is controlled by in-fold tune / out-of-fold validation.</li>
 <li>The DSL is expressive (range selectors + window aggregates + scalar and event functions); heavy or reused
   transforms stay in the feature/signal layer.</li>
+<li>Phase 2 priority is deterministic: hard exits (<code>STOP_LOSS</code> / <code>TRAILING_STOP</code>) win first, then
+  <code>TAKE_PROFIT</code>, then the first rule-driven position close (<code>RULE_EXIT</code>), then model-derived
+  <code>SIGNAL_FLIP</code>, then <code>LOW_CONFIDENCE</code>.</li>
+<li>Phase 2 exposes raw FAT-window market features plus synthetic scalar windows for current market,
+  prediction, and position state. The first slice includes <code>market_current_price</code>, <code>market_atr</code>,
+  <code>prediction_confidence</code>, <code>prediction_strength</code>, <code>prediction_quality</code>, <code>prediction_combined_confidence</code>,
+  <code>prediction_prob_long</code>, <code>prediction_prob_short</code>, <code>position_entry_price</code>, <code>position_size</code>,
+  <code>position_unrealized_pnl</code>, <code>position_unrealized_pnl_pct</code>, <code>position_bars_since_entry</code>,
+  <code>position_side_long</code>, and <code>position_side_short</code>.</li>
 <li>Track A adds the classic indicators missing from the catalog (Williams %R, CCI, MFI, PPO, TRIX, Keltner,
   SuperTrend, Aroon, Ichimoku, Parabolic SAR, Choppiness, fractals, pivots) on the existing indicator mold.</li>
-<li>Regime is exposed as a <code>REGIME</code> / <code>MARKET_STATE</code> indicator: the detector's <code>classify_regime</code> is moved into
-  <code>data-processing</code> (the three axes as binary features, used at a configurable timeframe like any indicator),
-  and the offline regime scripts reuse that one implementation. Regime-switch is expressed with conditions
-  over these features, not a grouping capability.</li>
+<li>Regime is exposed as the <strong>already-built <code>MARKET_STATE</code> indicator</strong> (companion <code>HALVING</code>): it consumes
+  pre-computed indicator columns in <code>data-processing</code> and emits its full regime column set;
+  <code>classify_regime_codes</code> is the one shared classifier and the offline regime scripts import it (single
+  source of truth). It is used at a configurable timeframe like any indicator. Regime-switch is expressed
+  with conditions over these features, not a grouping capability.</li>
+<li>The <code>torch</code> batch evaluator and its dependency live in <code>model-trainer</code>; <code>common.rules</code> stays <code>torch</code>-free
+  (resolver + compiler + validator + binding + scalar evaluator). Both layers share the compiler and
+  resolver from the foundation layer.</li>
+<li>The Layer-2 action-rules config is <strong>optional / nullable</strong>, like the other optional bot sub-configs — no
+  <code>Field</code> defaults; an absent block means the current fixed-gate behavior. Model rule-parameter blocks are
+  likewise optional and sourced from YAML.</li>
+<li>The single-strategy object (<code>RuleStrategyConfig</code>) <strong>already exists</strong> (in <code>rainbow.common.types.configs</code>,
+  file <code>rule_strategy_config.py</code>, exported) and is a <strong>Phase-3 deployment construct</strong>, not part of the
+  Phase 1–2 core. <strong>Keep it — do not delete or recreate it;</strong> Phase 3 only wires it to its consumers
+  (the experiment generator + the strategy-param optimizer).</li>
+<li>The Phase-4 action engine is the <strong>maximum-flexibility design</strong> (decided after an adversarially-reviewed
+  options study): a candidate + arbiter with two channels (fill orders plus a typed <code>PositionModification</code>
+  for state-only protective updates), allowing several actions on one position per tick; the arbiter replaces
+  the first-match exit chain while preserving the documented exit precedence and the no-rules early-return.
+  <code>REDUCE</code> = split-on-reduce, <code>ADD</code> = pyramid <code>OPEN</code>, <code>REVERSE</code> = ordered legs; protective updates are
+  provider-gated in LIVE_REAL (and today's trailing-stop write is brought under that gate). The core refactor
+  is accepted. Full detail in the Roadmap Phase-4 entry.</li>
 </ul>
 <p>Open questions:</p>
 <ul>
-<li>Action priority/conflict resolution between the rule engine and the existing fixed exits (which wins when
-  both fire).</li>
-<li>Exact set of position variables and feature context exposed to Layer-2 rules in the first slice.</li>
 <li>Whether Layer-1 and Layer-2 parameters are optimized jointly or in stages.</li>
 <li>Per-symbol battalions vs contextual multi-symbol; lab folder name for the catalog.</li>
+</ul>
+<p>Pending follow-ups:</p>
+<ul>
+<li>Script 2 generator / preflight is a boundary-validation follow-up, not Layer-1 core work. It may call
+  <code>common.rules</code> to compile rule expressions against generated feature names, but it must not own DSL
+  parsing, alias resolution, rule semantics, Layer-1 signals, or Layer-2 actions. Address it only when
+  generator / preflight work is the active plan item.</li>
 </ul>
 <h2 id="13-key-files">13. Key Files</h2>
 <ul>
@@ -129103,8 +129374,8 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
 <li>Optuna search-space machinery: <code>scripts/thesis/script_2_thesis/bot_config_optimizer/config_space.py</code></li>
 </ul>
 <h2 id="14-parallel-research-the-strategy-catalog">14. Parallel research: the strategy catalog</h2>
-<p>Which strategies to implement is a separate research effort that defines the rules and actions to express; it
-does not change the engine architecture above. A 50-strategy seed catalog exists
+<p>Which strategies to implement is a separate research effort that defines the predicate/payload wrappers to
+express; it does not change the engine architecture above. A 50-strategy seed catalog exists
 (<code>docs/_researchs/_RULE_BASED/</code>), grouped by family and weighted by evidence: trend-following / breakout /
 time-series momentum are the strongest, trend-filtered pullback and intermarket confirmation next, and
 mean-reversion is useful but cost-fragile. Each strategy references one of eight reusable <strong>bot profiles</strong>
@@ -129119,8 +129390,10 @@ Regime-switch hybrids are expressible <strong>natively</strong> (conditions over
 and session/VWAP strategies need session features plus <code>FLAT_AT_TIME</code>; both are achievable, not deferred by
 structure.</p>
 <p>Each strategy becomes one experiment, recorded in an <strong>experiment ledger</strong> with: strategy family, base-logic
-id, parameter variant, feature profile, symbol-context profile, execution profile, and source hypothesis — so
-robustness scoring (with deflated-Sharpe / PBO multiple-testing control) sees the whole tested family, not
+id, parameter variant, feature profile, symbol-context profile, execution profile, and source hypothesis. A
+strategy can use many predicates with different layer payloads (for example several entry predicates that
+map to <code>LONG</code> or <code>SHORT</code>, plus a <code>default_signal</code>, and separate bot predicates that map to action payloads).
+Robustness scoring (with deflated-Sharpe / PBO multiple-testing control) sees the whole tested family, not
 just the winners.</p>
 
 
