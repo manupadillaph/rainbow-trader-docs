@@ -128813,8 +128813,10 @@ source of action candidates beside the current fixed logic:</p>
 <ul>
 <li>With <code>action_rules.enabled=false</code>, the current bot behavior is unchanged.</li>
 <li>With <code>action_rules.enabled=true</code>, the bot also evaluates configured predicates and maps matches to typed
-  action candidates (<code>CLOSE</code>, <code>REDUCE</code>, <code>ADD</code>, <code>REVERSE</code>, and so on). Entry by market condition stays a
-  Layer-1 model rule (it produces the signal), not a bot action.</li>
+  action candidates (<code>CLOSE</code>, <code>REDUCE</code>, <code>ADD</code>, <code>REVERSE</code>, <code>ENTER_LONG</code> / <code>ENTER_SHORT</code>, and so on).
+  Market-view entries stay Layer-1 model rules (they produce the cached signal); <strong>book-aware</strong> entries —
+  that depend on the current positions / exposure / capital, which the model cannot see — are Layer-2 bot
+  actions.</li>
 </ul>
 <p>When enabled, rule actions do not bypass the hard safety logic. The deterministic precedence per position is
 <strong><code>STOP_LOSS</code> / <code>TRAILING_STOP</code> → <code>TAKE_PROFIT</code> → <code>RULE_EXIT</code> (rule-driven close) → <code>SIGNAL_FLIP</code> →
@@ -128944,17 +128946,25 @@ the bot candidate represent?"</p>
 <li><code>REVERSE</code>: position-scoped; requires <code>target</code>, <code>new_side</code>, and optional sizing policy; the close leg needs
   no risk approval, the open leg does.</li>
 <li><code>ADD</code>: position- or side-scoped pyramiding; requires <code>target</code> / <code>side</code> and <code>size_policy</code>; risk-approved.
-  Adding to an open position is position-aware, so it is a bot action; the <em>first</em> entry is a Layer-1 signal.</li>
+  Adding to an open position is position-aware, so it is a bot action.</li>
+<li><code>ENTER_LONG</code> / <code>ENTER_SHORT</code>: <strong>book-aware entry</strong> — open a new position from a rule that depends on the
+  current positions / exposure / capital (which the model cannot see). Risk-approved (sized + limit-checked),
+  but <strong>skips the model-signal filters</strong> (confidence / quality / cooldown) because the rule already decided the
+  direction. Distinct from a Layer-1 market-view entry (which the model produces).</li>
 <li><code>MOVE_STOP</code> / <code>MODIFY_TP</code>: position-scoped protective-level updates.</li>
 <li><code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code>: position-scoped trailing-stop updates.</li>
 <li><code>FLAT_AT_TIME</code>: portfolio-scoped force-flat at a session boundary.</li>
 <li><code>HOLD</code>: portfolio- or position-scoped no-op.</li>
 </ul>
-<p><strong>Entry by market condition is not a Layer-2 action.</strong> "Enter long when RSI &lt; 30" is a Layer-1 model rule
-(<code>{expression, signal}</code> in <code>rule_based</code>): it produces the <code>LONG</code> / <code>SHORT</code> signal with the model's strength /
-quality / confidence, is cached in the prediction parquet, feeds the thesis and ensemble pipeline, and flows
-through the bot's existing entry gates and risk sizing. Layer-2 actions are only the position-aware
-management the three-class signal cannot express (it has no <code>CLOSE</code>, and it is not position-aware).</p>
+<p><strong>Two kinds of entry, split by what they depend on.</strong> A <strong>market-view</strong> entry ("enter long when RSI &lt; 30")
+depends only on the market, so it is a <strong>Layer-1 model rule</strong> (<code>{expression, signal}</code> in <code>rule_based</code>): it
+produces the <code>LONG</code> / <code>SHORT</code> signal with the model's strength / quality / confidence, is cached in the
+prediction parquet, feeds the thesis and ensemble pipeline, and flows through the model's entry gates. A
+<strong>book-aware</strong> entry ("enter long only if I am flat", "enter only if my exposure &lt; X") depends on the current
+positions / exposure / capital — which the model <strong>cannot see</strong> — so it is a <strong>Layer-2 bot action</strong>
+(<code>ENTER_LONG</code> / <code>ENTER_SHORT</code>). The model is never position-aware; everything that depends on the book lives
+in Layer 2. A book-aware entry skips the model-signal filters (the rule already decided the direction) but
+still passes the risk manager for sizing and limits — see the action-vs-filters rule in the Phase-4 design.</p>
 <p>Example shape:</p>
 <pre><code class="language-yaml">action_rules:
   enabled: true
@@ -129069,7 +129079,9 @@ The first action-rule close reason uses the <code>RULE_EXIT</code> exit code.</p
 <li><code>CLOSE</code> needs no new <code>orders.py</code> action.</li>
 <li><code>REDUCE</code> can be implemented either as a partial close order or as a dedicated order action, depending on
   the final execution contract.</li>
-<li><code>ADD</code> becomes a risk-approved <code>OPEN</code> order; model-signal entries already use the existing <code>OPEN</code> path.</li>
+<li><code>ADD</code> and book-aware <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> become risk-approved <code>OPEN</code> orders (the rule decides the
+  direction; the risk manager sizes and limit-checks); model-signal entries already use the existing <code>OPEN</code>
+  path.</li>
 <li><code>REVERSE</code> is a compound candidate: close leg first, risk-approved open leg second.</li>
 <li><code>MOVE_STOP</code> / <code>MODIFY_TP</code> need order/update paths for protective-level changes.</li>
 </ul>
@@ -129232,9 +129244,9 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
    over cached predictions (reuse bot-config optimizer); Layer-1 signal-regeneration loop; in-fold/out-of-fold
    validation harness.</li>
 <li><strong>Phase 4 — General action candidates and order contracts (decided design).</strong> Extend the optional action
-   engine with <code>ADD</code>, <code>REDUCE</code>, <code>REVERSE</code>, <code>MOVE_STOP</code>, <code>MODIFY_TP</code>, <code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code>,
-   <code>FLAT_AT_TIME</code>, <code>HOLD</code> — the maximum-flexibility design, with the core refactor accepted. Chosen after an
-   adversarially-reviewed options study.</li>
+   engine with <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> (book-aware), <code>ADD</code>, <code>REDUCE</code>, <code>REVERSE</code>, <code>MOVE_STOP</code>,
+   <code>MODIFY_TP</code>, <code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code>, <code>FLAT_AT_TIME</code>, <code>HOLD</code> — the maximum-flexibility design, with
+   the core refactor accepted. Chosen after an adversarially-reviewed options study.</li>
 <li><strong>Architecture: candidate + arbiter, two channels.</strong> Each tick the bot collects typed action
      <em>candidates</em> (from the fixed exits, risk force-flat, and the rule actions); a single <strong>arbiter</strong> resolves
      conflicts and emits the final actions, replacing today's "one exit per position, first-match-wins"
@@ -129243,6 +129255,28 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
      <strong><code>PositionModification</code></strong> message for state-only protective changes (<code>MOVE_STOP</code> / <code>MODIFY_TP</code> / trailing)
      that by construction cannot touch PnL / equity / metrics. The arbiter allows several actions on one
      position in one tick (e.g. scale out <strong>and</strong> tighten the stop on the same bar).</li>
+<li><strong>Arbiter decision logic (the heart).</strong> The arbiter turns the per-tick candidate pile into final actions
+     by fixed priority layers — top wins, safety is absolute:<ol>
+<li><strong>Safety:</strong> stop-loss / trailing / risk force-flat (daily-loss, drawdown) → close the position and
+    ignore every other candidate for it. Never overridden by anything discretionary.</li>
+<li><strong>Take-profit:</strong> → close.</li>
+<li><strong>One money-moving action per position:</strong> among <code>CLOSE</code> / <code>REDUCE</code> / <code>REVERSE</code> / model <code>SIGNAL_FLIP</code> /
+    model <code>LOW_CONFIDENCE</code>, the highest-priority candidate wins — at most one (you cannot reduce <em>and</em>
+    reverse the same position the same tick).</li>
+<li><strong>One protective modification, alongside:</strong> if the position is not being fully closed, one
+    <code>MOVE_STOP</code> / <code>MODIFY_TP</code> / trailing update rides along (it moves no money, so it cannot conflict with
+    the layer-3 action).</li>
+<li><strong>New entries (portfolio):</strong> model-signal entries plus rule <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> plus <code>ADD</code>
+    plus the open leg of <code>REVERSE</code> all pass the <strong>risk manager</strong> (sizing + max-positions + exposure +
+    affordability) in priority order, until capital / slots run out.
+ Within any layer, ties break by rule priority (list order today; an optional explicit priority number is
+ available). The whole resolution is deterministic.</li>
+</ol>
+</li>
+<li><strong>Action-vs-filters rule.</strong> A bot action is a <em>decided</em> action: it <strong>skips the model-signal filters</strong>
+     (entry confidence / quality / cooldown — those judge the model's own signal), but it <strong>always passes the
+     risk manager</strong> (it is your capital). Direction is decided by the rule; size and admissibility by risk.
+     Only model-signal entries are gated by the model's confidence / quality.</li>
 <li><strong>Execution contracts.</strong> <code>REDUCE</code> = <em>split-on-reduce</em>: close a child <code>Trade</code> row for the reduced size and
      shrink the surviving row in place — the only representation that keeps PnL / fees correct against the
      three row-counting metric layers; it must hold <code>Σ entry_commission == original</code> and <code>Σ size == original</code>,
@@ -129257,13 +129291,45 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
      queued orders survive pause / resume (or the multi-leg actions are made resume-atomic) before <code>REVERSE</code>
      ships. <code>MODIFY_TP</code> / trailing updates get a persistence path covering <code>take_profit</code> and the trailing-delta
      columns. The <code>ActionRuleConfig.action</code> literal is widened in both its definition sites.</li>
+<li><strong>Audit &amp; DB consistency (extend the existing systems, do not reinvent).</strong> Every new action stays as
+     auditable as today's exits, reusing the per-trade reason-JSON, the operational-gate counters, and the
+     established nullable + backfill conventions.<ul>
+<li><em>Reason codes:</em> extend the <code>ExitCode</code> literal (e.g. <code>REDUCE</code>, <code>REVERSE_CLOSE</code>, <code>RULE_STOP_MOVE</code>) and add
+   entry-side codes (e.g. <code>PYRAMID_ADD</code>, <code>REVERSE_OPEN</code>); add matching buckets to the exit-reason
+   distribution (<code>ExitReasonStats</code> / <code>fetch_exit_reason_stats</code>) so new codes are counted distinctly, not
+   lumped into <code>other</code>. The distribution recomputes from <code>trades.exit_reason</code> — no migration or backfill.</li>
+<li><em>Trade lineage + origin:</em> add nullable <code>parent_trade_id</code> (self-FK), <code>position_group_id</code>, and an
+   <code>action_origin</code> marker (<code>ENTRY</code> / <code>PYRAMID_ADD</code> / <code>REDUCE_CHILD</code> / <code>REVERSE_CLOSE</code> / <code>REVERSE_OPEN</code>) on
+   <code>Trade</code>, plumbed through <code>create_trade</code> / <code>open_position</code>, so a split child, an add, and a reverse leg are
+   traceable to their parent / group.</li>
+<li><em>Protective-modification audit:</em> generalize the trailing-stop audit precedent (<code>initial_stop_loss</code>,
+   <code>stop_was_trailed</code>, <code>*_activated_at</code> / <code>*_updated_at</code>) to rule-driven stop / TP moves — add
+   <code>initial_take_profit</code> and a per-modification record (origin / level kind / old→new / timestamp / code),
+   and capture the survivor's original size on a <code>REDUCE</code>. Audit-only (no money moves).</li>
+<li><em>Operational counters:</em> add the action counters (<code>reduce_count</code>, <code>add_count</code>, <code>reverse_count</code>,
+   <code>move_stop_count</code>, <code>modify_tp_count</code>, an arbiter-blocked count + a <code>*_by_reason_json</code> map) to
+   <code>OperationalGateMetrics</code> and its runtime accumulator (with pause / resume serialization), pack them in
+   <code>build_investor_submodels</code>, flatten them in both <code>to_flat_session_columns</code>, and record them in both
+   loops — following the existing gate-counter pattern exactly.</li>
+<li><em>Migration + backfill:</em> one Alembic <code>batch_alter_table</code> revision adds the new columns to <code>trades</code>,
+   <code>backtest_sessions</code>, <code>live_sessions</code> (and optional <code>Trial.stage3_*</code> mirrors) as <code>nullable=True</code> with no
+   server default; existing rows stay valid as NULL (the established convention — most gate counters are
+   already NULL on historical rows). Counters reconstructable from <code>trades.exit_reason.code</code> get a backfill
+   pass mirroring the existing <code>risk_force_flat_count</code> backfill; non-reconstructable ones (arbiter
+   rejections) remain NULL by design. Add per-action structured success logs at the action boundary
+   (today's per-trade logging is error-only).</li>
+</ul>
+</li>
 <li><strong>Resolved details.</strong> <code>ADD</code>-vs-<code>max_concurrent_positions</code> is a config flag (consume a slot or extend);
      <code>REVERSE</code> sizes the open leg off post-close equity; the <code>REDUCE</code> child carries zero entry-commission; an
      action-moved stop uses a distinct exit code (<code>RULE_STOP_MOVE</code>). Deferred until a strategy needs it: a full
      cross-source conflict model beyond one-fill-plus-one-protective per position per tick.</li>
 <li><strong>Build order</strong> (each a complete vertical slice: config → candidate → order / modify contract → risk →
-     tests → gates → QA): foundation (candidate collection + arbiter + <code>PositionModification</code> channel) →
-     <code>HOLD</code> → <code>FLAT_AT_TIME</code> → <code>ADD</code> → <code>REDUCE</code> → protective (gated) → <code>REVERSE</code> (after queue-resume).</li>
+     audit (code / lineage / counter) → tests → gates → QA): foundation (candidate collection + arbiter +
+     <code>PositionModification</code> channel + the audit / persistence schema — lineage / origin columns,
+     protective-modification audit, operational-counter columns, one Alembic migration + backfill) →
+     <code>HOLD</code> → <code>FLAT_AT_TIME</code> → <code>ADD</code> → <code>REDUCE</code> → protective (gated) → <code>REVERSE</code> (after queue-resume). Each
+     action wires in its own reason code, lineage / origin, and counter as it lands.</li>
 <li><strong>Phase 5 — Feature layer + catalog.</strong> Expose far more of the existing feature/signal system to rule
    experiments (today <code>rule_raw</code> is the bottleneck: 5 raw indicators, single timeframe) across timeframes,
    periods, context symbols, and raw OHLCV. <strong>Add the classic indicators still missing from the
@@ -129295,12 +129361,21 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
   bot-logic owns action scope, target, payload validation, priority, and order mapping.</li>
 <li>Position-scoped actions (<code>CLOSE</code>, <code>REDUCE</code>, the close leg of <code>REVERSE</code>) are evaluated per open position
   and target the current position unless a later payload model specifies otherwise.</li>
-<li>Portfolio-scoped actions (<code>FLAT_AT_TIME</code>, <code>HOLD</code>) are evaluated once per tick / side.</li>
-<li>Entry by market condition is a <strong>Layer-1 model rule</strong> (<code>{expression, signal}</code> in <code>rule_based</code>) that produces
-  the cached signal — <strong>not</strong> a Layer-2 bot action. Layer-2 actions are only the position-aware management the
-  three-class signal cannot express.</li>
-<li>Risk-increasing actions (<code>ADD</code> and the open leg of <code>REVERSE</code>), plus the model-signal entry, pass through the
-  risk manager.</li>
+<li>Portfolio-scoped actions (<code>ENTER_LONG</code>, <code>ENTER_SHORT</code>, <code>FLAT_AT_TIME</code>, <code>HOLD</code>) are evaluated once per tick.</li>
+<li>Entry is split by what it depends on: a <strong>market-view</strong> entry is a <strong>Layer-1 model rule</strong>
+  (<code>{expression, signal}</code> in <code>rule_based</code>, cached); a <strong>book-aware</strong> entry (depends on current
+  positions / exposure / capital, which the model cannot see) is a <strong>Layer-2 bot action</strong>
+  (<code>ENTER_LONG</code> / <code>ENTER_SHORT</code>). The model is never position-aware; everything that depends on the book is
+  Layer 2.</li>
+<li>A bot action is a decided action: it skips the model-signal filters (confidence / quality / cooldown) but
+  always passes the risk manager. Direction is decided by the rule; size and admissibility by risk. Only
+  model-signal entries are gated by the model's confidence / quality.</li>
+<li>Risk-increasing actions (<code>ENTER_LONG</code> / <code>ENTER_SHORT</code>, <code>ADD</code>, and the open leg of <code>REVERSE</code>), plus the
+  model-signal entry, pass through the risk manager.</li>
+<li>The arbiter resolves the per-tick candidates by fixed priority layers (safety → take-profit → one
+  money-moving action per position → one protective modification alongside → risk-gated new entries), ties
+  broken by rule priority. Deterministic; the documented exit precedence and the no-rules early-return are
+  preserved.</li>
 <li>The DSL is extracted to a new <code>rainbow.common.rules</code> subpackage and shared by both layers.</li>
 <li><code>common.rules</code> is a predicate engine only: it evaluates expressions to booleans / boolean masks and does
   not know Layer-1 signals or Layer-2 actions.</li>
