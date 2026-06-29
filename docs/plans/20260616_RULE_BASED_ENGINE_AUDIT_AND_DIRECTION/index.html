@@ -2651,10 +2651,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-current-rule_raw-block-palette-and-limits" class="md-nav__link">
+  <a href="#31-the-rule_raw-block-palette-and-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 Current rule_raw block: palette and limits
+        3.1 The rule_raw block: palette and limits
       
     </span>
   </a>
@@ -2662,10 +2662,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-full-indicator-catalog-available-not-yet-wired-to-rules" class="md-nav__link">
+  <a href="#32-full-indicator-catalog-34-indicators" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 Full indicator catalog (available, not yet wired to rules)
+        3.2 Full indicator catalog (34 indicators)
       
     </span>
   </a>
@@ -135048,10 +135048,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-current-rule_raw-block-palette-and-limits" class="md-nav__link">
+  <a href="#31-the-rule_raw-block-palette-and-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 Current rule_raw block: palette and limits
+        3.1 The rule_raw block: palette and limits
       
     </span>
   </a>
@@ -135059,10 +135059,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-full-indicator-catalog-available-not-yet-wired-to-rules" class="md-nav__link">
+  <a href="#32-full-indicator-catalog-34-indicators" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 Full indicator catalog (available, not yet wired to rules)
+        3.2 Full indicator catalog (34 indicators)
       
     </span>
   </a>
@@ -135481,9 +135481,11 @@ standalone reference; it assumes no prior context.</p>
 their gates; the <code>torch</code> batch evaluator lives in <code>model-trainer</code> and the action-rules config is optional.
 The full Phase-4 action set is implemented and gate-green: <code>HOLD</code>, <code>FLAT_AT_TIME</code>, book-aware <code>ENTER_LONG</code> /
 <code>ENTER_SHORT</code>, <code>ADD</code>, <code>REDUCE</code>, the protective updates (<code>MOVE_STOP</code> / <code>MODIFY_TP</code> / <code>ENABLE_TRAIL</code> /
-<code>UPDATE_TRAIL</code>), and <code>REVERSE</code>. The closing datetime / timezone consistency audit is verified. Only the single
-Alembic migration for the protective and reverse schema (the new columns sit on the ORM models, not yet on the
-database) remains before the action engine is fully shipped.</p>
+<code>UPDATE_TRAIL</code>), and <code>REVERSE</code>. The closing datetime / timezone consistency audit is verified. The Alembic
+migration for the protective and reverse schema is <strong>applied and verified</strong> — the <code>trade_modifications</code> table,
+<code>trades.initial_take_profit</code>, and the four action-counter columns on each session table now exist on the
+production database, added by a native <code>ADD COLUMN</code> (no table rebuild, no bloat), with every existing row left
+intact. The action engine is fully shipped, code and database.</p>
 <p><code>REDUCE</code> is <strong>complete end-to-end</strong>: its config (<code>reduce_size</code>, a DSL formula in instrument units resolved
 against the rule context and bounded to the open interval <code>(0, position size)</code>, and the shared
 <code>rank_by</code> / <code>order</code> / <code>limit</code> selector, plus the <code>ENTER</code> <code>count</code>), the trade split lineage (<code>parent_trade_id</code> / <code>position_group_id</code> /
@@ -135518,7 +135520,7 @@ historical value (0 on every finalized session — these actions never ran befor
 left without a valid metrics payload stay NULL), writing both the metrics-JSON <code>operational_gates</code> block and
 the flat columns from the same validated object; <code>trades.action_origin</code> is normalized to its <code>ENTRY</code> default
 on historical rows.</p>
-<p><strong>Protective-updates slice — complete and gate-green; only the single Alembic migration is deferred.</strong> The four
+<p><strong>Protective-updates slice — complete, gate-green, and migrated.</strong> The four
 protective actions (<code>MOVE_STOP</code> / <code>MODIFY_TP</code> / <code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code>) and the automatic trailing stop are
 resolved on one <strong>protective channel</strong>, separate from the money-moving order channel, so a protective level change
 rides <strong>alongside</strong> the per-position money-moving action on the same tick and by construction touches no PnL /
@@ -135549,18 +135551,39 @@ equity / metric. Built and passing every touched module gate:</p>
 </ul>
 <p>The old direct-trailing path (<code>apply_trailing_stops</code>, <code>TrailingStopApplication</code>, <code>update_trailing_stop_state</code>) is
 removed; the pure <code>update_trailing_stop</code> evaluator stays. <code>REDUCE.size_pct</code> is remediated to the §7.7 <code>reduce_size</code>
-formula end-to-end. <strong>Deferred:</strong> the single Alembic autogenerate migration for the protective and reverse schema
-(the new columns sit on the ORM models, not yet on the database).</p>
-<p><strong><code>REVERSE</code> — complete and gate-green.</strong> A <code>REVERSE</code> rule (position-scoped, carrying <code>new_side</code>) closes the
-matched position with the <code>REVERSE_CLOSE</code> exit code, carrying the side to open on <code>Order.reverse_open_side</code>, and
-the entry phase raises a risk-approved open leg on that side (<code>REVERSE_OPEN</code> lineage), sized off the post-close
-equity. The compound action is <strong>resume-atomic by construction</strong>: both legs queue with the same execute time and
-fill together on the next tick, so a pause never leaves a half-reverse. <code>REVERSE_CLOSE</code> is added to <code>ExitCode</code> and
-broken out in the exit-reason distribution; <code>reverse_action_count</code> is a session-metric column and runtime counter
-alongside the others; execution reuses the existing <code>CLOSE</code> and <code>OPEN</code> order paths across backtest, live sim, and
-the live-real provider boundary. Covered by per-action, config-validation, and a full-chain integral backtest test.</p>
-<p>The full Phase-4 action engine is implemented and gate-green; only the single Alembic migration is deferred.
+formula end-to-end. The single Alembic migration for the protective and reverse schema (the <code>trade_modifications</code>
+table, <code>trades.initial_take_profit</code>, and the per-session action counters) is <strong>applied and verified</strong> on the
+production database via a native <code>ADD COLUMN</code> (no table rebuild, no bloat, rows intact).</p>
+<p><strong><code>REVERSE</code> — complete and gate-green.</strong> A <code>REVERSE</code> rule is position-scoped and always flips the position to the
+opposite side, so the side to open is derived rather than configured. The close leg closes the matched position
+with the <code>REVERSE_CLOSE</code> exit code, carrying the opposite side on <code>Order.reverse_to_side</code>, and the entry phase
+raises a risk-approved open leg on that side (<code>REVERSE_OPEN</code> lineage), sized off the post-close equity. The
+compound action is <strong>resume-atomic by construction</strong>: both legs queue with the same execute time and fill together
+on the next tick, so a pause never leaves a half-reverse. <code>REVERSE_CLOSE</code> is added to <code>ExitCode</code> and broken out in
+the exit-reason distribution; <code>reverse_action_count</code> is a session-metric column and runtime counter alongside the
+others; execution reuses the existing <code>CLOSE</code> and <code>OPEN</code> order paths across backtest, live sim, and the live-real
+provider boundary. Covered by per-action, config-validation, and a full-chain integral backtest test.</p>
+<p>The full Phase-4 action engine is implemented, gate-green, and migrated.
 Phase 3 (the optimization / run harness) is <strong>not</strong> built — only isolated foundations exist.</p>
+<p><strong>Indicator catalog (2026-06-29) — complete: 34 indicators.</strong> Every classic indicator this plan called for
+now exists end-to-end (YAML defaults + <code>IndicatorType</code> + typed config + composed warm-up class +
+<code>process_</code> / <code>validate_</code> + dispatch + tests) across common / core / data-processing with green gates. The
+latest six were added on the same mold — <strong>Keltner Channel, SuperTrend, Ichimoku, Choppiness Index,
+Fractals, and Pivot Points</strong> — none of which TA-Lib provides, so each is computed with polars from
+primitives and each is <strong>lookahead-free</strong> (Ichimoku omits the forward-shifted cloud and the Chikou span,
+Fractals carry the centered-window confirmation delay, Pivots read the prior bar). <code>IndicatorType</code> lists 34.</p>
+<p><strong>What remains is outside the core engine:</strong></p>
+<ul>
+<li><strong>Open the rest of the catalog to raw rule features.</strong> The generator's <code>rule_raw</code> block currently exposes
+  <strong>14</strong> indicators as raw (non-normalized) rule features — <code>rsi</code>, <code>roc</code>, <code>ema</code>, <code>macd</code>, <code>adx</code>, <code>stochastic</code>,
+  <code>willr</code>, <code>cci</code>, <code>mfi</code>, <code>ppo</code>, <code>trix</code>, <code>aroon</code>, <code>sar</code>, <code>linreg</code>. The other indicators exist and run, but are
+  not yet callable raw from a rule, so <code>cci{-1} &gt; 100</code> works while <code>keltner_upper{-1}</code> does not until added.
+  Opening ATR / Bollinger / Keltner / SuperTrend / Ichimoku / Choppiness / Fractals / Pivots / VWAP / OBV /
+  Volatility / Drawdown / Price-Oscillator (and the two-series Correlation / Ratio / Spread, which take a
+  context symbol) to <code>rule_raw</code> is <strong>generator config, not engine work</strong> (§3.1).</li>
+<li><strong>Phase 3 (Optuna over rule parameters)</strong> is not built (the optimization / run harness above).</li>
+<li><strong>Running the vetted strategy battalion on folds</strong> is <em>using</em> the finished engine, not building it.</li>
+</ul>
 <h3 id="scope-and-priorities">Scope and priorities</h3>
 <ol>
 <li><strong>Core engine first.</strong> The deliverable that must be correct and complete is the two-layer engine —
@@ -135654,16 +135677,20 @@ the model layer.</p>
 <p>Feature blocks are built by the MEGA generator
 (<code>scripts/experiments/generate/generate_mega_experiment.py</code>). The Script 2 orchestrator delegates feature
 construction to MEGA via subprocess.</p>
-<h3 id="31-current-rule_raw-block-palette-and-limits">3.1 Current <code>rule_raw</code> block: palette and limits</h3>
+<h3 id="31-the-rule_raw-block-palette-and-limits">3.1 The <code>rule_raw</code> block: palette and limits</h3>
 <p>The <code>_append_rule_raw_features</code> function emits raw features named <code>rule_raw_{symbol}_{timeframe}_{indicator}</code>
-with an empty pipeline (no normalization). Current capabilities: RSI, EMA (fast/slow), MACD (line/signal),
-ADX (with <code>plus_di</code>/<code>minus_di</code>), Stochastic (<code>k_percent</code>) — five families toggled by <code>include_*</code> flags;
-exactly one timeframe per experiment; per-symbol builder (BTC 5m shipped). Raw OHLCV is ensured as input
-but not exposed as a named rule feature. Net effect: prior rule-based experiments were single-timeframe,
-single-symbol, five-indicator only.</p>
-<h3 id="32-full-indicator-catalog-available-not-yet-wired-to-rules">3.2 Full indicator catalog (available, not yet wired to rules)</h3>
-<p>The indicator library (<code>modules/data-processing/src/rainbow/data_processing/indicator/</code>) already implements
-more than the five wired families:</p>
+with an empty pipeline (no normalization), so classic thresholds (<code>rsi_14{-1} &gt; 70</code>) stay semantically valid.
+It currently exposes <strong>14</strong> indicators toggled by <code>include_*</code> flags — RSI, ROC, EMA (fast/slow), MACD
+(line/signal), ADX (with <code>plus_di</code> / <code>minus_di</code>), Stochastic, Williams %R, CCI, MFI, PPO, TRIX, Aroon,
+Parabolic SAR, and LinReg — at one timeframe per experiment, per-symbol builder (BTC 5m shipped). Raw OHLCV is
+ensured as input but not exposed as a named rule feature. The remaining catalog indicators (§3.2) exist and
+run with green gates but are not yet in <code>rule_raw</code>, so they cannot be referenced raw from a rule until an
+<code>include_&lt;name&gt;</code> entry and its feature block are added here — generator config, not engine work.</p>
+<h3 id="32-full-indicator-catalog-34-indicators">3.2 Full indicator catalog (34 indicators)</h3>
+<p>The indicator library (<code>modules/data-processing/src/rainbow/data_processing/indicator/</code>) implements 34
+indicators (every <code>IndicatorType</code> value). 14 are exposed raw to rules via <code>rule_raw</code> (§3.1); the rest run
+with green gates but still need a <code>rule_raw</code> entry to be callable raw from a rule. A sample of column sets
+and scaling (bounded ones take fixed thresholds directly; raw/price ones are used in comparisons):</p>
 <table>
 <thead>
 <tr>
@@ -135689,6 +135716,11 @@ more than the five wired families:</p>
 <td>Bands raw; <code>percent_b</code> 0–1</td>
 </tr>
 <tr>
+<td>Choppiness</td>
+<td><code>choppiness</code></td>
+<td>0–100</td>
+</tr>
+<tr>
 <td>Correlation</td>
 <td><code>correlation</code></td>
 <td>-1..1</td>
@@ -135704,6 +135736,21 @@ more than the five wired families:</p>
 <td>Raw, price units</td>
 </tr>
 <tr>
+<td>Fractals</td>
+<td><code>fractal_up</code>, <code>fractal_down</code></td>
+<td>0/1 swing flags</td>
+</tr>
+<tr>
+<td>Ichimoku</td>
+<td><code>ichimoku_tenkan</code>, <code>ichimoku_kijun</code>, <code>ichimoku_senkou_a</code>, <code>ichimoku_senkou_b</code></td>
+<td>Raw, price units</td>
+</tr>
+<tr>
+<td>Keltner</td>
+<td><code>keltner_upper/middle/lower</code>, <code>keltner_position</code>, <code>keltner_width</code></td>
+<td>Bands raw; position ~0–1</td>
+</tr>
+<tr>
 <td>MACD</td>
 <td><code>macd</code>, <code>signal</code>, <code>histogram</code></td>
 <td>Raw, unbounded</td>
@@ -135712,6 +135759,11 @@ more than the five wired families:</p>
 <td>OBV</td>
 <td><code>obv</code></td>
 <td>Raw, cumulative</td>
+</tr>
+<tr>
+<td>Pivots</td>
+<td><code>pivot</code>, <code>pivot_r1/s1/r2/s2</code></td>
+<td>Raw, price units</td>
 </tr>
 <tr>
 <td>Price Oscillator</td>
@@ -135737,6 +135789,11 @@ more than the five wired families:</p>
 <td>Stochastic</td>
 <td><code>k_percent</code>, <code>d_percent</code></td>
 <td>0–100</td>
+</tr>
+<tr>
+<td>SuperTrend</td>
+<td><code>supertrend</code>, <code>supertrend_direction</code></td>
+<td>Line raw; direction 0/1</td>
 </tr>
 <tr>
 <td>Time Features</td>
@@ -135925,8 +135982,8 @@ the bot candidate represent?"</p>
 <li><code>CLOSE</code>: position-scoped; requires <code>target: current_position</code>; closes the current position; no risk approval.</li>
 <li><code>REDUCE</code>: position-scoped; requires <code>target</code> plus <code>reduce_size</code> (a DSL formula in instrument units, e.g.
   <code>position_size * 0.5</code> to close half); pure reduction needs no risk approval.</li>
-<li><code>REVERSE</code>: position-scoped; requires <code>target</code>, <code>new_side</code>, and optional sizing policy; the close leg needs
-  no risk approval, the open leg does.</li>
+<li><code>REVERSE</code>: position-scoped; requires <code>target</code> and an optional sizing policy; the side to open is derived as
+  the opposite of the position's side; the close leg needs no risk approval, the open leg does.</li>
 <li><code>ADD</code>: position- or side-scoped pyramiding; requires <code>target</code> / <code>side</code> and <code>size_policy</code>; risk-approved.
   Adding to an open position is position-aware, so it is a bot action.</li>
 <li><code>ENTER_LONG</code> / <code>ENTER_SHORT</code>: <strong>book-aware entry</strong> — open a new position from a rule that depends on the
@@ -136000,7 +136057,6 @@ still passes the risk manager for sizing and limits — see the action-vs-filter
     - expression: &quot;position_side_long{-1} == 1 and trend_bearish{-1} == 1&quot;
       action: &quot;REVERSE&quot;
       target: &quot;current_position&quot;
-      new_side: &quot;SHORT&quot;
       size_policy: &quot;risk_manager&quot;
 </code></pre>
 <p>The first implementation slice supports only the smallest useful payload: a position-scoped <code>CLOSE</code> action
@@ -136525,12 +136581,12 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
      comparison, or hour / minute / weekday extraction, so a naive (reloaded) value never mixes with an aware
      (live) one.</li>
 <li><strong>Phase 5 — Feature layer + catalog.</strong> Expose far more of the existing feature/signal system to rule
-   experiments (today <code>rule_raw</code> is the bottleneck: 5 raw indicators, single timeframe) across timeframes,
-   periods, context symbols, and raw OHLCV. <strong>Add the classic indicators still missing from the
-   16-indicator catalog</strong> — Williams %R, CCI, MFI, PPO, TRIX, Keltner, SuperTrend, Aroon, Ichimoku,
-   Parabolic SAR, Choppiness, plus swing/structure features (fractals, pivots) — each a self-contained
-   <code>data-processing/.../indicator/&lt;name&gt;.py</code> on the existing <code>process_&lt;name&gt;</code> mold (the polars-ta library
-   covers most), wired into <code>IndicatorType</code>, the dispatch, the MEGA generator, and tests. The
+   experiments (today <code>rule_raw</code> exposes 14 raw indicators at a single timeframe — §3.1) across timeframes,
+   periods, context symbols, and raw OHLCV. <strong>The classic indicator catalog is complete (34 indicators,
+   §3.2):</strong> Williams %R, CCI, MFI, PPO, TRIX, Aroon and Parabolic SAR were already built, and Keltner,
+   SuperTrend, Ichimoku, Choppiness plus the swing/structure features (fractals, pivots) were added on the
+   existing mold (<code>IndicatorType</code> + typed config + composed warm-up + <code>process_</code> / <code>validate_</code> + dispatch +
+   tests), each computed with polars and each lookahead-free. The
    <strong><code>MARKET_STATE</code> and <code>HALVING</code> indicators this wave depended on are already built</strong> (across common / core
    / data-processing, with the MEGA generator wired): <code>MARKET_STATE</code> consumes pre-computed indicator columns
    and emits its full regime column set (continuous components, discrete one-hot state flags, a categorical
@@ -136540,10 +136596,11 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
    exactly like any other indicator — existing multi-timeframe handling makes a higher-timeframe feature
    usable at the base timeframe, so there is no new alignment work. Column set and build are specified in
    <a href="../_archived/20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN/"><code>20260622_REGIME_MARKET_STATE_AND_HALVING_PLAN.md</code></a>.
-   The remaining Phase-5 work is therefore the rest of the catalog and the <code>rule_raw</code> expansion, not the
-   regime indicators. Then a Phase-0
-   control battery and the vetted battalion on folds → chronological holdout → multi-year (the multi-year
-   step needs the data refresh + de-hardcoded folds noted in the master roadmap).</li>
+   The remaining Phase-5 work is therefore the <strong><code>rule_raw</code> expansion</strong> — adding <code>include_&lt;name&gt;</code> entries and
+   their feature blocks so the rest of the catalog is callable raw from rules (generator config, not engine
+   work) — not new indicators. Then a Phase-0 control battery and the vetted battalion on folds →
+   chronological holdout → multi-year (the multi-year step needs the data refresh + de-hardcoded folds noted
+   in the master roadmap).</li>
 </ol>
 <h2 id="12-decisions-and-open-questions">12. Decisions and Open Questions</h2>
 <p>Decisions taken:</p>
@@ -136598,8 +136655,9 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
   <code>prediction_prob_long</code>, <code>prediction_prob_short</code>, <code>position_entry_price</code>, <code>position_size</code>,
   <code>position_unrealized_pnl</code>, <code>position_unrealized_pnl_pct</code>, <code>position_bars_since_entry</code>,
   <code>position_side_long</code>, and <code>position_side_short</code>.</li>
-<li>Track A adds the classic indicators missing from the catalog (Williams %R, CCI, MFI, PPO, TRIX, Keltner,
-  SuperTrend, Aroon, Ichimoku, Parabolic SAR, Choppiness, fractals, pivots) on the existing indicator mold.</li>
+<li>Track A (the classic indicator catalog) is <strong>complete</strong>: all 34 indicators exist on the shared mold —
+  Williams %R, CCI, MFI, PPO, TRIX, Aroon and Parabolic SAR, plus the latest Keltner, SuperTrend, Ichimoku,
+  Choppiness, fractals and pivots, all lookahead-free. The open item is exposing the rest to <code>rule_raw</code>.</li>
 <li>Regime is exposed as the <strong>already-built <code>MARKET_STATE</code> indicator</strong> (companion <code>HALVING</code>): it consumes
   pre-computed indicator columns in <code>data-processing</code> and emits its full regime column set;
   <code>classify_regime_codes</code> is the one shared classifier and the offline regime scripts import it (single
@@ -136732,7 +136790,7 @@ mean-reversion is useful but cost-fragile. Each strategy references one of eight
 regime-switch hybrid) that template the management logic.</p>
 <p><strong>Coverage with this plan</strong> (expressive DSL + the added indicators + the Layer-2 action engine): essentially
 the whole single-instrument catalog is expressible. NR7 and inside-bar need no new feature (they fall out of
-the DSL); the missing classic indicators are Phase-5 additions on the existing mold. The only strategy
+the DSL); the classic indicator catalog is complete (§3.2). The only strategy
 deferred by structure is <strong>two-leg pairs / spread execution</strong> — it needs synchronized long-short legs and
 shared-capital accounting (a portfolio-execution capability), not an indicator or a DSL feature.
 Regime-switch hybrids are expressible <strong>natively</strong> (conditions over a <code>REGIME</code> feature; no grouping needed),
