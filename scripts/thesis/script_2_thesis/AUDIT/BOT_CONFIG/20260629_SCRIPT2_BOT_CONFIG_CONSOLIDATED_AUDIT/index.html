@@ -14,7 +14,7 @@
         <link rel="prev" href="../../BASELINES/20260620_ALWAYS_LONG_BASELINE_EXECUTED_AUDIT/">
       
       
-        <link rel="next" href="../20260619_SCRIPT2_TRAILING_TP_REGIME_SWEEP_AUDIT/">
+        <link rel="next" href="../DEPRECATED/20260619_SCRIPT2_BOT_CONFIG_01_HAND_SWEEP_AUDIT/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>20260619 Script2 Optuna Regime Config Audit - Rainbow Trader</title>
+        <title>20260629 Script2 Bot Config Consolidated Audit - Rainbow Trader</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#script-2--optuna-bot-config-trailing--tp--sl--regime-audit" class="md-skip">
+        <a href="#script-2--bot-config-optimization-consolidated-audit" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              20260619 Script2 Optuna Regime Config Audit
+              20260629 Script2 Bot Config Consolidated Audit
             
           </span>
         </div>
@@ -10598,10 +10598,6 @@
       
         
       
-        
-      
-        
-      
     
     
     
@@ -10668,7 +10664,7 @@
   <span class="md-ellipsis">
     
   
-    20260619 Script2 Optuna Regime Config Audit
+    20260629 Script2 Bot Config Consolidated Audit
   
 
     
@@ -10686,7 +10682,7 @@
   <span class="md-ellipsis">
     
   
-    20260619 Script2 Optuna Regime Config Audit
+    20260629 Script2 Bot Config Consolidated Audit
   
 
     
@@ -10712,10 +10708,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-inputs" class="md-nav__link">
+  <a href="#1-selection-caveat-the-one-provisional-thing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Inputs
+        1. Selection caveat (the one provisional thing)
       
     </span>
   </a>
@@ -10723,10 +10719,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-method-note" class="md-nav__link">
+  <a href="#2-run-inventory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Method note
+        2. Run inventory
       
     </span>
   </a>
@@ -10734,22 +10730,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-findings" class="md-nav__link">
+  <a href="#3-fold--regime-context-shared-by-all-campaigns" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Findings
+        3. Fold → regime context (shared by all campaigns)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Findings">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-campaign-1--hand-sweep-2026-06-1819" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Campaign 1 — Hand Sweep (2026-06-18/19)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Campaign 1 — Hand Sweep (2026-06-18/19)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-optuna-improved-every-trial--and-turned-one-profitable" class="md-nav__link">
+  <a href="#41-inputs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 Optuna improved every trial — and turned one profitable
+        4.1 Inputs
       
     </span>
   </a>
@@ -10757,10 +10764,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-the-optimum-is-regime-dependent-confirms-the-sweep" class="md-nav__link">
+  <a href="#42-method-note--the-comparison-metric" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 The optimum is regime-dependent (confirms the sweep)
+        4.2 Method note — the comparison metric
       
     </span>
   </a>
@@ -10768,10 +10775,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#33-positive-alpha-still-only-in-the-bear-folds" class="md-nav__link">
+  <a href="#43-findings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.3 Positive alpha still only in the bear folds
+        4.3 Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-the-winner-and-the-loser-are-the-same-in-every-regime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 The winner and the loser are the same in every regime
       
     </span>
   </a>
@@ -10779,10 +10798,81 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#34-parameter-importance" class="md-nav__link">
+  <a href="#432-mean-net-pnl-per-fold--config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4 Parameter importance
+        4.3.2 Mean net PnL per fold × config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-the-trailing-stops-harm-is-regime-dependent-the-headline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.3 The trailing-stop's harm is regime-dependent (the headline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#434-the-take-profit-lift-also-helps-most-where-price-oscillates-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.4 The take-profit lift also helps most where price oscillates up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#435-how-much-the-configuration-matters-is-itself-regime-dependent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.5 How much the configuration matters is itself regime-dependent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#436-operational-counter-mechanism-verified--why-the-trailing-stop-churns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.6 Operational-counter mechanism (verified) — why the trailing stop churns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Caveats
       
     </span>
   </a>
@@ -10795,35 +10885,534 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-conclusions" class="md-nav__link">
+  <a href="#5-campaign-2--optuna-pilot-2026-06-19" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Conclusions
+        5. Campaign 2 — Optuna Pilot (2026-06-19)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Campaign 2 — Optuna Pilot (2026-06-19)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Inputs
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#5-caveats" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#52-method-note" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Caveats
+        5.2 Method note
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#6-next-steps" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#53-findings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Next steps
+        5.3 Findings
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="5.3 Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-optuna-improved-every-trial--and-turned-one-profitable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.1 Optuna improved every trial — and turned one profitable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#532-the-optimum-is-regime-dependent-confirms-the-sweep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.2 The optimum is regime-dependent (confirms the sweep)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#533-positive-composite-only-in-the-bear-folds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.3 Positive composite only in the bear folds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#534-parameter-importance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.4 Parameter importance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Caveats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-campaign-3--full-optuna-campaign-2026-06-2224" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Campaign 3 — Full Optuna Campaign (2026-06-22/24)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Campaign 3 — Full Optuna Campaign (2026-06-22/24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-method-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Method note
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#631-config-tuning-turns-most-losing-trials-profitable--in-sample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 Config tuning turns most losing trials profitable — in-sample
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-the-winning-config-stop-loss-wide-take-profit-high-trailing-off-or-loose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.2 The winning config: stop-loss wide, take-profit high, trailing off-or-loose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-the-take-profit-optimum-is-not-regime-conditional-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.3 The take-profit optimum is NOT regime-conditional at scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#634-selectivity-winners-trade-little" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.4 Selectivity: winners trade little
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#635-best-model-config-per-fold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.5 Best (model, config) per fold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#636-top-5-trials-per-family--canonical-orig--new--δ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.6 Top-5 trials per family — canonical Orig / New / Δ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3.6 Top-5 trials per family — canonical Orig / New / Δ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logistic--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        logistic — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlp--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mlp — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlp_ex--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mlp_ex — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcn--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tcn — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vit--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vit — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#637-pnl-positive-is-not-the-same-as-alpha-positive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.7 PnL-positive is not the same as alpha-positive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#638-coherence-with-the-labeling-service-why-trailing-off-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.8 Coherence with the labeling service (why trailing-off wins)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Caveats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-campaign-4--cross-fold-transfer-validation-2026-06-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Campaign 4 — Cross-Fold Transfer Validation (2026-06-24)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Campaign 4 — Cross-Fold Transfer Validation (2026-06-24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#721-transfer-matrix--mean-new-net-pnl-config--target-fold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2.1 Transfer matrix — mean New net PnL (config × target fold)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#722-share-of-trials-with-new-pnl--0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2.2 Share of trials with New PnL &gt; 0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#723-mean-new-α-rc--corrected-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2.3 Mean New α (RC) — corrected benchmark
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Caveats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-cross-campaign-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Cross-campaign synthesis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Cross-campaign synthesis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-the-investigation-arc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 The investigation arc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-consolidated-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Consolidated recipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-the-structural-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 The structural explanation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-transfer-vs-ensemble-recipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Transfer vs ensemble recipes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-what-remains-provisional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 What remains provisional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-recommended-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 Recommended next steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -10842,15 +11431,77 @@
   
   
   
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3_1_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_3_1_3_2" id="__nav_4_5_3_1_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deprecated
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_4_5_3_1_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_3_1_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deprecated
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../20260619_SCRIPT2_TRAILING_TP_REGIME_SWEEP_AUDIT/" class="md-nav__link">
+      <a href="../DEPRECATED/20260619_SCRIPT2_BOT_CONFIG_01_HAND_SWEEP_AUDIT/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    20260619 Script2 Trailing Tp Regime Sweep Audit
+    20260619 Script2 Bot Config 01 Hand Sweep Audit
   
 
     
@@ -10871,14 +11522,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../20260624_SCRIPT2_BOT_CONFIG_CROSS_FOLD_TRANSFER_AUDIT/" class="md-nav__link">
+      <a href="../DEPRECATED/20260619_SCRIPT2_BOT_CONFIG_02_OPTUNA_PILOT_AUDIT/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    20260624 Script2 Bot Config Cross Fold Transfer Audit
+    20260619 Script2 Bot Config 02 Optuna Pilot Audit
   
 
     
@@ -10899,14 +11550,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../20260624_SCRIPT2_BOT_CONFIG_OPTUNA_CAMPAIGN_AUDIT/" class="md-nav__link">
+      <a href="../DEPRECATED/20260624_SCRIPT2_BOT_CONFIG_03_OPTUNA_CAMPAIGN_AUDIT/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    20260624 Script2 Bot Config Optuna Campaign Audit
+    20260624 Script2 Bot Config 03 Optuna Campaign Audit
   
 
     
@@ -10915,6 +11566,42 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPRECATED/20260624_SCRIPT2_BOT_CONFIG_04_CROSSFOLD_TRANSFER_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260624 Script2 Bot Config 04 Crossfold Transfer Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -134606,10 +135293,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-inputs" class="md-nav__link">
+  <a href="#1-selection-caveat-the-one-provisional-thing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Inputs
+        1. Selection caveat (the one provisional thing)
       
     </span>
   </a>
@@ -134617,10 +135304,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-method-note" class="md-nav__link">
+  <a href="#2-run-inventory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Method note
+        2. Run inventory
       
     </span>
   </a>
@@ -134628,22 +135315,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-findings" class="md-nav__link">
+  <a href="#3-fold--regime-context-shared-by-all-campaigns" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Findings
+        3. Fold → regime context (shared by all campaigns)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Findings">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-campaign-1--hand-sweep-2026-06-1819" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Campaign 1 — Hand Sweep (2026-06-18/19)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Campaign 1 — Hand Sweep (2026-06-18/19)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-optuna-improved-every-trial--and-turned-one-profitable" class="md-nav__link">
+  <a href="#41-inputs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 Optuna improved every trial — and turned one profitable
+        4.1 Inputs
       
     </span>
   </a>
@@ -134651,10 +135349,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-the-optimum-is-regime-dependent-confirms-the-sweep" class="md-nav__link">
+  <a href="#42-method-note--the-comparison-metric" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 The optimum is regime-dependent (confirms the sweep)
+        4.2 Method note — the comparison metric
       
     </span>
   </a>
@@ -134662,10 +135360,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#33-positive-alpha-still-only-in-the-bear-folds" class="md-nav__link">
+  <a href="#43-findings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.3 Positive alpha still only in the bear folds
+        4.3 Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-the-winner-and-the-loser-are-the-same-in-every-regime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 The winner and the loser are the same in every regime
       
     </span>
   </a>
@@ -134673,10 +135383,81 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#34-parameter-importance" class="md-nav__link">
+  <a href="#432-mean-net-pnl-per-fold--config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4 Parameter importance
+        4.3.2 Mean net PnL per fold × config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-the-trailing-stops-harm-is-regime-dependent-the-headline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.3 The trailing-stop's harm is regime-dependent (the headline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#434-the-take-profit-lift-also-helps-most-where-price-oscillates-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.4 The take-profit lift also helps most where price oscillates up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#435-how-much-the-configuration-matters-is-itself-regime-dependent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.5 How much the configuration matters is itself regime-dependent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#436-operational-counter-mechanism-verified--why-the-trailing-stop-churns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.6 Operational-counter mechanism (verified) — why the trailing stop churns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Caveats
       
     </span>
   </a>
@@ -134689,35 +135470,534 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-conclusions" class="md-nav__link">
+  <a href="#5-campaign-2--optuna-pilot-2026-06-19" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Conclusions
+        5. Campaign 2 — Optuna Pilot (2026-06-19)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Campaign 2 — Optuna Pilot (2026-06-19)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Inputs
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#5-caveats" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#52-method-note" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Caveats
+        5.2 Method note
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#6-next-steps" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#53-findings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Next steps
+        5.3 Findings
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="5.3 Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-optuna-improved-every-trial--and-turned-one-profitable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.1 Optuna improved every trial — and turned one profitable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#532-the-optimum-is-regime-dependent-confirms-the-sweep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.2 The optimum is regime-dependent (confirms the sweep)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#533-positive-composite-only-in-the-bear-folds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.3 Positive composite only in the bear folds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#534-parameter-importance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.4 Parameter importance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Caveats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-campaign-3--full-optuna-campaign-2026-06-2224" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Campaign 3 — Full Optuna Campaign (2026-06-22/24)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Campaign 3 — Full Optuna Campaign (2026-06-22/24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-method-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Method note
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#631-config-tuning-turns-most-losing-trials-profitable--in-sample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 Config tuning turns most losing trials profitable — in-sample
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-the-winning-config-stop-loss-wide-take-profit-high-trailing-off-or-loose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.2 The winning config: stop-loss wide, take-profit high, trailing off-or-loose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-the-take-profit-optimum-is-not-regime-conditional-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.3 The take-profit optimum is NOT regime-conditional at scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#634-selectivity-winners-trade-little" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.4 Selectivity: winners trade little
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#635-best-model-config-per-fold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.5 Best (model, config) per fold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#636-top-5-trials-per-family--canonical-orig--new--δ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.6 Top-5 trials per family — canonical Orig / New / Δ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3.6 Top-5 trials per family — canonical Orig / New / Δ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logistic--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        logistic — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlp--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mlp — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlp_ex--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mlp_ex — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcn--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tcn — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vit--top-5-by-new-pnl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vit — top 5 by New PnL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#637-pnl-positive-is-not-the-same-as-alpha-positive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.7 PnL-positive is not the same as alpha-positive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#638-coherence-with-the-labeling-service-why-trailing-off-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.8 Coherence with the labeling service (why trailing-off wins)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Caveats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-campaign-4--cross-fold-transfer-validation-2026-06-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Campaign 4 — Cross-Fold Transfer Validation (2026-06-24)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Campaign 4 — Cross-Fold Transfer Validation (2026-06-24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Findings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 Findings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#721-transfer-matrix--mean-new-net-pnl-config--target-fold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2.1 Transfer matrix — mean New net PnL (config × target fold)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#722-share-of-trials-with-new-pnl--0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2.2 Share of trials with New PnL &gt; 0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#723-mean-new-α-rc--corrected-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2.3 Mean New α (RC) — corrected benchmark
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-conclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Caveats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-cross-campaign-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Cross-campaign synthesis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Cross-campaign synthesis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-the-investigation-arc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 The investigation arc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-consolidated-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Consolidated recipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-the-structural-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 The structural explanation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-transfer-vs-ensemble-recipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Transfer vs ensemble recipes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-what-remains-provisional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 What remains provisional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-recommended-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 Recommended next steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -134930,15 +136210,482 @@
 
 
 
-<h1 id="script-2--optuna-bot-config-trailing--tp--sl--regime-audit">Script 2 — Optuna Bot-Config (Trailing / TP / SL) × Regime Audit</h1>
-<p><strong>Created:</strong> 2026-06-19</p>
-<p><strong>Reads:</strong> fold/regime context from <code>AUDIT/REGIME/20260612_SCRIPT2_REGIME_FOLD_CROSSFOLD_FULL_AUDIT.md</code>; the
-hand-config sweep findings in <code>AUDIT/BOT_CONFIG/20260619_SCRIPT2_TRAILING_TP_REGIME_SWEEP_AUDIT.md</code>.</p>
-<p>This audit interprets the first Optuna run of the bot-config optimizer. Each studied trial gets its own
-Optuna study that searches the trailing-stop, take-profit and stop-loss settings on the trial's cached
-predictions (no retrain, no re-inference) and is scored by a composite objective. The question: <strong>does an
-Optuna search find better configs than the hand-picked sweep, and is the optimum regime-dependent?</strong></p>
-<h2 id="1-inputs">1. Inputs</h2>
+<h1 id="script-2--bot-config-optimization-consolidated-audit">Script 2 — Bot-Config Optimization: Consolidated Audit</h1>
+<p><strong>Created:</strong> 2026-06-29</p>
+<blockquote>
+<p><strong>Predecessor documents</strong> in <code>BOT_CONFIG/DEPRECATED/</code>:</p>
+<ul>
+<li><code>20260619_SCRIPT2_BOT_CONFIG_01_HAND_SWEEP_AUDIT.md</code> — hand sweep (Campaign 1)</li>
+<li><code>20260619_SCRIPT2_BOT_CONFIG_02_OPTUNA_PILOT_AUDIT.md</code> — Optuna pilot (Campaign 2)</li>
+<li><code>20260624_SCRIPT2_BOT_CONFIG_03_OPTUNA_CAMPAIGN_AUDIT.md</code> — full Optuna campaign (Campaign 3)</li>
+<li><code>20260624_SCRIPT2_BOT_CONFIG_04_CROSSFOLD_TRANSFER_AUDIT.md</code> — cross-fold transfer (Campaign 4)</li>
+</ul>
+<p>All canonical campaign reports were regenerated <strong>2026-06-26 09:37 UTC</strong>, after the risk-constrained
+benchmark backfill was corrected (2026-06-25). Every result value here — both <code>Orig</code> (the baseline
+session) and <code>New</code> (the rerun) — is read from those regenerated reports / the corrected database.</p>
+</blockquote>
+<p><strong>Reads:</strong> fold/regime context from <code>AUDIT/REGIME/20260612_SCRIPT2_REGIME_FOLD_CROSSFOLD_FULL_AUDIT.md</code>
+and <code>AUDIT/REGIME/20260613_SCRIPT2_CROSS_FOLD_FAMILY_DIAGNOSTIC_AUDIT.md</code>; campaign plan in
+<code>docs/plans/THESIS-SCRIPT2/20260621_SCRIPT2_BOT_CONFIG_OPTIMIZATION_CAMPAIGN_PLAN.md</code>; risk-constrained
+benchmark backfill bug in <code>docs/audit/20260624_RC_BENCHMARK_BACKFILL_WRONG_ATR_AUDIT.md</code>.</p>
+<p>This audit covers the complete bot-config optimization investigation: a 6-point hand sweep over the
+trailing/take-profit settings; a per-trial Optuna pilot; a full large-scale Optuna campaign across all
+four folds and five model families; and cross-fold transfer validation. The central question:
+<strong>can the right trailing-stop / take-profit / stop-loss configuration turn losing trials profitable,
+and does the winning recipe transfer across market regimes?</strong></p>
+<hr />
+<h2 id="1-selection-caveat-the-one-provisional-thing">1. Selection caveat (the one provisional thing)</h2>
+<blockquote>
+<p><strong>⚠️ All four campaigns chose <em>which trials to study</em> by ranking on <code>backtest_alpha_risk_constrained</code>
+as it was stored at selection time — before the risk-constrained-benchmark backfill was corrected.</strong>
+That stored value was wrong: the backfill had used the input high price as the ATR, so the stored
+benchmark ≈ 0 and the stored <code>alpha_rc</code> collapsed onto the trial's return (see
+<code>docs/audit/20260624_RC_BENCHMARK_BACKFILL_WRONG_ATR_AUDIT.md</code>). The selection is therefore effectively
+a <strong>return ranking, not the intended risk-constrained-alpha ranking</strong> — with the corrected benchmark
+the ranking would differ, so <strong>potentially better candidates were left out</strong>. Re-select by the
+corrected alpha-RC before any further scaling.</p>
+<p>This affects <strong>only which trials were studied.</strong> The <em>result values</em> throughout this audit are on the
+corrected benchmark: the reports were regenerated on 2026-06-26 (after the backfill on 2026-06-25), and
+the renderer re-sources every <code>Orig</code> (baseline) and <code>New</code> (rerun) session fresh from the corrected
+database, so both sides sit on the same correct basis and the <code>Δ</code> columns are like-for-like. The
+numbers are not contaminated — only the upstream choice of trials is provisional.</p>
+</blockquote>
+<hr />
+<h2 id="2-run-inventory">2. Run inventory</h2>
+<table>
+<thead>
+<tr>
+<th>Campaign</th>
+<th>Run folder</th>
+<th>Evaluations</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 — Hand sweep</td>
+<td><code>bot_config_optimizer/results/20260618_185125_highSL_trailing_tp_sweep/</code></td>
+<td>192 (32 trials × 6 configs)</td>
+<td>2026-06-18/19</td>
+</tr>
+<tr>
+<td>2 — Optuna pilot</td>
+<td><code>bot_config_optimizer/results/20260619_040950_optuna_regime_trailing_tp_sl/</code></td>
+<td>320 (8 trials × 40 TPE)</td>
+<td>2026-06-19</td>
+</tr>
+<tr>
+<td>3 — Full campaign</td>
+<td><code>bot_config_optimizer/results/20260622_*_etapa1_{logistic,mlp,mlp_ex,tcn,vit}/</code></td>
+<td>≈3,000 (100 trials × 30 TPE)</td>
+<td>2026-06-22/24</td>
+</tr>
+<tr>
+<td>4 — Transfer sweep</td>
+<td><code>bot_config_optimizer/results/20260624_024805_crossfold_validation/</code></td>
+<td>100 (20 trials × 5 configs)</td>
+<td>2026-06-24</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-fold--regime-context-shared-by-all-campaigns">3. Fold → regime context (shared by all campaigns)</h2>
+<table>
+<thead>
+<tr>
+<th>Fold</th>
+<th>Validation window</th>
+<th>Benchmark RC (Ret%)</th>
+<th>Regime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>2025-04-07 → 2025-05-01</td>
+<td>+11.90%</td>
+<td>Ranging / choppy (79% RANGING, no dominant direction)</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>2025-07-07 → 2025-08-01</td>
+<td>+4.16%</td>
+<td>Clean bull (100% bullish direction)</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>2025-10-07 → 2025-11-01</td>
+<td>−6.93%</td>
+<td>Trending bear</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>2026-01-07 → 2026-02-01</td>
+<td>−8.42%</td>
+<td>Mixed / weak bear</td>
+</tr>
+</tbody>
+</table>
+<p>The benchmark column is the corrected risk-constrained buy-and-hold over each fold's validation window;
+under the position caps (<code>max_position_value_pct = 0.20</code>, <code>max_concurrent_positions = 3</code>) it deploys
+≈ 60% of equity (see the backfill audit). The sign is the key: F1/F2 are rising-benchmark folds
+(buy-and-hold deploys and makes money); F3/F4 are falling-benchmark folds (buy-and-hold loses).</p>
+<hr />
+<h2 id="4-campaign-1--hand-sweep-2026-06-1819">4. Campaign 1 — Hand Sweep (2026-06-18/19)</h2>
+<h3 id="41-inputs">4.1 Inputs</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bot_config_optimizer/requests/20260618_185125_highSL_trailing_tp_sweep.json</code></td>
+<td>The selection + 6-config sweep request (the primary evidence).</td>
+</tr>
+<tr>
+<td>run <code>…/results/20260618_185125_highSL_trailing_tp_sweep/</code></td>
+<td>32 trials × 6 configs = 192 reruns; the canonical report.</td>
+</tr>
+<tr>
+<td>run <code>…/results/20260618_181056_minitest_asis_vs_disabled/</code></td>
+<td>4 best-per-fold trials × {as-is, trailing-off}; the determinism control.</td>
+</tr>
+<tr>
+<td>runs <code>…_minitest_best_per_fold</code> / <code>…_minitest_trailing_disabled</code></td>
+<td>Earlier 4-trial mini-tests.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Selection of the 32:</strong> stage-3 baseline COMPLETED, <code>stop_loss_exit_ratio ≥ 0.7</code> (stop-loss-heavy),
+top-8 per fold by <code>alpha_risk_constrained</code> (the stored value at selection time, see Section 1), diverse
+across tiers A+B and families LOG/MLP/MEX/TCN/VIT/AXV.</p>
+<p><strong>The 6 configs</strong> (override on each trial's tier-template bot config; baseline trailing = <code>atr,
+activation 3.0, distance 1.5</code>, take-profit = <code>risk_reward 2.0</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Trailing</th>
+<th>Take-profit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>off_tp2</code></td>
+<td>off</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>distance 1.5, activation 3.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td><code>wide_tp2</code></td>
+<td>distance 3.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td><code>wide_tp3</code></td>
+<td>distance 3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td><code>wider_tp3</code></td>
+<td>distance 5.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td><code>off_tp3</code></td>
+<td>off</td>
+<td>3.0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-method-note--the-comparison-metric">4.2 Method note — the comparison metric</h3>
+<p>The six configs are compared on <strong>net PnL</strong>. The question this sweep answers is which trailing /
+take-profit setting produces more money per trial, and net PnL is the direct economic answer: all six
+configs run on the same trials, so their PnL ordering is the finding. The risk-constrained <code>alpha_rc</code> is
+available on every session and on the corrected benchmark, but it is not the discriminator here. All
+numbers below are the mean over the 8 trials in each fold, for the rerun session.</p>
+<h3 id="43-findings">4.3 Findings</h3>
+<h4 id="431-the-winner-and-the-loser-are-the-same-in-every-regime">4.3.1 The winner and the loser are the same in every regime</h4>
+<p><code>off_tp3</code> (no trailing, take-profit 3.0) has the best mean PnL in all four folds; <code>current</code> (the
+deployed trailing, distance 1.5) has the worst in all four. Across the full 32-trial set <code>off_tp3</code>
+wins 22/32 trials and is the only config with any positive-PnL trials (2, both in F1).</p>
+<h4 id="432-mean-net-pnl-per-fold--config">4.3.2 Mean net PnL per fold × config</h4>
+<table>
+<thead>
+<tr>
+<th>Config</th>
+<th>F1 chop</th>
+<th>F2 bull</th>
+<th>F3 bear</th>
+<th>F4 bear-mixed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>off_tp3</code></td>
+<td><strong>−$181.8</strong></td>
+<td><strong>−$238.3</strong></td>
+<td><strong>−$188.6</strong></td>
+<td><strong>−$223.3</strong></td>
+</tr>
+<tr>
+<td><code>wider_tp3</code></td>
+<td>−$318.8</td>
+<td>−$343.9</td>
+<td>−$229.1</td>
+<td>−$233.0</td>
+</tr>
+<tr>
+<td><code>off_tp2</code> (≈ baseline)</td>
+<td>−$338.6</td>
+<td>−$332.2</td>
+<td>−$244.6</td>
+<td>−$251.2</td>
+</tr>
+<tr>
+<td><code>wide_tp3</code></td>
+<td>−$476.7</td>
+<td>−$443.6</td>
+<td>−$271.4</td>
+<td>−$292.0</td>
+</tr>
+<tr>
+<td><code>wide_tp2</code></td>
+<td>−$479.1</td>
+<td>−$487.2</td>
+<td>−$290.6</td>
+<td>−$312.3</td>
+</tr>
+<tr>
+<td><code>current</code></td>
+<td>−$617.4</td>
+<td>−$523.7</td>
+<td>−$310.9</td>
+<td>−$363.1</td>
+</tr>
+<tr>
+<td><em>baseline</em></td>
+<td>−$338.6</td>
+<td>−$332.2</td>
+<td>−$244.6</td>
+<td>−$251.2</td>
+</tr>
+</tbody>
+</table>
+<p><code>off_tp2</code> reproduces the baseline exactly in every fold — identical per-trial net PnL <strong>and</strong> trade count
+(e.g. F1 trial 680: −$249 and 74 trades on both sides). The baseline stage-3 sessions therefore carry no
+trailing-stop exits; <code>current</code> is the same take-profit with the trailing active at distance 1.5, and it
+is the trailing firing that adds the churn. The exact match is also the determinism control: re-applying
+a config that produces no trailing exits reproduces the baseline trade-for-trade.</p>
+<h4 id="433-the-trailing-stops-harm-is-regime-dependent-the-headline">4.3.3 The trailing-stop's harm is regime-dependent (the headline)</h4>
+<p>Isolating the trailing stop (<code>current</code> − <code>off_tp2</code>, both take-profit 2.0):</p>
+<table>
+<thead>
+<tr>
+<th>Fold</th>
+<th>Regime</th>
+<th>Trailing "tax" (mean PnL)</th>
+<th>Trade-count inflation (off → current)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Ranging / chop</td>
+<td><strong>−$278.8</strong> (worst)</td>
+<td>190.6 → 281.8 (+48%)</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Clean bull</td>
+<td>−$191.4</td>
+<td>173.0 → 222.1 (+28%)</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Trending bear</td>
+<td><strong>−$66.3</strong> (mildest)</td>
+<td>79.5 → 107.9 (+36%)</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Mixed bear</td>
+<td>−$111.9</td>
+<td>86.4 → 117.6 (+36%)</td>
+</tr>
+</tbody>
+</table>
+<p>The trailing stop does <strong>~4× more damage in the ranging fold (F1) than in the trending-bear fold
+(F3)</strong>. The mechanism is whipsaw: in a directionless / choppy market price oscillates through the
+trailing band repeatedly, closing positions early and forcing re-entries (F1 churns the most extra
+trades). In a clean down-trend the trailing is hit cleanly with less oscillation, so it churns less
+and costs less.</p>
+<h4 id="434-the-take-profit-lift-also-helps-most-where-price-oscillates-up">4.3.4 The take-profit lift also helps most where price oscillates up</h4>
+<p>Isolating the take-profit (<code>off_tp3</code> − <code>off_tp2</code>, both trailing off):</p>
+<table>
+<thead>
+<tr>
+<th>Fold</th>
+<th>Regime</th>
+<th>Take-profit benefit (2.0 → 3.0)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Ranging / chop</td>
+<td><strong>+$156.8</strong> (best)</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Clean bull</td>
+<td>+$93.9</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Trending bear</td>
+<td>+$56.1</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Mixed bear</td>
+<td><strong>+$27.9</strong> (smallest)</td>
+</tr>
+</tbody>
+</table>
+<p>Raising the take-profit captures larger up-swings before they revert; that pays most in the chop and
+bull folds (F1/F2, where up-moves exist to capture) and least in the strong-bear fold (F4, fewest
+up-moves).</p>
+<h4 id="435-how-much-the-configuration-matters-is-itself-regime-dependent">4.3.5 How much the configuration matters is itself regime-dependent</h4>
+<p>The PnL swing from worst (<code>current</code>) to best (<code>off_tp3</code>) per fold:</p>
+<table>
+<thead>
+<tr>
+<th>Fold</th>
+<th>Regime</th>
+<th>PnL swing (worst → best)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Ranging / chop</td>
+<td><strong>$435.6</strong></td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Clean bull</td>
+<td>$285.4</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Trending bear</td>
+<td>$122.4</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Mixed bear</td>
+<td>$139.8</td>
+</tr>
+</tbody>
+</table>
+<p>Configuration choice swings outcomes ~3.5× more in the ranging fold than in the trending-bear fold.
+The stakes of getting trailing/TP right are highest in choppy markets.</p>
+<h4 id="436-operational-counter-mechanism-verified--why-the-trailing-stop-churns">4.3.6 Operational-counter mechanism (verified) — why the trailing stop churns</h4>
+<p>The reruns populate the operational gate counters; the baseline stage-3 sessions do not carry them. The
+counters are internally coherent: <code>candidates = attempts + proposal_blocked</code>,
+<code>entry_blocked = proposal_blocked + (attempts − approved)</code>, and <code>approved = positions opened</code> (closed
+trades plus any still open at the window end). Same trial (F1, 2391), same predictions (3,758 candidate
+signals either way):</p>
+<table>
+<thead>
+<tr>
+<th>Run</th>
+<th>Trades</th>
+<th>Candidates</th>
+<th>Proposal-blocked</th>
+<th>Attempts</th>
+<th>Approved</th>
+<th>Risk-blocked</th>
+<th>Approval rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>trailing OFF (9195)</td>
+<td>154</td>
+<td>3758</td>
+<td>1831</td>
+<td>1927</td>
+<td>157</td>
+<td>1770</td>
+<td>8.1%</td>
+</tr>
+<tr>
+<td>trailing ON (9191)</td>
+<td>262</td>
+<td>3758</td>
+<td>2575</td>
+<td>1183</td>
+<td>263</td>
+<td>920</td>
+<td>22.2%</td>
+</tr>
+</tbody>
+</table>
+<p>The model emits the <strong>same</strong> candidate signals both ways; the difference is slot turnover. The trailing
+stop closes positions early (in 9191: 82 <code>TRAILING_STOP</code> exits, 121 trades trailed), so
+<code>max_concurrent_positions</code> slots free up more often and the risk manager approves a far higher share of
+entries (22% vs 8%), opening 263 vs 157 positions. With trailing off, positions ride to stop-loss /
+take-profit, slots stay occupied, and the risk manager blocks far more entries on the position cap
+(1,770 vs 920), so the bot opens fewer. The extra entries also trigger more post-entry cooldown windows,
+which raises the pre-risk <code>proposal_blocked</code> count. No risk halts or force-flats fire in this fold (both
+counters 0), so the churn is entirely the trailing-exit → free-slot → re-entry loop, not risk-manager
+intervention. This is the operational reason the trailing stop both exits more and enters more.</p>
+<h3 id="44-conclusions">4.4 Conclusions</h3>
+<ol>
+<li><strong>Confirmed: the trailing / take-profit configuration interacts with regime.</strong> The trailing stop is
+   most harmful in ranging and bull folds (whipsaw) and least harmful in the trending-bear fold; the
+   take-profit lift helps most in chop/bull and least in strong bear.</li>
+<li><strong>The deployed trailing config (distance 1.5) is the worst option in every regime</strong> and should be
+   widened or disabled. Across all 32 trials and all four regimes, <strong>no trailing + higher take-profit</strong>
+   is the best of the tested configs.</li>
+<li><strong>None of this turns the strategy profitable.</strong> Every config is negative-mean in every fold; only
+   <code>off_tp3</code> produces any positive trials (2/32, both in F1). These are stop-loss-heavy trials by
+   selection; tuning trailing/TP reduces the loss, it does not create an edge.</li>
+</ol>
+<h3 id="45-caveats">4.5 Caveats</h3>
+<ul>
+<li><strong>Stop-loss was not varied</strong> (held at <code>atr 2.5</code>). The SL × regime interaction is untested; it is the
+  obvious next lever, especially since the selection targeted stop-loss-heavy trials.</li>
+<li><strong>Stop-loss-heavy selection</strong> (<code>stop_loss_exit_ratio ≥ 0.7</code>) biases toward losers; the whole
+  candidate pool is stop-loss-heavy (1025/1026 trials ≥ 0.5), so this is representative of the
+  population, but the configs were not tested on the rare non-stop-loss-heavy trials.</li>
+<li><strong>The sweep reads net PnL across the six configs.</strong> The risk-constrained alpha is available per session
+  on the corrected benchmark but is not the sweep's discriminator; the per-trial alpha pattern is read in
+  Campaign 3 (Section 6.3.7).</li>
+<li><strong>Hand-picked configs, not a search.</strong> Six points in <code>{trailing distance, trailing enabled,
+  take-profit}</code>; the optima between them are unprobed.</li>
+<li><strong>Reruns are strategy-identical to the baseline, not bit-identical.</strong> A field-by-field check
+  (<code>scripts/tmp-utils/checks/compare_backtest_sessions.py</code>, baseline session 1218 vs trailing-off rerun
+  9195) confirms all 157 trades match the baseline trade-for-trade (side, size, entry/exit price,
+  PnL, gross PnL, commissions, exit reason within 1e-9). Predictions are re-inferred per run, so model
+  confidences differ at ~1e-7 (float, non-decision-flipping); that shifts <code>ref_gross</code> (~$0.5/trade) and
+  a few session-tail aggregates (last price, exposure, slippage, daily volatility). The
+  risk-constrained benchmark family and the operational counters differ as expected (recomputed /
+  not carried on the baseline). Trade decisions are unaffected, which is why the trailing-off rerun
+  reproduces the baseline economics exactly.</li>
+</ul>
+<hr />
+<h2 id="5-campaign-2--optuna-pilot-2026-06-19">5. Campaign 2 — Optuna Pilot (2026-06-19)</h2>
+<h3 id="51-inputs">5.1 Inputs</h3>
 <table>
 <thead>
 <tr>
@@ -134958,19 +136705,19 @@ Optuna search find better configs than the hand-picked sweep, and is the optimum
 </tbody>
 </table>
 <p><strong>Selection:</strong> stage-3 baseline COMPLETED, <code>stop_loss_exit_ratio ≥ 0.7</code>, top-2 per fold by
-<code>alpha_risk_constrained</code> → <strong>8 trials, 2 per regime</strong>: F1 LOG+MEX, F2 VIT+VIT, F3 VIT+VIT, F4 MEX+VIT.</p>
-<p><strong>Search space:</strong> <code>trailing_stop.distance</code> (1–6), <code>trailing_stop.activation</code> (1–6), <code>take_profit.value</code>
-(1–4), <code>stop_loss.value</code> (1–4).</p>
+<code>alpha_risk_constrained</code> (the stored value at selection time, see Section 1) → <strong>8 trials, 2 per
+regime</strong>: F1 LOG+MEX, F2 VIT+VIT, F3 VIT+VIT, F4 MEX+VIT.</p>
+<p><strong>Search space:</strong> <code>trailing_stop.distance</code> (1–6), <code>trailing_stop.activation</code> (1–6),
+<code>take_profit.value</code> (1–4), <code>stop_loss.value</code> (1–4).</p>
 <p><strong>Objective:</strong> <code>0.5·alpha_rc + 0.5·return_pct</code> (weighted-mean composite). 40 TPE trials per studied
 trial, seed 42.</p>
-<h2 id="2-method-note">2. Method note</h2>
-<p>The composite objective is used because per-trial <code>alpha_rc</code> alone is near-flat (it barely discriminated
-in the hand sweep), so adding <code>return_pct</code> gives the search a usable gradient. Within one study every
-config runs on the same engine, so its <code>alpha_rc</code> is internally consistent and the search ranking is
-valid; the baseline-vs-best comparison below reads <strong>net PnL</strong>, since old-engine baseline <code>alpha_rc</code> is
-not comparable to new-engine reruns (see the trailing/TP sweep audit).</p>
-<h2 id="3-findings">3. Findings</h2>
-<h3 id="31-optuna-improved-every-trial--and-turned-one-profitable">3.1 Optuna improved every trial — and turned one profitable</h3>
+<h3 id="52-method-note">5.2 Method note</h3>
+<p>The composite objective blends the risk-constrained alpha with the raw return so the TPE sampler has a
+usable gradient across a stop-loss-heavy population. Within one study every config runs on the same
+trial, so the search ranking is internally consistent; the baseline-vs-best comparison below reads
+<strong>net PnL</strong>, the economic bottom line.</p>
+<h3 id="53-findings">5.3 Findings</h3>
+<h4 id="531-optuna-improved-every-trial--and-turned-one-profitable">5.3.1 Optuna improved every trial — and turned one profitable</h4>
 <p>Best Optuna config per trial vs the trial's baseline:</p>
 <table>
 <thead>
@@ -135000,16 +136747,16 @@ not comparable to new-engine reruns (see the trailing/TP sweep audit).</p>
 <tr>
 <td>F2 bull</td>
 <td>vit</td>
-<td>−$111</td>
-<td>−$266</td>
-<td>3.7 / 5.3 / 3.5 / 3.8</td>
+<td>−$53</td>
+<td>−$235</td>
+<td>4.5 / 4.9 / 3.5 / 3.9</td>
 </tr>
 <tr>
 <td>F2 bull</td>
 <td>vit</td>
-<td>−$53</td>
-<td>−$235</td>
-<td>4.5 / 4.9 / 3.5 / 3.9</td>
+<td>−$111</td>
+<td>−$266</td>
+<td>3.7 / 5.3 / 3.5 / 3.8</td>
 </tr>
 <tr>
 <td>F3 bear</td>
@@ -135043,44 +136790,1174 @@ not comparable to new-engine reruns (see the trailing/TP sweep audit).</p>
 </table>
 <p>Every one of the 8 trials improved on its baseline; <strong>F1 <code>mlp_ex</code> flipped from −$316 to +$306</strong> — the
 first profitable result in this line of work.</p>
-<h3 id="32-the-optimum-is-regime-dependent-confirms-the-sweep">3.2 The optimum is regime-dependent (confirms the sweep)</h3>
+<h4 id="532-the-optimum-is-regime-dependent-confirms-the-sweep">5.3.2 The optimum is regime-dependent (confirms the sweep)</h4>
 <ul>
 <li><strong>Take-profit:</strong> <strong>high (3.5–3.9) in the chop/bull folds (F1, F2) and the mixed-bear F4</strong>, but
-  <strong>low (1.0–1.4) in the clean trending-bear F3</strong> — take small gains quickly in a downtrend, let them run
-  in chop/up.</li>
-<li><strong>Stop-loss:</strong> <strong>wide (3.3–4.0) everywhere</strong> — wider stops avoid the premature exits that dominate this
-  stop-loss-heavy population.</li>
-<li><strong>Trailing:</strong> <strong>wide (distance ≈ 5–6, effectively off) in 7 of 8</strong> — consistent with the sweep finding
-  that a tight trailing stop only churns and hurts. (One F4 outlier used distance 1.3.)</li>
+  <strong>low (1.0–1.4) in the clean trending-bear F3</strong> — take small gains quickly in a downtrend, let them
+  run in chop/up. (Note: this per-regime split does <strong>not</strong> survive at full scale — see Section 6.3.3.)</li>
+<li><strong>Stop-loss:</strong> <strong>wide (3.3–4.0) everywhere</strong> — wider stops avoid the premature exits that dominate
+  this stop-loss-heavy population.</li>
+<li><strong>Trailing:</strong> <strong>wide (distance ≈ 5–6, effectively off) in 7 of 8</strong> — consistent with the sweep
+  finding that a tight trailing stop only churns and hurts. (One F4 outlier used distance 1.3.)</li>
 </ul>
-<h3 id="33-positive-alpha-still-only-in-the-bear-folds">3.3 Positive alpha still only in the bear folds</h3>
-<p>The composite objective is positive only for F3/F4; F1/F2 stay negative — the defensive edge remains
-concentrated in down markets, matching the regime audit.</p>
-<h3 id="34-parameter-importance">3.4 Parameter importance</h3>
+<h4 id="533-positive-composite-only-in-the-bear-folds">5.3.3 Positive composite only in the bear folds</h4>
+<p>The composite objective is positive only for F3/F4; F1/F2 stay negative — the defensive edge concentrates
+in down markets, matching the regime audit, and Campaign 3 confirms this at the per-trial alpha level
+(Section 6.3.7).</p>
+<h4 id="534-parameter-importance">5.3.4 Parameter importance</h4>
 <p>Across the studies, <code>take_profit.value</code> and <code>stop_loss.value</code> dominate the Optuna importance; the
 trailing parameters matter less. Adding the stop-loss to the search was the decisive lever.</p>
-<h2 id="4-conclusions">4. Conclusions</h2>
+<h3 id="54-conclusions">5.4 Conclusions</h3>
 <ol>
 <li><strong>An Optuna search beats the hand-picked configs</strong> and tunes per trial, improving all 8 and producing
    one profitable trial — the apparatus and the composite objective work end to end.</li>
-<li><strong>The optimal config is regime-conditional</strong>, chiefly through the take-profit: high in chop/bull,
-   low in trending bear; the stop-loss is best wide and the trailing stop best loose/off in every regime.</li>
+<li><strong>The optimal config appears regime-conditional at this scale</strong>, chiefly through the take-profit:
+   high in chop/bull, low in trending bear; the stop-loss is best wide and the trailing stop best
+   loose/off in every regime.</li>
 <li><strong>Stop-loss and take-profit are the dominant levers</strong> here, not the trailing stop.</li>
 </ol>
-<h2 id="5-caveats">5. Caveats</h2>
+<h3 id="55-caveats">5.5 Caveats</h3>
 <ul>
-<li><strong>Per-trial, not ensemble</strong>, and on a <strong>stop-loss-heavy</strong> selection; the per-trial risk-constrained
-  benchmark is near-flat, so this is an economic (PnL) optimization, not an ensemble-alpha claim.</li>
+<li><strong>Per-trial reruns on a stop-loss-heavy selection</strong>; the headline is net PnL.</li>
 <li><strong>40 trials per study</strong> is a modest budget; the optima are indicative, not converged.</li>
 <li>The single profitable result (F1 <code>mlp_ex</code>) is <strong>in-sample</strong> to its fold; it must be validated
   out-of-fold before it means anything.</li>
+<li>The per-regime take-profit split observed here (low in F3) is a small-sample artifact — it does
+  not generalize to the full population at scale (see Section 6.3.3).</li>
 </ul>
-<h2 id="6-next-steps">6. Next steps</h2>
+<hr />
+<h2 id="6-campaign-3--full-optuna-campaign-2026-06-2224">6. Campaign 3 — Full Optuna Campaign (2026-06-22/24)</h2>
+<h3 id="61-inputs">6.1 Inputs</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bot_config_optimizer/requests/20260622_etapa1_&lt;family&gt;.json</code></td>
+<td>Five per-family search requests.</td>
+</tr>
+<tr>
+<td><code>…/results/20260622_*_etapa1_{logistic,mlp,mlp_ex,tcn,vit}/</code></td>
+<td><code>optuna_trial_&lt;id&gt;.sqlite</code>, <code>results.json</code> / <code>.csv</code>, <code>report.md</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Selection:</strong> top-5 trials per <code>(family, fold)</code> ranked by <code>backtest_alpha_risk_constrained</code> (the stored
+value at selection time, see Section 1), over the five canonical source runs (<code>20260319_035820</code>,
+<code>20260323_tierA_rescue_v2</code>, <code>20260325_tierB_mlp_ex</code>, <code>20260328_tierB_corrected</code>,
+<code>20260401_tierB_rescue_v5</code>). Families <code>logistic</code>, <code>mlp</code>, <code>mlp_ex</code>, <code>tcn</code>, <code>vit</code>; 20 trials each →
+<strong>100 trials</strong>, 25 per fold.</p>
+<p><strong>Search space:</strong> <code>trailing_stop.enabled</code> (on/off), <code>trailing_stop.distance</code> (1–6),
+<code>trailing_stop.activation</code> (1–6), <code>take_profit.value</code> (1–4), <code>stop_loss.value</code> (1–4).</p>
+<p><strong>Objective:</strong> <code>0.5·return_pct + 0.5·alpha_risk_constrained</code> (weighted composite). 30 TPE trials per
+study, seed 42, no pruning (the reruns are <code>MANUAL</code> backtests, which run the full validation window).
+<strong>3,000 backtests total.</strong></p>
+<h3 id="62-method-note">6.2 Method note</h3>
+<p>One independent Optuna study per studied trial: each trial is a different trained model with its own
+cached predictions, so its best config is a separate optimization problem (pooling trials would feed the
+TPE sampler incomparable objective values). Each study fully searches its trial's config space; the
+per-trial study is stored in its own sqlite for independence, resume, and audit.</p>
+<p><code>Orig</code> is the trial's baseline stage-3 session; <code>New</code> is the tuned-config rerun. Both sessions read their
+risk-constrained benchmark from the corrected database (the renderer re-sources each side fresh from
+<code>backtest_sessions</code> by id), so <code>Orig α (RC)</code> and <code>New α (RC)</code> are on the same corrected basis and
+<code>Δ α (RC)</code> is a like-for-like comparison. The baseline and rerun benchmarks agree to ~1–2 pp; small
+per-session residuals remain because each session's benchmark is computed over its own execution window
+with the live ATR. The <code>best</code> config is the maximum over 30 searched configs on the trial's own fold,
+so every number here is <strong>in-sample and optimistic by construction</strong>.</p>
+<h3 id="63-findings">6.3 Findings</h3>
+<h4 id="631-config-tuning-turns-most-losing-trials-profitable--in-sample">6.3.1 Config tuning turns most losing trials profitable — in-sample</h4>
+<p><strong>68 of 100 trials have a PnL-positive best config.</strong> It works in every fold, including the two folds
+that never produced a profitable trial before:</p>
+<table>
+<thead>
+<tr>
+<th>Fold</th>
+<th>Regime</th>
+<th>Best config PnL &gt; 0</th>
+<th>Baseline PnL &gt; 0</th>
+<th>Median Δ PnL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>ranging</td>
+<td><strong>23/25</strong></td>
+<td>8/25</td>
+<td>+$494</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>bull</td>
+<td><strong>11/25</strong></td>
+<td>0/25</td>
+<td>+$456</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>bear</td>
+<td><strong>15/25</strong></td>
+<td>6/25</td>
+<td>+$264</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>bear-mix</td>
+<td><strong>19/25</strong></td>
+<td>0/25</td>
+<td>+$489</td>
+</tr>
+</tbody>
+</table>
+<p>F2 and F4 go from <strong>zero</strong> baseline-profitable trials to 11/25 and 19/25 — config alone, no retrain.</p>
+<h4 id="632-the-winning-config-stop-loss-wide-take-profit-high-trailing-off-or-loose">6.3.2 The winning config: stop-loss wide, take-profit high, trailing off-or-loose</h4>
+<ul>
+<li><strong>Trailing:</strong> of the 100 winning configs, <strong>46 disable it, 42 keep it but wide (distance ≥ 4.5),
+  only 12 keep it tight (distance &lt; 4.5)</strong> — 88/100 are off-or-loose. The tight-trailing churn that
+  dominated the deployed config is almost never optimal.</li>
+<li><strong>Stop-loss:</strong> median <strong>3.68</strong> (range 1.90–3.99) — wide, as in the earlier sweep.</li>
+<li><strong>Take-profit:</strong> median <strong>3.45</strong> (range 1.06–4.00) — high.</li>
+</ul>
+<h4 id="633-the-take-profit-optimum-is-not-regime-conditional-at-scale">6.3.3 The take-profit optimum is NOT regime-conditional at scale</h4>
+<p>Per-fold median take-profit is essentially flat — <strong>F1 3.55, F2 3.47, F3 3.41, F4 3.42</strong> — i.e. high
+in the bear folds too. This <strong>revises the single-run pilot</strong> (Section 5), which read take-profit as
+low (1.0–1.4) in the trending-bear fold. With a real budget across many trials the take-profit optimum
+is uniformly high; the earlier per-regime split does not generalize. Median stop-loss is similarly wide
+across folds (F1 3.53, F2 3.72, F3 3.56, F4 3.89), and loose trailing was already regime-flat.</p>
+<h4 id="634-selectivity-winners-trade-little">6.3.4 Selectivity: winners trade little</h4>
+<p>The median trade count of the PnL-positive winners is <strong>72</strong> — at or below the ~100–150 selectivity
+zone flagged as the primary economic lever. The configs that win do so by trading less.</p>
+<h4 id="635-best-model-config-per-fold">6.3.5 Best <code>(model, config)</code> per fold</h4>
+<table>
+<thead>
+<tr>
+<th>Fold</th>
+<th>Trial</th>
+<th>Base → Best</th>
+<th>Winning config</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td><code>mlp</code> 3167</td>
+<td>−$150 → <strong>+$952</strong></td>
+<td>trailing off, TP 3.24, SL 3.47, 69 trades</td>
+</tr>
+<tr>
+<td>F2</td>
+<td><code>mlp_ex</code> 2256</td>
+<td>−$463 → <strong>+$365</strong></td>
+<td>trailing off, TP 3.37, SL 3.97, 30 trades</td>
+</tr>
+<tr>
+<td>F3</td>
+<td><code>vit</code> 3955</td>
+<td>+$33 → <strong>+$354</strong></td>
+<td>trailing off, TP 3.11, SL 3.99, 31 trades</td>
+</tr>
+<tr>
+<td>F4</td>
+<td><code>logistic</code> 797</td>
+<td>−$320 → <strong>+$454</strong></td>
+<td>trailing on (d6.0/a5.4), TP 3.93, SL 3.43, 98 trades</td>
+</tr>
+</tbody>
+</table>
+<h4 id="636-top-5-trials-per-family--canonical-orig--new--δ">6.3.6 Top-5 trials per family — canonical <code>Orig / New / Δ</code></h4>
+<p>Per-family top-5 by New net PnL (best config per distinct trial), in canonical column order. <code>Orig</code> =
+the trial's baseline stage-3 session; <code>New</code> = the tuned-config rerun. Both benchmark/alpha columns are
+on the corrected risk-constrained benchmark, read fresh from the backfilled database (per-fold benchmark
+F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
+<h5 id="logistic--top-5-by-new-pnl"><code>logistic</code> — top 5 by New PnL</h5>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Model</th>
+<th>Fold</th>
+<th>Orig PnL (Ret%)</th>
+<th>New PnL (Ret%)</th>
+<th>Δ PnL</th>
+<th>Orig Bm RC (Ret%)</th>
+<th>New Bm RC (Ret%)</th>
+<th>Orig α (RC)</th>
+<th>New α (RC)</th>
+<th>Δ α (RC)</th>
+<th>Orig Trades (Entry%)</th>
+<th>New Trades</th>
+<th>New Sharpe</th>
+<th>TrialID</th>
+<th>BktID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>logistic</td>
+<td>F4</td>
+<td>$-320 (-3.2%)</td>
+<td>$454 (+4.5%)</td>
+<td>+$774</td>
+<td>-9.2%</td>
+<td>-8.4%</td>
+<td>+6.0%</td>
+<td>+13.0%</td>
+<td>+7.0 pp</td>
+<td>225 (69.6%)</td>
+<td>98</td>
+<td>2.76</td>
+<td>797</td>
+<td>13426</td>
+</tr>
+<tr>
+<td>2</td>
+<td>logistic</td>
+<td>F4</td>
+<td>$-383 (-3.8%)</td>
+<td>$279 (+2.8%)</td>
+<td>+$662</td>
+<td>-6.6%</td>
+<td>-8.4%</td>
+<td>+2.8%</td>
+<td>+11.2%</td>
+<td>+8.4 pp</td>
+<td>234 (51.4%)</td>
+<td>95</td>
+<td>1.63</td>
+<td>807</td>
+<td>13473</td>
+</tr>
+<tr>
+<td>3</td>
+<td>logistic</td>
+<td>F1</td>
+<td>$-347 (-3.5%)</td>
+<td>$273 (+2.7%)</td>
+<td>+$620</td>
+<td>+11.7%</td>
+<td>+11.9%</td>
+<td>-15.1%</td>
+<td>-9.2%</td>
+<td>+5.9 pp</td>
+<td>329 (53.2%)</td>
+<td>156</td>
+<td>1.05</td>
+<td>2894</td>
+<td>12967</td>
+</tr>
+<tr>
+<td>4</td>
+<td>logistic</td>
+<td>F4</td>
+<td>$-437 (-4.4%)</td>
+<td>$250 (+2.5%)</td>
+<td>+$687</td>
+<td>-9.2%</td>
+<td>-8.4%</td>
+<td>+4.8%</td>
+<td>+10.9%</td>
+<td>+6.1 pp</td>
+<td>249 (71.3%)</td>
+<td>52</td>
+<td>1.31</td>
+<td>3078</td>
+<td>13514</td>
+</tr>
+<tr>
+<td>5</td>
+<td>logistic</td>
+<td>F1</td>
+<td>$-547 (-5.5%)</td>
+<td>$211 (+2.1%)</td>
+<td>+$757</td>
+<td>+11.8%</td>
+<td>+11.9%</td>
+<td>-17.3%</td>
+<td>-9.8%</td>
+<td>+7.5 pp</td>
+<td>262 (71.8%)</td>
+<td>114</td>
+<td>1.14</td>
+<td>688</td>
+<td>13038</td>
+</tr>
+</tbody>
+</table>
+<h5 id="mlp--top-5-by-new-pnl"><code>mlp</code> — top 5 by New PnL</h5>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Model</th>
+<th>Fold</th>
+<th>Orig PnL (Ret%)</th>
+<th>New PnL (Ret%)</th>
+<th>Δ PnL</th>
+<th>Orig Bm RC (Ret%)</th>
+<th>New Bm RC (Ret%)</th>
+<th>Orig α (RC)</th>
+<th>New α (RC)</th>
+<th>Δ α (RC)</th>
+<th>Orig Trades (Entry%)</th>
+<th>New Trades</th>
+<th>New Sharpe</th>
+<th>TrialID</th>
+<th>BktID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>mlp</td>
+<td>F1</td>
+<td>$-150 (-1.5%)</td>
+<td>$952 (+9.5%)</td>
+<td>+$1,102</td>
+<td>+11.6%</td>
+<td>+11.9%</td>
+<td>-13.1%</td>
+<td>-2.4%</td>
+<td>+10.7 pp</td>
+<td>235 (27.0%)</td>
+<td>69</td>
+<td>5.97</td>
+<td>3167</td>
+<td>13668</td>
+</tr>
+<tr>
+<td>2</td>
+<td>mlp</td>
+<td>F1</td>
+<td>$-92 (-0.9%)</td>
+<td>$604 (+6.0%)</td>
+<td>+$696</td>
+<td>+11.8%</td>
+<td>+11.9%</td>
+<td>-12.8%</td>
+<td>-5.9%</td>
+<td>+6.9 pp</td>
+<td>212 (27.9%)</td>
+<td>91</td>
+<td>3.35</td>
+<td>1954</td>
+<td>13582</td>
+</tr>
+<tr>
+<td>3</td>
+<td>mlp</td>
+<td>F1</td>
+<td>$73 (+0.7%)</td>
+<td>$413 (+4.1%)</td>
+<td>+$340</td>
+<td>+11.5%</td>
+<td>+11.9%</td>
+<td>-10.8%</td>
+<td>-7.8%</td>
+<td>+3.0 pp</td>
+<td>213 (29.4%)</td>
+<td>110</td>
+<td>2.22</td>
+<td>1943</td>
+<td>13546</td>
+</tr>
+<tr>
+<td>4</td>
+<td>mlp</td>
+<td>F4</td>
+<td>$-167 (-1.7%)</td>
+<td>$400 (+4.0%)</td>
+<td>+$567</td>
+<td>-6.9%</td>
+<td>-8.4%</td>
+<td>+5.2%</td>
+<td>+12.4%</td>
+<td>+7.2 pp</td>
+<td>155 (36.7%)</td>
+<td>84</td>
+<td>2.55</td>
+<td>1424</td>
+<td>13996</td>
+</tr>
+<tr>
+<td>5</td>
+<td>mlp</td>
+<td>F1</td>
+<td>$-115 (-1.1%)</td>
+<td>$362 (+3.6%)</td>
+<td>+$477</td>
+<td>+11.7%</td>
+<td>+11.9%</td>
+<td>-12.8%</td>
+<td>-8.3%</td>
+<td>+4.5 pp</td>
+<td>210 (41.7%)</td>
+<td>107</td>
+<td>1.61</td>
+<td>1365</td>
+<td>13597</td>
+</tr>
+</tbody>
+</table>
+<h5 id="mlp_ex--top-5-by-new-pnl"><code>mlp_ex</code> — top 5 by New PnL</h5>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Model</th>
+<th>Fold</th>
+<th>Orig PnL (Ret%)</th>
+<th>New PnL (Ret%)</th>
+<th>Δ PnL</th>
+<th>Orig Bm RC (Ret%)</th>
+<th>New Bm RC (Ret%)</th>
+<th>Orig α (RC)</th>
+<th>New α (RC)</th>
+<th>Δ α (RC)</th>
+<th>Orig Trades (Entry%)</th>
+<th>New Trades</th>
+<th>New Sharpe</th>
+<th>TrialID</th>
+<th>BktID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>mlp_ex</td>
+<td>F1</td>
+<td>$77 (+0.8%)</td>
+<td>$577 (+5.8%)</td>
+<td>+$500</td>
+<td>+11.8%</td>
+<td>+11.9%</td>
+<td>-11.0%</td>
+<td>-6.1%</td>
+<td>+4.9 pp</td>
+<td>228 (41.8%)</td>
+<td>77</td>
+<td>3.79</td>
+<td>2171</td>
+<td>14151</td>
+</tr>
+<tr>
+<td>2</td>
+<td>mlp_ex</td>
+<td>F1</td>
+<td>$-126 (-1.3%)</td>
+<td>$567 (+5.7%)</td>
+<td>+$694</td>
+<td>+11.6%</td>
+<td>+11.9%</td>
+<td>-12.9%</td>
+<td>-6.2%</td>
+<td>+6.7 pp</td>
+<td>216 (47.8%)</td>
+<td>94</td>
+<td>3.09</td>
+<td>2189</td>
+<td>14163</td>
+</tr>
+<tr>
+<td>3</td>
+<td>mlp_ex</td>
+<td>F1</td>
+<td>$-197 (-2.0%)</td>
+<td>$553 (+5.5%)</td>
+<td>+$750</td>
+<td>+11.8%</td>
+<td>+11.9%</td>
+<td>-13.8%</td>
+<td>-6.4%</td>
+<td>+7.4 pp</td>
+<td>259 (39.8%)</td>
+<td>58</td>
+<td>3.56</td>
+<td>2188</td>
+<td>14268</td>
+</tr>
+<tr>
+<td>4</td>
+<td>mlp_ex</td>
+<td>F1</td>
+<td>$-147 (-1.5%)</td>
+<td>$447 (+4.5%)</td>
+<td>+$594</td>
+<td>+11.6%</td>
+<td>+11.9%</td>
+<td>-13.1%</td>
+<td>-7.4%</td>
+<td>+5.7 pp</td>
+<td>252 (39.4%)</td>
+<td>52</td>
+<td>3.27</td>
+<td>2168</td>
+<td>14212</td>
+</tr>
+<tr>
+<td>5</td>
+<td>mlp_ex</td>
+<td>F2</td>
+<td>$-463 (-4.6%)</td>
+<td>$365 (+3.6%)</td>
+<td>+$827</td>
+<td>+4.2%</td>
+<td>+4.2%</td>
+<td>-8.8%</td>
+<td>-0.5%</td>
+<td>+8.3 pp</td>
+<td>287 (48.8%)</td>
+<td>30</td>
+<td>6.17</td>
+<td>2256</td>
+<td>14319</td>
+</tr>
+</tbody>
+</table>
+<h5 id="tcn--top-5-by-new-pnl"><code>tcn</code> — top 5 by New PnL</h5>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Model</th>
+<th>Fold</th>
+<th>Orig PnL (Ret%)</th>
+<th>New PnL (Ret%)</th>
+<th>Δ PnL</th>
+<th>Orig Bm RC (Ret%)</th>
+<th>New Bm RC (Ret%)</th>
+<th>Orig α (RC)</th>
+<th>New α (RC)</th>
+<th>Δ α (RC)</th>
+<th>Orig Trades (Entry%)</th>
+<th>New Trades</th>
+<th>New Sharpe</th>
+<th>TrialID</th>
+<th>BktID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>tcn</td>
+<td>F1</td>
+<td>$186 (+1.9%)</td>
+<td>$740 (+7.4%)</td>
+<td>+$554</td>
+<td>+11.7%</td>
+<td>+11.9%</td>
+<td>-9.8%</td>
+<td>-4.5%</td>
+<td>+5.3 pp</td>
+<td>154 (53.2%)</td>
+<td>78</td>
+<td>3.95</td>
+<td>2391</td>
+<td>14736</td>
+</tr>
+<tr>
+<td>2</td>
+<td>tcn</td>
+<td>F1</td>
+<td>$-173 (-1.7%)</td>
+<td>$594 (+5.9%)</td>
+<td>+$768</td>
+<td>+11.8%</td>
+<td>+11.9%</td>
+<td>-13.5%</td>
+<td>-6.0%</td>
+<td>+7.5 pp</td>
+<td>177 (68.7%)</td>
+<td>94</td>
+<td>3.24</td>
+<td>5790</td>
+<td>14865</td>
+</tr>
+<tr>
+<td>3</td>
+<td>tcn</td>
+<td>F1</td>
+<td>$-68 (-0.7%)</td>
+<td>$238 (+2.4%)</td>
+<td>+$306</td>
+<td>+11.7%</td>
+<td>+11.9%</td>
+<td>-12.4%</td>
+<td>-9.5%</td>
+<td>+2.9 pp</td>
+<td>142 (43.6%)</td>
+<td>84</td>
+<td>1.57</td>
+<td>5723</td>
+<td>14799</td>
+</tr>
+<tr>
+<td>4</td>
+<td>tcn</td>
+<td>F4</td>
+<td>$-274 (-2.7%)</td>
+<td>$221 (+2.2%)</td>
+<td>+$495</td>
+<td>-8.2%</td>
+<td>-8.4%</td>
+<td>+5.5%</td>
+<td>+10.6%</td>
+<td>+5.1 pp</td>
+<td>238 (100.0%)</td>
+<td>109</td>
+<td>1.59</td>
+<td>1516</td>
+<td>15188</td>
+</tr>
+<tr>
+<td>5</td>
+<td>tcn</td>
+<td>F1</td>
+<td>$-57 (-0.6%)</td>
+<td>$217 (+2.2%)</td>
+<td>+$273</td>
+<td>+11.9%</td>
+<td>+11.9%</td>
+<td>-12.5%</td>
+<td>-9.7%</td>
+<td>+2.8 pp</td>
+<td>142 (44.5%)</td>
+<td>61</td>
+<td>1.55</td>
+<td>5749</td>
+<td>14773</td>
+</tr>
+</tbody>
+</table>
+<h5 id="vit--top-5-by-new-pnl"><code>vit</code> — top 5 by New PnL</h5>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Model</th>
+<th>Fold</th>
+<th>Orig PnL (Ret%)</th>
+<th>New PnL (Ret%)</th>
+<th>Δ PnL</th>
+<th>Orig Bm RC (Ret%)</th>
+<th>New Bm RC (Ret%)</th>
+<th>Orig α (RC)</th>
+<th>New α (RC)</th>
+<th>Δ α (RC)</th>
+<th>Orig Trades (Entry%)</th>
+<th>New Trades</th>
+<th>New Sharpe</th>
+<th>TrialID</th>
+<th>BktID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>vit</td>
+<td>F1</td>
+<td>$63 (+0.6%)</td>
+<td>$557 (+5.6%)</td>
+<td>+$494</td>
+<td>+11.7%</td>
+<td>+11.9%</td>
+<td>-11.1%</td>
+<td>-6.3%</td>
+<td>+4.8 pp</td>
+<td>221 (70.4%)</td>
+<td>55</td>
+<td>3.29</td>
+<td>3890</td>
+<td>15411</td>
+</tr>
+<tr>
+<td>2</td>
+<td>vit</td>
+<td>F4</td>
+<td>$-10 (-0.1%)</td>
+<td>$413 (+4.1%)</td>
+<td>+$424</td>
+<td>-8.4%</td>
+<td>-8.4%</td>
+<td>+8.3%</td>
+<td>+12.6%</td>
+<td>+4.3 pp</td>
+<td>202 (96.1%)</td>
+<td>35</td>
+<td>5.55</td>
+<td>7545</td>
+<td>15804</td>
+</tr>
+<tr>
+<td>3</td>
+<td>vit</td>
+<td>F3</td>
+<td>$33 (+0.3%)</td>
+<td>$354 (+3.5%)</td>
+<td>+$321</td>
+<td>-8.0%</td>
+<td>-6.9%</td>
+<td>+8.3%</td>
+<td>+10.5%</td>
+<td>+2.2 pp</td>
+<td>48 (2.4%)</td>
+<td>31</td>
+<td>5.45</td>
+<td>3955</td>
+<td>15667</td>
+</tr>
+<tr>
+<td>4</td>
+<td>vit</td>
+<td>F3</td>
+<td>$66 (+0.7%)</td>
+<td>$330 (+3.3%)</td>
+<td>+$264</td>
+<td>-6.8%</td>
+<td>-6.9%</td>
+<td>+7.5%</td>
+<td>+10.2%</td>
+<td>+2.7 pp</td>
+<td>194 (43.0%)</td>
+<td>174</td>
+<td>1.81</td>
+<td>2798</td>
+<td>15637</td>
+</tr>
+<tr>
+<td>5</td>
+<td>vit</td>
+<td>F4</td>
+<td>$-87 (-0.9%)</td>
+<td>$328 (+3.3%)</td>
+<td>+$416</td>
+<td>-8.3%</td>
+<td>-8.4%</td>
+<td>+7.4%</td>
+<td>+11.7%</td>
+<td>+4.3 pp</td>
+<td>195 (96.2%)</td>
+<td>83</td>
+<td>2.28</td>
+<td>7547</td>
+<td>15813</td>
+</tr>
+</tbody>
+</table>
+<h4 id="637-pnl-positive-is-not-the-same-as-alpha-positive">6.3.7 PnL-positive is not the same as alpha-positive</h4>
+<p>With the corrected benchmark the regime split is visible already in the baseline and sharpens after
+tuning:</p>
+<ul>
+<li>In the <strong>rising-benchmark folds</strong> (F1 +11.9%, F2 +4.2%) the baseline trials sit at strongly negative
+  <code>α (RC)</code> (−11% to −17% in F1) because they barely move while buy-and-hold rises. Tuning lifts α by
+  +3 to +11 pp, but it stays negative: the winners make money yet still underperform the deploying
+  benchmark. The headline <code>mlp</code> 3167 makes +$952 (+9.5%) and lifts α from −13.1% to −2.4% — a large
+  improvement, but −2.4% against a +11.9% benchmark is still a miss.</li>
+<li>In the <strong>falling-benchmark folds</strong> (F3 −6.9%, F4 −8.4%) the winners are <strong>both</strong> PnL-positive <strong>and</strong>
+  α(RC)-positive (+10% to +13%): they make money <em>and</em> beat the deploying benchmark (<code>vit</code> 7545 in F4:
+  +$413 and +12.6% RC alpha, up from a baseline +8.3%; <code>logistic</code> 797 in F4: +$454 and +13.0%, up from
+  +6.0%). Because the corrected benchmark deploys ≈ 60% of equity, this is not an under-deployment
+  artifact — the defensive bear-fold edge is real <strong>at the single-trial level</strong> and now carries positive
+  absolute PnL. This is the strongest single-trial signal in this line so far, still in-sample.</li>
+</ul>
+<h4 id="638-coherence-with-the-labeling-service-why-trailing-off-wins">6.3.8 Coherence with the labeling service (why trailing-off wins)</h4>
+<p>The labels are ATR-based (<code>config/experiments/labeling.yaml</code>, <code>threshold_type: atr_based</code>): a LONG is
+labeled when price rises ≥ <code>up_threshold</code> = <strong>5 × ATR</strong> without first drawing down more than
+<code>max_drawdown_before_up</code> = <strong>2 × ATR</strong>. A valid labeled move therefore targets <strong>5 × ATR</strong> and
+tolerates a <strong>2 × ATR</strong> adverse excursion on the way.</p>
+<p>The deployed bot config is calibrated to that on price levels: stop-loss <strong>2.5 × ATR</strong>, take-profit
+<code>risk_reward</code> 2.0 → <strong>5 × ATR</strong> (= the labeled target). The piece that broke the coherence was the
+deployed trailing stop at <strong>distance 1.5 × ATR</strong> — tighter than the 2 × ATR retracement a valid move
+tolerates, so it closed winners before they reached the 5 × ATR target. This is the mechanism behind
+the empirical result that trailing-off (or wide) wins: a trailing tighter than the labeled tolerance
+is structurally guaranteed to cut labeled moves short.</p>
+<p>If a trailing stop is kept on, the labeling-coherent floor is <strong>distance ≥ 2 × ATR</strong> (never below the
+labeled tolerance); <strong>distance 2.5 × ATR (= the initial stop) with activation ≈ 3 × ATR</strong> keeps it
+from ever sitting tighter than the entry risk while still protecting deep profit. Position sizing is
+independent of the labels — the labels set direction and move magnitude, not position size.</p>
+<h3 id="64-conclusions">6.4 Conclusions</h3>
 <ol>
-<li>Scale the search (more trials, wider per-regime grids) on the most promising trials, especially the
-   F1 profitable config.</li>
-<li>A cross-trial mode (optimize one robust config per regime over several trials) rather than per-trial.</li>
-<li>Out-of-fold validation of any config that turns a trial profitable.</li>
+<li><strong>Config tuning is a strong in-sample lever.</strong> Across all regimes, the right trailing/TP/SL turns a
+   majority of losing trials profitable — including the previously hopeless bull (F2) and mixed-bear
+   (F4) folds.</li>
+<li><strong>The recipe is consistent, not regime-specific:</strong> wide stop-loss, high take-profit, trailing
+   off-or-loose, few trades. The earlier per-regime take-profit split does not survive at scale.</li>
+<li><strong>The deployed tight trailing remains the wrong default</strong> — it is the optimum in only 12 of 100
+   trials.</li>
+<li><strong>In the bear folds the per-trial edge is benchmark-beating</strong> (positive α RC), confirming at the
+   single-trial level the defensive pattern the regime audits read at the ensemble level.</li>
+</ol>
+<h3 id="65-caveats">6.5 Caveats</h3>
+<ul>
+<li><strong>In-sample and optimistic.</strong> The best config is the max over 30 searched configs on each trial's
+  own fold; the flip rate measures in-sample capability, not realized edge. It means nothing until the
+  winning configs are validated on other folds.</li>
+<li><strong>Selection by the stored <code>alpha_rc</code></strong> at selection time (Section 1): the studied population is
+  provisional and likely missing better candidates. The per-trial reading itself is on the corrected
+  benchmark and is sound.</li>
+</ul>
+<hr />
+<h2 id="7-campaign-4--cross-fold-transfer-validation-2026-06-24">7. Campaign 4 — Cross-Fold Transfer Validation (2026-06-24)</h2>
+<h3 id="71-inputs">7.1 Inputs</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bot_config_optimizer/requests/20260624_crossfold_validation.json</code></td>
+<td>The sweep request (5 configs).</td>
+</tr>
+<tr>
+<td><code>…/results/20260624_024805_crossfold_validation/</code></td>
+<td>100 backtests; <code>results.json</code> / <code>results.csv</code>, <code>report.md</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Configs swept (5):</strong> <code>baseline</code> (original config, <code>{}</code>) plus the four per-fold campaign winners:</p>
+<table>
+<thead>
+<tr>
+<th>Config</th>
+<th>Trial</th>
+<th>SL</th>
+<th>TP</th>
+<th>Trailing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>winner_F1</code></td>
+<td><code>mlp</code> 3167</td>
+<td>3.47</td>
+<td>3.24</td>
+<td>off</td>
+</tr>
+<tr>
+<td><code>winner_F2</code></td>
+<td><code>mlp_ex</code> 2256</td>
+<td>3.97</td>
+<td>3.37</td>
+<td>off</td>
+</tr>
+<tr>
+<td><code>winner_F3</code></td>
+<td><code>vit</code> 3955</td>
+<td>3.99</td>
+<td>3.11</td>
+<td>off</td>
+</tr>
+<tr>
+<td><code>winner_F4</code></td>
+<td><code>logistic</code> 797</td>
+<td>3.43</td>
+<td>3.93</td>
+<td>on (d6, a5.4)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Trials (20):</strong> top-5 per fold by <code>backtest_alpha_risk_constrained</code> (the stored value at selection time
+— see Section 1), trainable families only. 5 configs × 20 trials = <strong>100 backtests</strong>.</p>
+<p>The diagonal (a fold's own winner on that fold's trials) is in-sample; the <strong>off-diagonal</strong> is the
+transfer test.</p>
+<h3 id="72-findings">7.2 Findings</h3>
+<h4 id="721-transfer-matrix--mean-new-net-pnl-config--target-fold">7.2.1 Transfer matrix — mean New net PnL (config × target fold)</h4>
+<table>
+<thead>
+<tr>
+<th>Config</th>
+<th>F1</th>
+<th>F2</th>
+<th>F3</th>
+<th>F4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>baseline</code></td>
+<td>−$126</td>
+<td>−$655</td>
+<td>−$122</td>
+<td>−$492</td>
+</tr>
+<tr>
+<td><code>winner_F1</code></td>
+<td>+$213</td>
+<td>−$88</td>
+<td>+$73</td>
+<td>+$142</td>
+</tr>
+<tr>
+<td><strong><code>winner_F2</code></strong></td>
+<td><strong>+$302</strong></td>
+<td><strong>+$64</strong></td>
+<td><strong>+$18</strong></td>
+<td><strong>+$267</strong></td>
+</tr>
+<tr>
+<td><strong><code>winner_F3</code></strong></td>
+<td><strong>+$265</strong></td>
+<td><strong>+$61</strong></td>
+<td><strong>+$87</strong></td>
+<td><strong>+$250</strong></td>
+</tr>
+<tr>
+<td><code>winner_F4</code></td>
+<td>+$333</td>
+<td>−$173</td>
+<td>+$65</td>
+<td>+$102</td>
+</tr>
+</tbody>
+</table>
+<h4 id="722-share-of-trials-with-new-pnl--0">7.2.2 Share of trials with New PnL &gt; 0</h4>
+<table>
+<thead>
+<tr>
+<th>Config</th>
+<th>F1</th>
+<th>F2</th>
+<th>F3</th>
+<th>F4</th>
+<th>total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>baseline</code></td>
+<td>1/5</td>
+<td>0/5</td>
+<td>1/5</td>
+<td>0/5</td>
+<td>2/20</td>
+</tr>
+<tr>
+<td><code>winner_F3</code></td>
+<td>5/5</td>
+<td>4/5</td>
+<td>4/5</td>
+<td>4/5</td>
+<td><strong>17/20</strong></td>
+</tr>
+<tr>
+<td><code>winner_F2</code></td>
+<td>5/5</td>
+<td>5/5</td>
+<td>2/5</td>
+<td>4/5</td>
+<td>16/20</td>
+</tr>
+<tr>
+<td><code>winner_F4</code></td>
+<td>5/5</td>
+<td>0/5</td>
+<td>4/5</td>
+<td>4/5</td>
+<td>13/20</td>
+</tr>
+<tr>
+<td><code>winner_F1</code></td>
+<td>4/5</td>
+<td>0/5</td>
+<td>4/5</td>
+<td>4/5</td>
+<td>12/20</td>
+</tr>
+</tbody>
+</table>
+<h4 id="723-mean-new-α-rc--corrected-benchmark">7.2.3 Mean New α (RC) — corrected benchmark</h4>
+<table>
+<thead>
+<tr>
+<th>Config</th>
+<th>F1</th>
+<th>F2</th>
+<th>F3</th>
+<th>F4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>baseline</code></td>
+<td>−13.2%</td>
+<td>−10.7%</td>
+<td>+5.7%</td>
+<td>+3.5%</td>
+</tr>
+<tr>
+<td><code>winner_F2</code></td>
+<td>−8.9%</td>
+<td>−3.5%</td>
+<td>+7.1%</td>
+<td>+11.1%</td>
+</tr>
+<tr>
+<td><code>winner_F3</code></td>
+<td>−9.2%</td>
+<td>−3.6%</td>
+<td>+7.8%</td>
+<td>+10.9%</td>
+</tr>
+<tr>
+<td><code>winner_F1</code></td>
+<td>−9.8%</td>
+<td>−5.0%</td>
+<td>+7.7%</td>
+<td>+9.8%</td>
+</tr>
+<tr>
+<td><code>winner_F4</code></td>
+<td>−8.6%</td>
+<td>−5.9%</td>
+<td>+7.6%</td>
+<td>+9.4%</td>
+</tr>
+</tbody>
+</table>
+<p>These α(RC) values are on the corrected benchmark; the trial <em>selection</em> is the only provisional input.
+Alpha-RC stays negative in the rising folds F1/F2 and positive in the falling folds F3/F4 — the same
+defensive pattern — and every winner improves on <code>baseline</code> in every fold.</p>
+<h3 id="73-conclusions">7.3 Conclusions</h3>
+<ol>
+<li><strong>The original (deployed) config loses in all four folds</strong> (−$126 / −$655 / −$122 / −$492). Every
+   winning config beats it in every fold.</li>
+<li><strong>The config recipe transfers.</strong> <code>winner_F2</code> and <code>winner_F3</code> are net-PnL-positive in <strong>all four
+   folds</strong> (<code>winner_F3</code> wins 17/20 trials across folds). This is the first cross-fold-transferring
+   result in the project — it reproduces the campaign recipe (wide stop-loss, high take-profit,
+   trailing off) and it is regime-robust, in contrast with the <strong>fold-local</strong> ensemble recipes.</li>
+<li><strong><code>winner_F1</code> and <code>winner_F4</code> fail the bull fold F2</strong> (−$88, −$173), so not every winner transfers;
+   the robust ones (<code>winner_F2</code>/<code>winner_F3</code>, both wide-SL / high-TP / trailing-off) do. F2 (clean
+   bull) is the discriminator.</li>
+<li>The benchmark-beating edge (positive α RC) stays concentrated in the bear folds; bull folds remain
+   negative-alpha (the strategy makes money but does not beat a deploying buy-and-hold).</li>
+</ol>
+<h3 id="74-caveats">7.4 Caveats</h3>
+<ul>
+<li><strong>Selection by the stored <code>alpha_rc</code></strong> (see Section 1): the studied trials were ranked on that value,
+  so the trial set is provisional and likely missing better candidates. Re-select after re-ranking by
+  the corrected alpha-RC.</li>
+<li><strong>Strong trials only:</strong> transfer is shown on the top-5 trials per fold, not the whole population.</li>
+<li><strong>Bull-fold alpha is negative</strong> against the (≈ 60%-deployed) risk-constrained benchmark; read the PnL
+  transfer as the headline and the alpha-RC as "versus a near-max-deployed passive benchmark".</li>
+</ul>
+<hr />
+<h2 id="8-cross-campaign-synthesis">8. Cross-campaign synthesis</h2>
+<h3 id="81-the-investigation-arc">8.1 The investigation arc</h3>
+<p>The four campaigns formed a coherent progression of evidence:</p>
+<table>
+<thead>
+<tr>
+<th>Campaign</th>
+<th>Scope</th>
+<th>Key question answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 — Hand sweep</td>
+<td>32 trials × 6 configs</td>
+<td>Does trailing/TP interact with regime? Yes — trailing harms most in chop (4×).</td>
+</tr>
+<tr>
+<td>2 — Optuna pilot</td>
+<td>8 trials × 40 TPE</td>
+<td>Does search beat hand-picked? Yes — all 8 improved, first profitable result (+$306 F1).</td>
+</tr>
+<tr>
+<td>3 — Full campaign</td>
+<td>100 trials × 30 TPE</td>
+<td>Does it scale? Yes — 68/100 turn profitable, recipe is uniform not regime-split.</td>
+</tr>
+<tr>
+<td>4 — Transfer</td>
+<td>5 configs × 20 trials</td>
+<td>Does the recipe transfer? Yes — <code>winner_F2</code>/<code>winner_F3</code> positive in all 4 folds (17/20 trials).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82-consolidated-recipe">8.2 Consolidated recipe</h3>
+<p>The evidence across all four campaigns converges on the same config recipe:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Finding</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trailing stop enabled</td>
+<td><strong>Off, or wide (distance ≥ 4.5 × ATR)</strong></td>
+<td>Very high — 88/100 winners are off-or-loose; churn mechanism verified operationally (Section 4.3.6) and explained by label coherence (Section 6.3.8).</td>
+</tr>
+<tr>
+<td>Take-profit</td>
+<td><strong>High (3.0–4.0 × ATR)</strong></td>
+<td>High — consistent across all campaigns; the per-regime split (low in F3) observed in the pilot does not survive at scale.</td>
+</tr>
+<tr>
+<td>Stop-loss</td>
+<td><strong>Wide (3.4–4.0 × ATR)</strong></td>
+<td>High — wide stops win in every campaign and every fold without exception.</td>
+</tr>
+<tr>
+<td>Trade frequency</td>
+<td><strong>Low (median ≈ 72 trades)</strong></td>
+<td>High — winners trade less; the recipe reduces position churn from the trailing stop, which is the proximate cause of fewer trades.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="83-the-structural-explanation">8.3 The structural explanation</h3>
+<p>The labeling service marks a LONG when price rises ≥ 5 × ATR without first drawing down &gt; 2 × ATR.
+The deployed trailing at distance 1.5 × ATR is <strong>tighter than the labeled tolerance</strong> (2 × ATR), so
+it structurally exits valid labeled moves before the 5 × ATR target — guaranteed to underperform the
+labeled signal. The fix is architectural, not empirical: trailing must be either off or at distance
+≥ 2 × ATR. The empirical campaigns confirmed this structural prediction across 3,000+ backtests.</p>
+<h3 id="84-transfer-vs-ensemble-recipes">8.4 Transfer vs ensemble recipes</h3>
+<p>The bot-config recipe (<code>winner_F2</code>/<code>winner_F3</code>) is the <strong>first cross-fold-transferring result in the
+project</strong>. The ensemble recipes from the Phase-1/Phase-3 cross-fold transfer campaigns were fold-local
+(12–14% positive off-fold trials at best). The bot-config recipe achieves 16–17/20 positive trials
+across all four folds simultaneously — a qualitatively different outcome.</p>
+<p>The two findings operate on different layers:</p>
+<ul>
+<li><strong>Ensemble recipe:</strong> which <em>models to combine</em> for a defensive alpha in bear folds. Fold-local.</li>
+<li><strong>Bot-config recipe:</strong> how to <em>execute any model</em> to reduce churn and improve raw PnL. Cross-fold
+  transferring.</li>
+</ul>
+<p>Neither finding is out-of-sample in a held-out time window; both remain in-sample.</p>
+<h3 id="85-what-remains-provisional">8.5 What remains provisional</h3>
+<ol>
+<li><strong>Trial selection:</strong> all four campaigns chose trials by the stored <code>alpha_rc</code> at selection time, so
+   the studied population is effectively ranked by return. With the corrected alpha-RC some trials may
+   have higher priority. The recipe itself is likely robust (it was consistent across 100 trials), but
+   the per-fold winners (especially the best single trial per fold) could change.</li>
+<li><strong>Out-of-sample validation:</strong> every result is in-sample to the campaign's validation folds. A held-
+   out window test is the next required step for any deployment claim.</li>
+<li><strong>Population breadth:</strong> the hand sweep and pilot used <code>stop_loss_exit_ratio ≥ 0.7</code> (stop-loss-heavy
+   trials). The full campaign extended to all top-5 per fold; coverage of the rare profitable-baseline
+   trial is thin.</li>
+<li><strong>Ensemble × config interaction:</strong> the winning bot configs were searched per individual trial;
+   whether the same recipe is optimal when applied to an ensemble combination is untested.</li>
+</ol>
+<h3 id="86-recommended-next-steps">8.6 Recommended next steps</h3>
+<ol>
+<li><strong>Re-select by corrected alpha-RC</strong> and re-run Campaign 3 (full Optuna) if the top-5 per fold
+   change materially. Re-run Campaign 4 (transfer) with the new per-fold winners.</li>
+<li><strong>Out-of-sample window test</strong> of <code>winner_F2</code>/<code>winner_F3</code> style (SL ≈ 4.0, TP ≈ 3.4, trailing off)
+   on a held-out time window not used in any fold.</li>
+<li><strong>Ensemble × config joint search</strong>: apply the recipe to ensemble combinations rather than individual
+   trials to test whether ensemble alpha and config PnL improvements are additive.</li>
+<li><strong>Regime-conditional deployment guard</strong>: the bull-fold alpha-RC is persistently negative (−3.5% to
+   −9.8% even with the best config); deploying the recipe in a confirmed-bull regime may still lose
+   to the benchmark. A regime gate (deploy only in ranging/bear) could protect capital.</li>
 </ol>
 
 
