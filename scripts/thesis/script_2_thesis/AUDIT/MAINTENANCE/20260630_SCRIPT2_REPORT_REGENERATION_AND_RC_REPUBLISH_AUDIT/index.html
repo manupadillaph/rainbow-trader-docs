@@ -11,7 +11,7 @@
       
       
       
-        <link rel="prev" href="../20260610_SCRIPT2_CANONICAL_FIELD_REFERENCE/">
+        <link rel="prev" href="../20260626_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT_DEPRECATED/">
       
       
         <link rel="next" href="../../REGIME/20260325_REGIME_TRAINING_OPTIONS_AUDIT/">
@@ -25,7 +25,7 @@
     
     
       
-        <title>20260626 Script2 Report Regeneration And Rc Republish Audit - Rainbow Trader</title>
+        <title>20260630 Script2 Report Regeneration And Rc Republish Audit - Rainbow Trader</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#script-2-report-regeneration-headers-and-risk-constrained-republish" class="md-skip">
+        <a href="#script-2-report-regeneration-process-and-risk-constrained-republish" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              20260626 Script2 Report Regeneration And Rc Republish Audit
+              20260630 Script2 Report Regeneration And Rc Republish Audit
             
           </span>
         </div>
@@ -11208,6 +11208,8 @@
       
         
       
+        
+      
     
     
     
@@ -11311,6 +11313,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260626_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT_DEPRECATED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260626 Script2 Report Regeneration And Rc Republish Audit Deprecated
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -11330,7 +11360,7 @@
   <span class="md-ellipsis">
     
   
-    20260626 Script2 Report Regeneration And Rc Republish Audit
+    20260630 Script2 Report Regeneration And Rc Republish Audit
   
 
     
@@ -11348,7 +11378,7 @@
   <span class="md-ellipsis">
     
   
-    20260626 Script2 Report Regeneration And Rc Republish Audit
+    20260630 Script2 Report Regeneration And Rc Republish Audit
   
 
     
@@ -11407,13 +11437,113 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#published-value-change-risk-constrained-benchmark-and-alpha_rc" class="md-nav__link">
+  <a href="#the-regenerator-and-the-grid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Published value change: risk-constrained benchmark and alpha_rc
+        The regenerator and the grid
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="The regenerator and the grid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grid-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grid columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#harvest-produces-one-row-per-report--no-dedup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Harvest produces one row per report — no dedup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-what-to-regenerate--the-regenerate-column-and-mark_regeneratepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing what to regenerate — the regenerate column and mark_regenerate.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-drops-false-first-then-deduplicates-by-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run drops false first, then deduplicates by command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-ignores-the-regenerate-flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        verify ignores the regenerate flag
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#published-value-changes-the-risk-constrained-benchmark-and-alpha_rc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Published value changes: the risk-constrained benchmark and alpha_rc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Published value changes: the risk-constrained benchmark and alpha_rc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-republish-2026-06-26--wrong-atr-backfill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First republish (2026-06-26) — wrong-ATR backfill
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-republish-2026-06-30--last_price-valuation-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second republish (2026-06-30) — last_price valuation fix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -11429,21 +11559,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verification" class="md-nav__link">
+  <a href="#verification-and-publish--never-regenerate-onto-canonical-first" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#republish" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Republish
+        Verification and publish — never regenerate onto canonical first
       
     </span>
   </a>
@@ -136138,13 +136257,113 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#published-value-change-risk-constrained-benchmark-and-alpha_rc" class="md-nav__link">
+  <a href="#the-regenerator-and-the-grid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Published value change: risk-constrained benchmark and alpha_rc
+        The regenerator and the grid
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="The regenerator and the grid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grid-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grid columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#harvest-produces-one-row-per-report--no-dedup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Harvest produces one row per report — no dedup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-what-to-regenerate--the-regenerate-column-and-mark_regeneratepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing what to regenerate — the regenerate column and mark_regenerate.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-drops-false-first-then-deduplicates-by-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run drops false first, then deduplicates by command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-ignores-the-regenerate-flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        verify ignores the regenerate flag
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#published-value-changes-the-risk-constrained-benchmark-and-alpha_rc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Published value changes: the risk-constrained benchmark and alpha_rc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Published value changes: the risk-constrained benchmark and alpha_rc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-republish-2026-06-26--wrong-atr-backfill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First republish (2026-06-26) — wrong-ATR backfill
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-republish-2026-06-30--last_price-valuation-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second republish (2026-06-30) — last_price valuation fix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -136160,21 +136379,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verification" class="md-nav__link">
+  <a href="#verification-and-publish--never-regenerate-onto-canonical-first" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#republish" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Republish
+        Verification and publish — never regenerate onto canonical first
       
     </span>
   </a>
@@ -136403,106 +136611,161 @@
 
 <!-- markdownlint-disable MD013 -->
 
-<h1 id="script-2-report-regeneration-headers-and-risk-constrained-republish">Script 2 Report Regeneration Headers and Risk-Constrained Republish</h1>
-<p><strong>Created:</strong> 2026-06-26</p>
+<h1 id="script-2-report-regeneration-process-and-risk-constrained-republish">Script 2 Report Regeneration Process and Risk-Constrained Republish</h1>
+<p><strong>Created:</strong> 2026-06-30</p>
 <h2 id="summary">Summary</h2>
-<p>Every Script 2 report now carries a self-contained regeneration header, sources its value-bearing
-metrics from the database (never from frozen artifacts), and was republished against the live
-database. Measured against the pre-correction database snapshot, the only value that moves is the
-risk-constrained benchmark and its <code>alpha_rc</code>. Measured against the older canonical files on disk, the
-republish additionally carries the metric repairs that had already landed in the database before the
-snapshot but after those files were last generated (the <code>sharpe</code>/<code>win_rate</code> repair), so a stale field
-such as a best-trial <code>best_sharpe</code> updates to its current value. A reusable regenerator plus a dated
-command grid is now the canonical way to rebuild these reports.</p>
+<p>Every Script 2 report carries a self-contained regeneration header, sources its value-bearing metrics from
+the database (never from frozen artifacts), and is rebuilt by a reusable regenerator driven by a dated
+command grid. The grid is harvested from the reports' own headers, a separate marker script chooses which
+rows to rebuild, and the regenerator stages, verifies, then publishes onto the canonical files. Two
+risk-constrained-benchmark corrections have been republished this way: the wrong-ATR fix (republished
+2026-06-26) and the <code>last_price</code> valuation fix (republished 2026-06-30). The only values that move are the
+risk-constrained benchmark and its <code>alpha_rc</code>; PnL, return, Sharpe, win rate, the unconstrained benchmark
+and <code>alpha</code> are untouched.</p>
 <h2 id="the-regeneration-header">The regeneration header</h2>
 <p>Every generated <code>.md</code> carries, right after its title:</p>
 <ul>
-<li><code>- As-of date:</code> — the fixed temporal anchor of the data (a stable <code>...Z</code> UTC instant). It never
-  changes between regenerations of the same report.</li>
+<li><code>- As-of date:</code> — the fixed temporal anchor of the data (a stable <code>...Z</code> UTC instant). It never changes
+  between regenerations of the same report.</li>
 <li><code>- Last regenerated:</code> — the current UTC timestamp, rewritten on every render.</li>
 <li><code>## How to Regenerate</code> — a fenced <code>bash</code> block with the exact command (program, inputs, <code>--db-path</code>,
   output flag and <code>--as-of-date</code>) that reproduces the report.</li>
 </ul>
 <p>For the database-window families (per-run progress dashboards, merged views, best-per-fold, the audit
-annexes and the cross-fold diagnostic) the As-of date also feeds the <code>completed_at</code> cutoff used to read
-the database. For the non-window families (extra-backtests, bot-config, ensemble) it only stamps the
-header; there the As-of value is the result directory's <code>YYYYMMDD[_HHMMSS]</code> timestamp.</p>
+annexes and the cross-fold diagnostic) the As-of date also feeds the <code>completed_at</code> cutoff used to read the
+database. For the non-window families (extra-backtests, bot-config, ensemble) it only stamps the header;
+there the As-of value is the result directory's <code>YYYYMMDD[_HHMMSS]</code> timestamp.</p>
 <h2 id="metrics-are-read-from-the-database">Metrics are read from the database</h2>
-<p>No report reads a value-bearing metric (benchmark, alpha, Sharpe, win rate, risk-constrained values)
-from a frozen <code>results.csv</code> / <code>results.json</code>. Every such metric is read from the database by
-<code>backtest_session_id</code> through the <code>--db-path</code> argument, so a report always reflects the database it is
-generated against rather than a possibly stale snapshot captured at artifact-creation time.</p>
-<h2 id="published-value-change-risk-constrained-benchmark-and-alpha_rc">Published value change: risk-constrained benchmark and <code>alpha_rc</code></h2>
-<p>The republish changed exactly three database-backed columns, for the <code>atr_based</code>-stop sessions:</p>
+<p>No report reads a value-bearing metric (benchmark, alpha, Sharpe, win rate, risk-constrained values) from a
+frozen <code>results.csv</code> / <code>results.json</code>. Every such metric is read from the database by <code>backtest_session_id</code>
+through the <code>--db-path</code> argument, so a report always reflects the database it is generated against rather
+than a possibly stale snapshot captured at artifact-creation time.</p>
+<h2 id="the-regenerator-and-the-grid">The regenerator and the grid</h2>
+<p>The reusable tool and the dated grids live in
+<a href="../../regenerate_reports/"><code>scripts/thesis/script_2_thesis/regenerate_reports/</code></a>. The tool
+(<code>regenerate_reports.py</code>) has four subcommands:</p>
+<ul>
+<li><code>grid-from-reports</code> — <strong>harvest</strong>: read the <code>## How to Regenerate</code> header of every existing report and
+  write one grid row per report. Discovery is by content, so reports added later are picked up
+  automatically.</li>
+<li><code>build-grid</code> — bootstrap fallback that seeds the grid from built-in specs, for the very first generation
+  before any report carries a header to harvest.</li>
+<li><code>run</code> — replay a grid against a database; with <code>--output-root</code> it writes into a staging tree, without it
+  it writes the canonical reports in place.</li>
+<li><code>verify</code> — check a staged tree against the canonicals and the grid (body unchanged, As-of date matches).</li>
+</ul>
+<h3 id="grid-columns">Grid columns</h3>
+<p>The grid CSV has six columns: <code>family, report_path, as_of_date, db_backed, regenerate, command</code>.</p>
+<ul>
+<li><code>command</code> is <strong>database-agnostic</strong> (it carries no <code>--db-path</code>); <code>run</code> injects the chosen database, so one
+  grid reproduces the reports against either the backup or the live database.</li>
+<li><code>db_backed</code> records whether the report reads the database. <code>run</code> injects <code>--db-path</code> only into
+  <code>db_backed=true</code> rows; the self-contained <code>--from-*-json</code> re-renders (plan/input artifacts) must not get
+  it.</li>
+<li><code>regenerate</code> is the skip flag: <code>run</code> rebuilds only <code>regenerate=true</code> rows.</li>
+</ul>
+<h3 id="harvest-produces-one-row-per-report--no-dedup">Harvest produces one row per report — no dedup</h3>
+<p><code>grid-from-reports</code> emits exactly one row per report file and never deduplicates. Deduplication happens only
+inside <code>run</code>, and only <strong>after</strong> the <code>regenerate=false</code> rows are dropped (see below). This ordering matters:
+some reports share an identical regenerate command — most importantly the hand-published annex copies under
+<code>AUDIT/ANEXOS/ENSEMBLES/</code> carry the same command as the real exporter output
+<code>ensemble_backtests/results/&lt;batch&gt;/campaign_report.md</code>. If harvest deduplicated by command, the
+alphabetically-first path (<code>AUDIT/…</code>) would win and shadow the real output, which would then never be
+regenerated.</p>
+<h3 id="choosing-what-to-regenerate--the-regenerate-column-and-mark_regeneratepy">Choosing what to regenerate — the <code>regenerate</code> column and <code>mark_regenerate.py</code></h3>
+<p>The <code>regenerate</code> flag is <strong>never hardcoded inside the regenerator</strong>. It is set by a separate marker script,
+<code>regenerate_reports/mark_regenerate.py</code>:</p>
+<pre><code class="language-bash">.venv/bin/python scripts/thesis/script_2_thesis/regenerate_reports/mark_regenerate.py \
+    --grid scripts/thesis/script_2_thesis/regenerate_reports/20260630/as_of_dates.csv \
+    --default true \
+    --false '*/AUDIT/ANEXOS/ENSEMBLES/*_CAMPAIGN_REPORT.md'
+</code></pre>
+<p>Every row starts at <code>--default</code>; each <code>--true</code> glob forces matching rows to <code>true</code> and each <code>--false</code> glob
+forces them to <code>false</code> (<code>--false</code> is applied last, so it wins on overlap). Globs are matched with
+<code>fnmatch</code> against the repo-relative <code>report_path</code>.</p>
+<p>In the <code>20260630</code> grid (1,488 rows) eight rows are <code>regenerate=false</code>: the eight
+<code>AUDIT/ANEXOS/ENSEMBLES/*_CAMPAIGN_REPORT.md</code> hand-copies. Their source of truth is the
+<code>ensemble_backtests/results/&lt;batch&gt;/campaign_report.md</code> produced by the exporter (<code>regenerate=true</code>); the
+annex copies are refreshed by hand from those, so the regenerator must not rebuild them.</p>
+<h3 id="run-drops-false-first-then-deduplicates-by-command"><code>run</code> drops false first, then deduplicates by command</h3>
+<p><code>run</code> first drops the <code>regenerate=false</code> rows, then collapses duplicate commands among what remains. Because
+the false annex copies are removed before the dedup, the surviving duplicate is always the real
+(<code>regenerate=true</code>) exporter output, never the shadow copy.</p>
+<h3 id="verify-ignores-the-regenerate-flag"><code>verify</code> ignores the <code>regenerate</code> flag</h3>
+<p><code>verify</code> checks every grid row for a staged file, regardless of its <code>regenerate</code> flag. A <code>regenerate=false</code>
+row was intentionally not staged by <code>run</code>, so <code>verify</code> reports it as <code>FAIL — staged file not generated</code>.
+That <code>FAIL</code> is expected and benign (no file, not a content error); it is not a body or value mismatch.</p>
+<h2 id="published-value-changes-the-risk-constrained-benchmark-and-alpha_rc">Published value changes: the risk-constrained benchmark and <code>alpha_rc</code></h2>
+<p>Both republishes changed only the database-backed risk-constrained columns, for the <code>atr_based</code>-stop
+sessions:</p>
 <ul>
 <li><code>benchmark_pnl_risk_constrained</code></li>
 <li><code>benchmark_return_risk_constrained</code></li>
 <li><code>alpha_risk_constrained</code></li>
 </ul>
-<p>Cause: an earlier historical backfill of the risk-constrained benchmark resolved the <strong>wrong ATR</strong> (it
-used a price-scale value as the ATR), which produced a near-zero benchmark and therefore an
-<code>alpha_rc</code> ≈ the strategy return. The live engine resolves the ATR correctly, so the recomputed
-benchmark is one to two orders of magnitude larger and correct. The root-cause analysis is in
-<a href="../../../../docs/audit/20260624_RC_BENCHMARK_BACKFILL_WRONG_ATR_AUDIT.md"><code>docs/audit/20260624_RC_BENCHMARK_BACKFILL_WRONG_ATR_AUDIT.md</code></a>.</p>
-<p>Scope of the change, measured directly on <code>backtest_sessions</code>: over 15,181 sessions present in both the
-pre-correction snapshot and the live database, only the three columns above differ (4,560 <code>atr_based</code>
-sessions). <code>total_pnl</code>, <code>total_gross_pnl</code>, <code>sharpe_ratio</code>, <code>win_rate</code>, <code>benchmark_return</code> and <code>alpha</code>
-are byte-identical between the two. Any cell that moved in a republished report therefore derives only
-from the risk-constrained correction.</p>
+<h3 id="first-republish-2026-06-26--wrong-atr-backfill">First republish (2026-06-26) — wrong-ATR backfill</h3>
+<p>An earlier historical backfill of the risk-constrained benchmark resolved the <strong>wrong ATR</strong> (it used a
+price-scale value as the ATR), which produced a near-zero benchmark and therefore an <code>alpha_rc</code> ≈ the
+strategy return. The live engine resolves the ATR correctly, so the recomputed benchmark is one to two
+orders of magnitude larger and correct. Root-cause analysis:
+<a href="../../../../docs/audit/20260624_RC_BENCHMARK_BACKFILL_WRONG_ATR_AUDIT.md"><code>docs/audit/20260624_RC_BENCHMARK_BACKFILL_WRONG_ATR_AUDIT.md</code></a>.
+Measured directly on <code>backtest_sessions</code>, over 15,181 sessions present in both the pre-correction snapshot
+and the live database, only the three columns above differed (4,560 <code>atr_based</code> sessions); <code>total_pnl</code>,
+<code>total_gross_pnl</code>, <code>sharpe_ratio</code>, <code>win_rate</code>, <code>benchmark_return</code> and <code>alpha</code> were byte-identical.</p>
+<h3 id="second-republish-2026-06-30--last_price-valuation-fix">Second republish (2026-06-30) — <code>last_price</code> valuation fix</h3>
+<p>The risk-constrained benchmark was then recomputed for a <code>last_price</code> valuation bug, which had left the
+per-session benchmark slightly non-uniform within a fold. After the fix the risk-constrained benchmark is
+<strong>uniform per fold</strong> (F1 <code>+$1190.10 / +11.90%</code>, F2 <code>+4.16%</code>, F3 <code>−6.93%</code>, F4 <code>−8.42%</code>). Every report was
+re-published from the corrected live database. Again, only the three risk-constrained columns move; PnL,
+return, Sharpe, win rate, the unconstrained benchmark and <code>alpha</code> are unchanged. The current grid is
+<code>regenerate_reports/20260630/as_of_dates.csv</code>, which supersedes the <code>20260626</code> grid.</p>
 <h2 id="determinism-of-the-model-profile-trial-selection">Determinism of the model-profile trial selection</h2>
-<p><code>fetch_last_completed_trial_result</code> and the no-running fallback of <code>fetch_current_trial_result</code> now
-order candidate trials by <code>completed_at</code> (with <code>id</code> as a stable tiebreak) instead of <code>updated_at</code>.
-A row-touching migration had re-stamped <code>trials.updated_at</code> without changing <code>completed_at</code> or the set
-of trials; ordering by <code>updated_at</code> let that re-stamp flip which trial the model-profile reported as the
-"last completed" one. Ordering by <code>completed_at</code> — the same field the As-of cutoff filters on — pins the
-selection to the data's temporal anchor, so a migration that only touches <code>updated_at</code> no longer
-perturbs it.</p>
-<h2 id="verification">Verification</h2>
-<p>The reports were rebuilt twice into staging trees that mirror the canonical layout, without touching any
-canonical file:</p>
-<ul>
-<li>Against the pre-correction backup database: every report's header carried the As-of date matching the
-  grid, and every body reproduced the established baseline — the bulk byte-for-byte, with a small,
-  already-adjudicated set of differences against the older on-disk files (the <code>sharpe</code>/<code>win_rate</code> repair
-  and status-rendering deltas that predate those files).</li>
-<li>Against the live database: relative to the backup render the only body change is the risk-constrained
-  correction described above, confirmed both at the report level and directly on <code>backtest_sessions</code>.</li>
-</ul>
-<h2 id="republish">Republish</h2>
-<p>Every in-scope non-<code>_LEGACY</code> report was regenerated in place against the live database
-(<code>database/rainbow_trader.sqlite</code>), so each canonical report's embedded <code>## How to Regenerate</code> command
-references the live database and its own canonical output path.</p>
-<ul>
-<li>Reports regenerated: 733 invocations, all successful (0 failures).</li>
-<li>Post-publish checks: <code>markdownlint-cli2</code> is clean over the published report tree and <code>git diff --check</code>
-  reports no whitespace or conflict-marker errors. Two pre-existing spacing defects the lint surfaced (a
-  missing blank line before the best-per-fold source-runs list, and a trailing extra blank line in the
-  progress dashboards) were fixed in the exporters so every report now lints clean.</li>
-</ul>
+<p><code>fetch_last_completed_trial_result</code> and the no-running fallback of <code>fetch_current_trial_result</code> order
+candidate trials by <code>completed_at</code> (with <code>id</code> as a stable tiebreak) instead of <code>updated_at</code>. A row-touching
+migration had re-stamped <code>trials.updated_at</code> without changing <code>completed_at</code> or the set of trials; ordering
+by <code>updated_at</code> let that re-stamp flip which trial the model-profile reported as the "last completed" one.
+Ordering by <code>completed_at</code> — the same field the As-of cutoff filters on — pins the selection to the data's
+temporal anchor, so a migration that only touches <code>updated_at</code> no longer perturbs it.</p>
+<h2 id="verification-and-publish--never-regenerate-onto-canonical-first">Verification and publish — never regenerate onto canonical first</h2>
+<p>The reports are never rebuilt directly onto the canonical files. The flow is always stage → verify →
+publish:</p>
+<ol>
+<li><strong>Stage</strong> — <code>run --output-root &lt;staging&gt;</code> rebuilds into a tree that mirrors the canonical layout, without
+   touching any canonical file.</li>
+<li><strong>Verify</strong> — <code>verify --output-root &lt;staging&gt;</code> confirms each report's header carries the As-of date
+   matching the grid and each body reproduces the established baseline (the <code>regenerate=false</code> rows show the
+   expected <code>FAIL — staged file not generated</code>).</li>
+<li><strong>Publish</strong> — <code>run</code> without <code>--output-root</code> regenerates the canonical reports in place. Publishing is a
+   regenerate, <strong>not</strong> a byte-copy from the staging tree: each report embeds its own <code>## How to Regenerate</code>
+   command, which contains the <code>--output-md</code> it was generated with, so copying a staged file would write the
+   staging path into the canonical header and the next harvest would read that wrong path.</li>
+</ol>
+<p>After the live-database publish, <code>markdownlint-cli2</code> is clean over the published report tree and
+<code>git diff --check</code> reports no whitespace or conflict-marker errors.</p>
 <h2 id="how-to-regenerate">How to regenerate</h2>
-<p>The reusable tool and the dated grid live in
-<a href="../../regenerate_reports/"><code>scripts/thesis/script_2_thesis/regenerate_reports/</code></a>. The normal flow is two
-steps — harvest the grid from the reports' own headers, then replay it:</p>
-<pre><code class="language-bash"># 1. Harvest the grid (one row per report: family, report_path, as_of_date, command) by reading the
-#    &quot;How to Regenerate&quot; header of every existing report. Discovery is by content, so reports added
-#    later are picked up automatically.
+<pre><code class="language-bash"># 1. Harvest the grid from the reports' own headers (one row per report).
 .venv/bin/python scripts/thesis/script_2_thesis/regenerate_reports/regenerate_reports.py \
-    grid-from-reports --out scripts/thesis/script_2_thesis/regenerate_reports/20260626/as_of_dates.csv
+    grid-from-reports --out scripts/thesis/script_2_thesis/regenerate_reports/20260630/as_of_dates.csv
 
-# 2. Replay the grid against a database (omit --output-root to write the canonical reports in place)
+# 2. Mark which rows to skip (the hand-published annex copies are regenerate=false).
+.venv/bin/python scripts/thesis/script_2_thesis/regenerate_reports/mark_regenerate.py \
+    --grid scripts/thesis/script_2_thesis/regenerate_reports/20260630/as_of_dates.csv \
+    --default true --false '*/AUDIT/ANEXOS/ENSEMBLES/*_CAMPAIGN_REPORT.md'
+
+# 3. Stage against a database (backup or live) and verify before touching canonicals.
 .venv/bin/python scripts/thesis/script_2_thesis/regenerate_reports/regenerate_reports.py \
-    run --grid-csv scripts/thesis/script_2_thesis/regenerate_reports/20260626/as_of_dates.csv \
+    run --grid-csv scripts/thesis/script_2_thesis/regenerate_reports/20260630/as_of_dates.csv \
+    --db-path database/rainbow_trader.sqlite \
+    --output-root scripts/thesis/script_2_thesis/regenerate_reports/20260630/_tmp_live
+.venv/bin/python scripts/thesis/script_2_thesis/regenerate_reports/regenerate_reports.py \
+    verify --grid-csv scripts/thesis/script_2_thesis/regenerate_reports/20260630/as_of_dates.csv \
+    --output-root scripts/thesis/script_2_thesis/regenerate_reports/20260630/_tmp_live
+
+# 4. Publish: same grid, no --output-root, regenerates the canonical reports in place.
+.venv/bin/python scripts/thesis/script_2_thesis/regenerate_reports/regenerate_reports.py \
+    run --grid-csv scripts/thesis/script_2_thesis/regenerate_reports/20260630/as_of_dates.csv \
     --db-path database/rainbow_trader.sqlite
-
-# Verify a staged tree against canonicals and the grid (body unchanged + As-of matches)
-.venv/bin/python scripts/thesis/script_2_thesis/regenerate_reports/regenerate_reports.py \
-    verify --grid-csv scripts/thesis/script_2_thesis/regenerate_reports/20260626/as_of_dates.csv \
-    --output-root &lt;staging-root&gt;
 </code></pre>
-<p>The grid is the single source of truth: each command is database-agnostic (it carries no <code>--db-path</code>),
-and <code>run</code> injects the chosen database, so one grid reproduces the reports against either the backup or
-the live database. <code>build-grid</code> is the bootstrap fallback that seeds the grid from built-in specs for
-the very first generation, before any report carries a header for <code>grid-from-reports</code> to read.</p>
 
 
 

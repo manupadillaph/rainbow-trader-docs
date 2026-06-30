@@ -11962,6 +11962,8 @@
       
         
       
+        
+      
     
     
     
@@ -12070,14 +12072,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../MAINTENANCE/20260626_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT/" class="md-nav__link">
+      <a href="../../MAINTENANCE/20260626_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT_DEPRECATED/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    20260626 Script2 Report Regeneration And Rc Republish Audit
+    20260626 Script2 Report Regeneration And Rc Republish Audit Deprecated
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MAINTENANCE/20260630_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260630 Script2 Report Regeneration And Rc Republish Audit
   
 
     
@@ -137653,9 +137683,10 @@
 <li><code>20260624_SCRIPT2_BOT_CONFIG_03_OPTUNA_CAMPAIGN_AUDIT.md</code> — full Optuna campaign (Campaign 3)</li>
 <li><code>20260624_SCRIPT2_BOT_CONFIG_04_CROSSFOLD_TRANSFER_AUDIT.md</code> — cross-fold transfer (Campaign 4)</li>
 </ul>
-<p>All canonical campaign reports were regenerated <strong>2026-06-26 09:37 UTC</strong>, after the risk-constrained
-benchmark backfill was corrected (2026-06-25). Every result value here — both <code>Orig</code> (the baseline
-session) and <code>New</code> (the rerun) — is read from those regenerated reports / the corrected database.</p>
+<p>All canonical campaign reports were regenerated <strong>2026-06-30 12:27 UTC</strong>, after the risk-constrained
+benchmark was corrected for the <code>last_price</code> valuation bug (which followed the 2026-06-25
+ATR-resolution backfill). Every result value here — both <code>Orig</code> (the baseline session) and <code>New</code> (the
+rerun) — is read from those regenerated reports / the corrected database.</p>
 </blockquote>
 <p><strong>Reads:</strong> fold/regime context from <code>AUDIT/REGIME/20260612_SCRIPT2_REGIME_FOLD_CROSSFOLD_FULL_AUDIT.md</code>
 and <code>AUDIT/REGIME/20260613_SCRIPT2_CROSS_FOLD_FAMILY_DIAGNOSTIC_AUDIT.md</code>; campaign plan in
@@ -137678,8 +137709,9 @@ a <strong>return ranking, not the intended risk-constrained-alpha ranking</stron
 the ranking would differ, so <strong>potentially better candidates were left out</strong>. Re-select by the
 corrected alpha-RC before any further scaling.</p>
 <p>This affects <strong>only which trials were studied.</strong> The <em>result values</em> throughout this audit are on the
-corrected benchmark: the reports were regenerated on 2026-06-26 (after the backfill on 2026-06-25), and
-the renderer re-sources every <code>Orig</code> (baseline) and <code>New</code> (rerun) session fresh from the corrected
+corrected benchmark: the reports were regenerated on 2026-06-30 (after the <code>last_price</code> benchmark fix,
+which followed the 2026-06-25 ATR-resolution backfill), and the renderer re-sources every <code>Orig</code>
+(baseline) and <code>New</code> (rerun) session fresh from the corrected
 database, so both sides sit on the same correct basis and the <code>Δ</code> columns are like-for-like. The
 numbers are not contaminated — only the upstream choice of trials is provisional.</p>
 </blockquote>
@@ -138436,11 +138468,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-320 (-3.2%)</td>
 <td>$454 (+4.5%)</td>
 <td>+$774</td>
-<td>-9.2%</td>
 <td>-8.4%</td>
-<td>+6.0%</td>
+<td>-8.4%</td>
+<td>+5.2%</td>
 <td>+13.0%</td>
-<td>+7.0 pp</td>
+<td>+7.7 pp</td>
 <td>225 (69.6%)</td>
 <td>98</td>
 <td>2.76</td>
@@ -138454,11 +138486,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-383 (-3.8%)</td>
 <td>$279 (+2.8%)</td>
 <td>+$662</td>
-<td>-6.6%</td>
 <td>-8.4%</td>
-<td>+2.8%</td>
+<td>-8.4%</td>
+<td>+4.6%</td>
 <td>+11.2%</td>
-<td>+8.4 pp</td>
+<td>+6.6 pp</td>
 <td>234 (51.4%)</td>
 <td>95</td>
 <td>1.63</td>
@@ -138472,11 +138504,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-347 (-3.5%)</td>
 <td>$273 (+2.7%)</td>
 <td>+$620</td>
-<td>+11.7%</td>
 <td>+11.9%</td>
-<td>-15.1%</td>
+<td>+11.9%</td>
+<td>-15.4%</td>
 <td>-9.2%</td>
-<td>+5.9 pp</td>
+<td>+6.2 pp</td>
 <td>329 (53.2%)</td>
 <td>156</td>
 <td>1.05</td>
@@ -138490,11 +138522,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-437 (-4.4%)</td>
 <td>$250 (+2.5%)</td>
 <td>+$687</td>
-<td>-9.2%</td>
 <td>-8.4%</td>
-<td>+4.8%</td>
+<td>-8.4%</td>
+<td>+4.1%</td>
 <td>+10.9%</td>
-<td>+6.1 pp</td>
+<td>+6.9 pp</td>
 <td>249 (71.3%)</td>
 <td>52</td>
 <td>1.31</td>
@@ -138508,11 +138540,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-547 (-5.5%)</td>
 <td>$211 (+2.1%)</td>
 <td>+$757</td>
-<td>+11.8%</td>
 <td>+11.9%</td>
-<td>-17.3%</td>
+<td>+11.9%</td>
+<td>-17.4%</td>
 <td>-9.8%</td>
-<td>+7.5 pp</td>
+<td>+7.6 pp</td>
 <td>262 (71.8%)</td>
 <td>114</td>
 <td>1.14</td>
@@ -138551,11 +138583,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-150 (-1.5%)</td>
 <td>$952 (+9.5%)</td>
 <td>+$1,102</td>
-<td>+11.6%</td>
 <td>+11.9%</td>
-<td>-13.1%</td>
+<td>+11.9%</td>
+<td>-13.4%</td>
 <td>-2.4%</td>
-<td>+10.7 pp</td>
+<td>+11.0 pp</td>
 <td>235 (27.0%)</td>
 <td>69</td>
 <td>5.97</td>
@@ -138569,11 +138601,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-92 (-0.9%)</td>
 <td>$604 (+6.0%)</td>
 <td>+$696</td>
-<td>+11.8%</td>
+<td>+11.9%</td>
 <td>+11.9%</td>
 <td>-12.8%</td>
 <td>-5.9%</td>
-<td>+6.9 pp</td>
+<td>+7.0 pp</td>
 <td>212 (27.9%)</td>
 <td>91</td>
 <td>3.35</td>
@@ -138587,11 +138619,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$73 (+0.7%)</td>
 <td>$413 (+4.1%)</td>
 <td>+$340</td>
-<td>+11.5%</td>
 <td>+11.9%</td>
-<td>-10.8%</td>
+<td>+11.9%</td>
+<td>-11.2%</td>
 <td>-7.8%</td>
-<td>+3.0 pp</td>
+<td>+3.4 pp</td>
 <td>213 (29.4%)</td>
 <td>110</td>
 <td>2.22</td>
@@ -138605,11 +138637,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-167 (-1.7%)</td>
 <td>$400 (+4.0%)</td>
 <td>+$567</td>
-<td>-6.9%</td>
 <td>-8.4%</td>
-<td>+5.2%</td>
+<td>-8.4%</td>
+<td>+6.8%</td>
 <td>+12.4%</td>
-<td>+7.2 pp</td>
+<td>+5.7 pp</td>
 <td>155 (36.7%)</td>
 <td>84</td>
 <td>2.55</td>
@@ -138623,11 +138655,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-115 (-1.1%)</td>
 <td>$362 (+3.6%)</td>
 <td>+$477</td>
-<td>+11.7%</td>
 <td>+11.9%</td>
-<td>-12.8%</td>
+<td>+11.9%</td>
+<td>-13.1%</td>
 <td>-8.3%</td>
-<td>+4.5 pp</td>
+<td>+4.8 pp</td>
 <td>210 (41.7%)</td>
 <td>107</td>
 <td>1.61</td>
@@ -138666,11 +138698,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$77 (+0.8%)</td>
 <td>$577 (+5.8%)</td>
 <td>+$500</td>
-<td>+11.8%</td>
 <td>+11.9%</td>
-<td>-11.0%</td>
+<td>+11.9%</td>
+<td>-11.1%</td>
 <td>-6.1%</td>
-<td>+4.9 pp</td>
+<td>+5.0 pp</td>
 <td>228 (41.8%)</td>
 <td>77</td>
 <td>3.79</td>
@@ -138684,11 +138716,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-126 (-1.3%)</td>
 <td>$567 (+5.7%)</td>
 <td>+$694</td>
-<td>+11.6%</td>
 <td>+11.9%</td>
-<td>-12.9%</td>
+<td>+11.9%</td>
+<td>-13.2%</td>
 <td>-6.2%</td>
-<td>+6.7 pp</td>
+<td>+6.9 pp</td>
 <td>216 (47.8%)</td>
 <td>94</td>
 <td>3.09</td>
@@ -138702,11 +138734,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-197 (-2.0%)</td>
 <td>$553 (+5.5%)</td>
 <td>+$750</td>
-<td>+11.8%</td>
 <td>+11.9%</td>
-<td>-13.8%</td>
+<td>+11.9%</td>
+<td>-13.9%</td>
 <td>-6.4%</td>
-<td>+7.4 pp</td>
+<td>+7.5 pp</td>
 <td>259 (39.8%)</td>
 <td>58</td>
 <td>3.56</td>
@@ -138720,11 +138752,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-147 (-1.5%)</td>
 <td>$447 (+4.5%)</td>
 <td>+$594</td>
-<td>+11.6%</td>
 <td>+11.9%</td>
-<td>-13.1%</td>
+<td>+11.9%</td>
+<td>-13.4%</td>
 <td>-7.4%</td>
-<td>+5.7 pp</td>
+<td>+5.9 pp</td>
 <td>252 (39.4%)</td>
 <td>52</td>
 <td>3.27</td>
@@ -138781,11 +138813,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$186 (+1.9%)</td>
 <td>$740 (+7.4%)</td>
 <td>+$554</td>
-<td>+11.7%</td>
 <td>+11.9%</td>
-<td>-9.8%</td>
+<td>+11.9%</td>
+<td>-10.0%</td>
 <td>-4.5%</td>
-<td>+5.3 pp</td>
+<td>+5.5 pp</td>
 <td>154 (53.2%)</td>
 <td>78</td>
 <td>3.95</td>
@@ -138799,11 +138831,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-173 (-1.7%)</td>
 <td>$594 (+5.9%)</td>
 <td>+$768</td>
-<td>+11.8%</td>
 <td>+11.9%</td>
-<td>-13.5%</td>
+<td>+11.9%</td>
+<td>-13.6%</td>
 <td>-6.0%</td>
-<td>+7.5 pp</td>
+<td>+7.7 pp</td>
 <td>177 (68.7%)</td>
 <td>94</td>
 <td>3.24</td>
@@ -138817,11 +138849,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-68 (-0.7%)</td>
 <td>$238 (+2.4%)</td>
 <td>+$306</td>
-<td>+11.7%</td>
 <td>+11.9%</td>
-<td>-12.4%</td>
+<td>+11.9%</td>
+<td>-12.6%</td>
 <td>-9.5%</td>
-<td>+2.9 pp</td>
+<td>+3.1 pp</td>
 <td>142 (43.6%)</td>
 <td>84</td>
 <td>1.57</td>
@@ -138835,11 +138867,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-274 (-2.7%)</td>
 <td>$221 (+2.2%)</td>
 <td>+$495</td>
-<td>-8.2%</td>
 <td>-8.4%</td>
-<td>+5.5%</td>
+<td>-8.4%</td>
+<td>+5.7%</td>
 <td>+10.6%</td>
-<td>+5.1 pp</td>
+<td>+5.0 pp</td>
 <td>238 (100.0%)</td>
 <td>109</td>
 <td>1.59</td>
@@ -138857,7 +138889,7 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>+11.9%</td>
 <td>-12.5%</td>
 <td>-9.7%</td>
-<td>+2.8 pp</td>
+<td>+2.7 pp</td>
 <td>142 (44.5%)</td>
 <td>61</td>
 <td>1.55</td>
@@ -138896,11 +138928,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$63 (+0.6%)</td>
 <td>$557 (+5.6%)</td>
 <td>+$494</td>
-<td>+11.7%</td>
 <td>+11.9%</td>
-<td>-11.1%</td>
+<td>+11.9%</td>
+<td>-11.3%</td>
 <td>-6.3%</td>
-<td>+4.8 pp</td>
+<td>+4.9 pp</td>
 <td>221 (70.4%)</td>
 <td>55</td>
 <td>3.29</td>
@@ -138918,7 +138950,7 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>-8.4%</td>
 <td>+8.3%</td>
 <td>+12.6%</td>
-<td>+4.3 pp</td>
+<td>+4.2 pp</td>
 <td>202 (96.1%)</td>
 <td>35</td>
 <td>5.55</td>
@@ -138932,11 +138964,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$33 (+0.3%)</td>
 <td>$354 (+3.5%)</td>
 <td>+$321</td>
-<td>-8.0%</td>
 <td>-6.9%</td>
-<td>+8.3%</td>
+<td>-6.9%</td>
+<td>+7.3%</td>
 <td>+10.5%</td>
-<td>+2.2 pp</td>
+<td>+3.2 pp</td>
 <td>48 (2.4%)</td>
 <td>31</td>
 <td>5.45</td>
@@ -138950,11 +138982,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$66 (+0.7%)</td>
 <td>$330 (+3.3%)</td>
 <td>+$264</td>
-<td>-6.8%</td>
 <td>-6.9%</td>
-<td>+7.5%</td>
+<td>-6.9%</td>
+<td>+7.6%</td>
 <td>+10.2%</td>
-<td>+2.7 pp</td>
+<td>+2.6 pp</td>
 <td>194 (43.0%)</td>
 <td>174</td>
 <td>1.81</td>
@@ -138968,11 +139000,11 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 <td>$-87 (-0.9%)</td>
 <td>$328 (+3.3%)</td>
 <td>+$416</td>
-<td>-8.3%</td>
 <td>-8.4%</td>
-<td>+7.4%</td>
+<td>-8.4%</td>
+<td>+7.6%</td>
 <td>+11.7%</td>
-<td>+4.3 pp</td>
+<td>+4.2 pp</td>
 <td>195 (96.2%)</td>
 <td>83</td>
 <td>2.28</td>
@@ -138986,14 +139018,14 @@ F1 +11.9%, F2 +4.2%, F3 −6.9%, F4 −8.4%).</p>
 tuning:</p>
 <ul>
 <li>In the <strong>rising-benchmark folds</strong> (F1 +11.9%, F2 +4.2%) the baseline trials sit at strongly negative
-  <code>α (RC)</code> (−11% to −17% in F1) because they barely move while buy-and-hold rises. Tuning lifts α by
+  <code>α (RC)</code> (−10% to −17% in F1) because they barely move while buy-and-hold rises. Tuning lifts α by
   +3 to +11 pp, but it stays negative: the winners make money yet still underperform the deploying
-  benchmark. The headline <code>mlp</code> 3167 makes +$952 (+9.5%) and lifts α from −13.1% to −2.4% — a large
+  benchmark. The headline <code>mlp</code> 3167 makes +$952 (+9.5%) and lifts α from −13.4% to −2.4% — a large
   improvement, but −2.4% against a +11.9% benchmark is still a miss.</li>
 <li>In the <strong>falling-benchmark folds</strong> (F3 −6.9%, F4 −8.4%) the winners are <strong>both</strong> PnL-positive <strong>and</strong>
   α(RC)-positive (+10% to +13%): they make money <em>and</em> beat the deploying benchmark (<code>vit</code> 7545 in F4:
   +$413 and +12.6% RC alpha, up from a baseline +8.3%; <code>logistic</code> 797 in F4: +$454 and +13.0%, up from
-  +6.0%). Because the corrected benchmark deploys ≈ 60% of equity, this is not an under-deployment
+  +5.2%). Because the corrected benchmark deploys ≈ 60% of equity, this is not an under-deployment
   artifact — the defensive bear-fold edge is real <strong>at the single-trial level</strong> and now carries positive
   absolute PnL. This is the strongest single-trial signal in this line so far, still in-sample.</li>
 </ul>
@@ -139348,6 +139380,61 @@ defensive pattern — and every winner improves on <code>baseline</code> in ever
 </tr>
 </tbody>
 </table>
+<p>The best <code>(model, config)</code> per fold, on the corrected benchmark, in one comparable view (in-sample):</p>
+<table>
+<thead>
+<tr>
+<th>Fold</th>
+<th>Regime</th>
+<th>Trial</th>
+<th>New PnL (Ret%)</th>
+<th>New Bm RC</th>
+<th>New α (RC)</th>
+<th>Winning recipe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>ranging</td>
+<td><code>mlp</code> 3167</td>
+<td>+$952 (+9.5%)</td>
+<td>+11.9%</td>
+<td>−2.4%</td>
+<td>trailing off, TP 3.24, SL 3.47, 69 trades</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>bull</td>
+<td><code>mlp_ex</code> 2256</td>
+<td>+$365 (+3.6%)</td>
+<td>+4.2%</td>
+<td>−0.5%</td>
+<td>trailing off, TP 3.37, SL 3.97, 30 trades</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>bear</td>
+<td><code>vit</code> 3955</td>
+<td>+$354 (+3.5%)</td>
+<td>−6.9%</td>
+<td>+10.5%</td>
+<td>trailing off, TP 3.11, SL 3.99, 31 trades</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>bear-mix</td>
+<td><code>logistic</code> 797</td>
+<td>+$454 (+4.5%)</td>
+<td>−8.4%</td>
+<td>+13.0%</td>
+<td>trailing on (d6.0/a5.4), TP 3.93, SL 3.43, 98 trades</td>
+</tr>
+</tbody>
+</table>
+<p>In the rising-benchmark folds (F1/F2) the best config makes money but its <code>α (RC)</code> stays negative (it does
+not beat a deploying buy-and-hold); in the falling-benchmark folds (F3/F4) the best config is both
+PnL-positive and <code>α (RC)</code>-positive — the same defensive pattern the campaigns show throughout.</p>
 <h3 id="83-the-structural-explanation">8.3 The structural explanation</h3>
 <p>The labeling service marks a LONG when price rises ≥ 5 × ATR without first drawing down &gt; 2 × ATR.
 The deployed trailing at distance 1.5 × ATR is <strong>tighter than the labeled tolerance</strong> (2 × ATR), so

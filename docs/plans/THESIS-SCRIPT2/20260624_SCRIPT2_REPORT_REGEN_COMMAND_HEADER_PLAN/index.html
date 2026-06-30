@@ -4278,10 +4278,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stage-6--deprecated-audits-appendix-b" class="md-nav__link">
+  <a href="#stage-6--audit-dispositions-appendix-b" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stage 6 — Deprecated audits (Appendix B)
+        Stage 6 — Audit dispositions (Appendix B)
       
     </span>
   </a>
@@ -11926,6 +11926,8 @@
       
         
       
+        
+      
     
     
     
@@ -12034,14 +12036,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/MAINTENANCE/20260626_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT/" class="md-nav__link">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/MAINTENANCE/20260626_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT_DEPRECATED/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    20260626 Script2 Report Regeneration And Rc Republish Audit
+    20260626 Script2 Report Regeneration And Rc Republish Audit Deprecated
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../scripts/thesis/script_2_thesis/AUDIT/MAINTENANCE/20260630_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260630 Script2 Report Regeneration And Rc Republish Audit
   
 
     
@@ -136834,10 +136864,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#stage-6--deprecated-audits-appendix-b" class="md-nav__link">
+  <a href="#stage-6--audit-dispositions-appendix-b" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stage 6 — Deprecated audits (Appendix B)
+        Stage 6 — Audit dispositions (Appendix B)
       
     </span>
   </a>
@@ -137475,7 +137505,9 @@
 
 <h1 id="script-2-report-regeneration-command-header-plan">Script 2 Report Regeneration-Command Header Plan</h1>
 <p><strong>Created:</strong> 2026-06-24
-<strong>Status:</strong> Draft — awaiting approval. No code changed yet.
+<strong>Status:</strong> Stages 1–5 complete — every exporter embeds the regeneration-command header and all reports were
+re-published against the corrected live DB. Remaining: Stage 6 audit dispositions — the bot-config group is
+reviewed and closed; the other audit groups are pending and owned by the thesis Script 2 plans (see Stage 6).
 <strong>Scope:</strong> Every Script 2 report/plan exporter, the reports they produce, and a shared header helper.</p>
 <blockquote>
 <p><strong>RC benchmark backfill — corrected (2026-06-25).</strong> The risk-constrained benchmark had been backfilled
@@ -137486,6 +137518,11 @@ checks PASS (see <code>docs/audit/20260624_RC_BENCHMARK_BACKFILL_WRONG_ATR_AUDIT
 the <strong>correct</strong> RC values, so any report reading <code>alpha_rc</code> / <code>Orig α (RC)</code> regenerates against correct
 data. The pre-RC backup (Appendix C) is still the date-finding reference for canonical reproduction,
 since the canonical reports predate any RC backfill.</p>
+<p><strong>Second correction (2026-06-30).</strong> The risk-constrained benchmark was recomputed for a <code>last_price</code>
+valuation bug and every report was re-published from the corrected live DB. The current regeneration grid is
+<code>regenerate_reports/20260630/as_of_dates.csv</code>, which adds a <code>regenerate</code> column (set per report by the
+separate <code>regenerate_reports/mark_regenerate.py</code> so a row can be skipped without hardcoding paths in the
+regenerator); it supersedes the <code>20260626</code> grid.</p>
 </blockquote>
 <h2 id="1-objective">1. Objective</h2>
 <p>Make every generated Script 2 Markdown report self-documenting: each report embeds, in its <strong>header</strong>
@@ -138008,19 +138045,32 @@ Stage 5 re-runs that gate with the header-carrying exporters, then regenerates a
   best-per-fold source-runs list and a trailing blank in the progress dashboards — fixed in the exporters) and
   <code>git diff --check</code> clean. Committed (republished reports + the data exports the same invocations rewrote).</li>
 <li>[x] 5.5 <strong>Audit + retire the old driver.</strong> Audit written under
-  <code>scripts/thesis/script_2_thesis/AUDIT/maintenance/20260626_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT.md</code>
+  <code>scripts/thesis/script_2_thesis/AUDIT/MAINTENANCE/20260630_SCRIPT2_REPORT_REGENERATION_AND_RC_REPUBLISH_AUDIT.md</code>
   (DB-sourcing, headers, the verification passes, the RC correction with its DB-level scope proof, the determinism
   fix, the reusable regenerator). A <code>grid-from-reports</code> subcommand now harvests the grid from the reports' own
   headers, with <code>build-grid</code> kept as the bootstrap fallback. The one-time <code>run_full_repro.py</code> driver and
   <code>first_push_dates.csv</code> are superseded by <code>regenerate_reports/</code> (kept on disk, not deleted).</li>
 </ul>
-<h3 id="stage-6--deprecated-audits-appendix-b">Stage 6 — Deprecated audits (Appendix B)</h3>
+<h3 id="stage-6--audit-dispositions-appendix-b">Stage 6 — Audit dispositions (Appendix B)</h3>
+<p>The narrative audits are reviewed and closed <strong>one group at a time</strong>. What to do with each group
+(consolidate, replace, deprecate or keep) is thesis work: the decision and its execution are owned by the
+thesis Script 2 plans — <code>SCRIPT2_CLOSURE_AND_NEW_ENSEMBLE_PLAN.md</code>,
+<code>EXPERIMENT_PLAN_THESIS_VALIDATION.md</code> and <code>THESIS-SCRIPT2/20260620_SCRIPT2_TIER_CDE_MTF_EXPANSION_PLAN.md</code> —
+not by this regeneration plan. This plan only regenerated the reports the audits read; B.1 below is the
+inventory of audits whose values changed.</p>
 <ul>
-<li>[ ] 6.1 Confirm DEPRECATED-vs-KEEP per audit (resolve the Appendix B.2 CONFIRM rows).</li>
-<li>[ ] 6.2 For each DEPRECATED audit: rename the file with <code>_DEPRECATED</code>, add the header block (banner + reason + link
-  to its new hand-written replacement audit).</li>
-<li>[ ] 6.3 Write the new hand-written replacement audits from the regenerated real data.</li>
-<li>[ ] 6.4 Final regeneration note recording that these audits were deprecated/replaced.</li>
+<li>[x] 6.1 <strong>Bot-config group — reviewed and closed.</strong> The four campaign audits were consolidated into one
+  (<code>AUDIT/BOT_CONFIG/20260629_SCRIPT2_BOT_CONFIG_CONSOLIDATED_AUDIT.md</code>), the predecessors kept under
+  <code>AUDIT/BOT_CONFIG/DEPRECATED/</code>, and the consolidated audit's risk-constrained benchmark / alpha numbers
+  refreshed against the corrected live reports.</li>
+<li>[ ] 6.2 <strong>Ensemble group — pending</strong> (<code>AUDIT/ENSEMBLES/</code>): the six Phase-1 per-selector audits, the
+  cross-block bifurcation synthesis, the cross-fold-regime diagnostic and the cross-fold-transfer synthesis.</li>
+<li>[ ] 6.3 <strong>Regime group — pending</strong> (<code>AUDIT/REGIME/</code>): the regime/fold cross-fold full audit and the
+  cross-fold family diagnostic audit.</li>
+<li>[ ] 6.4 <strong>Baseline group — pending</strong> (<code>AUDIT/BASELINES/</code>): the always-long executed audit.</li>
+<li>[ ] 6.5 <strong>Legacy group — pending</strong> (<code>AUDIT/_LEGACY/</code>): the older thesis-state audits (Tier-A / Tier-B
+  rescue, regime, normalization integrity, trade selectivity, the preliminary analyses). Already <code>_LEGACY</code>
+  (frozen); the open work is the thesis-state review, not regeneration.</li>
 </ul>
 <h3 id="stage-7--headers-on-planner-input-and-stats-markdown">Stage 7 — Headers on planner-input and stats markdown</h3>
 <p>Every generated <code>.md</code> must carry the full header (the <strong>As-of date</strong> + <strong>Last regenerated</strong> + <code>## How to
@@ -138609,6 +138659,15 @@ lines (not stored in <code>plan.json</code>); persisting the two counts into <co
 </tbody>
 </table>
 <h2 id="appendix-b--audits-invalidated-by-regeneration-deprecated">Appendix B — Audits Invalidated by Regeneration (DEPRECATED)</h2>
+<blockquote>
+<p><strong>Disposition status.</strong> These audits are reviewed and closed group by group; the decision for each group
+lives in the owning thesis Script 2 plan (Stage 6), not here. <strong>Done:</strong> the bot-config group (consolidated
+into <code>AUDIT/BOT_CONFIG/20260629_SCRIPT2_BOT_CONFIG_CONSOLIDATED_AUDIT.md</code>, predecessors under
+<code>AUDIT/BOT_CONFIG/DEPRECATED/</code>, numbers refreshed). <strong>Pending:</strong> the ensemble group (<code>AUDIT/ENSEMBLES/</code>),
+the regime group (<code>AUDIT/REGIME/</code>), the baseline group (<code>AUDIT/BASELINES/</code>) and the older <code>AUDIT/_LEGACY/</code>
+thesis-state audits. The <code>_DEPRECATED</code>-rename + replacement mechanism described next is one option; the
+bot-config group used consolidation instead.</p>
+</blockquote>
 <p>Because the base reports/anexos are regenerated, every hand-written audit whose insights derive from them is now based
 on changed data. At the <strong>end</strong> of the regeneration, each such audit is:</p>
 <ol>
@@ -138676,24 +138735,28 @@ updated if a field/label actually changed).</p>
 <td>Phase-3 cross-fold-transfer campaign reports</td>
 </tr>
 <tr>
-<td><code>20260619_SCRIPT2_OPTUNA_REGIME_CONFIG_AUDIT.md</code></td>
-<td>bot-config optuna/regime reports</td>
-</tr>
-<tr>
-<td><code>20260619_SCRIPT2_TRAILING_TP_REGIME_SWEEP_AUDIT.md</code></td>
-<td>bot-config trailing/TP sweep reports</td>
-</tr>
-<tr>
 <td><code>20260620_ALWAYS_LONG_BASELINE_EXECUTED_AUDIT.md</code></td>
 <td>always-long baseline progress/report</td>
 </tr>
 <tr>
-<td><code>20260624_SCRIPT2_BOT_CONFIG_CROSS_FOLD_TRANSFER_AUDIT.md</code></td>
-<td>bot-config cross-fold-transfer report</td>
+<td><code>BOT_CONFIG/20260629_SCRIPT2_BOT_CONFIG_CONSOLIDATED_AUDIT.md</code></td>
+<td>consolidated bot-config audit (all 4 campaigns)</td>
 </tr>
 <tr>
-<td><code>20260624_SCRIPT2_BOT_CONFIG_OPTUNA_CAMPAIGN_AUDIT.md</code></td>
-<td>bot-config optuna campaign reports</td>
+<td><code>BOT_CONFIG/DEPRECATED/20260619_SCRIPT2_BOT_CONFIG_01_HAND_SWEEP_AUDIT.md</code></td>
+<td>deprecated — bot-config hand sweep</td>
+</tr>
+<tr>
+<td><code>BOT_CONFIG/DEPRECATED/20260619_SCRIPT2_BOT_CONFIG_02_OPTUNA_PILOT_AUDIT.md</code></td>
+<td>deprecated — pilot Optuna</td>
+</tr>
+<tr>
+<td><code>BOT_CONFIG/DEPRECATED/20260624_SCRIPT2_BOT_CONFIG_03_OPTUNA_CAMPAIGN_AUDIT.md</code></td>
+<td>deprecated — full Optuna campaign</td>
+</tr>
+<tr>
+<td><code>BOT_CONFIG/DEPRECATED/20260624_SCRIPT2_BOT_CONFIG_04_CROSSFOLD_TRANSFER_AUDIT.md</code></td>
+<td>deprecated — cross-fold transfer</td>
 </tr>
 </tbody>
 </table>
