@@ -2564,6 +2564,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#current-state-2026-07-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current state (2026-07-01)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#scope-and-priorities" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -137013,6 +137024,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#current-state-2026-07-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current state (2026-07-01)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#scope-and-priorities" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -137641,14 +137663,18 @@ others; execution reuses the existing <code>CLOSE</code> and <code>OPEN</code> o
 provider boundary. Covered by per-action, config-validation, and a full-chain integral backtest test.</p>
 <p>The full Phase-4 action engine is implemented, gate-green, and migrated.
 Phase 3 (the optimization / run harness) is <strong>not</strong> built — only isolated foundations exist.</p>
-<p><strong>Rule-driven entry-level protective payloads — complete.</strong> Layer-2 opens (<code>ENTER_LONG</code> / <code>ENTER_SHORT</code> and
+<p><strong>Entry-level protective payloads and pending-entry setup.</strong> Layer-2 opens (<code>ENTER_LONG</code> / <code>ENTER_SHORT</code> and
 <code>ADD</code>) can carry optional initial protective values: <code>entry_stop_loss</code>, <code>entry_take_profit</code>,
 <code>entry_trailing_stop_distance</code>, and <code>entry_trailing_stop_activation</code>. Each field follows the §7.7 value model
 (literal number, DSL formula, or omitted). Omitted values keep the existing <code>stop_loss_config</code> /
 <code>take_profit_config</code> / <code>trailing_stop_config</code> calculation; supplied values are resolved before the
 <code>EntrySignalProposal</code> reaches the risk manager, so <code>risk_per_unit</code>, risk-based sizing, order metadata, and the
-persisted <code>Trade</code> levels all use the same entry levels. Layer-1 model entries keep the pure market-view
-contract and continue to use the strategy config defaults.</p>
+persisted <code>Trade</code> levels all use the same entry levels.</p>
+<p>The primary entry path remains the Layer-1 model signal: the model emits only <code>LONG</code> / <code>SHORT</code> / <code>NONE</code>, and
+model-driven entry statistics stay tied to that signal. Per-rule initial SL / TP / trailing on model-driven
+entries is Layer-2 pending-entry setup (<code>SET_ENTRY_LEVELS</code>, <code>target: pending_entry</code>) — implemented, not yet
+committed. Those rules do not create entries; they decorate an already-approved model entry candidate before
+risk sizing.</p>
 <p><strong>Indicator catalog (2026-06-29) — complete: 34 indicators.</strong> Every classic indicator this plan called for
 now exists end-to-end (YAML defaults + <code>IndicatorType</code> + typed config + composed warm-up class +
 <code>process_</code> / <code>validate_</code> + dispatch + tests) across common / core / data-processing with green gates. The
@@ -137686,6 +137712,39 @@ larger <strong>generator</strong> wave (full spec in §3.3):</p>
 </ul>
 <p>The earlier "indicator catalog complete (34)" status holds for the 34 enumerated indicators, but the
 catalog is <strong>not</strong> closed for the full strategy set until SMA and the VWAP anchor land.</p>
+<h3 id="current-state-2026-07-01">Current state (2026-07-01)</h3>
+<p>Named rule references, the pending-entry setup action, and its bot path are <strong>implemented and gate-green,
+but not yet committed</strong> (working-tree edits across <code>common</code> / <code>model-trainer</code> / <code>bot-logic</code> on top of the
+committed action-engine work):</p>
+<ul>
+<li><strong><code>rule("id")</code> references</strong> — a shared <code>RuleRegistry</code> (<code>id → expression</code>) in <code>common.rules</code>, recursive
+  expansion at <strong>runtime compile</strong> (before feature resolution and AST parse), cached per compiled
+  expression; missing targets, malformed calls, and cycles are rejected. Both layers carry the registry on
+  their resolved config and expand through the shared compiler.</li>
+<li><strong><code>id</code> / <code>name</code> on Layer-1 and Layer-2 rules</strong> — optional aliases on the model rule payload and on
+  <code>ActionRuleConfig</code>; the <code>id → expression</code> registry is <strong>derived from the rules</strong> by <code>common.rules</code>
+  (<code>build_rule_registry</code>), never authored; duplicate ids / names are rejected.</li>
+<li><strong><code>SET_ENTRY_LEVELS</code> / <code>target: pending_entry</code></strong> — evaluated after the model-entry gates pass and before
+  the entry proposal is risk-sized (first match wins), applying the resolved entry-level overrides to the
+  pending model-driven open or dropping that entry on an invalid override. Pending-entry context variables
+  (<code>pending_entry_side_long</code> / <code>pending_entry_side_short</code> plus the model metrics) are built.</li>
+</ul>
+<p>The cross-layer reference wiring is complete: <code>common.rules.build_rule_registry</code> derives each layer's
+registry from its own rules (the author-facing <code>rule_registry</code> config field is removed), and the run
+assembly (backtest driver and live bootstrap) hands the bot the <strong>resolved</strong> Layer-1 <code>id → expression</code> map
+via <code>entry_rule_registry</code>, so <code>L1 → L1</code>, <code>L2 → L2</code>, and <code>L2 → L1</code> references all resolve. The reference
+graph is validated <strong>before any run</strong>: <code>common.rules.validate_rule_reference_graph</code> runs at config load
+(from <code>RuleStrategyConfig</code>, alongside the <code>id</code> / <code>name</code> uniqueness check) over both layers' raw rules and
+rejects an unknown target, a reference cycle, or a Layer-1 rule that references a Layer-2 rule — the last
+with a message naming the direction rule. The check never binds <code>${...}</code> placeholders, so a reference graph
+that validates once holds for every trial the optimizer later samples.</p>
+<p><strong>What remains on this plan.</strong> The two-layer engine core is essentially complete (the shared DSL, the
+<code>rule_based</code> model, the full action engine — <code>CLOSE</code> / <code>HOLD</code> / <code>FLAT_AT_TIME</code> / <code>ENTER</code> / <code>ADD</code> / <code>REDUCE</code> /
+<code>REVERSE</code> / protective updates — with entry-level payloads, all committed and migrated; plus the
+named-reference and pending-entry slice above, uncommitted). Still owed: <strong>Phase 3</strong> (Optuna over rule
+parameters — deferred for now), <strong>Phase 5</strong> (opening the rest of the indicator catalog to <code>rule_raw</code> and
+running the vetted strategy battalion on folds — the active generator / roadmap work). The plan is <strong>not</strong>
+ready to archive; it is the live reference for the battalion build.</p>
 <h3 id="scope-and-priorities">Scope and priorities</h3>
 <ol>
 <li><strong>Core engine first.</strong> The deliverable that must be correct and complete is the two-layer engine —
@@ -137987,7 +138046,8 @@ source of action candidates beside the current fixed logic:</p>
 <ul>
 <li>With <code>action_rules.enabled=false</code>, the current bot behavior is unchanged.</li>
 <li>With <code>action_rules.enabled=true</code>, the bot also evaluates configured predicates and maps matches to typed
-  action candidates (<code>CLOSE</code>, <code>REDUCE</code>, <code>ADD</code>, <code>REVERSE</code>, <code>ENTER_LONG</code> / <code>ENTER_SHORT</code>, and so on).
+  action candidates (<code>CLOSE</code>, <code>REDUCE</code>, <code>ADD</code>, <code>REVERSE</code>, <code>ENTER_LONG</code> / <code>ENTER_SHORT</code>,
+  <code>SET_ENTRY_LEVELS</code>, and so on).
   Market-view entries stay Layer-1 model rules (they produce the cached signal); <strong>book-aware</strong> entries —
   that depend on the current positions / exposure / capital, which the model cannot see — are Layer-2 bot
   actions.</li>
@@ -138062,13 +138122,52 @@ unambiguous. It returns whether an expression holds (a scalar boolean or a batch
 <strong>not</strong> know what a match means.</p>
 <p>Layer-specific payloads live with the layer that owns them:</p>
 <ul>
-<li>Layer 1 keeps <code>{expression, signal}</code> rules. <code>common.rules</code> evaluates <code>expression</code>; model-trainer applies
+<li>Layer 1 keeps <code>{id/name, expression, signal}</code> rules. <code>common.rules</code> evaluates <code>expression</code>; model-trainer applies
   priority/default handling and maps the matched <code>signal</code> (<code>LONG</code> / <code>SHORT</code> / <code>NONE</code>) into logits.</li>
-<li>Layer 2 keeps <code>{expression, action, ...}</code> rules. <code>common.rules</code> evaluates <code>expression</code>; bot-logic applies
+<li>Layer 2 keeps <code>{id/name, expression, action, ...}</code> rules. <code>common.rules</code> evaluates <code>expression</code>; bot-logic applies
   priority/conflict handling and maps the matched action payload into orders or management decisions.</li>
 </ul>
 <p>This keeps rule semantics shared without turning the shared DSL into a strategy, signal, or execution
 module.</p>
+<p><strong>Named rule references.</strong> Every Layer-1 and Layer-2 rule may carry a stable <code>id</code> and/or human-readable
+<code>name</code>. The strategy object exposes those rule identities to the DSL as reusable named predicates. Any
+<code>expression</code>, in either layer, may include a rule reference such as <code>rule("donchian_long_breakout")</code>; the
+compiler resolves that reference by replacing it with the referenced rule's own <code>expression</code>, wrapped in
+parentheses, before normal feature-token resolution and AST compilation. The referenced rule's payload is
+never executed by the reference: <code>rule("x")</code> means "reuse the predicate of rule x", not "emit x's signal" and
+not "perform x's action".</p>
+<p>Rule references are strategy-scoped, resolved at <strong>runtime compile</strong>, and must be deterministic:</p>
+<ul>
+<li>The referenced predicates are held in a <strong>rule registry</strong> — a plain <code>id → expression</code> mapping
+  (<code>RuleRegistry</code>) that <code>common.rules</code> <strong>derives from the actual rules</strong> (<code>build_rule_registry</code>); it is never
+  authored or copied. Each rule lives once, in its layer, and the registry is a derived index. The model
+  derives its registry from its Layer-1 rules and the bot from its Layer-2 rules; for a Layer-2 rule that
+  references a Layer-1 predicate, the run assembly hands the bot the <strong>resolved</strong> Layer-1 <code>id → expression</code>
+  map (name and condition only, without the model's signal payload). Each layer binds its own placeholders
+  before the map crosses, so bot-logic expands a <code>rule("l1_name")</code> from pure data and <strong>never imports
+  <code>model-trainer</code></strong>.</li>
+<li>Expansion happens <strong>once per rule, at compile time</strong> (bot / model start-up or first evaluation), not per
+  tick: the compiler detects the <code>rule("...")</code> call, looks the id up in the registry, expands it recursively
+  (a referenced expression may itself contain references), substitutes the fully-expanded predicate, compiles
+  it once, and caches the <code>CompiledExpression</code>. The runtime never re-parses a reference per tick.</li>
+<li>Reference direction is <strong>asymmetric</strong>, dictated by what each layer can see: a <strong>Layer-1</strong> rule may
+  reference <strong>Layer-1</strong> rules only (Layer 1 is market-only and cacheable — it must never depend on a
+  position-aware Layer-2 predicate, whose position / book variables Layer 1 does not have); a <strong>Layer-2</strong>
+  rule may reference <strong>Layer-1 or Layer-2</strong> rules (the Layer-2 scalar context is a superset — market plus
+  position, book, and prediction — so a market-only Layer-1 predicate always evaluates there). A referenced
+  predicate must compile to a boolean in the <strong>consuming</strong> context; a Layer-1 predicate always does, which is
+  why the asymmetry is safe.</li>
+<li>Rule identifiers are unique within the strategy registry used for a compiled experiment. If both <code>id</code> and
+  <code>name</code> are supported, <code>id</code> is the canonical machine key and <code>name</code> is an alias that must not collide.</li>
+<li>References can be nested (<code>A</code> references <code>B</code>, <code>B</code> references <code>C</code>) and are expanded transitively.</li>
+<li>Cycles are rejected with a clear error (<code>A -&gt; B -&gt; A</code>) before a run starts.</li>
+</ul>
+<p><strong>Named-rule preflight (validated before any run):</strong> unique <code>id</code>s; <code>name</code> aliases unique and non-colliding
+with ids or feature names; every <code>rule("x")</code> target exists in the registry; the reference graph is acyclic
+(transitive); Layer-1 references stay Layer-1-only; each fully-expanded predicate compiles to a boolean in
+its consuming context; a reference is not a feature alias and cannot shadow a feature name.</p>
+<p>This keeps every rule as an ordinary DSL expression while allowing shared building blocks across entry
+predicates, pending-entry setup, exits, adds, reductions, reversals, and protective updates.</p>
 <p>A compiled expression runs against a supplied <strong>variable context</strong> — either a batch context of market
 features (Layer 1, the model) or a single-tick scalar context of market features plus position variables
 (Layer 2, the bot). Both layers import the compiler, resolver, and placeholder binding from <code>common.rules</code>;
@@ -138090,7 +138189,8 @@ feature that a rule just references.</p>
   <code>feature{-60:-50,-20:-1}</code>; <strong>window aggregates</strong> over a range (<code>highest</code>, <code>lowest</code>, <code>avg</code>, <code>sum</code>, <code>min</code>,
   <code>max</code>, <code>std</code>, <code>count</code>, <code>any</code>, <code>all</code>); <strong>scalar functions</strong> (<code>abs</code>, <code>min</code>, <code>max</code>); <strong>event/series helpers</strong>
   (<code>bars_since</code>, <code>cross_up</code>, <code>cross_down</code>, <code>change</code>, <code>pct_change</code>, <code>consecutive_true</code>, <code>slope</code>,
-  <code>percentile</code>); plus arithmetic, comparisons, and booleans.</li>
+  <code>percentile</code>); <strong>named rule references</strong> (<code>rule("some_rule_id")</code>); plus arithmetic, comparisons, and
+  booleans.</li>
 <li>Feature/signal layer (already rich — <code>data-processing/signals/</code> provides crossover, z-score, threshold,
   and an expression-based <code>condition</code> signal): heavy or reused transforms — long-window z-scores,
   correlations, spreads, volatility-normalized series, regime labels, complex reused boolean conditions. A
@@ -138110,6 +138210,9 @@ the bot candidate represent?"</p>
 <li><strong>Position-scoped actions</strong> are evaluated once per open position. <code>target: current_position</code> means the
   candidate applies to the position currently being evaluated.</li>
 <li><strong>Portfolio-scoped actions</strong> are evaluated once per tick / side. They do not target an existing position.</li>
+<li><strong>Pending-entry-scoped actions</strong> are evaluated only after the Layer-1 model signal has produced a
+  model-driven entry candidate and the model-entry gates have accepted it. <code>target: pending_entry</code> means the
+  candidate applies to the position that is about to open; it cannot create an entry on its own.</li>
 <li><strong>Risk-increasing actions</strong> must pass through the risk manager before they become orders.</li>
 </ul>
 <p>Initial action catalog:</p>
@@ -138129,7 +138232,14 @@ the bot candidate represent?"</p>
   but <strong>skips the model-signal filters</strong> (confidence / quality / cooldown) because the rule already decided the
   direction. Distinct from a Layer-1 market-view entry (which the model produces). It may carry optional
   entry-level protective payloads (<code>entry_stop_loss</code>, <code>entry_take_profit</code>, <code>entry_trailing_stop_distance</code>,
-  <code>entry_trailing_stop_activation</code>); omitted fields use the normal strategy config calculation.</li>
+  <code>entry_trailing_stop_activation</code>); omitted fields use the normal strategy config calculation. These actions
+  are a secondary book-aware tool, not the normal path for market-view first entries.</li>
+<li><code>SET_ENTRY_LEVELS</code>: pending-entry-scoped; requires <code>target: pending_entry</code>. It configures the initial
+  protective levels of a model-driven open that is already pending: optional <code>entry_stop_loss</code>,
+  <code>entry_take_profit</code>, <code>entry_trailing_stop_distance</code>, and <code>entry_trailing_stop_activation</code>. It <strong>does not</strong>
+  decide direction, does not create an entry, and does not bypass model-entry statistics. It runs after the
+  model's <code>LONG</code> / <code>SHORT</code> signal has passed the model-entry gates and before the entry proposal is finalized
+  for risk sizing, because the resolved stop-loss level changes <code>risk_per_unit</code>.</li>
 <li><code>MOVE_STOP</code> / <code>MODIFY_TP</code>: position-scoped protective-level updates. The new level (<code>new_stop</code> /
   <code>new_take_profit</code>) is <strong>required</strong> — a literal price or a DSL expression (<code>position_entry_price</code>,
   <code>market_current_price - market_atr * 2</code>). There is no config for a <em>moved</em> level (<code>stop_loss_config</code> /
@@ -138158,14 +138268,19 @@ action set work over a multi-position book:</p>
   <code>book_short_positions_count</code>, <code>book_open_notional</code>) is available in <strong>every</strong> rule context — position,
   portfolio, and entry — so a position-scoped rule can also gate on the global book state, and an entry rule
   likewise. Market, prediction, and time vocabularies are available everywhere too; position variables exist
-  only where a current position is in scope.</li>
+  only where a current position is in scope. Pending-entry rules additionally receive pending-entry variables
+  such as <code>pending_entry_side_long</code>, <code>pending_entry_side_short</code>, and the model signal / prediction metrics for
+  the candidate they are configuring.</li>
 </ul>
 <p><strong>Conflict resolution is by list order.</strong> Among the money-moving candidates on one position
 (<code>CLOSE</code> / <code>REDUCE</code> / <code>REVERSE</code> / model <code>SIGNAL_FLIP</code> / model <code>LOW_CONFIDENCE</code>), at most one wins, and the
 first matching rule in list order is chosen; hard safety (stop / trailing / take-profit / force-flat) always
 outranks them, and one protective modification may ride alongside (it moves no money). <code>ENTER</code> rules stack
 through the risk manager in list order until capital / slots run out. List order is the priority knob (an
-optional explicit priority number remains a later addition).</p>
+optional explicit priority number remains a later addition). <code>SET_ENTRY_LEVELS</code> rules are resolved separately
+for the pending model entry: first matching setup rule wins, and omitted payload fields fall back to the
+strategy config. Several setup rules may share named rule predicates through <code>rule("...")</code>, but only the chosen
+setup payload configures the pending entry.</p>
 <p><strong>Two kinds of entry, split by what they depend on.</strong> A <strong>market-view</strong> entry ("enter long when RSI &lt; 30")
 depends only on the market, so it is a <strong>Layer-1 model rule</strong> (<code>{expression, signal}</code> in <code>rule_based</code>): it
 produces the <code>LONG</code> / <code>SHORT</code> signal with the model's strength / quality / confidence, is cached in the
@@ -138175,6 +138290,55 @@ positions / exposure / capital — which the model <strong>cannot see</strong> �
 (<code>ENTER_LONG</code> / <code>ENTER_SHORT</code>). The model is never position-aware; everything that depends on the book lives
 in Layer 2. A book-aware entry skips the model-signal filters (the rule already decided the direction) but
 still passes the risk manager for sizing and limits — see the action-vs-filters rule in the Phase-4 design.</p>
+<p><strong>Pending-entry setup for model-driven opens.</strong> A model-driven entry can still need rule-specific initial
+protective levels. That is not a new model output and not a bot entry decision. It is a Layer-2 setup action
+scoped to the position about to open: <code>SET_ENTRY_LEVELS</code> with <code>target: pending_entry</code>. The model keeps the
+immutable <code>LONG</code> / <code>SHORT</code> / <code>NONE</code> output contract; the bot evaluates setup rules only for an already-pending
+model entry and applies the selected setup before finalizing the <code>EntrySignalProposal</code>. A setup rule may reuse
+the same Layer-1 predicate by referencing its named rule (<code>rule("donchian_long_breakout")</code>) inside its own DSL
+expression, so the entry condition is defined once while every rule still keeps its own <code>expression</code> field.</p>
+<p><strong>Entry-levels lifecycle — why <code>SET_ENTRY_LEVELS</code> never collides with <code>MOVE_STOP</code> / <code>MODIFY_TP</code>.</strong> The two
+touch a position at <strong>disjoint moments of its life</strong>, so they cannot conflict on the same position in the same
+tick:</p>
+<ol>
+<li>The model emits <code>LONG</code> / <code>SHORT</code>; the model-entry gates (confidence / quality / cooldown) accept it, so a
+   <strong>pending entry</strong> exists — the position is not open yet.</li>
+<li>Pending-entry setup runs: the first matching <code>SET_ENTRY_LEVELS</code> (<code>target: pending_entry</code>) resolves the
+   <strong>initial</strong> <code>entry_stop_loss</code> / <code>entry_take_profit</code> / trailing values (literal / DSL / omitted → config,
+   §7.7); omitted fields fall back to <code>stop_loss_config</code> / <code>take_profit_config</code> / <code>trailing_stop_config</code>.</li>
+<li>The <code>EntrySignalProposal</code> is finalized with those levels <strong>before</strong> risk sizing, so <code>risk_per_unit</code> and the
+   persisted <code>Trade</code> levels agree.</li>
+<li>The risk manager sizes / approves, and the position <strong>opens</strong> carrying those initial levels.</li>
+<li>On <strong>later</strong> ticks the position is <code>current_position</code>: <code>MOVE_STOP</code> / <code>MODIFY_TP</code> / <code>ENABLE_TRAIL</code> /
+   <code>UPDATE_TRAIL</code> (arbiter layer 4) and the automatic trailing may <strong>change</strong> those levels.</li>
+</ol>
+<p><code>SET_ENTRY_LEVELS</code> sets levels <strong>at birth</strong> on a position that does not exist yet; the protective updates
+<strong>change</strong> levels on a position that already exists. A position is never simultaneously pending and open, so
+the arbiter's pending-entry-setup step (layer 5) and its protective-modification step (layer 4) act on
+<strong>different</strong> positions — the collision is impossible by construction, not by a tie-break rule.
+<code>SET_ENTRY_LEVELS</code> decorates <strong>model-driven</strong> opens only; a book-aware <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code>
+carries its own entry-level payload on the same rule.</p>
+<p>Example shape:</p>
+<pre><code class="language-yaml">entry_rules:
+  - id: donchian_long_breakout
+    expression: &quot;rule_raw_btc_5m_close{-1} &gt; highest(rule_raw_btc_5m_high{-20:-2})&quot;
+    signal: &quot;LONG&quot;
+
+action_rules:
+  enabled: true
+  rules:
+    - id: setup_donchian_long
+      expression: &quot;rule(\&quot;donchian_long_breakout\&quot;) and pending_entry_side_long{-1} == 1&quot;
+      action: &quot;SET_ENTRY_LEVELS&quot;
+      target: &quot;pending_entry&quot;
+      entry_stop_loss: &quot;market_current_price{-1} - market_atr{-1} * 2&quot;
+      entry_take_profit: &quot;market_current_price{-1} + market_atr{-1} * 4&quot;
+      entry_trailing_stop_distance: null
+      entry_trailing_stop_activation: null
+</code></pre>
+<p>The setup rule above cannot open a trade. It can only configure the <code>LONG</code> entry candidate that the model
+already produced and that the model-entry gates already accepted. If no setup rule matches, the entry uses the
+normal <code>stop_loss_config</code> / <code>take_profit_config</code> / <code>trailing_stop_config</code> calculation.</p>
 <p>Example shape:</p>
 <pre><code class="language-yaml">action_rules:
   enabled: true
@@ -138257,11 +138421,13 @@ window, before any parameter set is believed. (The first profitable Jun-19 resul
 until validated out-of-fold.)</p>
 <h3 id="76-a-strategy-as-one-object">7.6 A strategy as one object</h3>
 <p>A strategy is defined in one place as <code>{entry_rules (Layer 1), action_rules (Layer 2), param_space}</code>.
-<code>entry_rules</code> are <code>{expression, signal}</code> payload wrappers around shared predicates; <code>action_rules</code> are
-<code>{expression, action, ...}</code> payload wrappers around shared predicates. At experiment generation they are
-deployed to their technical homes: entry rules to the model hyperparameters, action rules to <code>bot_config</code>.
-The single definition gives coherence; the split homes respect the cacheable-signal vs
-runtime-position-aware nature of each layer.</p>
+<code>entry_rules</code> are <code>{id/name, expression, signal}</code> payload wrappers around shared predicates; <code>action_rules</code>
+are <code>{id/name, expression, action, ...}</code> payload wrappers around shared predicates. Rule ids / names are part
+of the authoring object because any expression in either layer may reference any other named rule with
+<code>rule("...")</code>. At experiment generation they are deployed to their technical homes: entry rules to the model
+hyperparameters, action rules to <code>bot_config</code>, and the named-rule registry to every compiler / preflight path
+that needs to expand references. The single definition gives coherence; the split homes respect the
+cacheable-signal vs runtime-position-aware nature of each layer.</p>
 <p>This single-strategy object is an <strong>authoring / deployment</strong> construct, not part of the core engine. The
 type <strong>already exists</strong> — <code>RuleStrategyConfig</code> in
 <code>modules/common/src/rainbow/common/types/configs/experiments/rule_strategy_config.py</code>, exported from
@@ -138271,8 +138437,9 @@ parameter in <code>param_space</code> or <code>action_rules.parameters</code>) w
 <strong>Do not delete or recreate it.</strong> It is <strong>Phase-3</strong> scope: the core engine (Phase 1–2: the shared DSL,
 <code>rule_based</code>, and the optional action engine in backtest / LIVE_SIM) does not depend on it, and nothing
 consumes it yet. Phase 3 only needs to <strong>wire</strong> it — the generation step that splits one strategy into model
-hyperparameters (Layer 1) and <code>bot_config</code> action rules (Layer 2), plus the optimizer that searches its
-<code>param_space</code>.</p>
+hyperparameters (Layer 1), <code>bot_config</code> action rules (Layer 2), named-rule registry deployment and
+preflight validation (the reference expansion itself runs at runtime compile), and the optimizer that
+searches its <code>param_space</code>.</p>
 <h3 id="77-action-parameter-value-model-the-definitive-uniform-form">7.7 Action-parameter value model (the definitive, uniform form)</h3>
 <p>Every value an action rule carries — a protective level, a trailing distance, a size, a count — uses <strong>one</strong>
 uniform value mechanism with a per-parameter typed domain, so the author has a single mental model and nothing is
@@ -138294,12 +138461,13 @@ already has a config for that exact value.</p>
 formula</strong>, so its base is explicit (<code>position_size * 0.5</code>, <code>equity * 0.1 / market_current_price</code>). The "fraction
 of what" question is answered by the formula itself, never by a bare number.</p>
 <p><strong>Config fallback exists only where the engine computes that value today.</strong> <code>stop_loss_config</code> /
-<code>take_profit_config</code> set the default stop / TP <strong>at entry</strong>, so <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code> may omit
-<code>entry_stop_loss</code> / <code>entry_take_profit</code> and keep that calculation, or supply an exact literal / DSL level for
-that open. There is no config for <em>moving</em> an already-open level, so <code>MOVE_STOP</code> / <code>MODIFY_TP</code> are <strong>required</strong>.
-There is no config for <em>how much to reduce</em>, so <code>REDUCE</code> is <strong>required</strong>. The sizing config (risk-per-trade /
-kelly / pyramid) computes an entry / add size, so <code>ENTER</code> / <code>ADD</code> fall back to it; and <code>trailing_stop_config</code>
-exists, so both entry-level trailing payloads and <code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code> fall back to it.</p>
+<code>take_profit_config</code> set the default stop / TP <strong>at entry</strong>, so <code>SET_ENTRY_LEVELS</code>, <code>ENTER_LONG</code> /
+<code>ENTER_SHORT</code>, and <code>ADD</code> may omit <code>entry_stop_loss</code> / <code>entry_take_profit</code> and keep that calculation, or supply
+an exact literal / DSL level for that open. There is no config for <em>moving</em> an already-open level, so
+<code>MOVE_STOP</code> / <code>MODIFY_TP</code> are <strong>required</strong>. There is no config for <em>how much to reduce</em>, so <code>REDUCE</code> is
+<strong>required</strong>. The sizing config (risk-per-trade / kelly / pyramid) computes an entry / add size, so <code>ENTER</code> /
+<code>ADD</code> fall back to it; and <code>trailing_stop_config</code> exists, so both entry-level trailing payloads and
+<code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code> fall back to it.</p>
 <table>
 <thead>
 <tr>
@@ -138330,7 +138498,7 @@ exists, so both entry-level trailing payloads and <code>ENABLE_TRAIL</code> / <c
 </tr>
 <tr>
 <td><code>entry_stop_loss</code></td>
-<td><code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code></td>
+<td><code>SET_ENTRY_LEVELS</code> / <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code></td>
 <td>initial stop-loss level for the opened leg</td>
 <td>side-aware price (<code>LONG</code>: <code>0 &lt; x &lt; current_price</code>; <code>SHORT</code>: <code>x &gt; current_price</code>)</td>
 <td>number | formula</td>
@@ -138338,7 +138506,7 @@ exists, so both entry-level trailing payloads and <code>ENABLE_TRAIL</code> / <c
 </tr>
 <tr>
 <td><code>entry_take_profit</code></td>
-<td><code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code></td>
+<td><code>SET_ENTRY_LEVELS</code> / <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code></td>
 <td>initial take-profit level for the opened leg</td>
 <td>side-aware price (<code>LONG</code>: <code>x &gt; current_price</code>; <code>SHORT</code>: <code>0 &lt; x &lt; current_price</code>)</td>
 <td>number | formula</td>
@@ -138346,7 +138514,7 @@ exists, so both entry-level trailing payloads and <code>ENABLE_TRAIL</code> / <c
 </tr>
 <tr>
 <td><code>entry_trailing_stop_distance</code></td>
-<td><code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code></td>
+<td><code>SET_ENTRY_LEVELS</code> / <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code></td>
 <td>initial trailing distance for the opened leg</td>
 <td><code>&gt; 0</code>, absolute distance</td>
 <td>number | formula</td>
@@ -138354,7 +138522,7 @@ exists, so both entry-level trailing payloads and <code>ENABLE_TRAIL</code> / <c
 </tr>
 <tr>
 <td><code>entry_trailing_stop_activation</code></td>
-<td><code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code></td>
+<td><code>SET_ENTRY_LEVELS</code> / <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> / <code>ADD</code></td>
 <td>initial trailing activation for the opened leg</td>
 <td><code>&gt; 0</code>, absolute activation distance</td>
 <td>number | formula</td>
@@ -138416,16 +138584,18 @@ runtime against the domain (finite, in range, integral where required). A non-fi
 the config value, which is in-domain by construction.</p>
 <p><strong>Risk-increasing actions still pass the risk manager.</strong> For <code>ENTER</code> / <code>ADD</code> the size is the <strong>requested</strong> size;
 the risk manager always validates admissibility (max positions, exposure, affordability) and may cap or reject
-it. Entry-level protective overrides are resolved before this step, so risk-based sizing reads the same
-stop-loss level that will be persisted on the opened trade. The rule decides direction, requested size, and
-optional initial protective levels; risk decides what is actually allowed.</p>
+it. Model-driven entries also pass through the risk manager as today. <code>SET_ENTRY_LEVELS</code> resolves before this
+step, so risk-based sizing reads the same stop-loss level that will be persisted on the opened trade. The model
+decides the normal entry direction; setup rules decide optional initial protective levels; risk decides what is
+actually allowed.</p>
 <p><strong>Implementation.</strong> One shared value type — <code>float | str | None</code> (literal number / DSL expression / config
 default) — plus a per-parameter validator and a single resolver: <code>if set, use the literal or evaluate the
 expression; else read the config where one exists, or reject as required -&gt; validate the domain -&gt; typed value</code>.
 The per-parameter validator enforces the table (a size rejects a bare number; a required parameter rejects an
 omitted value). The protective slice lands <code>new_stop</code> / <code>new_take_profit</code> / <code>trail_distance</code> /
-<code>trail_activation</code> and <code>reduce_size</code>; entry-level protective payloads land on the rule-driven open path;
-<code>add_size</code> / <code>enter_size</code> reuse the same resolver when their sizing default is connected.</p>
+<code>trail_activation</code> and <code>reduce_size</code>; entry-level protective payloads land on the pending-entry setup path,
+the secondary book-aware open path, and <code>ADD</code>; <code>add_size</code> / <code>enter_size</code> reuse the same resolver when their
+sizing default is connected.</p>
 <h2 id="8-impact-analysis">8. Impact Analysis</h2>
 <h3 id="81-backtest-decision-and-close-paths">8.1 Backtest decision and close paths</h3>
 <p>Per tick, <code>process_tick</code> (<code>engine_loop.py</code>) runs: execute pending orders → resolve prediction →
@@ -138472,14 +138642,16 @@ live (see "Scope and priorities").</p>
 <h3 id="83-modelbot-contract-and-feature-passing">8.3 Model→bot contract and feature passing</h3>
 <p>Layer 1's contract (<code>{logits, strength, quality}</code> and derived <code>prob_*</code>/<code>combined_confidence</code>) is unchanged —
 no <code>close_signal</code> is added to the model, so the prediction parquet, ensemble merge, and frontend types are
-untouched. Layer 2 needs the <strong>raw features of the tick</strong> and the <strong>position variables</strong>. The bot receives a
-typed feature context from the engine loop (backtest) and runtime loop (live); both already hold the feature
-row. Position-scoped candidates derive variables such as <code>bars_since_entry</code>, <code>unrealized_pnl_pct</code>, and
-<code>entry_price</code> from the current open position. Portfolio-scoped candidates derive variables such as free
-slots, current exposure, and side counts from the current book. Book-aware <code>ENTER_LONG</code> / <code>ENTER_SHORT</code>
-variables that depend on capital (exposure, available equity, notional headroom) require the engine loop and
-the runtime loop to pass the live equity / portfolio state into the entry rule context — an explicit wiring
-step, not only the feature row already delivered for exits.</p>
+untouched. Layer 2 needs the <strong>raw features of the tick</strong>, the <strong>prediction values</strong>, the <strong>position variables</strong>,
+and, for pending-entry setup, the <strong>pending model entry candidate</strong>. The bot receives a typed feature context
+from the engine loop (backtest) and runtime loop (live); both already hold the feature row. Position-scoped
+candidates derive variables such as <code>bars_since_entry</code>, <code>unrealized_pnl_pct</code>, and <code>entry_price</code> from the
+current open position. Portfolio-scoped candidates derive variables such as free slots, current exposure, and
+side counts from the current book. Pending-entry-scoped candidates derive their side and model metrics from
+the model-driven candidate that is about to open. Book-aware <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> variables that
+depend on capital (exposure, available equity, notional headroom) require the engine loop and the runtime loop
+to pass the live equity / portfolio state into the entry rule context — an explicit wiring step, not only the
+feature row already delivered for exits.</p>
 <h3 id="84-resume--pause-state">8.4 Resume / pause state</h3>
 <p><code>CLOSE</code>/exit rules are stateless and need no new persisted state. Stateful actions (e.g. a per-position
 pyramid counter, or a "scaled out once" flag) must be persisted in the runtime state
@@ -138580,15 +138752,23 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
   negative timesteps, placeholder binding (edge); rejected AST nodes, unknown/ambiguous feature,
   out-of-range timestep, malformed placeholder (negative). Evaluate predicates against both a batch context
   and a single-tick position-aware context. Tests assert that <code>common.rules</code> returns booleans / boolean
-  masks only; Layer-1 signals and Layer-2 actions are asserted in their owning modules.</li>
+  masks only; Layer-1 signals and Layer-2 actions are asserted in their owning modules. Named rule references
+  cover expansion from Layer-1 and Layer-2 rules, nested references, references inside larger expressions,
+  unknown names, duplicate names / aliases, cycles, and the guarantee that <code>rule("x")</code> expands only x's
+  predicate and never executes x's signal or action payload.</li>
 <li><strong>Action engine (bot-logic)</strong>: each action fires when its rule matches (positive); first-match/priority
   interaction with the fixed exits, exact-threshold boundaries, position-variable values at entry/edge
   (edge); no duplicate close of the same position, no entry while force-closing, action with no matching rule
   → <code>HOLD</code> (negative). Reuse of <code>build_close_order</code> verified (exit code <code>RULE_EXIT</code>, metadata correct).
   Rule-driven opens cover default entry levels, literal and DSL entry-level overrides, side-aware rejection
-  of invalid entry stops / take-profits, and the guarantee that risk-based sizing uses the resolved entry stop.</li>
+  of invalid entry stops / take-profits, and the guarantee that risk-based sizing uses the resolved entry stop.
+  Pending-entry setup covers model-driven entries: no setup rule → defaults, first matching
+  <code>SET_ENTRY_LEVELS</code> wins, <code>rule("...")</code> shared predicates select the intended setup, invalid SL / TP /
+  trailing values block the entry proposal with an audited reason, and model-entry candidate / approved counts
+  still come from the Layer-1 signal path.</li>
 <li><strong>Config</strong>: model loads from YAML with defaults; rejects out-of-range; absent block → fixed-gate default
-  behavior unchanged.</li>
+  behavior unchanged. Rule ids / names are optional where backwards compatibility requires it, but duplicate
+  or invalid names are rejected when a strategy uses named references.</li>
 <li><strong>Feature passing</strong>: the engine loop and runtime loop deliver the correct feature context to the bot;
   parity between backtest and live for the same inputs.</li>
 <li><strong>Optuna</strong>: search space samples valid configs; placeholder binding produces the intended rules; a Layer-2
@@ -138624,8 +138804,9 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
    validation harness.</li>
 <li><strong>Phase 4 — General action candidates and order contracts (decided design).</strong> Extend the optional action
    engine with <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> (book-aware), <code>ADD</code>, <code>REDUCE</code>, <code>REVERSE</code>, <code>MOVE_STOP</code>,
-   <code>MODIFY_TP</code>, <code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code>, <code>FLAT_AT_TIME</code>, <code>HOLD</code> — the maximum-flexibility design, with
-   the core refactor accepted. Chosen after an adversarially-reviewed options study.</li>
+   <code>MODIFY_TP</code>, <code>ENABLE_TRAIL</code> / <code>UPDATE_TRAIL</code>, <code>SET_ENTRY_LEVELS</code> (<code>target: pending_entry</code>),
+   <code>FLAT_AT_TIME</code>, <code>HOLD</code> — the maximum-flexibility design, with the core refactor accepted. Chosen after an
+   adversarially-reviewed options study.</li>
 <li><strong>Architecture: candidate + arbiter, two channels.</strong> Each tick the bot collects typed action
      <em>candidates</em> (from the fixed exits, risk force-flat, and the rule actions); a single <strong>arbiter</strong> resolves
      conflicts and emits the final actions, replacing today's "one exit per position, first-match-wins"
@@ -138645,6 +138826,9 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
 <li><strong>One protective modification, alongside:</strong> if the position is not being fully closed, one
     <code>MOVE_STOP</code> / <code>MODIFY_TP</code> / trailing update rides along (it moves no money, so it cannot conflict with
     the layer-3 action).</li>
+<li><strong>Pending-entry setup:</strong> model-signal entries that pass the model-entry gates may receive one
+    <code>SET_ENTRY_LEVELS</code> setup (<code>target: pending_entry</code>) before risk sizing; the setup cannot create an
+    entry and cannot bypass model statistics.</li>
 <li><strong>New entries (portfolio):</strong> model-signal entries plus rule <code>ENTER_LONG</code> / <code>ENTER_SHORT</code> plus <code>ADD</code>
     plus the open leg of <code>REVERSE</code> all pass the <strong>risk manager</strong> (sizing + max-positions + exposure +
     affordability) in priority order, until capital / slots run out.
@@ -138749,8 +138933,10 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
      position per tick.</li>
 <li><strong>Build order</strong> (each a complete vertical slice: config → candidate → order / modify contract → risk →
      audit (code / lineage / counter) → tests → gates → QA): foundation (candidate collection + the exit-channel
-     arbiter + the lineage / origin columns and the <code>reduce</code> / <code>add</code> operational-counter columns, with one
-     Alembic migration + backfill) → <code>HOLD</code> → <code>FLAT_AT_TIME</code> → <code>ADD</code> → <code>REDUCE</code> → protective (gated) — which
+     arbiter + named rule references (registry deployment + preflight validation of the reference graph;
+     runtime-compile expansion) + the lineage / origin columns and the
+     <code>reduce</code> / <code>add</code> operational-counter columns, with one Alembic migration + backfill) → <code>HOLD</code> →
+     <code>FLAT_AT_TIME</code> → <code>SET_ENTRY_LEVELS</code> / <code>pending_entry</code> setup → <code>ADD</code> → <code>REDUCE</code> → protective (gated) — which
      builds the second <code>PositionModification</code> channel and the two-channel arbiter, folds the automatic trailing
      into that channel, and adds <code>initial_take_profit</code>, the <code>trade_modifications</code> audit table, and the
      <code>move_stop</code> / <code>modify_tp</code> / <code>trail</code> counters under a <strong>single</strong> Alembic migration at the end of the slice →
@@ -138789,14 +138975,28 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
   default behavior.</li>
 <li>Layer-2 action rules are predicates plus bot-owned payloads. <code>common.rules</code> evaluates the predicate;
   bot-logic owns action scope, target, payload validation, priority, and order mapping.</li>
+<li>All Layer-1 and Layer-2 rules may carry stable <code>id</code> / <code>name</code> values. <code>common.rules</code> <strong>derives</strong> the
+  <code>id → expression</code> registry from the rules themselves (<code>build_rule_registry</code>) — it is never authored or
+  copied: the model derives its registry from its Layer-1 rules, the bot from its Layer-2 rules, and the run
+  assembly hands the bot the resolved Layer-1 map for a cross-layer reference. Any DSL expression may
+  reference a named predicate with <code>rule("...")</code>; the compiler expands it <strong>at runtime compile, once per rule
+  (cached)</strong>, so bot-logic expands a referenced Layer-1 predicate as data and never imports <code>model-trainer</code>. References are <strong>asymmetric</strong>: a Layer-1 rule
+  references Layer-1 only (market-only, cacheable); a Layer-2 rule references Layer-1 or Layer-2. A reference
+  reuses only the predicate, never the referenced rule's <code>signal</code> / <code>action</code> payload. Duplicate ids / names,
+  missing targets, cycles, and a Layer-1 → Layer-2 reference are rejected at preflight.</li>
 <li>Position-scoped actions (<code>CLOSE</code>, <code>REDUCE</code>, the close leg of <code>REVERSE</code>) are evaluated per open position
   and target the current position unless a later payload model specifies otherwise.</li>
 <li>Portfolio-scoped actions (<code>ENTER_LONG</code>, <code>ENTER_SHORT</code>, <code>FLAT_AT_TIME</code>, <code>HOLD</code>) are evaluated once per tick.</li>
+<li>Pending-entry-scoped actions (<code>SET_ENTRY_LEVELS</code>) are evaluated only for a model-driven entry candidate that
+  already exists; <code>target: pending_entry</code> cannot create an entry.</li>
 <li>Entry is split by what it depends on: a <strong>market-view</strong> entry is a <strong>Layer-1 model rule</strong>
   (<code>{expression, signal}</code> in <code>rule_based</code>, cached); a <strong>book-aware</strong> entry (depends on current
   positions / exposure / capital, which the model cannot see) is a <strong>Layer-2 bot action</strong>
   (<code>ENTER_LONG</code> / <code>ENTER_SHORT</code>). The model is never position-aware; everything that depends on the book is
   Layer 2.</li>
+<li>Per-rule SL / TP / trailing for normal model-driven opens is a <strong>pending-entry setup</strong> concern, not a model
+  output and not a book-aware <code>ENTER</code> action. The model output contract remains immutable: <code>LONG</code> / <code>SHORT</code> /
+  <code>NONE</code> only.</li>
 <li>A bot action is a decided action: it skips the model-signal filters (confidence / quality / cooldown) but
   always passes the risk manager. Direction is decided by the rule; size and admissibility by risk. Only
   model-signal entries are gated by the model's confidence / quality.</li>
@@ -138817,6 +139017,9 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
   (<code>entry_stop_loss</code>, <code>entry_take_profit</code>, <code>entry_trailing_stop_distance</code>, <code>entry_trailing_stop_activation</code>).
   Each field uses the uniform literal / DSL / omitted value model; omitted values use the strategy config
   defaults. Resolved values are applied before risk approval so sizing and persisted trade levels agree.</li>
+<li><code>SET_ENTRY_LEVELS</code> may carry the same optional entry-level protective payloads for the pending model-driven
+  open. It resolves before risk approval so model-driven sizing and persisted trade levels use the selected
+  per-rule setup.</li>
 <li>The book vocabulary is available in every rule context (position, portfolio, entry), alongside the market,
   prediction, and time vocabularies; position variables exist only where a current position is in scope.</li>
 <li>Conflict resolution is by list order: among money-moving candidates on one position the first matching rule

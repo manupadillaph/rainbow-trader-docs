@@ -136871,6 +136871,13 @@ resolved within a single source run (never pooled across runs or tiers); per fol
 experiment's selected best trial. Aggregates compound chronologically across the represented folds. Because
 each entity's risk-constrained benchmark is near-flat at the trial level (Section 4), aggregate Alpha RC and
 aggregate return track each other closely, so the reading below is framed on return and net PnL.</p>
+<blockquote>
+<p><strong>Verification (2026-07-01).</strong> Every per-family aggregate below was re-checked against the source report
+(<code>AUDIT/ANEXOS/ANALYSIS/20260613_SCRIPT2_CROSS_FOLD_FAMILY_DIAGNOSTIC_REPORT.md</code>, regenerated 2026-06-30
+from the corrected database, as-of <code>2026-04-14</code>) and matches it. <code>always_none</code> is a <strong>deliberate</strong>
+do-nothing baseline — the zero-trade floor a trading strategy must beat, not an accidental non-trading run —
+so it is retained here on purpose.</p>
+</blockquote>
 <h2 id="1-headline">1. Headline</h2>
 <ul>
 <li><strong>Every entity loses money over the full four-fold cycle.</strong> No <code>(run, tier, family)</code> has a positive
@@ -136905,7 +136912,7 @@ aggregate return track each other closely, so the reading below is framed on ret
 <tr>
 <td><code>20260323_tierA_rescue_v2</code> (A)</td>
 <td><code>vit</code> −10.8%</td>
-<td><code>mlp</code> −11.5%, <code>tcn</code> −22.3%, <code>axv</code> −11.6% (F1–F3)</td>
+<td><code>mlp</code> −11.5%, <code>tcn</code> −22.3%, <code>axv</code> −11.8% (F1–F3)</td>
 <td>— (rescue run has no baselines)</td>
 </tr>
 <tr>

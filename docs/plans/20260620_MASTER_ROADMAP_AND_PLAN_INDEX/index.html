@@ -137486,7 +137486,7 @@
 investigate, every improvement idea on the table, and every plan / audit / research document in the
 project — with each one's state, purpose, what it contributes, and what is concrete versus still open.
 It does not replace the intermediate documents; it consolidates and sequences them.</p>
-<p>Last updated: 2026-06-20.</p>
+<p>Last updated: 2026-07-01.</p>
 </blockquote>
 <h2 id="table-of-contents">Table of contents</h2>
 <ul>
@@ -137531,12 +137531,15 @@ to the thesis, not inside it.</p>
 <p>"Concrete" = there is code, data, or a runnable artifact. "To investigate" = an open question needing a
 decision or an experiment.</p>
 <h2 id="1-current-priority">1. Current priority</h2>
-<p>The chosen next build is the <strong>rule-based strategy engine</strong> (Section 6.1) — a money-track line testing
-whether deterministic, parameterized rules produce positive net edge through the existing engine, with
-Optuna optimizing the rule parameters and <strong>no model training</strong>. Its main blocker (the trailing-stop
-defect) is resolved (Section 2). The design is now closed (Section 6.1's plan — a two-layer architecture),
-and the Phase-1 build of the shared DSL (<code>rainbow.common.rules</code>) is under way (placeholder binding done;
-expressive compiler + evaluator next).</p>
+<p>The active build is the <strong>rule-based strategy engine</strong> (Section 6.1) — a money-track line testing whether
+deterministic rules produce positive net edge through the existing engine, with <strong>no model training</strong>. The
+two-layer engine is essentially complete: the shared <code>rainbow.common.rules</code> DSL, the <code>rule_based</code> model, and
+the full Layer-2 action engine (<code>CLOSE</code> / <code>HOLD</code> / <code>FLAT_AT_TIME</code> / <code>ENTER</code> / <code>ADD</code> / <code>REDUCE</code> / <code>REVERSE</code> /
+protective updates, with entry-level DSL payloads) are built, gate-green, and migrated; named rule
+references and the pending-entry setup (<code>SET_ENTRY_LEVELS</code>) are built and pending commit. The current focus
+is the <strong>strategy battalion</strong> — authoring ~50 research strategies on eight reusable bot profiles
+(<code>docs/plans/20260701_RULE_STRATEGY_LAB_GENERATOR_AND_RUNNER_PLAN.md</code>) — and the staged validation program in
+Track 1. Optuna over rule / bot-config parameters is deferred.</p>
 <h2 id="2-recently-landed-system-level-facts">2. Recently landed (system-level facts)</h2>
 <p>Verified against code, commits, and on-disk results — not only docs.</p>
 <ul>
@@ -137557,6 +137560,10 @@ expressive compiler + evaluator next).</p>
   profitable model-level trials (§3.1), which ran on the old engine and are not magnitude-comparable.</li>
 <li>✅ <strong>always_long baseline</strong> complete and archived (Section 6.1) — executed ×3 RC-matched, full investor
   metric suite, <code>alpha_rc ≈ 0</code>.</li>
+<li>✅ <strong>Rule-based action engine shipped.</strong> The two-layer engine's Layer-2 action set (<code>CLOSE</code> / <code>HOLD</code> /
+  <code>FLAT_AT_TIME</code> / <code>ENTER</code> / <code>ADD</code> / <code>REDUCE</code> / <code>REVERSE</code> / protective updates) plus entry-level DSL payloads
+  are built, gate-green, and migrated (Section 6.1). Named rule references and the <code>SET_ENTRY_LEVELS</code>
+  pending-entry setup are built and pending commit.</li>
 </ul>
 <h2 id="3-what-we-know-validated-findings">3. What we know (validated findings)</h2>
 <h3 id="31-thesis-level-results">3.1 Thesis-level results</h3>
@@ -137902,8 +137909,9 @@ iTransformer / ConvTran, then hybrids, with feature neutralization + calibration
   <code>(model, config)</code> per fold/regime; Phase 1b: cross-fold validation of the winners (real edge vs
   fold-local); Phase 2 (later, gated on the data refresh + detector): regime-conditional testing. Not
   authorized to run.</li>
-<li><strong><code>docs/plans/20260616_RULE_BASED_ENGINE_AUDIT_AND_DIRECTION.md</code></strong> · 🟡 the chosen build (design closed;
-  Phase 1 under way). Two layers: Layer 1 = market view (the model, unchanged) → signal; Layer 2 = a
+<li><strong><code>docs/plans/20260616_RULE_BASED_ENGINE_AUDIT_AND_DIRECTION.md</code></strong> · 🟡 the chosen build (engine core
+  essentially complete; the strategy battalion is next). Two layers: Layer 1 = market view (the model,
+  unchanged) → signal; Layer 2 = a
   position-aware rule-driven action engine in the bot, universal for any model. A shared, <strong>expressive
   DSL</strong> lives in a new <code>rainbow.common.rules</code> (feature{T} + range selectors + window aggregates +
   scalar/event functions; heavy/reused transforms stay in the feature/signal layer). Action set
@@ -137911,8 +137919,10 @@ iTransformer / ConvTran, then hybrids, with feature neutralization + calibration
   add new order actions in Phase 4). <strong>Two optimizers</strong>: Layer-1 rule thresholds via an extension of the
   native model-trainer Optuna; Layer-2 + bot_config via the existing bot-config optimizer over cached
   predictions. Regime is a <code>REGIME</code>/<code>MARKET_STATE</code> <strong>feature-indicator</strong> (classify_regime → data-processing).
-  50-strategy seed catalog reviewed; only two-leg pairs is structurally deferred. Build: <code>common.rules</code>
-  placeholder binding done (gates green).</li>
+  50-strategy seed catalog reviewed; only two-leg pairs is structurally deferred. Build: engine core
+  complete (DSL + full action engine + protective + <code>REVERSE</code> + entry-level payloads committed and migrated;
+  named references + <code>SET_ENTRY_LEVELS</code> built, pending commit); remaining = Phase 3 Optuna (deferred) and
+  Phase 5 <code>rule_raw</code> exposure + the strategy battalion.</li>
 <li><strong><code>docs/plans/IDEAS/THESIS-SCRIPT2/20260529_SCRIPT2_MARKET_REGIME_ANALYSIS_PLAN.md</code></strong> · ⏳ active
   reference; the regime-aware cross-fold aggregation it proposes (bull-only/bear-only Alpha RC,
   leaderboard) is not implemented.</li>
@@ -138014,18 +138024,34 @@ reference = <code>scripts/thesis/script_2_thesis/bot_config_optimizer/README.md<
 <h2 id="7-proposed-order">7. Proposed order</h2>
 <p>A proposal, not a commitment. Four tracks; Track 1 active now.</p>
 <h3 id="track-1--rule-based-money-engine-active">Track 1 — Rule-based money engine (active)</h3>
+<p>Engine build (done): ✅ the two-layer architecture, the shared <code>common.rules</code> DSL, <code>rule_based</code>, and the
+full Layer-2 action engine (<code>CLOSE</code> / <code>HOLD</code> / <code>FLAT_AT_TIME</code> / <code>ENTER</code> / <code>ADD</code> / <code>REDUCE</code> / <code>REVERSE</code> /
+protective updates, entry-level payloads) — committed and migrated; ✅ named rule references +
+<code>SET_ENTRY_LEVELS</code> pending-entry setup — built, pending commit; ⏳ Optuna over rule / bot-config parameters —
+deferred (it re-enters at the staged program's last step).</p>
+<p>Staged validation program (the money question — does a rule battalion make positive PnL on unseen data?):</p>
 <ol>
-<li>✅ Design closed (two-layer architecture; the rule-based plan). 🟡 Phase 1: build the shared expressive
-   DSL <code>rainbow.common.rules</code> (binding done; compiler + evaluator next); migrate <code>rule_based</code> to it after
-   the live ensemble.</li>
-<li>Phase 2: the parallel <code>CLOSE</code> channel (the Layer-2 action engine's first action) in the bot.</li>
-<li>Phase 3: Optuna over strategy params — Layer-1 thresholds (native model-trainer Optuna extension) and
-   Layer-2 + bot_config (existing bot-config optimizer), with in-fold / out-of-fold validation.</li>
-<li>Phase 4: position-aware entries + management (ENTER/ADD/REDUCE/REVERSE + stop/TP edits; the new order
-   actions).</li>
-<li>Phase 5: feature layer (add the missing classic indicators + the <code>REGIME</code> indicator) + the vetted
-   strategy battalion on folds → chronological holdout → multi-year (needs the data refresh below).</li>
+<li>🟡 <strong>Strategy battalion — ~50 strategies now.</strong> Author the research catalog
+   (<code>docs/_researchs/_RULE_BASED/</code>) as rule-based experiments on eight reusable bot profiles, via the lab
+   generator (<code>docs/plans/20260701_RULE_STRATEGY_LAB_GENERATOR_AND_RUNNER_PLAN.md</code>). The ~40 expressible
+   with the shipped engine now; multi-timeframe / context-symbol / session-anchored / two-leg / regime-hybrid
+   deferred.</li>
+<li>⏳ <strong>More strategies via research.</strong> A deep research pass (papers + online) for additional strategies,
+   then a deep code review to implement the new ones or improve the existing.</li>
+<li>⏳ <strong>Run the whole battalion over four years, one year held out.</strong> Every strategy over ≈4 years of data,
+   leaving one year unseen (needs the data refresh + de-hardcoded folds below).</li>
+<li>⏳ <strong>Regime buckets + per-bucket scoring.</strong> Build the 27 / 9 / 3 regime buckets and score each strategy in
+   each bucket (at least label accuracy) to learn <strong>which strategy fits which market regime</strong>.</li>
+<li>⏳ <strong>Unseen year, regime-routed.</strong> On the held-out year, detect the regime, and per regime (27 / 9 / 3, or
+   all) run date-ranged experiments with the best strategy for that bucket — the test of whether the program
+   finally produces positive PnL on data it never saw.</li>
+<li>⏳ <strong>Optuna per regime (later).</strong> Beyond picking the best strategy, optimize bot-config (and, separately,
+   rule L1 / L2 parameters) <strong>per regime</strong> to find the best configuration for each market state — potentially
+   best-strategy <em>and</em> best-config per regime for even better PnL.</li>
 </ol>
+<p>Feature-layer prerequisite for steps 1–2: open the rest of the 34-indicator catalog to <code>rule_raw</code> (generator
+config, not engine work) and add the deferred plumbing (MTF / context-symbol / session anchoring) as the
+catalog demands it.</p>
 <h3 id="track-2--close-the-thesis-parallelizable-between-track-1-phases">Track 2 — Close the thesis (parallelizable between Track 1 phases)</h3>
 <ol>
 <li>✅ Core + backtesting-engine field population done (new sessions carry the full investor suite +

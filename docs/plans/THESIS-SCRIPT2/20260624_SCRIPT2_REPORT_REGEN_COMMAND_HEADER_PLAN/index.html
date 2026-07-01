@@ -137981,8 +137981,10 @@
 <h1 id="script-2-report-regeneration-command-header-plan">Script 2 Report Regeneration-Command Header Plan</h1>
 <p><strong>Created:</strong> 2026-06-24
 <strong>Status:</strong> Stages 1–5 complete — every exporter embeds the regeneration-command header and all reports were
-re-published against the corrected live DB. Remaining: Stage 6 audit dispositions — the bot-config group is
-reviewed and closed; the other audit groups are pending and owned by the thesis Script 2 plans (see Stage 6).
+re-published against the corrected live DB. Remaining: Stage 6 audit dispositions — the bot-config, ensemble,
+baseline and regime groups are reviewed and closed; only the <code>_LEGACY</code> group is pending (frozen — a
+thesis-state review, not regeneration), owned by the thesis Script 2 plans (see Stage 6). Stage 7 (headers on
+the planner-input / stats markdown) is also still open.
 <strong>Scope:</strong> Every Script 2 report/plan exporter, the reports they produce, and a shared header helper.</p>
 <blockquote>
 <p><strong>RC benchmark backfill — corrected (2026-06-25).</strong> The risk-constrained benchmark had been backfilled
@@ -138542,9 +138544,24 @@ inventory of audits whose values changed.</p>
   syntheses (cross-block bifurcation, cross-fold-regime diagnostic, cross-fold-transfer) were consolidated
   into one (<code>AUDIT/ENSEMBLES/20260701_SCRIPT2_ENSEMBLE_LINE_CONSOLIDATED_AUDIT.md</code>) with the predecessors
   moved to <code>AUDIT/ENSEMBLES/DEPRECATED/</code>; numbers verified against the campaign reports and the database.</li>
-<li>[ ] 6.3 <strong>Regime group — pending</strong> (<code>AUDIT/REGIME/</code>): the regime/fold cross-fold full audit and the
-  cross-fold family diagnostic audit.</li>
-<li>[ ] 6.4 <strong>Baseline group — pending</strong> (<code>AUDIT/BASELINES/</code>): the always-long executed audit.</li>
+<li>[x] 6.3 <strong>Regime group — reviewed and closed.</strong> Three audits verified against the corrected database and
+  the regenerated diagnostic report:
+  <code>20260612_SCRIPT2_REGIME_FOLD_CROSSFOLD_FULL_AUDIT.md</code> (a regime/fold/cross-fold reference doc — §2 benchmark
+  RC and §3.3 per-selector figures were already correct; its references to the six Phase-1 audits + bifurcation
+  synthesis were repointed to the consolidated ensemble audit);
+  <code>20260613_SCRIPT2_CROSS_FOLD_FAMILY_DIAGNOSTIC_AUDIT.md</code> (per-family aggregates matched the 2026-06-30
+  regenerated report; one stale figure <code>axv</code> −11.6%→−11.8% corrected; <code>always_none</code> kept as the deliberate
+  zero-trade floor);
+  <code>20260325_REGIME_TRAINING_OPTIONS_AUDIT.md</code> (regime-detection analysis from offline detector CSVs — no
+  dependency on the corrected metrics, kept as-is). All kept in place (reference/interpretation docs, nothing
+  to consolidate or deprecate).</li>
+<li>[x] 6.4 <strong>Baseline group — reviewed and closed.</strong> The always-long executed audit
+  (<code>AUDIT/BASELINES/20260620_ALWAYS_LONG_BASELINE_EXECUTED_AUDIT.md</code>) was verified against the corrected
+  live database (sessions 9743–9746): per fold the executed return equals the risk-constrained benchmark up
+  to the friction (<code>alpha_rc</code> = −0.12% to −0.13%), so the baseline needs no re-execution. The audit's
+  Return / Calmar / Sortino / <code>alpha_rc</code> already matched the corrected DB; it was refreshed with an explicit
+  <code>Benchmark RC</code> column and a verification note. Kept in place (single reference audit, nothing to
+  consolidate or deprecate).</li>
 <li>[ ] 6.5 <strong>Legacy group — pending</strong> (<code>AUDIT/_LEGACY/</code>): the older thesis-state audits (Tier-A / Tier-B
   rescue, regime, normalization integrity, trade selectivity, the preliminary analyses). Already <code>_LEGACY</code>
   (frozen); the open work is the thesis-state review, not regeneration.</li>
@@ -139140,10 +139157,15 @@ lines (not stored in <code>plan.json</code>); persisting the two counts into <co
 <p><strong>Disposition status.</strong> These audits are reviewed and closed group by group; the decision for each group
 lives in the owning thesis Script 2 plan (Stage 6), not here. <strong>Done:</strong> the bot-config group (consolidated
 into <code>AUDIT/BOT_CONFIG/20260629_SCRIPT2_BOT_CONFIG_CONSOLIDATED_AUDIT.md</code>, predecessors under
-<code>AUDIT/BOT_CONFIG/DEPRECATED/</code>, numbers refreshed). <strong>Pending:</strong> the ensemble group (<code>AUDIT/ENSEMBLES/</code>),
-the regime group (<code>AUDIT/REGIME/</code>), the baseline group (<code>AUDIT/BASELINES/</code>) and the older <code>AUDIT/_LEGACY/</code>
-thesis-state audits. The <code>_DEPRECATED</code>-rename + replacement mechanism described next is one option; the
-bot-config group used consolidation instead.</p>
+<code>AUDIT/BOT_CONFIG/DEPRECATED/</code>, numbers refreshed); the ensemble group (consolidated into
+<code>AUDIT/ENSEMBLES/20260701_SCRIPT2_ENSEMBLE_LINE_CONSOLIDATED_AUDIT.md</code>, predecessors under
+<code>AUDIT/ENSEMBLES/DEPRECATED/</code>); the baseline group (<code>AUDIT/BASELINES/20260620_ALWAYS_LONG_BASELINE_EXECUTED_AUDIT.md</code>,
+verified against the corrected DB and kept in place); the regime group (three reference/interpretation
+audits under <code>AUDIT/REGIME/</code> — verified against the corrected DB and the 2026-06-30 regenerated diagnostic
+report, references repointed and one stale figure fixed, all kept in place). <strong>Pending:</strong> the older
+<code>AUDIT/_LEGACY/</code> thesis-state audits. The <code>_DEPRECATED</code>-rename + replacement mechanism described next is one
+option; the bot-config and ensemble groups used consolidation, the baseline and regime groups a verified
+keep-in-place.</p>
 </blockquote>
 <p>Because the base reports/anexos are regenerated, every hand-written audit whose insights derive from them is now based
 on changed data. At the <strong>end</strong> of the regeneration, each such audit is:</p>

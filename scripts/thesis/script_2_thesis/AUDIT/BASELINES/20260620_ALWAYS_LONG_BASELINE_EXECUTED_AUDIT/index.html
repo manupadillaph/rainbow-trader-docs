@@ -136863,6 +136863,7 @@ risk-constrained Benchmark RC three-slot model, so the baseline deploys the same
 <th>Fold</th>
 <th>Experiment</th>
 <th>Return (MtM)</th>
+<th>Benchmark RC</th>
 <th>Calmar</th>
 <th>Sortino (daily)</th>
 <th><code>alpha_rc</code></th>
@@ -136874,6 +136875,7 @@ risk-constrained Benchmark RC three-slot model, so the baseline deploys the same
 <td>F1</td>
 <td>969</td>
 <td>+11.78%</td>
+<td>+11.92%</td>
 <td>98.44</td>
 <td>13.06</td>
 <td>−0.13%</td>
@@ -136883,6 +136885,7 @@ risk-constrained Benchmark RC three-slot model, so the baseline deploys the same
 <td>F2</td>
 <td>970</td>
 <td>+4.03%</td>
+<td>+4.16%</td>
 <td>19.48</td>
 <td>6.51</td>
 <td>−0.13%</td>
@@ -136892,6 +136895,7 @@ risk-constrained Benchmark RC three-slot model, so the baseline deploys the same
 <td>F3</td>
 <td>971</td>
 <td>−7.07%</td>
+<td>−6.95%</td>
 <td>−6.56</td>
 <td>−4.57</td>
 <td>−0.12%</td>
@@ -136901,6 +136905,7 @@ risk-constrained Benchmark RC three-slot model, so the baseline deploys the same
 <td>F4</td>
 <td>972</td>
 <td>−8.55%</td>
+<td>−8.43%</td>
 <td>−5.73</td>
 <td>−5.43</td>
 <td>−0.12%</td>
@@ -136911,7 +136916,13 @@ risk-constrained Benchmark RC three-slot model, so the baseline deploys the same
 <p>Each fold: exactly one LONG trade, entered at the start of the window and closed <code>END_OF_WINDOW</code> (the
 end-of-window liquidation), ~54–66% of equity deployed (the ×3 sizing), with entry/exit friction paid. The
 small residual <code>alpha_rc</code> (≈ −0.12%) is precisely that friction. The complete suite (drawdown, volatility,
-profit factor, exposure, costs) lives on the <code>backtest_sessions</code> rows for experiments 969–972.</p>
+profit factor, exposure, costs) lives on the <code>backtest_sessions</code> rows for experiments 969–972 (sessions
+9743–9746).</p>
+<p><strong>Verification (2026-07-01).</strong> Values read from the corrected live database (after the risk-constrained
+benchmark's wrong-ATR and <code>last_price</code> fixes). Per fold the executed return equals the risk-constrained
+benchmark up to the friction — <code>alpha_rc = Return − Benchmark RC = −0.12% to −0.13%</code> — so the executed
+baseline and the scalar RC reference agree and the run needs no re-execution. Return, Benchmark RC, <code>alpha_rc</code>,
+Calmar and Sortino all match the values above.</p>
 <h2 id="artifacts">Artifacts</h2>
 <ul>
 <li>Run results: <a href="../results/20260620_always_long_x3/progress.md">results/20260620_always_long_x3/progress.md</a></li>

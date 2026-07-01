@@ -2751,6 +2751,67 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#10-strategy-battalion-the-50-strategy-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Strategy battalion (the ~50-strategy expansion)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Strategy battalion (the ~50-strategy expansion)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-extract-the-registry-into-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Extract the registry into a package
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-eight-bot-profiles-as-reusable-management-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Eight bot profiles as reusable management templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-named-reference-registry-deployment-closes-the-engine-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Named-reference registry deployment (closes the engine gap)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-coverage-and-deferrals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Coverage and deferrals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -136845,6 +136906,67 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#10-strategy-battalion-the-50-strategy-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Strategy battalion (the ~50-strategy expansion)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Strategy battalion (the ~50-strategy expansion)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-extract-the-registry-into-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Extract the registry into a package
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-eight-bot-profiles-as-reusable-management-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Eight bot profiles as reusable management templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-named-reference-registry-deployment-closes-the-engine-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Named-reference registry deployment (closes the engine gap)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-coverage-and-deferrals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Coverage and deferrals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -136940,7 +137062,8 @@ enabled). <code>generate_rule_experiment.py</code> and <code>runner/run_experime
 gates (ruff, mypy --strict, pylint ≥ 9.5). Both reference strategies (<code>donchian_breakout</code>,
 <code>adx_di_surge</code>) generate, validate through <code>ExperimentConfig</code>, and their Layer-1 rules compile
 through <code>common.rules</code> (window functions, ranges, feature resolution). <code>fat_window.window_size</code> is
-80 (≥ 21). Running the experiments end to end is the operator's step.</p>
+80 (≥ 21). Running the experiments end to end is the operator's step. The next step expands the
+in-module registry into a ~50-strategy battalion authored on eight reusable bot profiles (Section 10).</p>
 </blockquote>
 <h2 id="1-purpose-and-scope">1. Purpose and scope</h2>
 <p>Create a lightweight, reusable way to author and run a single rule-based strategy end to end on real
@@ -137104,6 +137227,49 @@ window (plus the warm-up cushion) from Binance on demand.</p>
   <code>helpers/mega_naming.py</code>, <code>modules/common/.../bot_config.py</code> (<code>ActionRuleConfig</code> /
   <code>ActionRulesConfig</code>), <code>modules/core/.../composed/experiments.py</code> (<code>ExperimentConfig</code>)</li>
 </ul>
+<h2 id="10-strategy-battalion-the-50-strategy-expansion">10. Strategy battalion (the ~50-strategy expansion)</h2>
+<p>The two reference strategies proved the path end to end. The next step turns the in-module registry into a
+<strong>battalion of ~50 strategies</strong> drawn from the rule-based research catalog (<code>docs/_researchs/_RULE_BASED/</code>),
+authored to exploit the full engine: the Layer-2 action set, named rule references, and entry-level DSL
+payloads.</p>
+<h3 id="101-extract-the-registry-into-a-package">10.1 Extract the registry into a package</h3>
+<p>The <code>_STRATEGIES</code> registry and the strategy spec builders move out of <code>generate_rule_experiment.py</code> (which
+keeps only the CLI and the generic spec → JSON assembly) into a new package:</p>
+<pre><code class="language-text">scripts/experiments/generate/rule_strategies/
+├── base.py                  # RuleStrategySpec, EntryRule (moved from the generator)
+├── profiles.py              # the eight bot-profile action-rule builders
+├── features.py              # per-indicator raw-feature helpers (EMA / SMA / RSI / ADX / BB / …)
+├── trend_breakout.py        # family specs
+├── momentum.py              # family specs
+├── mean_reversion.py        # family specs
+├── volatility_structure.py  # family specs
+└── __init__.py              # assembles _STRATEGIES from the family modules
+</code></pre>
+<h3 id="102-eight-bot-profiles-as-reusable-management-templates">10.2 Eight bot profiles as reusable management templates</h3>
+<p>The research catalog groups every strategy under one of eight <strong>bot profiles</strong> — TR (trend-rider),
+BO (breakout), PB (pullback), MR (mean-reversion), IN (intraday / session), FR (failure-reversal),
+SP (spread / pairs), HY (regime-hybrid). Each profile is a parameterized builder that emits the Layer-2
+<code>action_rules</code> for a strategy: the initial stop / take-profit via <code>SET_ENTRY_LEVELS</code> on the model-driven
+open, plus the post-open <code>MOVE_STOP</code> / trailing / <code>REDUCE</code> / time-flat rules the profile implies. A strategy
+is then authored as <strong>Layer-1 entry rules + a chosen profile + parameters</strong> (ATR multiple, take-profit in R,
+trail distance…), so the management logic is written once per profile and reused across the family.</p>
+<h3 id="103-named-reference-registry-deployment-closes-the-engine-gap">10.3 Named-reference registry deployment (closes the engine gap)</h3>
+<p>Authoring a <code>SET_ENTRY_LEVELS</code> rule that reuses a Layer-1 entry predicate through <code>rule("...")</code> requires the
+Layer-1 predicate to be present in the Layer-2 <code>rule_registry</code>. The generator performs that <strong>deployment</strong>:
+when it assembles a spec, it copies every referenced Layer-1 entry predicate (keyed by its <code>id</code>) into
+<code>bot_config.action_rules_config.rule_registry</code>. This is the Phase-3 registry-deployment wiring the engine
+audit flagged as missing; it lands here, in the generator, not in the runtime.</p>
+<h3 id="104-coverage-and-deferrals">10.4 Coverage and deferrals</h3>
+<ul>
+<li><strong>Expressible now (~40 strategies):</strong> everything the shipped DSL, action engine, entry-level payloads, and
+  the 34 indicators (exposed raw by this generator, no MEGA edit) already cover.</li>
+<li><strong>Deferred — needs extra plumbing:</strong> higher-timeframe / context-symbol strategies (dual momentum,
+  relative strength, multi-timeframe stacks) and session-anchored VWAP / daily-pivot strategies.</li>
+<li><strong>Deferred by structure:</strong> two-leg pair / spread execution (one strategy) and the regime-switch hybrid
+  (needs conditional routing between sub-policies, or a split into two regime-gated strategies).</li>
+</ul>
+<p>Each generated strategy still validates through <code>ExperimentConfig.from_config</code> and its rules still compile
+against the generated feature universe before the JSON is written.</p>
 
 
 
