@@ -2786,10 +2786,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#103-named-reference-registry-deployment-closes-the-engine-gap" class="md-nav__link">
+  <a href="#103-named-references-resolve-without-a-deployment-step" class="md-nav__link">
     <span class="md-ellipsis">
       
-        10.3 Named-reference registry deployment (closes the engine gap)
+        10.3 Named references resolve without a deployment step
       
     </span>
   </a>
@@ -136941,10 +136941,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#103-named-reference-registry-deployment-closes-the-engine-gap" class="md-nav__link">
+  <a href="#103-named-references-resolve-without-a-deployment-step" class="md-nav__link">
     <span class="md-ellipsis">
       
-        10.3 Named-reference registry deployment (closes the engine gap)
+        10.3 Named references resolve without a deployment step
       
     </span>
   </a>
@@ -137062,8 +137062,13 @@ enabled). <code>generate_rule_experiment.py</code> and <code>runner/run_experime
 gates (ruff, mypy --strict, pylint ≥ 9.5). Both reference strategies (<code>donchian_breakout</code>,
 <code>adx_di_surge</code>) generate, validate through <code>ExperimentConfig</code>, and their Layer-1 rules compile
 through <code>common.rules</code> (window functions, ranges, feature resolution). <code>fat_window.window_size</code> is
-80 (≥ 21). Running the experiments end to end is the operator's step. The next step expands the
-in-module registry into a ~50-strategy battalion authored on eight reusable bot profiles (Section 10).</p>
+80 (≥ 21). Running the experiments end to end is the operator's step. The registry has been extracted into
+the <code>rule_strategies/</code> package (<code>base.py</code>, <code>trend_breakout.py</code>, and <code>__init__.py</code> with the two reference
+strategies, verified byte-identical); the next step adds <code>profiles.py</code> (the eight bot profiles),
+<code>features.py</code>, and the remaining family modules to grow it into a ~50-strategy battalion (Section 10).</p>
+<p><strong>What remains (2026-07-01):</strong> the ~50-strategy battalion — <code>profiles.py</code> (the eight bot profiles),
+<code>features.py</code>, and the three remaining family modules (<code>momentum.py</code>, <code>mean_reversion.py</code>,
+<code>volatility_structure.py</code>). That is the original pending task.</p>
 </blockquote>
 <h2 id="1-purpose-and-scope">1. Purpose and scope</h2>
 <p>Create a lightweight, reusable way to author and run a single rule-based strategy end to end on real
@@ -137253,12 +137258,14 @@ SP (spread / pairs), HY (regime-hybrid). Each profile is a parameterized builder
 open, plus the post-open <code>MOVE_STOP</code> / trailing / <code>REDUCE</code> / time-flat rules the profile implies. A strategy
 is then authored as <strong>Layer-1 entry rules + a chosen profile + parameters</strong> (ATR multiple, take-profit in R,
 trail distance…), so the management logic is written once per profile and reused across the family.</p>
-<h3 id="103-named-reference-registry-deployment-closes-the-engine-gap">10.3 Named-reference registry deployment (closes the engine gap)</h3>
-<p>Authoring a <code>SET_ENTRY_LEVELS</code> rule that reuses a Layer-1 entry predicate through <code>rule("...")</code> requires the
-Layer-1 predicate to be present in the Layer-2 <code>rule_registry</code>. The generator performs that <strong>deployment</strong>:
-when it assembles a spec, it copies every referenced Layer-1 entry predicate (keyed by its <code>id</code>) into
-<code>bot_config.action_rules_config.rule_registry</code>. This is the Phase-3 registry-deployment wiring the engine
-audit flagged as missing; it lands here, in the generator, not in the runtime.</p>
+<h3 id="103-named-references-resolve-without-a-deployment-step">10.3 Named references resolve without a deployment step</h3>
+<p>Authoring a <code>SET_ENTRY_LEVELS</code> rule that reuses a Layer-1 entry predicate through <code>rule("...")</code> needs no
+generator work. The reference registry is <strong>derived at runtime</strong> by <code>common.rules.build_rule_registry</code> from
+the rules themselves, and the run assembly hands the bot the resolved Layer-1 <code>id → expression</code> map, so a
+Layer-2 rule resolves <code>rule("l1_id")</code> while the bot never imports the model layer. A strategy authors each
+rule once, in its own layer, carrying an <code>id</code> / <code>name</code>; the generator copies nothing, and there is no
+<code>rule_registry</code> field to populate. The reference graph — unknown target, cycle, Layer-1 → Layer-2 direction —
+is validated before any run by <code>common.rules.validate_rule_reference_graph</code> at config load.</p>
 <h3 id="104-coverage-and-deferrals">10.4 Coverage and deferrals</h3>
 <ul>
 <li><strong>Expressible now (~40 strategies):</strong> everything the shipped DSL, action engine, entry-level payloads, and

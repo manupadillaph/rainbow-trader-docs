@@ -137554,6 +137554,10 @@
 the target two-layer architecture, the impact analysis across every close path and every run mode
 (backtest, live sim, live real), the code-quality contract, and the per-method test plan. It is a
 standalone reference; it assumes no prior context.</p>
+<p><strong>What remains (2026-07-01):</strong> the two-layer engine core is essentially complete. Owed: <strong>Phase 3</strong>
+(Optuna over rule parameters — deferred) and <strong>Phase 5</strong> (exposing the rest of the indicator catalog to
+<code>rule_raw</code> in MEGA, then running the strategy battalion on folds). Not archivable — this is the live
+reference for the battalion build.</p>
 </blockquote>
 <h2 id="related-plans-audits-and-current-state-handoff">Related plans, audits, and current state (handoff)</h2>
 <p>Entry point for the rule-based build line. Start here, then follow the links.</p>
@@ -137713,9 +137717,9 @@ larger <strong>generator</strong> wave (full spec in §3.3):</p>
 <p>The earlier "indicator catalog complete (34)" status holds for the 34 enumerated indicators, but the
 catalog is <strong>not</strong> closed for the full strategy set until SMA and the VWAP anchor land.</p>
 <h3 id="current-state-2026-07-01">Current state (2026-07-01)</h3>
-<p>Named rule references, the pending-entry setup action, and its bot path are <strong>implemented and gate-green,
-but not yet committed</strong> (working-tree edits across <code>common</code> / <code>model-trainer</code> / <code>bot-logic</code> on top of the
-committed action-engine work):</p>
+<p>Named rule references, the pending-entry setup action, and its bot path are <strong>implemented, gate-green, and
+committed</strong> (across <code>common</code> / <code>model-trainer</code> / <code>bot-logic</code> / <code>backtesting-engine</code> / <code>live-trading-runner</code>,
+on top of the committed action-engine work):</p>
 <ul>
 <li><strong><code>rule("id")</code> references</strong> — a shared <code>RuleRegistry</code> (<code>id → expression</code>) in <code>common.rules</code>, recursive
   expansion at <strong>runtime compile</strong> (before feature resolution and AST parse), cached per compiled
@@ -137738,13 +137742,17 @@ graph is validated <strong>before any run</strong>: <code>common.rules.validate_
 rejects an unknown target, a reference cycle, or a Layer-1 rule that references a Layer-2 rule — the last
 with a message naming the direction rule. The check never binds <code>${...}</code> placeholders, so a reference graph
 that validates once holds for every trial the optimizer later samples.</p>
+<p>The two core indicator items the strategy catalog still needed have also landed: <strong>SMA</strong> (a simple moving
+average, distinct from EMA) and a session <strong><code>anchor</code></strong> on VWAP (<code>NONE</code> / <code>DAY</code> / <code>WEEK</code> / <code>MONTH</code>), both on
+the existing indicator mold — so the classic-indicator catalog is now closed for the full strategy set. The
+<code>IndicatorType</code> enum carries <code>SMA</code> and <code>VWAP</code>, with <code>sma.py</code> / <code>vwap.py</code> and the <code>VWAPAnchor</code> config in place.</p>
 <p><strong>What remains on this plan.</strong> The two-layer engine core is essentially complete (the shared DSL, the
 <code>rule_based</code> model, the full action engine — <code>CLOSE</code> / <code>HOLD</code> / <code>FLAT_AT_TIME</code> / <code>ENTER</code> / <code>ADD</code> / <code>REDUCE</code> /
-<code>REVERSE</code> / protective updates — with entry-level payloads, all committed and migrated; plus the
-named-reference and pending-entry slice above, uncommitted). Still owed: <strong>Phase 3</strong> (Optuna over rule
-parameters — deferred for now), <strong>Phase 5</strong> (opening the rest of the indicator catalog to <code>rule_raw</code> and
-running the vetted strategy battalion on folds — the active generator / roadmap work). The plan is <strong>not</strong>
-ready to archive; it is the live reference for the battalion build.</p>
+<code>REVERSE</code> / protective updates — with entry-level payloads, plus the named-reference and pending-entry slice
+above, all committed and migrated). Still owed: <strong>Phase 3</strong> (Optuna over rule parameters — deferred for now),
+<strong>Phase 5</strong> (opening the rest of the indicator catalog to <code>rule_raw</code> and running the vetted strategy battalion
+on folds — the active generator / roadmap work). The plan is <strong>not</strong> ready to archive; it is the live
+reference for the battalion build.</p>
 <h3 id="scope-and-priorities">Scope and priorities</h3>
 <ol>
 <li><strong>Core engine first.</strong> The deliverable that must be correct and complete is the two-layer engine —
@@ -138425,9 +138433,10 @@ until validated out-of-fold.)</p>
 are <code>{id/name, expression, action, ...}</code> payload wrappers around shared predicates. Rule ids / names are part
 of the authoring object because any expression in either layer may reference any other named rule with
 <code>rule("...")</code>. At experiment generation they are deployed to their technical homes: entry rules to the model
-hyperparameters, action rules to <code>bot_config</code>, and the named-rule registry to every compiler / preflight path
-that needs to expand references. The single definition gives coherence; the split homes respect the
-cacheable-signal vs runtime-position-aware nature of each layer.</p>
+hyperparameters and action rules to <code>bot_config</code>. The named-rule registry is <strong>not</strong> deployed —
+<code>common.rules</code> derives it from those rules at runtime (<code>build_rule_registry</code>) and the run assembly hands the
+bot the resolved Layer-1 <code>id → expression</code> map for a cross-layer reference. The single definition gives
+coherence; the split homes respect the cacheable-signal vs runtime-position-aware nature of each layer.</p>
 <p>This single-strategy object is an <strong>authoring / deployment</strong> construct, not part of the core engine. The
 type <strong>already exists</strong> — <code>RuleStrategyConfig</code> in
 <code>modules/common/src/rainbow/common/types/configs/experiments/rule_strategy_config.py</code>, exported from
@@ -138437,9 +138446,9 @@ parameter in <code>param_space</code> or <code>action_rules.parameters</code>) w
 <strong>Do not delete or recreate it.</strong> It is <strong>Phase-3</strong> scope: the core engine (Phase 1–2: the shared DSL,
 <code>rule_based</code>, and the optional action engine in backtest / LIVE_SIM) does not depend on it, and nothing
 consumes it yet. Phase 3 only needs to <strong>wire</strong> it — the generation step that splits one strategy into model
-hyperparameters (Layer 1), <code>bot_config</code> action rules (Layer 2), named-rule registry deployment and
-preflight validation (the reference expansion itself runs at runtime compile), and the optimizer that
-searches its <code>param_space</code>.</p>
+hyperparameters (Layer 1) and <code>bot_config</code> action rules (Layer 2), the reference-graph validation
+(<code>common.rules.validate_rule_reference_graph</code>; the registry is derived and the expansion runs at runtime
+compile), and the optimizer that searches its <code>param_space</code>.</p>
 <h3 id="77-action-parameter-value-model-the-definitive-uniform-form">7.7 Action-parameter value model (the definitive, uniform form)</h3>
 <p>Every value an action rule carries — a protective level, a trailing distance, a size, a count — uses <strong>one</strong>
 uniform value mechanism with a per-parameter typed domain, so the author has a single mental model and nothing is
@@ -138933,7 +138942,7 @@ quality gates over <code>src</code> and <code>tests</code>.</p>
      position per tick.</li>
 <li><strong>Build order</strong> (each a complete vertical slice: config → candidate → order / modify contract → risk →
      audit (code / lineage / counter) → tests → gates → QA): foundation (candidate collection + the exit-channel
-     arbiter + named rule references (registry deployment + preflight validation of the reference graph;
+     arbiter + named rule references (derived registry + preflight validation of the reference graph;
      runtime-compile expansion) + the lineage / origin columns and the
      <code>reduce</code> / <code>add</code> operational-counter columns, with one Alembic migration + backfill) → <code>HOLD</code> →
      <code>FLAT_AT_TIME</code> → <code>SET_ENTRY_LEVELS</code> / <code>pending_entry</code> setup → <code>ADD</code> → <code>REDUCE</code> → protective (gated) — which
