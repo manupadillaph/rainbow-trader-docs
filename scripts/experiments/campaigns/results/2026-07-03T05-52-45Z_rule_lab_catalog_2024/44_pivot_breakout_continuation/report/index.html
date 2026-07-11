@@ -8895,6 +8895,8 @@
       
         
       
+        
+      
     
     
     
@@ -13968,6 +13970,141 @@
     </li>
   
 
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3_2_1_1_52" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../campaign_ideal/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campaign Ideal
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3_2_1_1_52" id="__nav_4_3_2_1_1_52_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_4_3_2_1_1_52_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_2_1_1_52">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Campaign Ideal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../campaign_ideal/BTCUSDT_5m_820da1361f9c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Btcusdt 5M 820Da1361F9C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../campaign_ideal/ETHUSDT_5m_820da1361f9c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ethusdt 5M 820Da1361F9C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
               
             
           </ul>
@@ -146826,7 +146963,7 @@
 <h1 id="rule-experiment-report--rule_pivot_breakout_continuation_btc_5m">Rule Experiment Report — rule_pivot_breakout_continuation_btc_5m</h1>
 <ul>
 <li>As-of date: <code>2026-07-03T13:32:40.752627Z</code></li>
-<li>Last regenerated: 2026-07-03T13:32:56.194977Z</li>
+<li>Last regenerated: 2026-07-11T08:49:27.820195Z</li>
 <li>Run: pivot_breakout_continuation</li>
 <li>Experiment ID: 1297</li>
 <li>Trial: 14068 (#0)</li>
@@ -146836,6 +146973,8 @@
 <pre><code class="language-bash">.venv/bin/python scripts/experiments/runner/report_experiment.py \
   --result-json scripts/experiments/campaigns/results/2026-07-03T05-52-45Z_rule_lab_catalog_2024/44_pivot_breakout_continuation/result.json \
   --as-of-date 2026-07-03T13:32:40.752627Z \
+  --db-path database/rainbow_trader.sqlite \
+  --output-dir scripts/experiments/campaigns/results/2026-07-03T05-52-45Z_rule_lab_catalog_2024/44_pivot_breakout_continuation \
   --with-regime
 </code></pre>
 <h2 id="layer-1--entry-rules">Layer 1 — Entry Rules</h2>
@@ -147286,6 +147425,12 @@
 <th>Total Gross PnL</th>
 <th>Net/trade</th>
 <th>Gross/trade</th>
+<th>Total Fees</th>
+<th>Profit Factor Net</th>
+<th>Expectancy</th>
+<th>Avg Win Net</th>
+<th>Avg Loss Net</th>
+<th>Avg Holding</th>
 </tr>
 </thead>
 <tbody>
@@ -147300,6 +147445,12 @@
 <td>-$0.63</td>
 <td>-$0.93</td>
 <td>-$0.02</td>
+<td>+$30.09</td>
+<td>0.59</td>
+<td>-$0.93</td>
+<td>+$11.16</td>
+<td>+$2.60</td>
+<td>9.3</td>
 </tr>
 <tr>
 <td>2</td>
@@ -147312,6 +147463,12 @@
 <td>-$67.48</td>
 <td>-$1.32</td>
 <td>-$0.48</td>
+<td>+$119.12</td>
+<td>0.52</td>
+<td>-$1.32</td>
+<td>+$7.87</td>
+<td>+$3.40</td>
+<td>13.4</td>
 </tr>
 <tr>
 <td>3</td>
@@ -147324,6 +147481,12 @@
 <td>-$30.49</td>
 <td>-$1.29</td>
 <td>-$0.46</td>
+<td>+$55.89</td>
+<td>0.61</td>
+<td>-$1.29</td>
+<td>+$11.16</td>
+<td>+$4.01</td>
+<td>10.2</td>
 </tr>
 <tr>
 <td>4</td>
@@ -147336,6 +147499,12 @@
 <td>-$288.68</td>
 <td>-$3.10</td>
 <td>-$2.33</td>
+<td>+$96.25</td>
+<td>0.31</td>
+<td>-$3.10</td>
+<td>+$14.40</td>
+<td>+$4.98</td>
+<td>12.8</td>
 </tr>
 <tr>
 <td>5</td>
@@ -147348,6 +147517,12 @@
 <td>-$38.49</td>
 <td>-$1.78</td>
 <td>-$0.96</td>
+<td>+$32.55</td>
+<td>0.44</td>
+<td>-$1.78</td>
+<td>+$11.14</td>
+<td>+$3.62</td>
+<td>12.0</td>
 </tr>
 <tr>
 <td>6</td>
@@ -147360,6 +147535,12 @@
 <td>-$52.50</td>
 <td>-$2.06</td>
 <td>-$1.46</td>
+<td>+$21.72</td>
+<td>0.33</td>
+<td>-$2.06</td>
+<td>+$7.47</td>
+<td>+$3.60</td>
+<td>10.7</td>
 </tr>
 <tr>
 <td>7</td>
@@ -147372,6 +147553,12 @@
 <td>-$17.37</td>
 <td>-$0.99</td>
 <td>-$0.19</td>
+<td>+$73.26</td>
+<td>0.57</td>
+<td>-$0.99</td>
+<td>+$10.97</td>
+<td>+$2.61</td>
+<td>10.5</td>
 </tr>
 <tr>
 <td>8</td>
@@ -147384,6 +147571,12 @@
 <td>-$465.08</td>
 <td>-$3.13</td>
 <td>-$2.37</td>
+<td>+$148.20</td>
+<td>0.12</td>
+<td>-$3.13</td>
+<td>+$7.28</td>
+<td>+$3.81</td>
+<td>9.9</td>
 </tr>
 <tr>
 <td>9</td>
@@ -147396,6 +147589,12 @@
 <td>-$235.22</td>
 <td>-$2.61</td>
 <td>-$1.78</td>
+<td>+$109.62</td>
+<td>0.23</td>
+<td>-$2.61</td>
+<td>+$9.48</td>
+<td>+$3.71</td>
+<td>11.4</td>
 </tr>
 <tr>
 <td>10</td>
@@ -147408,6 +147607,12 @@
 <td>-$409.46</td>
 <td>-$2.13</td>
 <td>-$1.33</td>
+<td>+$248.46</td>
+<td>0.48</td>
+<td>-$2.13</td>
+<td>+$10.24</td>
+<td>+$5.11</td>
+<td>11.3</td>
 </tr>
 </tbody>
 </table>
@@ -147424,6 +147629,12 @@
 <th>Total Gross PnL</th>
 <th>Net/trade</th>
 <th>Gross/trade</th>
+<th>Total Fees</th>
+<th>Profit Factor Net</th>
+<th>Expectancy</th>
+<th>Avg Win Net</th>
+<th>Avg Loss Net</th>
+<th>Avg Holding</th>
 </tr>
 </thead>
 <tbody>
@@ -147438,6 +147649,12 @@
 <td>-$157.74</td>
 <td>-$2.32</td>
 <td>-$1.56</td>
+<td>+$76.70</td>
+<td>0.29</td>
+<td>-$2.32</td>
+<td>+$10.83</td>
+<td>+$3.61</td>
+<td>10.8</td>
 </tr>
 <tr>
 <td>12</td>
@@ -147450,6 +147667,12 @@
 <td>-$365.83</td>
 <td>-$2.49</td>
 <td>-$1.73</td>
+<td>+$161.96</td>
+<td>0.32</td>
+<td>-$2.49</td>
+<td>+$11.67</td>
+<td>+$4.05</td>
+<td>12.2</td>
 </tr>
 </tbody>
 </table>
@@ -147465,6 +147688,12 @@
 <li><code>Total Gross PnL</code>: Gross PnL proxy before friction.</li>
 <li><code>Net/trade</code>: Net PnL divided by trade count.</li>
 <li><code>Gross/trade</code>: Gross PnL divided by trade count.</li>
+<li><code>Total Fees</code>: Total commission fees paid across the session.</li>
+<li><code>Profit Factor Net</code>: Sum of positive net trade PnL divided by the absolute sum of negative net trade PnL.</li>
+<li><code>Expectancy</code>: Mean net PnL per trade in the bucket.</li>
+<li><code>Avg Win Net</code>: Mean net PnL of winning closed trades.</li>
+<li><code>Avg Loss Net</code>: Absolute mean net PnL of losing closed trades.</li>
+<li><code>Avg Holding</code>: Mean trade holding time in base-timeframe bars.</li>
 </ul>
 <h4 id="9-state--trend--volatility">9-state — trend × volatility</h4>
 <p><em>Trend paired with volatility, collapsing direction.</em></p>
@@ -147481,6 +147710,12 @@
 <th>Total Gross PnL</th>
 <th>Net/trade</th>
 <th>Gross/trade</th>
+<th>Total Fees</th>
+<th>Profit Factor Net</th>
+<th>Expectancy</th>
+<th>Avg Win Net</th>
+<th>Avg Loss Net</th>
+<th>Avg Holding</th>
 </tr>
 </thead>
 <tbody>
@@ -147495,6 +147730,12 @@
 <td>-$68.11</td>
 <td>-$1.25</td>
 <td>-$0.39</td>
+<td>+$149.21</td>
+<td>0.53</td>
+<td>-$1.25</td>
+<td>+$8.31</td>
+<td>+$3.24</td>
+<td>12.6</td>
 </tr>
 <tr>
 <td>2</td>
@@ -147507,6 +147748,12 @@
 <td>-$319.17</td>
 <td>-$2.47</td>
 <td>-$1.67</td>
+<td>+$152.14</td>
+<td>0.39</td>
+<td>-$2.47</td>
+<td>+$12.78</td>
+<td>+$4.66</td>
+<td>11.9</td>
 </tr>
 <tr>
 <td>3</td>
@@ -147519,6 +147766,12 @@
 <td>-$38.49</td>
 <td>-$1.78</td>
 <td>-$0.96</td>
+<td>+$32.55</td>
+<td>0.44</td>
+<td>-$1.78</td>
+<td>+$11.14</td>
+<td>+$3.62</td>
+<td>12.0</td>
 </tr>
 <tr>
 <td>4</td>
@@ -147531,6 +147784,12 @@
 <td>-$52.50</td>
 <td>-$2.06</td>
 <td>-$1.46</td>
+<td>+$21.72</td>
+<td>0.33</td>
+<td>-$2.06</td>
+<td>+$7.47</td>
+<td>+$3.60</td>
+<td>10.7</td>
 </tr>
 <tr>
 <td>5</td>
@@ -147543,6 +147802,12 @@
 <td>-$717.68</td>
 <td>-$2.50</td>
 <td>-$1.71</td>
+<td>+$331.08</td>
+<td>0.23</td>
+<td>-$2.50</td>
+<td>+$9.19</td>
+<td>+$3.53</td>
+<td>10.5</td>
 </tr>
 <tr>
 <td>6</td>
@@ -147555,6 +147820,12 @@
 <td>-$409.46</td>
 <td>-$2.13</td>
 <td>-$1.33</td>
+<td>+$248.46</td>
+<td>0.48</td>
+<td>-$2.13</td>
+<td>+$10.24</td>
+<td>+$5.11</td>
+<td>11.3</td>
 </tr>
 <tr>
 <td>7</td>
@@ -147567,6 +147838,12 @@
 <td>-$523.57</td>
 <td>-$2.44</td>
 <td>-$1.67</td>
+<td>+$238.66</td>
+<td>0.31</td>
+<td>-$2.44</td>
+<td>+$11.42</td>
+<td>+$3.90</td>
+<td>11.8</td>
 </tr>
 </tbody>
 </table>
@@ -147582,6 +147859,12 @@
 <li><code>Total Gross PnL</code>: Gross PnL proxy before friction.</li>
 <li><code>Net/trade</code>: Net PnL divided by trade count.</li>
 <li><code>Gross/trade</code>: Gross PnL divided by trade count.</li>
+<li><code>Total Fees</code>: Total commission fees paid across the session.</li>
+<li><code>Profit Factor Net</code>: Sum of positive net trade PnL divided by the absolute sum of negative net trade PnL.</li>
+<li><code>Expectancy</code>: Mean net PnL per trade in the bucket.</li>
+<li><code>Avg Win Net</code>: Mean net PnL of winning closed trades.</li>
+<li><code>Avg Loss Net</code>: Absolute mean net PnL of losing closed trades.</li>
+<li><code>Avg Holding</code>: Mean trade holding time in base-timeframe bars.</li>
 </ul>
 <h4 id="9-state--trend--direction">9-state — trend × direction</h4>
 <p><em>Trend paired with direction, collapsing volatility.</em></p>
@@ -147598,6 +147881,12 @@
 <th>Total Gross PnL</th>
 <th>Net/trade</th>
 <th>Gross/trade</th>
+<th>Total Fees</th>
+<th>Profit Factor Net</th>
+<th>Expectancy</th>
+<th>Avg Win Net</th>
+<th>Avg Loss Net</th>
+<th>Avg Holding</th>
 </tr>
 </thead>
 <tbody>
@@ -147612,6 +147901,12 @@
 <td>-$69.61</td>
 <td>-$1.34</td>
 <td>-$0.50</td>
+<td>+$118.53</td>
+<td>0.55</td>
+<td>-$1.34</td>
+<td>+$11.16</td>
+<td>+$3.55</td>
+<td>10.5</td>
 </tr>
 <tr>
 <td>2</td>
@@ -147624,6 +147919,12 @@
 <td>-$356.16</td>
 <td>-$2.16</td>
 <td>-$1.34</td>
+<td>+$215.37</td>
+<td>0.40</td>
+<td>-$2.16</td>
+<td>+$9.93</td>
+<td>+$4.18</td>
+<td>13.1</td>
 </tr>
 <tr>
 <td>3</td>
@@ -147636,6 +147937,12 @@
 <td>-$17.37</td>
 <td>-$0.99</td>
 <td>-$0.19</td>
+<td>+$73.26</td>
+<td>0.57</td>
+<td>-$0.99</td>
+<td>+$10.97</td>
+<td>+$2.61</td>
+<td>10.5</td>
 </tr>
 <tr>
 <td>4</td>
@@ -147648,6 +147955,12 @@
 <td>-$465.08</td>
 <td>-$3.13</td>
 <td>-$2.37</td>
+<td>+$148.20</td>
+<td>0.12</td>
+<td>-$3.13</td>
+<td>+$7.28</td>
+<td>+$3.81</td>
+<td>9.9</td>
 </tr>
 <tr>
 <td>5</td>
@@ -147660,6 +147973,12 @@
 <td>-$287.72</td>
 <td>-$2.49</td>
 <td>-$1.71</td>
+<td>+$131.34</td>
+<td>0.25</td>
+<td>-$2.49</td>
+<td>+$8.85</td>
+<td>+$3.69</td>
+<td>11.2</td>
 </tr>
 <tr>
 <td>6</td>
@@ -147672,6 +147991,12 @@
 <td>-$157.74</td>
 <td>-$2.32</td>
 <td>-$1.56</td>
+<td>+$76.70</td>
+<td>0.29</td>
+<td>-$2.32</td>
+<td>+$10.83</td>
+<td>+$3.61</td>
+<td>10.8</td>
 </tr>
 <tr>
 <td>7</td>
@@ -147684,6 +148009,12 @@
 <td>-$775.29</td>
 <td>-$2.28</td>
 <td>-$1.49</td>
+<td>+$410.42</td>
+<td>0.42</td>
+<td>-$2.28</td>
+<td>+$10.61</td>
+<td>+$4.65</td>
+<td>11.7</td>
 </tr>
 </tbody>
 </table>
@@ -147699,6 +148030,12 @@
 <li><code>Total Gross PnL</code>: Gross PnL proxy before friction.</li>
 <li><code>Net/trade</code>: Net PnL divided by trade count.</li>
 <li><code>Gross/trade</code>: Gross PnL divided by trade count.</li>
+<li><code>Total Fees</code>: Total commission fees paid across the session.</li>
+<li><code>Profit Factor Net</code>: Sum of positive net trade PnL divided by the absolute sum of negative net trade PnL.</li>
+<li><code>Expectancy</code>: Mean net PnL per trade in the bucket.</li>
+<li><code>Avg Win Net</code>: Mean net PnL of winning closed trades.</li>
+<li><code>Avg Loss Net</code>: Absolute mean net PnL of losing closed trades.</li>
+<li><code>Avg Holding</code>: Mean trade holding time in base-timeframe bars.</li>
 </ul>
 <h4 id="9-state--volatility--direction">9-state — volatility × direction</h4>
 <p><em>Volatility paired with direction, collapsing trend.</em></p>
@@ -147715,6 +148052,12 @@
 <th>Total Gross PnL</th>
 <th>Net/trade</th>
 <th>Gross/trade</th>
+<th>Total Fees</th>
+<th>Profit Factor Net</th>
+<th>Expectancy</th>
+<th>Avg Win Net</th>
+<th>Avg Loss Net</th>
+<th>Avg Holding</th>
 </tr>
 </thead>
 <tbody>
@@ -147729,6 +148072,12 @@
 <td>-$0.63</td>
 <td>-$0.93</td>
 <td>-$0.02</td>
+<td>+$30.09</td>
+<td>0.59</td>
+<td>-$0.93</td>
+<td>+$11.16</td>
+<td>+$2.60</td>
+<td>9.3</td>
 </tr>
 <tr>
 <td>2</td>
@@ -147741,6 +148090,12 @@
 <td>-$119.98</td>
 <td>-$1.47</td>
 <td>-$0.68</td>
+<td>+$140.84</td>
+<td>0.48</td>
+<td>-$1.47</td>
+<td>+$7.81</td>
+<td>+$3.44</td>
+<td>12.8</td>
 </tr>
 <tr>
 <td>3</td>
@@ -147753,6 +148108,12 @@
 <td>-$17.37</td>
 <td>-$0.99</td>
 <td>-$0.19</td>
+<td>+$73.26</td>
+<td>0.57</td>
+<td>-$0.99</td>
+<td>+$10.97</td>
+<td>+$2.61</td>
+<td>10.5</td>
 </tr>
 <tr>
 <td>4</td>
@@ -147765,6 +148126,12 @@
 <td>-$495.57</td>
 <td>-$2.66</td>
 <td>-$1.88</td>
+<td>+$204.09</td>
+<td>0.24</td>
+<td>-$2.66</td>
+<td>+$9.22</td>
+<td>+$3.85</td>
+<td>10.0</td>
 </tr>
 <tr>
 <td>5</td>
@@ -147777,6 +148144,12 @@
 <td>-$933.36</td>
 <td>-$2.46</td>
 <td>-$1.65</td>
+<td>+$454.33</td>
+<td>0.39</td>
+<td>-$2.46</td>
+<td>+$10.74</td>
+<td>+$4.73</td>
+<td>11.7</td>
 </tr>
 <tr>
 <td>6</td>
@@ -147789,6 +148162,12 @@
 <td>-$196.24</td>
 <td>-$2.17</td>
 <td>-$1.39</td>
+<td>+$109.26</td>
+<td>0.33</td>
+<td>-$2.17</td>
+<td>+$10.94</td>
+<td>+$3.61</td>
+<td>11.1</td>
 </tr>
 <tr>
 <td>7</td>
@@ -147801,6 +148180,12 @@
 <td>-$365.83</td>
 <td>-$2.49</td>
 <td>-$1.73</td>
+<td>+$161.96</td>
+<td>0.32</td>
+<td>-$2.49</td>
+<td>+$11.67</td>
+<td>+$4.05</td>
+<td>12.2</td>
 </tr>
 </tbody>
 </table>
@@ -147816,6 +148201,12 @@
 <li><code>Total Gross PnL</code>: Gross PnL proxy before friction.</li>
 <li><code>Net/trade</code>: Net PnL divided by trade count.</li>
 <li><code>Gross/trade</code>: Gross PnL divided by trade count.</li>
+<li><code>Total Fees</code>: Total commission fees paid across the session.</li>
+<li><code>Profit Factor Net</code>: Sum of positive net trade PnL divided by the absolute sum of negative net trade PnL.</li>
+<li><code>Expectancy</code>: Mean net PnL per trade in the bucket.</li>
+<li><code>Avg Win Net</code>: Mean net PnL of winning closed trades.</li>
+<li><code>Avg Loss Net</code>: Absolute mean net PnL of losing closed trades.</li>
+<li><code>Avg Holding</code>: Mean trade holding time in base-timeframe bars.</li>
 </ul>
 <h4 id="3-state--trend-axis">3-state — trend axis</h4>
 <p><em>Trend axis alone: RANGING / NEUTRAL / TRENDING.</em></p>
@@ -147832,6 +148223,12 @@
 <th>Total Gross PnL</th>
 <th>Net/trade</th>
 <th>Gross/trade</th>
+<th>Total Fees</th>
+<th>Profit Factor Net</th>
+<th>Expectancy</th>
+<th>Avg Win Net</th>
+<th>Avg Loss Net</th>
+<th>Avg Holding</th>
 </tr>
 </thead>
 <tbody>
@@ -147846,6 +148243,12 @@
 <td>-$425.78</td>
 <td>-$1.88</td>
 <td>-$1.05</td>
+<td>+$333.90</td>
+<td>0.45</td>
+<td>-$1.88</td>
+<td>+$10.37</td>
+<td>+$3.96</td>
+<td>12.2</td>
 </tr>
 <tr>
 <td>2</td>
@@ -147858,6 +148261,12 @@
 <td>-$770.18</td>
 <td>-$2.46</td>
 <td>-$1.69</td>
+<td>+$352.80</td>
+<td>0.24</td>
+<td>-$2.46</td>
+<td>+$8.97</td>
+<td>+$3.53</td>
+<td>10.5</td>
 </tr>
 <tr>
 <td>3</td>
@@ -147870,6 +148279,12 @@
 <td>-$933.03</td>
 <td>-$2.28</td>
 <td>-$1.50</td>
+<td>+$487.12</td>
+<td>0.40</td>
+<td>-$2.28</td>
+<td>+$10.63</td>
+<td>+$4.47</td>
+<td>11.6</td>
 </tr>
 </tbody>
 </table>
@@ -147885,6 +148300,12 @@
 <li><code>Total Gross PnL</code>: Gross PnL proxy before friction.</li>
 <li><code>Net/trade</code>: Net PnL divided by trade count.</li>
 <li><code>Gross/trade</code>: Gross PnL divided by trade count.</li>
+<li><code>Total Fees</code>: Total commission fees paid across the session.</li>
+<li><code>Profit Factor Net</code>: Sum of positive net trade PnL divided by the absolute sum of negative net trade PnL.</li>
+<li><code>Expectancy</code>: Mean net PnL per trade in the bucket.</li>
+<li><code>Avg Win Net</code>: Mean net PnL of winning closed trades.</li>
+<li><code>Avg Loss Net</code>: Absolute mean net PnL of losing closed trades.</li>
+<li><code>Avg Holding</code>: Mean trade holding time in base-timeframe bars.</li>
 </ul>
 <h4 id="3-state--volatility-axis">3-state — volatility axis</h4>
 <p><em>Volatility axis alone: LOW_VOL / NORMAL_VOL / HIGH_VOL.</em></p>
@@ -147901,6 +148322,12 @@
 <th>Total Gross PnL</th>
 <th>Net/trade</th>
 <th>Gross/trade</th>
+<th>Total Fees</th>
+<th>Profit Factor Net</th>
+<th>Expectancy</th>
+<th>Avg Win Net</th>
+<th>Avg Loss Net</th>
+<th>Avg Holding</th>
 </tr>
 </thead>
 <tbody>
@@ -147915,6 +148342,12 @@
 <td>-$120.61</td>
 <td>-$1.39</td>
 <td>-$0.57</td>
+<td>+$170.93</td>
+<td>0.50</td>
+<td>-$1.39</td>
+<td>+$8.19</td>
+<td>+$3.30</td>
+<td>12.3</td>
 </tr>
 <tr>
 <td>2</td>
@@ -147927,6 +148360,12 @@
 <td>-$1446.30</td>
 <td>-$2.37</td>
 <td>-$1.57</td>
+<td>+$731.68</td>
+<td>0.36</td>
+<td>-$2.37</td>
+<td>+$10.45</td>
+<td>+$4.25</td>
+<td>11.1</td>
 </tr>
 <tr>
 <td>3</td>
@@ -147939,6 +148378,12 @@
 <td>-$562.07</td>
 <td>-$2.36</td>
 <td>-$1.59</td>
+<td>+$271.22</td>
+<td>0.32</td>
+<td>-$2.36</td>
+<td>+$11.38</td>
+<td>+$3.87</td>
+<td>11.8</td>
 </tr>
 </tbody>
 </table>
@@ -147954,6 +148399,12 @@
 <li><code>Total Gross PnL</code>: Gross PnL proxy before friction.</li>
 <li><code>Net/trade</code>: Net PnL divided by trade count.</li>
 <li><code>Gross/trade</code>: Gross PnL divided by trade count.</li>
+<li><code>Total Fees</code>: Total commission fees paid across the session.</li>
+<li><code>Profit Factor Net</code>: Sum of positive net trade PnL divided by the absolute sum of negative net trade PnL.</li>
+<li><code>Expectancy</code>: Mean net PnL per trade in the bucket.</li>
+<li><code>Avg Win Net</code>: Mean net PnL of winning closed trades.</li>
+<li><code>Avg Loss Net</code>: Absolute mean net PnL of losing closed trades.</li>
+<li><code>Avg Holding</code>: Mean trade holding time in base-timeframe bars.</li>
 </ul>
 <h4 id="3-state--direction-axis">3-state — direction axis</h4>
 <p><em>Direction axis alone: BEARISH / NEUTRAL / BULLISH.</em></p>
@@ -147970,6 +148421,12 @@
 <th>Total Gross PnL</th>
 <th>Net/trade</th>
 <th>Gross/trade</th>
+<th>Total Fees</th>
+<th>Profit Factor Net</th>
+<th>Expectancy</th>
+<th>Avg Win Net</th>
+<th>Avg Loss Net</th>
+<th>Avg Holding</th>
 </tr>
 </thead>
 <tbody>
@@ -147984,6 +148441,12 @@
 <td>-$17.37</td>
 <td>-$0.99</td>
 <td>-$0.19</td>
+<td>+$73.26</td>
+<td>0.57</td>
+<td>-$0.99</td>
+<td>+$10.97</td>
+<td>+$2.61</td>
+<td>10.5</td>
 </tr>
 <tr>
 <td>2</td>
@@ -147996,6 +148459,12 @@
 <td>-$692.44</td>
 <td>-$2.37</td>
 <td>-$1.58</td>
+<td>+$343.44</td>
+<td>0.29</td>
+<td>-$2.37</td>
+<td>+$9.98</td>
+<td>+$3.68</td>
+<td>10.3</td>
 </tr>
 <tr>
 <td>3</td>
@@ -148008,6 +148477,12 @@
 <td>-$1419.17</td>
 <td>-$2.28</td>
 <td>-$1.49</td>
+<td>+$757.13</td>
+<td>0.39</td>
+<td>-$2.28</td>
+<td>+$10.21</td>
+<td>+$4.34</td>
+<td>12.0</td>
 </tr>
 </tbody>
 </table>
@@ -148023,6 +148498,12 @@
 <li><code>Total Gross PnL</code>: Gross PnL proxy before friction.</li>
 <li><code>Net/trade</code>: Net PnL divided by trade count.</li>
 <li><code>Gross/trade</code>: Gross PnL divided by trade count.</li>
+<li><code>Total Fees</code>: Total commission fees paid across the session.</li>
+<li><code>Profit Factor Net</code>: Sum of positive net trade PnL divided by the absolute sum of negative net trade PnL.</li>
+<li><code>Expectancy</code>: Mean net PnL per trade in the bucket.</li>
+<li><code>Avg Win Net</code>: Mean net PnL of winning closed trades.</li>
+<li><code>Avg Loss Net</code>: Absolute mean net PnL of losing closed trades.</li>
+<li><code>Avg Holding</code>: Mean trade holding time in base-timeframe bars.</li>
 </ul>
 <h3 id="regime-labels">Regime Labels</h3>
 <h4 id="27-state--trend--volatility--direction_1">27-state — trend × volatility × direction</h4>
@@ -148826,6 +149307,8 @@
 <th>% Entries</th>
 <th>Bars</th>
 <th>Accuracy</th>
+<th>Entry Precision</th>
+<th>Entry Recall</th>
 <th>Entry F1</th>
 <th>F1 Macro</th>
 <th>JS</th>
@@ -148839,6 +149322,8 @@
 <td>2.00%</td>
 <td>1,152</td>
 <td>90.89%</td>
+<td>0.1892</td>
+<td>0.2745</td>
 <td>0.2240</td>
 <td>0.3562</td>
 <td>0.009js</td>
@@ -148850,6 +149335,8 @@
 <td>10.39%</td>
 <td>1,440</td>
 <td>66.88%</td>
+<td>0.1143</td>
+<td>0.2486</td>
 <td>0.1566</td>
 <td>0.3142</td>
 <td>0.019js</td>
@@ -148861,6 +149348,8 @@
 <td>5.43%</td>
 <td>4,896</td>
 <td>83.58%</td>
+<td>0.1741</td>
+<td>0.0528</td>
 <td>0.0810</td>
 <td>0.3379</td>
 <td>0.029js</td>
@@ -148872,6 +149361,8 @@
 <td>10.12%</td>
 <td>2,880</td>
 <td>68.75%</td>
+<td>0.1573</td>
+<td>0.0969</td>
 <td>0.1199</td>
 <td>0.2981</td>
 <td>0.041js</td>
@@ -148883,6 +149374,8 @@
 <td>3.16%</td>
 <td>2,016</td>
 <td>87.80%</td>
+<td>0.1197</td>
+<td>0.0979</td>
 <td>0.1077</td>
 <td>0.3128</td>
 <td>0.017js</td>
@@ -148895,6 +149388,8 @@
 <td>288</td>
 <td>72.57%</td>
 <td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
 <td>0.2803</td>
 <td>0.106js</td>
 </tr>
@@ -148905,6 +149400,8 @@
 <td>2.97%</td>
 <td>288</td>
 <td>53.82%</td>
+<td>0.1091</td>
+<td>0.3429</td>
 <td>0.1655</td>
 <td>0.2398</td>
 <td>0.156js</td>
@@ -148916,6 +149413,8 @@
 <td>5.51%</td>
 <td>1,440</td>
 <td>81.04%</td>
+<td>0.0588</td>
+<td>0.1290</td>
 <td>0.0808</td>
 <td>0.3250</td>
 <td>0.008js</td>
@@ -148927,6 +149426,8 @@
 <td>10.77%</td>
 <td>6,048</td>
 <td>80.59%</td>
+<td>0.1479</td>
+<td>0.0683</td>
 <td>0.0934</td>
 <td>0.3230</td>
 <td>0.027js</td>
@@ -148938,6 +149439,8 @@
 <td>8.10%</td>
 <td>1,440</td>
 <td>69.86%</td>
+<td>0.1500</td>
+<td>0.2419</td>
 <td>0.1852</td>
 <td>0.2903</td>
 <td>0.047js</td>
@@ -148953,6 +149456,8 @@
 <th>% Entries</th>
 <th>Bars</th>
 <th>Accuracy</th>
+<th>Entry Precision</th>
+<th>Entry Recall</th>
 <th>Entry F1</th>
 <th>F1 Macro</th>
 <th>JS</th>
@@ -148968,6 +149473,8 @@
 <td>0.00%</td>
 <td>0.0000</td>
 <td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
 <td>0.693js</td>
 </tr>
 <tr>
@@ -148977,6 +149484,8 @@
 <td>23.35%</td>
 <td>7,200</td>
 <td>82.25%</td>
+<td>0.2751</td>
+<td>0.2917</td>
 <td>0.2832</td>
 <td>0.3829</td>
 <td>0.019js</td>
@@ -148988,6 +149497,8 @@
 <td>5.86%</td>
 <td>1,728</td>
 <td>66.44%</td>
+<td>0.2719</td>
+<td>0.1294</td>
 <td>0.1753</td>
 <td>0.3177</td>
 <td>0.049js</td>
@@ -148999,6 +149510,8 @@
 <td>12.36%</td>
 <td>4,032</td>
 <td>72.72%</td>
+<td>0.1179</td>
+<td>0.0750</td>
 <td>0.0917</td>
 <td>0.3023</td>
 <td>0.038js</td>
@@ -149013,6 +149526,8 @@
 <li><code>% Entries</code>: Share of all predicted entry signals that fell in this regime bucket.</li>
 <li><code>Bars</code>: Number of native-timeframe bars falling in the regime bucket.</li>
 <li><code>Accuracy</code>: Model directional accuracy within the regime bucket.</li>
+<li><code>Entry Precision</code>: Entry precision: share of predicted entries that were correct.</li>
+<li><code>Entry Recall</code>: Entry recall: share of ideal entry labels captured.</li>
 <li><code>Entry F1</code>: Entry-signal F1 score.</li>
 <li><code>F1 Macro</code>: Macro-averaged F1 score.</li>
 <li><code>JS</code>: Jensen-Shannon divergence for prediction distribution drift.</li>
@@ -149028,6 +149543,8 @@
 <th>% Entries</th>
 <th>Bars</th>
 <th>Accuracy</th>
+<th>Entry Precision</th>
+<th>Entry Recall</th>
 <th>Entry F1</th>
 <th>F1 Macro</th>
 <th>JS</th>
@@ -149041,6 +149558,8 @@
 <td>12.39%</td>
 <td>2,592</td>
 <td>77.55%</td>
+<td>0.1264</td>
+<td>0.2544</td>
 <td>0.1689</td>
 <td>0.3382</td>
 <td>0.014js</td>
@@ -149052,6 +149571,8 @@
 <td>15.55%</td>
 <td>7,776</td>
 <td>78.09%</td>
+<td>0.1632</td>
+<td>0.0739</td>
 <td>0.1017</td>
 <td>0.3220</td>
 <td>0.032js</td>
@@ -149063,6 +149584,8 @@
 <td>3.16%</td>
 <td>2,304</td>
 <td>85.89%</td>
+<td>0.1197</td>
+<td>0.0631</td>
 <td>0.0826</td>
 <td>0.3090</td>
 <td>0.027js</td>
@@ -149074,6 +149597,8 @@
 <td>2.97%</td>
 <td>288</td>
 <td>53.82%</td>
+<td>0.1091</td>
+<td>0.3429</td>
 <td>0.1655</td>
 <td>0.2398</td>
 <td>0.156js</td>
@@ -149085,6 +149610,8 @@
 <td>24.37%</td>
 <td>8,928</td>
 <td>78.93%</td>
+<td>0.1285</td>
+<td>0.1015</td>
 <td>0.1134</td>
 <td>0.3171</td>
 <td>0.024js</td>
@@ -149096,6 +149623,8 @@
 <td>23.35%</td>
 <td>7,201</td>
 <td>82.24%</td>
+<td>0.2751</td>
+<td>0.2913</td>
 <td>0.2830</td>
 <td>0.3829</td>
 <td>0.019js</td>
@@ -149107,6 +149636,8 @@
 <td>18.22%</td>
 <td>5,760</td>
 <td>70.83%</td>
+<td>0.1674</td>
+<td>0.0961</td>
 <td>0.1221</td>
 <td>0.3091</td>
 <td>0.040js</td>
@@ -149121,6 +149652,8 @@
 <li><code>% Entries</code>: Share of all predicted entry signals that fell in this regime bucket.</li>
 <li><code>Bars</code>: Number of native-timeframe bars falling in the regime bucket.</li>
 <li><code>Accuracy</code>: Model directional accuracy within the regime bucket.</li>
+<li><code>Entry Precision</code>: Entry precision: share of predicted entries that were correct.</li>
+<li><code>Entry Recall</code>: Entry recall: share of ideal entry labels captured.</li>
 <li><code>Entry F1</code>: Entry-signal F1 score.</li>
 <li><code>F1 Macro</code>: Macro-averaged F1 score.</li>
 <li><code>JS</code>: Jensen-Shannon divergence for prediction distribution drift.</li>
@@ -149136,6 +149669,8 @@
 <th>% Entries</th>
 <th>Bars</th>
 <th>Accuracy</th>
+<th>Entry Precision</th>
+<th>Entry Recall</th>
 <th>Entry F1</th>
 <th>F1 Macro</th>
 <th>JS</th>
@@ -149149,6 +149684,8 @@
 <td>10.58%</td>
 <td>8,064</td>
 <td>85.68%</td>
+<td>0.1607</td>
+<td>0.0735</td>
 <td>0.1009</td>
 <td>0.3350</td>
 <td>0.021js</td>
@@ -149160,6 +149697,8 @@
 <td>20.51%</td>
 <td>4,608</td>
 <td>68.40%</td>
+<td>0.1355</td>
+<td>0.1191</td>
 <td>0.1268</td>
 <td>0.3071</td>
 <td>0.035js</td>
@@ -149171,6 +149710,8 @@
 <td>5.51%</td>
 <td>1,440</td>
 <td>81.04%</td>
+<td>0.0588</td>
+<td>0.1290</td>
 <td>0.0808</td>
 <td>0.3250</td>
 <td>0.008js</td>
@@ -149182,6 +149723,8 @@
 <td>10.77%</td>
 <td>6,048</td>
 <td>80.59%</td>
+<td>0.1479</td>
+<td>0.0683</td>
 <td>0.0934</td>
 <td>0.3230</td>
 <td>0.027js</td>
@@ -149193,6 +149736,8 @@
 <td>11.07%</td>
 <td>1,728</td>
 <td>67.19%</td>
+<td>0.1390</td>
+<td>0.2579</td>
 <td>0.1807</td>
 <td>0.2817</td>
 <td>0.061js</td>
@@ -149206,6 +149751,8 @@
 <td>0.00%</td>
 <td>0.0000</td>
 <td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
 <td>0.693js</td>
 </tr>
 <tr>
@@ -149215,6 +149762,8 @@
 <td>5.86%</td>
 <td>1,728</td>
 <td>66.44%</td>
+<td>0.2719</td>
+<td>0.1294</td>
 <td>0.1753</td>
 <td>0.3177</td>
 <td>0.049js</td>
@@ -149226,6 +149775,8 @@
 <td>35.71%</td>
 <td>11,232</td>
 <td>78.83%</td>
+<td>0.2207</td>
+<td>0.1901</td>
 <td>0.2043</td>
 <td>0.3539</td>
 <td>0.026js</td>
@@ -149240,6 +149791,8 @@
 <li><code>% Entries</code>: Share of all predicted entry signals that fell in this regime bucket.</li>
 <li><code>Bars</code>: Number of native-timeframe bars falling in the regime bucket.</li>
 <li><code>Accuracy</code>: Model directional accuracy within the regime bucket.</li>
+<li><code>Entry Precision</code>: Entry precision: share of predicted entries that were correct.</li>
+<li><code>Entry Recall</code>: Entry recall: share of ideal entry labels captured.</li>
 <li><code>Entry F1</code>: Entry-signal F1 score.</li>
 <li><code>F1 Macro</code>: Macro-averaged F1 score.</li>
 <li><code>JS</code>: Jensen-Shannon divergence for prediction distribution drift.</li>
@@ -149255,6 +149808,8 @@
 <th>% Entries</th>
 <th>Bars</th>
 <th>Accuracy</th>
+<th>Entry Precision</th>
+<th>Entry Recall</th>
 <th>Entry F1</th>
 <th>F1 Macro</th>
 <th>JS</th>
@@ -149268,6 +149823,8 @@
 <td>2.00%</td>
 <td>1,152</td>
 <td>90.89%</td>
+<td>0.1892</td>
+<td>0.2745</td>
 <td>0.2240</td>
 <td>0.3562</td>
 <td>0.009js</td>
@@ -149279,6 +149836,8 @@
 <td>13.36%</td>
 <td>1,728</td>
 <td>64.70%</td>
+<td>0.1131</td>
+<td>0.2642</td>
 <td>0.1584</td>
 <td>0.3019</td>
 <td>0.034js</td>
@@ -149290,6 +149849,8 @@
 <td>5.51%</td>
 <td>1,441</td>
 <td>80.99%</td>
+<td>0.0588</td>
+<td>0.1277</td>
 <td>0.0805</td>
 <td>0.3249</td>
 <td>0.008js</td>
@@ -149301,6 +149862,8 @@
 <td>16.19%</td>
 <td>10,944</td>
 <td>81.93%</td>
+<td>0.1567</td>
+<td>0.0616</td>
 <td>0.0884</td>
 <td>0.3290</td>
 <td>0.028js</td>
@@ -149312,6 +149875,8 @@
 <td>41.57%</td>
 <td>11,520</td>
 <td>77.33%</td>
+<td>0.2221</td>
+<td>0.2123</td>
 <td>0.2171</td>
 <td>0.3466</td>
 <td>0.027js</td>
@@ -149323,6 +149888,8 @@
 <td>9.01%</td>
 <td>3,744</td>
 <td>77.94%</td>
+<td>0.2186</td>
+<td>0.1219</td>
 <td>0.1565</td>
 <td>0.3297</td>
 <td>0.030js</td>
@@ -149334,6 +149901,8 @@
 <td>12.36%</td>
 <td>4,320</td>
 <td>72.71%</td>
+<td>0.1179</td>
+<td>0.0676</td>
 <td>0.0859</td>
 <td>0.3023</td>
 <td>0.042js</td>
@@ -149348,6 +149917,8 @@
 <li><code>% Entries</code>: Share of all predicted entry signals that fell in this regime bucket.</li>
 <li><code>Bars</code>: Number of native-timeframe bars falling in the regime bucket.</li>
 <li><code>Accuracy</code>: Model directional accuracy within the regime bucket.</li>
+<li><code>Entry Precision</code>: Entry precision: share of predicted entries that were correct.</li>
+<li><code>Entry Recall</code>: Entry recall: share of ideal entry labels captured.</li>
 <li><code>Entry F1</code>: Entry-signal F1 score.</li>
 <li><code>F1 Macro</code>: Macro-averaged F1 score.</li>
 <li><code>JS</code>: Jensen-Shannon divergence for prediction distribution drift.</li>
@@ -149363,6 +149934,8 @@
 <th>% Entries</th>
 <th>Bars</th>
 <th>Accuracy</th>
+<th>Entry Precision</th>
+<th>Entry Recall</th>
 <th>Entry F1</th>
 <th>F1 Macro</th>
 <th>JS</th>
@@ -149376,6 +149949,8 @@
 <td>31.09%</td>
 <td>12,672</td>
 <td>79.40%</td>
+<td>0.1441</td>
+<td>0.0964</td>
 <td>0.1155</td>
 <td>0.3281</td>
 <td>0.025js</td>
@@ -149387,6 +149962,8 @@
 <td>27.34%</td>
 <td>9,216</td>
 <td>78.15%</td>
+<td>0.1264</td>
+<td>0.1087</td>
 <td>0.1168</td>
 <td>0.3140</td>
 <td>0.025js</td>
@@ -149398,6 +149975,8 @@
 <td>41.57%</td>
 <td>12,961</td>
 <td>77.17%</td>
+<td>0.2279</td>
+<td>0.1761</td>
 <td>0.1987</td>
 <td>0.3490</td>
 <td>0.028js</td>
@@ -149412,6 +149991,8 @@
 <li><code>% Entries</code>: Share of all predicted entry signals that fell in this regime bucket.</li>
 <li><code>Bars</code>: Number of native-timeframe bars falling in the regime bucket.</li>
 <li><code>Accuracy</code>: Model directional accuracy within the regime bucket.</li>
+<li><code>Entry Precision</code>: Entry precision: share of predicted entries that were correct.</li>
+<li><code>Entry Recall</code>: Entry recall: share of ideal entry labels captured.</li>
 <li><code>Entry F1</code>: Entry-signal F1 score.</li>
 <li><code>F1 Macro</code>: Macro-averaged F1 score.</li>
 <li><code>JS</code>: Jensen-Shannon divergence for prediction distribution drift.</li>
@@ -149427,6 +150008,8 @@
 <th>% Entries</th>
 <th>Bars</th>
 <th>Accuracy</th>
+<th>Entry Precision</th>
+<th>Entry Recall</th>
 <th>Entry F1</th>
 <th>F1 Macro</th>
 <th>JS</th>
@@ -149440,6 +150023,8 @@
 <td>15.36%</td>
 <td>2,880</td>
 <td>75.17%</td>
+<td>0.1230</td>
+<td>0.2662</td>
 <td>0.1683</td>
 <td>0.3268</td>
 <td>0.023js</td>
@@ -149451,6 +150036,8 @@
 <td>63.27%</td>
 <td>23,905</td>
 <td>79.65%</td>
+<td>0.1911</td>
+<td>0.1386</td>
 <td>0.1607</td>
 <td>0.3405</td>
 <td>0.024js</td>
@@ -149462,6 +150049,8 @@
 <td>21.38%</td>
 <td>8,064</td>
 <td>75.14%</td>
+<td>0.1604</td>
+<td>0.0908</td>
 <td>0.1160</td>
 <td>0.3148</td>
 <td>0.036js</td>
@@ -149476,6 +150065,8 @@
 <li><code>% Entries</code>: Share of all predicted entry signals that fell in this regime bucket.</li>
 <li><code>Bars</code>: Number of native-timeframe bars falling in the regime bucket.</li>
 <li><code>Accuracy</code>: Model directional accuracy within the regime bucket.</li>
+<li><code>Entry Precision</code>: Entry precision: share of predicted entries that were correct.</li>
+<li><code>Entry Recall</code>: Entry recall: share of ideal entry labels captured.</li>
 <li><code>Entry F1</code>: Entry-signal F1 score.</li>
 <li><code>F1 Macro</code>: Macro-averaged F1 score.</li>
 <li><code>JS</code>: Jensen-Shannon divergence for prediction distribution drift.</li>
@@ -149491,6 +150082,8 @@
 <th>% Entries</th>
 <th>Bars</th>
 <th>Accuracy</th>
+<th>Entry Precision</th>
+<th>Entry Recall</th>
 <th>Entry F1</th>
 <th>F1 Macro</th>
 <th>JS</th>
@@ -149504,6 +150097,8 @@
 <td>5.51%</td>
 <td>1,441</td>
 <td>80.99%</td>
+<td>0.0588</td>
+<td>0.1277</td>
 <td>0.0805</td>
 <td>0.3249</td>
 <td>0.008js</td>
@@ -149515,6 +150110,8 @@
 <td>27.21%</td>
 <td>15,840</td>
 <td>81.64%</td>
+<td>0.1796</td>
+<td>0.0831</td>
 <td>0.1137</td>
 <td>0.3317</td>
 <td>0.026js</td>
@@ -149526,6 +150123,8 @@
 <td>67.29%</td>
 <td>17,568</td>
 <td>74.95%</td>
+<td>0.1813</td>
+<td>0.1724</td>
 <td>0.1767</td>
 <td>0.3320</td>
 <td>0.030js</td>
@@ -149540,6 +150139,8 @@
 <li><code>% Entries</code>: Share of all predicted entry signals that fell in this regime bucket.</li>
 <li><code>Bars</code>: Number of native-timeframe bars falling in the regime bucket.</li>
 <li><code>Accuracy</code>: Model directional accuracy within the regime bucket.</li>
+<li><code>Entry Precision</code>: Entry precision: share of predicted entries that were correct.</li>
+<li><code>Entry Recall</code>: Entry recall: share of ideal entry labels captured.</li>
 <li><code>Entry F1</code>: Entry-signal F1 score.</li>
 <li><code>F1 Macro</code>: Macro-averaged F1 score.</li>
 <li><code>JS</code>: Jensen-Shannon divergence for prediction distribution drift.</li>
