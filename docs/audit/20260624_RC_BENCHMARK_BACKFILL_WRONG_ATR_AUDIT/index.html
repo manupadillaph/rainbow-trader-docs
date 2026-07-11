@@ -145760,7 +145760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../scripts/tmp-utils/lazy_full_compare_2/TEST_AND_FIX_HANDOFF/" class="md-nav__link">
+      <a href="../../../scripts/tmp_utils/lazy_full_compare_2/TEST_AND_FIX_HANDOFF/" class="md-nav__link">
         
   
   
@@ -146077,7 +146077,7 @@ correct.</p>
   only be a computation/input difference — here, the ATR input.</li>
 </ul>
 <h2 id="root-cause">Root cause</h2>
-<p>In <code>scripts/tmp-utils/backfills/backfill_backtest_metrics.py</code>, <code>_resolve_atr_at_t0()</code> reads
+<p>In <code>scripts/tmp_utils/backfills/backfill_backtest_metrics.py</code>, <code>_resolve_atr_at_t0()</code> reads
 <code>atr_ef.columns_generated[0]</code>. For the ATR feature that list is
 <code>['input_high_high', 'input_low_low', 'input_close_close', 'atr', 'synthetic']</code>, so index <code>[0]</code> is
 <strong><code>input_high_high</code> — the input HIGH price (≈ 78,460), not the ATR</strong>. The true ATR is the <code>atr</code> column
@@ -146123,7 +146123,7 @@ tree resolves a base ATR parquet built for an earlier fold (e.g. coverage 2024-1
 does NOT cover a later session's window (F2 = 2025-07, F3 = 2025-10, F4 = 2026-01), so the
 <code>timestamp &gt;= range_start</code> filter returns empty and the ATR is <code>None</code>. The data exists — sibling ATR
 parquets of the same config cover the later folds — the resolver just picked the wrong one.</p>
-<p>Four code changes are in <code>scripts/tmp-utils/backfills/backfill_backtest_metrics.py</code>:</p>
+<p>Four code changes are in <code>scripts/tmp_utils/backfills/backfill_backtest_metrics.py</code>:</p>
 <ol>
 <li><strong>ATR resolver fixed.</strong> <code>_resolve_atr_at_t0()</code> now selects the <code>atr</code> output column by name (helper
    <code>_select_atr_output_column</code>, never <code>columns_generated[0]</code> = <code>input_high_high</code>) plus an ATR-vs-close

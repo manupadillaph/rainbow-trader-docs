@@ -146407,7 +146407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../tmp-utils/lazy_full_compare_2/TEST_AND_FIX_HANDOFF/" class="md-nav__link">
+      <a href="../../../../../tmp_utils/lazy_full_compare_2/TEST_AND_FIX_HANDOFF/" class="md-nav__link">
         
   
   
@@ -147915,7 +147915,7 @@ intervention. This is the operational reason the trailing stop both exits more a
 <li><strong>Hand-picked configs, not a search.</strong> Six points in <code>{trailing distance, trailing enabled,
   take-profit}</code>; the optima between them are unprobed.</li>
 <li><strong>Reruns are strategy-identical to the baseline, not bit-identical.</strong> A field-by-field check
-  (<code>scripts/tmp-utils/checks/compare_backtest_sessions.py</code>, baseline session 1218 vs trailing-off rerun
+  (<code>scripts/tmp_utils/checks/compare_backtest_sessions.py</code>, baseline session 1218 vs trailing-off rerun
   9195) confirms all 157 trades match the baseline trade-for-trade (side, size, entry/exit price,
   PnL, gross PnL, commissions, exit reason within 1e-9). Predictions are re-inferred per run, so model
   confidences differ at ~1e-7 (float, non-decision-flipping); that shifts <code>ref_gross</code> (~$0.5/trade) and

@@ -707,6 +707,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="10. Work Plans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-and-archiving-plans-plans-are-docs-not-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating and Archiving Plans (Plans Are Docs, Not Code)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -146399,7 +146416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scripts/tmp-utils/lazy_full_compare_2/TEST_AND_FIX_HANDOFF/" class="md-nav__link">
+      <a href="../scripts/tmp_utils/lazy_full_compare_2/TEST_AND_FIX_HANDOFF/" class="md-nav__link">
         
   
   
@@ -146840,6 +146857,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="10. Work Plans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-and-archiving-plans-plans-are-docs-not-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating and Archiving Plans (Plans Are Docs, Not Code)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -147482,6 +147516,22 @@ User asks: &quot;Fix the bug in the loss calculation&quot;
 <li><strong>DO</strong> mark tasks as done, update progress notes, and ask questions</li>
 <li>In every progress update, explicitly mark which tasks are completed and which are in progress</li>
 </ul>
+<h3 id="updating-and-archiving-plans-plans-are-docs-not-code">Updating and Archiving Plans (Plans Are Docs, Not Code)</h3>
+<p>Plans are living documents and <strong>are always edited</strong> to reflect progress — that is their job. They are
+<strong>not code</strong>: do not spend effort/tokens polishing, refactoring, rewriting prose, or chasing 100%
+accuracy on a plan, especially one about to be archived. Cheap, minimal edits only.</p>
+<p>When a plan is finished (or superseded), do exactly this and no more:</p>
+<ol>
+<li><strong>Mark its tasks done</strong> — flip the checkboxes (<code>- [ ]</code> → <code>- [x]</code>). This is expected, not a task-content
+   change.</li>
+<li><strong>Add one line of status at the top</strong> — done / what changed / superseded by which plan. A single plain
+   sentence is enough ("this changed and that's it" is acceptable). No changelog, no narration.</li>
+<li><strong>Archive it</strong> — move the file to <code>docs/plans/_archived/</code> (the flat, dated-filename convention).</li>
+<li><strong>Extract anything still pending</strong> to a <strong>new mini-plan under <code>docs/mini-plans/</code></strong> (not a full plan),
+   so the pending work survives the archive.</li>
+</ol>
+<p>Keep the archived plan coherent enough that a fresh reader understands the project history — but that is a
+one-line status note, not a rewrite.</p>
 <hr />
 <h2 id="11-persistent-memory-mcp">11. Persistent Memory (MCP)</h2>
 <h3 id="supreme-rule-no-mcp-memory-no-work">Supreme Rule: No MCP Memory, No Work</h3>
