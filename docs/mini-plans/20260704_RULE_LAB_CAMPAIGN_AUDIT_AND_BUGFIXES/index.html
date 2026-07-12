@@ -1954,6 +1954,8 @@
       
         
       
+        
+      
     
     
     
@@ -2042,6 +2044,34 @@
     
   
     20260621 02 Fifty Rule Defined Trading Strategies For Rainbow Trader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_researchs/_RULE_BASED/20260711_01_Rule-Strategy%20Catalog%20%E2%80%94%20Configuration%20and%20Structural%20Levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260711 01 Rule Strategy Catalog — Configuration And Structural Levels
   
 
     
@@ -146487,7 +146517,40 @@
    exit match its concept. Scope: <code>scripts/experiments/generate/rule_strategies/profiles.py</code> + per-family
    spec calls; no engine change.</p>
 </li>
-<li><strong>B2 — <code>nr7_breakout</code> fix (DONE, pending rerun).</strong> <code>hl_pct = (high-low)/close</code> is a derived column
+</ol>
+<p><strong>Research + decision complete (2026-07-11).</strong> Each of the 51 strategies was checked against its
+   canonical/foundational source; the full per-strategy audit (entry logic, profile, source citation,
+   proposed DSL, keep-vs-wire verdict) lives in
+   <code>docs/_researchs/_RULE_BASED/20260711_01_Rule-Strategy Catalog — Configuration and Structural Levels.md</code>.
+   Outcome: <strong>29 strategies carry an intrinsic level to wire, 22 correctly keep the config default.</strong> The
+   canonical pattern: breakout/channel → structural stop inside the broken range (or Turtle 2N ATR);
+   mean-reversion → target at the mean (band middle / MA / z-score→0); stop-and-reverse indicators
+   (Supertrend, Parabolic SAR) → the indicator line <em>is</em> the trailing stop; pure oscillator recross /
+   signal crossover / momentum-sign / cross-asset rotation → no intrinsic level, keep the default.</p>
+<p>Methodical task breakdown:</p>
+<ul>
+<li>[x] <strong>B1.1 — Extend <code>profiles.py</code> (four capability additions).</strong> (a) structural <code>*_stop_expr</code> on
+     <code>trend_rider()</code>; (b) a per-bar line-trailing helper (<code>_line_trail</code>) that re-trails the stop onto a
+     feature column every bar, guarded to only tighten, for the Supertrend line and the SAR value;
+     (c) structural <code>*_take_profit_expr</code> on <code>breakout()</code>, <code>failure_reversal()</code> and <code>intraday()</code> (and the
+     FR R-multiple runner is dropped when a structural target is set); (d) an optional stalled-trade
+     time-stop on <code>intraday()</code>. <code>regime_hybrid()</code> was left unextended — no keep-vs-wire strategy uses it.
+     Gates green: ruff, pylint 10.00, mypy --strict.</li>
+<li>[x] <strong>B1.2 — Wire the 29 strategies' profile calls</strong> across <code>trend_breakout.py</code> (6), <code>momentum.py</code>
+     (3), <code>mean_reversion.py</code> (7), <code>volatility_structure.py</code> (11) and <code>session.py</code> (2), passing the
+     structural DSL from the research doc. Low-confidence cases use the structural range-window level
+     rather than an invented multiplier; vwap_reversion wires only its VWAP target and keeps the config
+     stop. All 51 specs build; the new expressions compile against the engine rule compiler.</li>
+<li>[x] <strong>B1.3 — Left the 22 keep-default strategies unchanged</strong> (their canonical exit is the opposite
+     signal, already in Layer-1); <code>regime.py</code> and <code>cross_asset.py</code> untouched.</li>
+<li>[ ] <strong>B1.4 — Regenerate the affected experiment specs</strong> from the updated generators.</li>
+<li>[ ] <strong>B1.5 — Rerun the campaign and regenerate the report</strong> (long run; executed by Manu with the
+     exact prepared command), then compare against the pre-B1 baseline.</li>
+</ul>
+<p>Note: the bolted-on time-stops (6 / 24 / 8 bars) and the 20:00 UTC force-flat are left as-is under B1
+   (the force-flat correctly affects only the two session-anchored VWAP strategies); their redesign stays
+   with B3.
+2. <strong>B2 — <code>nr7_breakout</code> fix (DONE, pending rerun).</strong> <code>hl_pct = (high-low)/close</code> is a derived column
    produced by the <code>RELATIVE_PRICE</code> pipeline stage (<code>data_processing/pipeline/relative_price.py:97</code>);
    it is in <code>RELATIVE_PRICE_COLS</code>, not in <code>OHLCV_COLUMNS</code>. The rule feature helper only emitted
    cleaned-price OHLCV columns, so it could not produce <code>hl_pct</code>. FIX APPLIED (gates green — ruff, pylint
@@ -146496,8 +146559,7 @@
    (default cleaned-price only); <code>StrategyFeatureSet</code> gained <code>relative_price(column)</code> (validates against
    <code>RELATIVE_PRICE_COLS</code>) plus a separate relative-price OHLCV bucket emitted in <code>build()</code>; <code>nr7</code> now calls
    <code>features.relative_price("hl_pct")</code>, DSL expression unchanged. End-to-end fetch validation happens on
-   the rerun. Rerun command:</li>
-</ol>
+   the rerun. Rerun command:</p>
 <p><code>bash
    .venv/bin/python scripts/experiments/campaigns/run_campaign.py \
      --campaign-json scripts/experiments/campaigns/results/2026-07-03T05-52-45Z_rule_lab_catalog_2024/campaign_spec.json \
@@ -146508,19 +146570,94 @@
 <p>FOLLOW-UP: the feature accumulator is named <code>StrategyFeatureSet</code> (it accumulates a strategy's OHLCV
    price, relative-price and indicator features). Open question left for later: whether one helper should
    own both OHLCV and indicator features, or split into two.
-3. <strong>B3 — Friction-aware TP/SL floor (config flag).</strong> Add an opt-in floor so TP/SL distances can never
-   fall below a multiple of round-trip friction (see §5.1). Fix the trailing default too: distance 5.0 ATR</p>
-<blockquote>
-<p>TP 3.4 ATR makes the trailing stop provably unable to profit (0/2,156 gross-positive) — set
-   distance &lt; TP or disable, and add a config-validation warning when TP &lt; activation + distance.
-4. <strong>B4 — Report defects batch.</strong> Real <code>failed</code> status in the leaderboard; add a Symbol column; clip the
-   labels parquet to the regime window; exclude pruned VALIDATION sessions from per-experiment Regime
-   Economics; thin-sample guard on the scores-lens winner; drop stale ensemble legends; fix the JS
-   formatter; add the 4 missing JSON columns.
-5. <strong>B5 — Slippage calibration decision (Manu).</strong> Decide whether 8 bp/side is an intentional stress test
-   (then document it beside the friction metrics) or calibrate to measured BTCUSDT spread/impact and rerun
-   the frontier strategies. This single knob decides the campaign verdict.</p>
-</blockquote>
+3. <strong>B3 — Friction-aware take-profit floor (config flag).</strong> Add an opt-in floor — a
+   <code>enforce_friction_floor</code> switch plus a <code>friction_floor_multiple</code> k — so the take-profit distance can
+   never fall below <code>k * round-trip friction</code> (see §5.1). It only clamps the take-profit from below (a
+   minimum, <code>max(computed_tp, k * friction)</code>, never a sum); it changes nothing else. <strong>Decided: k = 1</strong>
+   (the floor equals one round-trip friction, so the take-profit at least covers the cost).
+4. <strong>B4 — Report defects batch (verified 2026-07-12 against the current report + generator code).</strong> Six
+   real defects remain; two earlier items are closed. Still to fix:
+   (a) <em>latent</em> status mislabel — <code>run_campaign.py:628-644</code> hardcodes <code>status="skipped_existing"</code> on a
+   skip-existing pass and never checks <code>status == "failed"</code>, so a <code>failed</code> <code>result.json</code> would be shown as
+   skipped (does not reproduce today only because the nr7 rerun used <code>--rerun-existing</code>);
+   (b) per-experiment Regime Economics still sums the pruned VALIDATION session together with the full
+   backtest (<code>report_experiment.py:583-587</code> → <code>economics.py:144</code>, no status filter);
+   (c) the labels table is not clipped to the regime window, so out-of-window bars fall into the last
+   regime bucket (<code>labels.py:94</code> + backward <code>join_asof</code>);
+   (d) stale "ensemble" wording in shared legends (<code>core/.../markdown_tables.py:87,525</code>);
+   (e) <code>campaign_report.json</code> omits the benchmark-RC / benchmark / <code>alpha_adj</code> columns present in the
+   Markdown leaderboard (<code>report_campaign.py:352-378</code>);
+   (f) no thin-sample guard on the scores-lens "Best Signal" (<code>campaign_ideal_tables.py:build_winner_rows</code>
+   ignores <code>is_thin</code>), so a single-bar bucket can win with F1=1.0.
+   CLOSED: the Symbol column is already emitted (<code>report_campaign.py:69</code>, present in the current report);
+   the <code>js</code>-suffix number format is intentional, not a defect.
+5. <strong>B5 — Slippage calibration decision (DONE — 5 bp/side).</strong> Decided: <code>estimated_slippage = 0.0005</code>
+   (5 bp/side, 10 bp roundtrip), backed by the BTCUSDT slippage audit. A new campaign spec
+   <code>rule_lab_catalog_2024_SLIP_v2</code> at 5 bp is committed; the next rerun uses it (not the old 8 bp run).</p>
+<ol>
+<li>
+<p><strong>B6 — Core engine capabilities (build first).</strong> The fidelity and holding-time analysis
+   (<code>docs/_researchs/_RULE_BASED/20260711_01_*</code>, §10.3, §10.4, §11) established that no compromise among the
+   51 is a hard engine limit; three of them are missing <em>capabilities</em> the engine should own before any
+   strategy can use them. Each is opt-in; its default value lives in <strong>YAML</strong> (not Python) and reproduces
+   the prior behavior exactly, so every existing experiment/config JSON keeps validating (new fields carry
+   a default) and every prior run stays byte-identical. Config-integrity tests plus full unit coverage are
+   required for each addition, reusing existing helpers and following the established patterns — no new
+   duplicated logic.</p>
+</li>
+<li>
+<p>[x] <strong>B6.1 — Volatility-target position sizing (DONE 2026-07-12).</strong> Added a fourth
+     <code>position_sizing_method</code>, <code>"volatility_target"</code>, alongside <code>fixed | risk_based | kelly</code>: size so every
+     position carries equal volatility (<code>size = target_volatility_fraction * equity / atr</code>) rather than by
+     stop distance. Wired through the shared Literal and the sizing computation:
+     <code>types/configs/experiments/bot_config.py</code> (Literal + new <code>target_volatility_fraction</code> field +
+     validation), <code>types/trade_meta.py</code> (Literal), <code>bot_logic/helpers/position_sizing.py</code> (the sizing
+     branch), <code>bot_logic/helpers/risk_manager.py</code> and <code>bot_logic/helpers/entry_helpers.py</code>, plus
+     <code>backtesting_engine/helpers/risk_constrained_benchmark.py</code> and <code>bot_config_overrides.py</code>. Default lives
+     in <code>config/experiments/bot.yaml</code> (<code>target_volatility_fraction: null</code> = disabled) so every prior run is
+     byte-identical. Tests added (sizing branch + config validation) and the risk-manager completeness test
+     updated; gates green (ruff, mypy --strict, pyright, pylint) and old config JSONs still validate.
+     Committed (4 submodules + root). Serves the momentum / cross-asset family whose canon sizes by
+     volatility target
+     (§10.4 point 3).</p>
+</li>
+<li>[ ] <strong>B6.2 — Pure-math feature columns (new indicator outputs).</strong> Build the mathematical features the
+     catalog needs to be faithful (§10.3): linreg regression-channel bands (<code>linreg ± k·stderr</code>) so
+     <code>linreg_slope_breakout</code> gets its real channel, and VWAP standard-deviation bands (<code>vwap ± k·σ</code>) so
+     <code>vwap_reversion</code> fades a real band rather than a raw ATR stretch. Both are self-contained additions on
+     the existing indicator mould plus raw exposure in the generator. Deferred within B6.2 unless needed:
+     Alligator, z-score half-life, volume distribution-day count, VCP multi-contraction (more specialized).</li>
+<li>
+<p>[ ] <strong>B6.3 — Decision-cadence gate. DEFERRED — not in this implementation batch.</strong> Design to be
+     discussed with Manu (2026-07-13) before any build. A per-strategy gate to act only every N base bars or
+     only when a new higher-timeframe bar closes, so a long-horizon strategy re-decides slowly instead of on
+     every 5m bar (§10.4 point 2). New engine capability; most invasive of the three.</p>
+</li>
+<li>
+<p><strong>B7 — Strategy horizon and exit redesign (after B6).</strong> Wire the new engine capabilities and the
+   holding-time principle (§11.2) into the 51 strategies. This subsumes the exit-redesign previously parked
+   in B3; B3 stays purely the friction-aware TP/SL floor.</p>
+</li>
+<li>
+<p>[ ] <strong>B7.1 — Eliminate the 20:00 UTC session force-flat in ALL strategies.</strong> Zero of the 51 have a
+     canonical basis for a session-close flat on 24/7 crypto (§11.1); drop <code>FLAT_AT_TIME</code> from the
+     <code>intraday()</code> profile emission (the engine action stays; the profiles stop emitting it).</p>
+</li>
+<li>[ ] <strong>B7.2 — Replace the bolted-on fixed bar-count time-stops with authored canonical <code>CLOSE</code> rules</strong>
+     (§11.2 preference 1) — each strategy's own opposite-channel / signal-recross / oscillator-recross exit,
+     expressible today in the DSL (proven: <code>_time_stop</code> already emits <code>action: CLOSE</code>). Where a stall cutoff
+     is still wanted, make it relative to the strategy's own lookback and to volatility, not a shared
+     constant (§11.2 preference 3).</li>
+<li>[ ] <strong>B7.3 — Declare each long-horizon strategy's own horizon</strong> (§10.4 point 1). <strong>The base timeframe
+     stays 5m</strong>; the horizon is expressed either by adding a higher-timeframe (1d/1w) momentum/allocation
+     feature — the engine aligns it onto the 5m grid — or by a large-N base-timeframe window, instead of an
+     inherited short 5m window. Applies to the momentum / cross-asset family (<code>time_series_momentum</code>,
+     <code>multi_horizon_momentum</code>, <code>mtf_momentum_stack</code>, <code>dual_momentum</code>, <code>relative_strength_leader</code>,
+     <code>context_risk_on</code>).</li>
+<li>[ ] <strong>B7.4 — Wire the new features and capabilities</strong> into the strategies that need them:
+     <code>linreg_slope_breakout</code> → linreg channel bands (B6.2); <code>vwap_reversion</code> → VWAP stdev bands (B6.2);
+     the volatility-target sizing (B6.1) and cadence gate (B6.3) where a strategy's canon calls for them.</li>
+</ol>
 <h2 id="3-audit-work--status">3. Audit work — status</h2>
 <p>Six-dimension multi-agent audit; five of six finder dimensions completed (metrics coherence, DSL strategy
 review incl. full provenance table, friction/geometry, regime tables, data pipeline) plus two adversarial
