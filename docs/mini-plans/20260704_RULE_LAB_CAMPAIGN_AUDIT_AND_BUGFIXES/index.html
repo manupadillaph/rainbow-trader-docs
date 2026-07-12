@@ -146570,11 +146570,13 @@
 <p>FOLLOW-UP: the feature accumulator is named <code>StrategyFeatureSet</code> (it accumulates a strategy's OHLCV
    price, relative-price and indicator features). Open question left for later: whether one helper should
    own both OHLCV and indicator features, or split into two.
-3. <strong>B3 — Friction-aware take-profit floor (config flag).</strong> Add an opt-in floor — a
-   <code>enforce_friction_floor</code> switch plus a <code>friction_floor_multiple</code> k — so the take-profit distance can
-   never fall below <code>k * round-trip friction</code> (see §5.1). It only clamps the take-profit from below (a
-   minimum, <code>max(computed_tp, k * friction)</code>, never a sum); it changes nothing else. <strong>Decided: k = 1</strong>
-   (the floor equals one round-trip friction, so the take-profit at least covers the cost).
+3. <strong>B3 — Friction-aware take-profit floor (config flag) — DONE 2026-07-12.</strong> Added an opt-in floor — a
+   <code>enforce_friction_floor</code> switch plus a <code>friction_floor_multiple</code> k on <code>StrategyConfig</code> — so the
+   take-profit distance can never fall below <code>k * round-trip friction</code> (see §5.1). It only clamps the
+   take-profit from below (a minimum, <code>max(computed_tp, k * friction)</code>, never a sum); it changes nothing
+   else. <strong>Decided: k = 1</strong>. Default in YAML keeps <code>enforce_friction_floor</code> false (byte-identical); applied
+   in <code>bot_logic</code> after the take-profit is finalized; behavior tests (floor on/off + negative-k rejection)
+   and the strategy-config completeness test added; gates green and old config JSONs still validate.
 4. <strong>B4 — Report defects batch (verified 2026-07-12 against the current report + generator code).</strong> Six
    real defects remain; two earlier items are closed. Still to fix:
    (a) <em>latent</em> status mislabel — <code>run_campaign.py:628-644</code> hardcodes <code>status="skipped_existing"</code> on a
@@ -146639,15 +146641,17 @@
    in B3; B3 stays purely the friction-aware TP/SL floor.</p>
 </li>
 <li>
-<p>[ ] <strong>B7.1 — Eliminate the 20:00 UTC session force-flat in ALL strategies.</strong> Zero of the 51 have a
-     canonical basis for a session-close flat on 24/7 crypto (§11.1); drop <code>FLAT_AT_TIME</code> from the
-     <code>intraday()</code> profile emission (the engine action stays; the profiles stop emitting it).</p>
+<p>[x] <strong>B7.1 — Eliminate the 20:00 UTC session force-flat in ALL strategies (DONE 2026-07-12).</strong> Dropped
+     <code>FLAT_AT_TIME</code> and the <code>session_end_hour</code> parameter from the <code>intraday()</code> profile; all 51 specs build with
+     zero <code>FLAT_AT_TIME</code> rules. The engine action itself is untouched.</p>
 </li>
-<li>[ ] <strong>B7.2 — Replace the bolted-on fixed bar-count time-stops with authored canonical <code>CLOSE</code> rules</strong>
-     (§11.2 preference 1) — each strategy's own opposite-channel / signal-recross / oscillator-recross exit,
-     expressible today in the DSL (proven: <code>_time_stop</code> already emits <code>action: CLOSE</code>). Where a stall cutoff
-     is still wanted, make it relative to the strategy's own lookback and to volatility, not a shared
-     constant (§11.2 preference 3).</li>
+<li>[x] <strong>B7.2 — Make the bolted-on fixed bar-count time-stops opt-in (DONE 2026-07-12).</strong> The shared
+     constants (breakout 6, mean-reversion 24, failure-reversal 8, vwap-reversion 24) are removed as defaults;
+     each strategy now exits on its structural target, its structural stop (B1), or the opposite signal — the
+     condition-based exit the canon uses — with an opt-in, lookback-scaled stall cut still available (§11.2
+     preferences 2/3). All 51 specs build with zero time-stop rules; gates green. FURTHER-FIDELITY REFINEMENT
+     (optional, not done): author each channel breakout's explicit opposite-channel <code>CLOSE</code> (§11.2 preference
+     1, e.g. donchian's tighter exit channel) rather than relying on the structural stop + opposite signal.</li>
 <li>[ ] <strong>B7.3 — Declare each long-horizon strategy's own horizon</strong> (§10.4 point 1). <strong>The base timeframe
      stays 5m</strong>; the horizon is expressed either by adding a higher-timeframe (1d/1w) momentum/allocation
      feature — the engine aligns it onto the 5m grid — or by a large-N base-timeframe window, instead of an
