@@ -11,7 +11,7 @@
       
       
       
-        <link rel="prev" href="../20260704_RULE_LAB_CAMPAIGN_AUDIT_AND_BUGFIXES/">
+        <link rel="prev" href="../../audit/20260711_1928_SLIPPAGE_ASSUMPTION_AUDIT/">
       
       
         <link rel="next" href="../../plans/20260616_RULE_BASED_ENGINE_AUDIT_AND_DIRECTION/">
@@ -2448,8 +2448,6 @@
       
         
       
-        
-      
     
     
     
@@ -2492,34 +2490,6 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../20260704_RULE_LAB_CAMPAIGN_AUDIT_AND_BUGFIXES/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    20260704 Rule Lab Campaign Audit And Bugfixes
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2671,10 +2641,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#p6--cierre" class="md-nav__link">
+  <a href="#p6--test-de-comportamiento-por-estrategia-motor-real-precios-mockeados" class="md-nav__link">
     <span class="md-ellipsis">
       
-        P6 — Cierre
+        P6 — Test de comportamiento por estrategia (motor real, precios mockeados)
       
     </span>
   </a>
@@ -2682,10 +2652,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#p7--diferido-revisar-más-adelante" class="md-nav__link">
+  <a href="#p7--cierre" class="md-nav__link">
     <span class="md-ellipsis">
       
-        P7 — Diferido (revisar más adelante)
+        P7 — Cierre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p8--diferido-revisar-más-adelante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P8 — Diferido (revisar más adelante)
       
     </span>
   </a>
@@ -5582,6 +5563,8 @@
       
         
       
+        
+      
     
     
     
@@ -7798,6 +7781,34 @@
     
   
     20260703 Campaign Regime Report Part A Implementation Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/_archived/20260704_RULE_LAB_CAMPAIGN_AUDIT_AND_BUGFIXES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260704 Rule Lab Campaign Audit And Bugfixes
   
 
     
@@ -146374,10 +146385,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#p6--cierre" class="md-nav__link">
+  <a href="#p6--test-de-comportamiento-por-estrategia-motor-real-precios-mockeados" class="md-nav__link">
     <span class="md-ellipsis">
       
-        P6 — Cierre
+        P6 — Test de comportamiento por estrategia (motor real, precios mockeados)
       
     </span>
   </a>
@@ -146385,10 +146396,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#p7--diferido-revisar-más-adelante" class="md-nav__link">
+  <a href="#p7--cierre" class="md-nav__link">
     <span class="md-ellipsis">
       
-        P7 — Diferido (revisar más adelante)
+        P7 — Cierre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p8--diferido-revisar-más-adelante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P8 — Diferido (revisar más adelante)
       
     </span>
   </a>
@@ -146456,7 +146478,7 @@
     
     
       <li class="md-path__item">
-        <a href="../20260704_RULE_LAB_CAMPAIGN_AUDIT_AND_BUGFIXES/" class="md-path__link">
+        <a href="./" class="md-path__link">
           
   <span class="md-ellipsis">
     Mini Plans
@@ -146489,6 +146511,8 @@
 <ul>
 <li>Auditoría código-vs-doc (51) + research canónico (con fuentes) + catálogo-verdad reescrito: hechos.</li>
 <li>Las 51 <strong>corren hoy</strong>. Lo de abajo las hace <em>más fieles</em>; no las desbloquea.</li>
+<li>Auditoría de fidelidad profunda (2026-07-13, canon-vs-código, estrategia entera, no por partes): 36 fieles, 15 con
+  divergencia. Los arreglos están integrados abajo en P1 (correcciones de código) y P2 (features + cableado).</li>
 </ul>
 <h2 id="p1--correcciones-de-código-rápidas-ya-decididas">P1 — Correcciones de código (rápidas, ya decididas)</h2>
 <ul>
@@ -146499,6 +146523,18 @@
 <li>[x] <strong>P1.3 <code>distance_from_ema_reversion</code> — stop inventado.</strong> Hoy tiene un stop <code>1.5·market_atr</code> <strong>hardcodeado en el
   spec Python</strong> (<code>mean_reversion.py</code>, <code>distance_from_ema_reversion_spec</code>, en <code>long_stop_expr</code>/<code>short_stop_expr</code>). No sale
   de ninguna fuente. Fix: <strong>borrar esos dos args</strong> → cae al default de la config (no se pone ni 1.5 ni 2 ni 3).</li>
+<li>[ ] <strong>P1.4 <code>relative_strength_leader</code> — falta un término del canon.</strong> El canon (research #17) pide <code>close &gt; ema_50</code>
+  (filtro de tendencia) y el ensanchamiento de fuerza relativa. Fix: agregar <code>close &gt; ema_50</code> y restaurar el
+  ensanchamiento medido sobre barras <strong>diarias</strong> (fuerza relativa de hoy vs 20 barras diarias atrás; el <code>{-20}</code> en 5m
+  era el bug de timeframe). Archivo: <code>cross_asset.py</code>. <strong>Se resuelve junto con P3.2:</strong> es una de las cuatro solo-HTF
+  (el <code>close &gt; ema_50</code> sobre 5m le da su término/gatillo de 5m para la V2), y el ensanchamiento diario necesita un lag
+  diario (feature). Hacerlo suelto y re-hacerlo para V1/V2 sería doble trabajo.</li>
+<li>[x] <strong>P1.5 <code>context_risk_on</code> — falta un término del canon.</strong> El canon (research #26) pide <code>ctx_vol_regime_bad == 0</code>
+  (régimen de volatilidad malo del símbolo contexto). Fix: agregar ese filtro leyendo la columna de régimen de
+  volatilidad del Market State del contexto. Archivo: <code>cross_asset.py</code>. Hecho: se agrega <code>ms_vol_high == 0</code> sobre el
+  Market State diario del contexto (calibración 30/20/30 de la familia regime) en long y short; unit test red→green.</li>
+<li>[x] <strong>P1.6 <code>triple_ema_alignment</code> — comentario mal.</strong> El comentario del código llama "GMMA exit" a la salida, pero el
+  stack 10/20/50 no es el ribbon de Guppy (6+6 EMAs). Fix: corregir el comentario. Archivo: <code>trend_breakout.py</code>.</li>
 </ul>
 <h2 id="p2--indicadores-a-construir--cablearlos-para-fidelidad">P2 — Indicadores a construir + cablearlos (para fidelidad)</h2>
 <p>Cada uno es un indicador nuevo siguiendo el patrón de las bandas linreg/VWAP (config → compute → dispatch → YAML →
@@ -146550,13 +146586,46 @@ es fórmula limpia, se explica el patrón y la aproximación honesta.</p>
   (timestamp): bandera 1 en la primera barra de cada día UTC (ancla <code>anchor_hour</code>); la posición se cierra en esa barra,
   cuando los pivotes diarios se recalculan y los niveles del trade caducan.</li>
 </ul>
+<p>Arreglos de feature-timeframe del audit (2026-07-13): diez estrategias calculan un patrón canónicamente diario/semanal
+sobre el base de 5m, achicando la ventana a horas. Base sigue <strong>5m</strong>; se recalcula la feature del patrón en el <strong>bucket
+1d reenviado al grid de 5m</strong> (como <code>ema200_pullback_continuation</code>/<code>pivot_breakout_continuation</code>), y el <strong>gatillo</strong> de
+entrada queda como un <strong>evento de 5m</strong> (el close de 5m cruzando el nivel diario, <code>cross_up</code>/<code>cross_down</code>), así no
+dispara todo el día. No es cambiar el base ni un compromiso — es un bug de feature-timeframe (research §13.B).</p>
+<ul>
+<li>[ ] <strong>P2.6 Canal alto/bajo diario</strong> (highest-high / lowest-low sobre N barras <strong>diarias</strong>) → <code>donchian_breakout</code> (20),
+  <code>turtle_breakout</code> (55/20), <code>failed_breakout_reversal</code> (20). Reemplaza el <code>highest/lowest</code> de 5m por el canal en 1d.</li>
+<li>[ ] <strong>P2.7 Flag de rango-más-estrecho diario</strong> (rango de barra más chico de las últimas 7 barras <strong>diarias</strong>) →
+  <code>nr7_breakout</code>, rompiendo el máximo/mínimo del <strong>día</strong> NR7.</li>
+<li>[ ] <strong>P2.8 Conteo diario de barras direccionales</strong> (cuántas de las últimas 5 barras <strong>diarias</strong> cerraron en contra) →
+  <code>consecutive_bar_exhaustion</code>.</li>
+<li>[ ] <strong>P2.9 Patrón inside-bar diario</strong> (barra interior dentro del rango del <strong>día</strong> previo) → <code>inside_bar_expansion</code>.</li>
+<li>[ ] <strong>P2.10 Percentil diario de BandWidth</strong> (percentil del ancho de Bollinger sobre 252 barras <strong>diarias</strong>) →
+  <code>bollinger_squeeze_breakout</code>.</li>
+<li>[ ] <strong>P2.11 Histograma de momentum (TTM Squeeze)</strong> → <code>bollinger_keltner_squeeze</code>, en lugar del proxy con <code>roc</code>, y
+  <strong>quitar</strong> el take-profit residual de +2 ATR.</li>
+<li>[ ] <strong>P2.12 Cablear en el bucket 1d (sin feature nueva)</strong> → <code>sma_regime_cross</code> (<code>daily.sma(50/200)</code>),
+  <code>ichimoku_cloud_breakout</code> (<code>daily.ichimoku()</code>), <code>volatility_contraction_expansion</code> (<code>VOLATILITY_CONTRACTION</code> en 1d).
+  Los indicadores ya existen; solo se instancian en el bucket diario, con el gatillo de 5m.</li>
+</ul>
 <h2 id="p3--motor-bot_logic--con-cuidado-patrones--backfill">P3 — Motor (bot_logic) — con cuidado, patrones + backfill</h2>
 <ul>
-<li>[ ] <strong>P3.1 Snapshot del ATR al entrar</strong> → lo necesita <code>vwap_reversion</code> para la fórmula exacta del corte por tiempo.
+<li>[x] <strong>P3.1 Snapshot del ATR al entrar</strong> → lo necesita <code>vwap_reversion</code> para la fórmula exacta del corte por tiempo.
   <strong>Cuidado con las formas: no inventar.</strong> Pasos: (1) revisar cómo se guardan hoy los snapshots de entrada
   (<code>position_entry_price</code>, <code>position_initial_take_profit</code>, etc.); (2) agregar el campo nuevo siguiendo ese mismo patrón;
   (3) backfill completo: <strong>bk de la DB current → verificar el bk → backfill en current → verificación de consistencia
-  completa</strong>. Necesita <code>EJECUTA</code> explícito de Manu por ser motor.</li>
+  completa</strong>. Necesita <code>EJECUTA</code> explícito de Manu por ser motor.
+  Resuelto sin columna nueva ni backfill: el ATR de entrada ya persiste en el JSON <code>entry_reason</code>
+  (<code>meta.sizing.atr</code>), así que se expone al DSL como token <code>position_entry_atr</code> (validación tipada de
+  <code>PositionSizingInfo</code>, con caída al ATR vivo si falta). <code>vwap_reversion</code> usa ese token en el corte por tiempo. Sirve
+  también para trades viejos.</li>
+<li>[ ] <strong>P3.2 Estrategias solo-HTF: gate de cadencia (V1) + variante fractal (V2).</strong> Las cuatro con todas las
+  condiciones en diario (<code>time_series_momentum</code>, <code>multi_horizon_momentum</code>, <code>dual_momentum</code>, <code>relative_strength_leader</code>)
+  disparan/re-entran todo el día en 5m. Se construyen <strong>dos variantes</strong> de cada una y se comparan (research §10.4):
+  <strong>V1</strong> — gate de cadencia en el motor: decidir solo al cerrar la barra diaria (sobre la barra diaria completa, sin
+  lookahead), actuando en la siguiente barra de 5m; una entrada por día. <strong>V2</strong> — sesgo diario fijado a la apertura del
+  día + gatillo de 5m con criterio fractal propio (ej. pullback-and-resume a una MA rápida de 5m en la dirección del
+  sesgo). Base 5m en las dos. Las tres leves (<code>mtf_momentum_stack</code>, <code>context_risk_on</code>, <code>regime_confirmed_trend</code>) tienen
+  término de 5m pero de estado; se revisan igual. Necesita <code>EJECUTA</code> por tocar motor (V1).</li>
 </ul>
 <h2 id="p4--decisión-de-sesión-ancla-fija-utc">P4 — Decisión de sesión (ancla fija UTC)</h2>
 <ul>
@@ -146568,17 +146637,32 @@ es fórmula limpia, se explica el patrón y la aproximación honesta.</p>
 <li>[ ] <strong>P5.1 spread/pairs z-score.</strong> Necesita operar 2 instrumentos coordinados; el motor opera de a uno. Por eso <strong>no
   está entre las 51</strong>. Queda documentado como límite estructural, no como pendiente.</li>
 </ul>
-<h2 id="p6--cierre">P6 — Cierre</h2>
+<h2 id="p6--test-de-comportamiento-por-estrategia-motor-real-precios-mockeados">P6 — Test de comportamiento por estrategia (motor real, precios mockeados)</h2>
+<p>Última etapa de ingeniería, antes del rerun. Es una capa <strong>nueva</strong>, encima de los unit tests por función (no los
+reemplaza). Un suite funcional por estrategia que corre con <strong>todo real</strong> —pipeline de indicadores real (VWAP, ATR,
+etc. calculados de verdad), loop del motor real, DSL real (compilador + resolver + evaluador), apertura/cierre de
+trades real, con trades y métricas reales— y <strong>lo único que se mockea son los precios</strong> (barras OHLCV sintéticas
+diseñadas para disparar cada condición).</p>
 <ul>
-<li>[ ] <strong>P6.1 Actualizar el catálogo-verdad</strong> (<code>§4.12</code>, <code>§9</code>, <code>§10.3</code>, <code>§13</code>) para reflejar lo hecho en P1–P4.</li>
-<li>[ ] <strong>P6.2 Rerun <code>rule_lab_catalog_2024_SLIP_v2</code></strong> + regenerar reportes (proceso largo → se le pasa a Manu el comando
+<li>[ ] <strong>P6.1 Test de comportamiento de cada estrategia.</strong> Por cada estrategia, verificar <strong>cada condición de entrada,
+  cada acción DSL</strong> (stop, take-profit, close, etc.) <strong>y cada término de cada expresión</strong>, afirmando que a nivel código
+  entra, sale y calcula exactamente donde su definición lo dice. Cada condición/término se prueba de <strong>tres formas</strong>:
+  <strong>positivo</strong> (debe dispararse → se afirma que se dispara), <strong>borde</strong> (el límite/igualdad exacta) y <strong>negativo</strong> (no
+  debe dispararse → se afirma que queda callado). Todo debe quedar probado por positivo, borde y negativo.</li>
+</ul>
+<h2 id="p7--cierre">P7 — Cierre</h2>
+<ul>
+<li>[ ] <strong>P7.1 Dejar el catálogo-verdad como la foto final.</strong> Cuando todo esté aplicado, el research que lista las 51
+  debe terminar mostrando, por cada estrategia, <strong>cómo quedó implementada según el código real final</strong> (su DSL
+  completa), las <strong>dos variantes V1/V2</strong> donde existan, y las <strong>decisiones arbitrarias / de compromiso</strong> que quedan
+  porque no se pueden hacer más fieles. Actualizar los bullets de Implementation y las secciones §10/§13 a ese estado.</li>
+<li>[ ] <strong>P7.2 Rerun <code>rule_lab_catalog_2024_SLIP_v2</code></strong> + regenerar reportes (proceso largo → se le pasa a Manu el comando
   exacto; Manu lo corre).</li>
 </ul>
-<h2 id="p7--diferido-revisar-más-adelante">P7 — Diferido (revisar más adelante)</h2>
+<h2 id="p8--diferido-revisar-más-adelante">P8 — Diferido (revisar más adelante)</h2>
 <ul>
-<li>[ ] <strong>P7.1 Gate de cadencia de decisión.</strong> Que una estrategia de horizonte largo re-decida cada N barras, o solo al
-  cerrar una barra diaria, en vez de en cada barra de 5m. Capacidad de motor, la más invasiva; diseño a discutir antes
-  de construir.</li>
+<li>[ ] <strong>P8.1 Gate de cadencia de decisión → promovido a P3.2.</strong> Dejó de ser diferido: se construye como la V1 de las
+  estrategias solo-HTF (decidir al cerrar la barra diaria). Ver P3.2.</li>
 </ul>
 
 
