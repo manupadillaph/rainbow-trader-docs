@@ -146623,12 +146623,16 @@
      volatility target
      (§10.4 point 3).</p>
 </li>
-<li>[ ] <strong>B6.2 — Pure-math feature columns (new indicator outputs).</strong> Build the mathematical features the
-     catalog needs to be faithful (§10.3): linreg regression-channel bands (<code>linreg ± k·stderr</code>) so
-     <code>linreg_slope_breakout</code> gets its real channel, and VWAP standard-deviation bands (<code>vwap ± k·σ</code>) so
-     <code>vwap_reversion</code> fades a real band rather than a raw ATR stretch. Both are self-contained additions on
-     the existing indicator mould plus raw exposure in the generator. Deferred within B6.2 unless needed:
-     Alligator, z-score half-life, volume distribution-day count, VCP multi-contraction (more specialized).</li>
+<li>[x] <strong>B6.2 — Pure-math feature columns (new indicator outputs) — DONE 2026-07-12.</strong> Built two band
+     indicators on the existing indicator mould: <code>LinRegChannel</code> (the regression line ± <code>std_dev</code> standard
+     deviations of its residuals) and <code>VWAPBands</code> (the anchored VWAP ± <code>std_dev</code> volume-weighted standard
+     deviations of the typical price), each emitting upper/middle/lower/position/width. Full stack wired —
+     <code>IndicatorType</code>, config union, composed indicators, process + validate dispatch, YAML defaults, and
+     <code>StrategyFeatureSet.linreg_channel()</code> / <code>.vwap_bands()</code> for the generator. Compute, band-ordering,
+     width-scaling and synthetic-propagation tests added; gates green (ruff, pylint 10.00, mypy --strict,
+     pyright) and old config JSONs still validate. Committed (3 submodules + root). The actual wiring into
+     <code>linreg_slope_breakout</code> and <code>vwap_reversion</code> is B7.4. Deferred within B6.2 unless needed: Alligator,
+     z-score half-life, volume distribution-day count, VCP multi-contraction (more specialized).</li>
 <li>
 <p>[ ] <strong>B6.3 — Decision-cadence gate. DEFERRED — not in this implementation batch.</strong> Design to be
      discussed with Manu (2026-07-13) before any build. A per-strategy gate to act only every N base bars or
@@ -146645,13 +146649,20 @@
      <code>FLAT_AT_TIME</code> and the <code>session_end_hour</code> parameter from the <code>intraday()</code> profile; all 51 specs build with
      zero <code>FLAT_AT_TIME</code> rules. The engine action itself is untouched.</p>
 </li>
-<li>[x] <strong>B7.2 — Make the bolted-on fixed bar-count time-stops opt-in (DONE 2026-07-12).</strong> The shared
-     constants (breakout 6, mean-reversion 24, failure-reversal 8, vwap-reversion 24) are removed as defaults;
-     each strategy now exits on its structural target, its structural stop (B1), or the opposite signal — the
-     condition-based exit the canon uses — with an opt-in, lookback-scaled stall cut still available (§11.2
-     preferences 2/3). All 51 specs build with zero time-stop rules; gates green. FURTHER-FIDELITY REFINEMENT
-     (optional, not done): author each channel breakout's explicit opposite-channel <code>CLOSE</code> (§11.2 preference
-     1, e.g. donchian's tighter exit channel) rather than relying on the structural stop + opposite signal.</li>
+<li>[x] <strong>B7.2 — Author each strategy's canonical exit (DONE 2026-07-12).</strong> The bolted-on fixed bar-count
+     time-stops (breakout 6, mean-reversion 24, failure-reversal 8, vwap-reversion 24) are gone; each strategy
+     now carries the condition-based exit its foundational source prescribes (§11.3), authored as explicit
+     side-guarded <code>CLOSE</code> rules via a reusable <code>_close_when</code> profile helper. <strong>31 of 51</strong> strategies gained an
+     explicit canonical exit (62 CLOSE rules): opposite-channel breaks (Donchian 10-bar, Turtle 20-bar, ATR
+     5-bar), oscillator recrosses (RSI 50, %R -50, CCI 0, MFI 50, stochastic/PPO/TRIX crossovers), momentum
+     sign-flips (time-series/multi-horizon/MTF legs, dual/relative-strength/context cross-asset), regime
+     rollovers (choppiness, regime-switch, regime-confirmed-trend), and the VWAP recross. The remaining
+     strategies exit faithfully via their structural target/stop (B1) or the engine's opposite-signal flip
+     (mean-reversion to the band mean, supertrend/SAR line-trail, pivot/fractal levels). Where a stall cut is
+     still wanted it is sized to the strategy's own window (rsi2 20, bollinger 30, keltner 30, z-score 50,
+     consecutive-bar 8, nr7 10, failed-breakout 3, vwap-fade stretch/vol-relative), never a shared constant.
+     All 51 specs build; all rule expressions compile; gates green (ruff, pylint 10.00, mypy --strict).
+     Committed as four per-family commits.</li>
 <li>[ ] <strong>B7.3 — Declare each long-horizon strategy's own horizon</strong> (§10.4 point 1). <strong>The base timeframe
      stays 5m</strong>; the horizon is expressed either by adding a higher-timeframe (1d/1w) momentum/allocation
      feature — the engine aligns it onto the 5m grid — or by a large-N base-timeframe window, instead of an
