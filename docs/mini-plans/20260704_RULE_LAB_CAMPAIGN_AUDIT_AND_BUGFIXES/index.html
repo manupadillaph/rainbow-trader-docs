@@ -14,7 +14,7 @@
         <link rel="prev" href="../../audit/20260711_1928_SLIPPAGE_ASSUMPTION_AUDIT/">
       
       
-        <link rel="next" href="../../plans/20260616_RULE_BASED_ENGINE_AUDIT_AND_DIRECTION/">
+        <link rel="next" href="../20260713_RULE_STRATEGY_FIDELITY_BUILD_PLAN/">
       
       
         
@@ -2448,6 +2448,8 @@
       
         
       
+        
+      
     
     
     
@@ -2655,6 +2657,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20260713_RULE_STRATEGY_FIDELITY_BUILD_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20260713 Rule Strategy Fidelity Build Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -146577,8 +146607,14 @@
    else. <strong>Decided: k = 1</strong>. Default in YAML keeps <code>enforce_friction_floor</code> false (byte-identical); applied
    in <code>bot_logic</code> after the take-profit is finalized; behavior tests (floor on/off + negative-k rejection)
    and the strategy-config completeness test added; gates green and old config JSONs still validate.
-4. <strong>B4 — Report defects batch (verified 2026-07-12 against the current report + generator code).</strong> Six
-   real defects remain; two earlier items are closed. Still to fix:
+4. <strong>B4 — Report defects batch (DONE 2026-07-13).</strong> All six verified defects fixed and committed (gates
+   green; tests added for the regime-join clip and the thin-sample marker): (a) failed pre-existing skips
+   now surface their real status; (b) regime economics sums only the COMPLETE backtest, not the pruned
+   VALIDATION session; (c) event-to-regime joins clip out-of-window trailing events (root fix in the shared
+   <code>join_to_regime_series</code>); (d) shared column legends gained per-report overrides so the rule report shows
+   rule-specific text for <code>Kind</code>/<code>Strategy</code> while the ensemble reports are unchanged; (e) <code>campaign_report.json</code>
+   now carries the benchmark / risk-constrained-benchmark / <code>alpha_adj</code> columns; (f) the regime "Best Signal"
+   winner is flagged with a thin-sample marker. Original defect list (verified 2026-07-12):
    (a) <em>latent</em> status mislabel — <code>run_campaign.py:628-644</code> hardcodes <code>status="skipped_existing"</code> on a
    skip-existing pass and never checks <code>status == "failed"</code>, so a <code>failed</code> <code>result.json</code> would be shown as
    skipped (does not reproduce today only because the nr7 rerun used <code>--rerun-existing</code>);
