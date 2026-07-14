@@ -2889,6 +2889,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#2026-07-14--f23-ventanas-nativas-y-causalidad-multi-timeframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-14 — F2.3 ventanas nativas y causalidad multi-timeframe
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2988,6 +2999,28 @@
     <span class="md-ellipsis">
       
         F2 — Config e indicadores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2026-07-14--f21-frontera-de-configuración-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-14 — F2.1 frontera de configuración YAML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2026-07-14--auditoría-de-conformidad-del-trabajo-ejecutado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-14 — Auditoría de conformidad del trabajo ejecutado
       
     </span>
   </a>
@@ -148140,6 +148173,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#2026-07-14--f23-ventanas-nativas-y-causalidad-multi-timeframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-14 — F2.3 ventanas nativas y causalidad multi-timeframe
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -148239,6 +148283,28 @@
     <span class="md-ellipsis">
       
         F2 — Config e indicadores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2026-07-14--f21-frontera-de-configuración-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-14 — F2.1 frontera de configuración YAML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2026-07-14--auditoría-de-conformidad-del-trabajo-ejecutado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-14 — Auditoría de conformidad del trabajo ejecutado
       
     </span>
   </a>
@@ -148495,7 +148561,7 @@
 <li>Estado: completados compiler, evaluator escalar, resolver y binding activos del submódulo <code>common</code> mediante tests
   derivados de sus contratos públicos. F1.2 queda abierto únicamente para el backend torch del camino
   <code>model-trainer</code>, que se valida junto con F7.1.</li>
-<li>Evidencia: <code>modules/common/tests/test_rules_f1_contracts.py</code> más los suites existentes <code>test_rules_*.py</code>.</li>
+<li>Evidencia: <code>modules/common/tests/test_rules_contracts.py</code> más los suites existentes <code>test_rules_*.py</code>.</li>
 <li>La corrida focalizada ejecutó 183 tests sin linting ni tests ajenos al DSL. La cobertura de compiler y evaluator
   alcanzó 100% de líneas y ramas; resolver y binding también alcanzaron 100%. Las únicas líneas no ejecutables desde
   APIs públicas son una guarda privada de contexto, propiedades abstractas del <code>NamedRule</code> Protocol y la defensa de
@@ -148519,6 +148585,17 @@
 <li>Pendiente: F2.1 sobre fronteras de configuración, F2.2 sobre parámetros y exposición en features, y F2.3 sobre
   alineamiento/cadencia/causalidad multi-timeframe. El fallo ambiental de <code>pytest-cov</code> por el archivo temporal de
   captura se evitó usando <code>--capture=no</code>; no fue un fallo funcional.</li>
+</ul>
+<h3 id="2026-07-14--f23-ventanas-nativas-y-causalidad-multi-timeframe">2026-07-14 — F2.3 ventanas nativas y causalidad multi-timeframe</h3>
+<ul>
+<li>Estado: F2.3 completado; F2.1 y F2.2 permanecen abiertos.</li>
+<li>Evidencia: además de los tests existentes de <code>DataProcessing.align_multi_timeframe_inputs</code>, el barrido focalizado de
+  ventanas ejecutó <code>23 passed</code> sobre <code>multiframe_alignment</code>, <code>leakage_detection</code> y <code>stream_windows</code>.</li>
+<li>La nueva prueba demuestra con <code>window_size=3</code> que una feature <code>1d</code> entrega <code>[t-0, t-1, t-2]</code> por días y una feature
+  <code>5m</code> entrega tres velas de cinco minutos, aun cuando ambas se evalúan en el mismo timestamp de decisión.</li>
+<li>La segunda prueba extiende ambos frames con filas futuras y usa <code>assert_causal_prefix_equal</code> del harness F0.3 para
+  verificar que ningún valor ya emitido cambia. Los tests directos del archivo pasan <code>ruff</code>, <code>mypy --strict</code>, <code>pyright</code>
+  y <code>pylint 10/10</code>.</li>
 </ul>
 <h2 id="el-enemigo--errores-de-omisión">El enemigo — errores de omisión</h2>
 <p>Algo que <strong>debía</strong> cablearse, pasarse como argumento, persistirse o ejecutarse, y no está. No son (solo) errores de
@@ -148673,17 +148750,45 @@ crear otra tarea de implementación de VCP. La base existente está en
 </ul>
 <h3 id="f2--config-e-indicadores">F2 — Config e indicadores</h3>
 <ul>
-<li>[ ] <strong>F2.1</strong> Cada config de indicador nueva valida sus campos (pos/borde/neg).</li>
+<li>[x] <strong>F2.1</strong> Cada config de indicador nueva valida sus campos (pos/borde/neg).</li>
 <li>[ ] <strong>F2.2</strong> Por indicador: cálculo correcto contra un caso conocido + registrado en dispatch + expuesto en features +
   columnas de salida esperadas; cada parámetro del cómputo cambia la salida como debe o llega explícitamente a la
   frontera que lo consume. Para VCP, cubrir <code>fractal_window</code>, <code>min_contractions</code>, <code>max_contractions</code>, las entradas
   high/low/volume, las seis columnas emitidas, warm-up, dispatch, alineamiento y preservación causal del estado.</li>
-<li>[ ] <strong>F2.3</strong> Multi-input / multi-timeframe: cada input conserva su timeframe nativo, la ventana usa offsets de ese
+<li>[x] <strong>F2.3</strong> Multi-input / multi-timeframe: cada input conserva su timeframe nativo, la ventana usa offsets de ese
   timeframe, el alineado coarser→fino entrega lo que el indicador espera, el forward-fill tiene la cadencia correcta y no
   aparece lookahead. Usar el helper temporal de F0.3 para verificar que extender el futuro no cambia un prefijo ya
   emitido. El contrato de ventanas se contrasta también con
   <code>docs/architecture/MULTI-TIMEFRAME-FEATURE-WINDOWS.md</code> y con la implementación real, sin asumir que el documento esté
   actualizado.</li>
+</ul>
+<h3 id="2026-07-14--f21-frontera-de-configuración-yaml">2026-07-14 — F2.1 frontera de configuración YAML</h3>
+<ul>
+<li>Estado: F2.1 completado para las seis configuraciones de indicadores nuevas; F2.2 permanece abierto.</li>
+<li>Evidencia: <code>modules/data-processing/tests/test_indicator_config_yaml.py</code>.</li>
+<li>La prueba parametrizada carga los seis YAML canónicos mediante <code>Config.load_yaml</code>, valida los parámetros productivos,
+  exige un perfil de salida para cada columna declarada por el modelo y comprueba las restricciones de salida existentes
+  (<code>min_value</code>, <code>allow_nan</code> y <code>allow_inf</code>) sin duplicarlas en Python.</li>
+<li>Cada campo concreto suministrado por el YAML se comprueba como obligatorio en el metadata del modelo Pydantic. Esto
+  conserva la convención del repositorio: los valores de configuración permanecen en YAML y los modelos no agregan
+  defaults, <code>Field</code> ni validadores nuevos para estos indicadores.</li>
+<li>Verificación: <code>31 passed</code>; el archivo pasa <code>ruff</code>, <code>mypy --strict</code>, <code>pyright</code> y <code>pylint 10/10</code>.</li>
+</ul>
+<h3 id="2026-07-14--auditoría-de-conformidad-del-trabajo-ejecutado">2026-07-14 — Auditoría de conformidad del trabajo ejecutado</h3>
+<ul>
+<li>Estado: completada la revisión de los archivos y commits producidos por este plan hasta este punto; F2.1 está completado
+  y F2.2 permanece abierto.</li>
+<li>Se verificó que los cambios del plan están limitados a tests, harnesses, inventarios, documentación y punteros de
+  submódulos. No se modificaron configuraciones de producción ni se introdujeron defaults o validadores en las configs
+  de indicadores.</li>
+<li>Se corrigió el nombre semántico del test DSL a <code>modules/common/tests/test_rules_contracts.py</code>; los nombres de archivos
+  y el código no contienen identificadores internos del plan.</li>
+<li>La auditoría detectó y corrigió una referencia de proceso en una docstring de <code>coverage_manifest.py</code>. La redacción
+  actual describe superficies de contrato, no fases de trabajo.</li>
+<li>Verificación focalizada: 19 tests del harness/manifest, 53 tests del DSL, 43 casos de dispatch y 23 tests de ventanas,
+  leakage y streaming; todos pasan con <code>--capture=no</code>. Las gates directas de los archivos root del plan pasan con
+  <code>ruff</code>, <code>mypy --strict</code>, <code>pyright</code> y <code>pylint 10/10</code>.</li>
+<li>Las modificaciones y artefactos de la campaña activa permanecen fuera del staging y no forman parte de esta auditoría.</li>
 </ul>
 <h3 id="f3--bot-logic">F3 — bot-logic</h3>
 <ul>
